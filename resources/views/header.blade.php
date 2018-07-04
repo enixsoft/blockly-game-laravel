@@ -1,5 +1,4 @@
-@section('layout')
-<body>
+@section('header')
 <header>
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -45,7 +44,7 @@
       </div>
     </div>
   </nav>
-
+</header>
 @auth   
 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
 @endauth
@@ -120,34 +119,5 @@
 
     </div>
   </div>
-</header>
-@yield('content')
-
-<footer id="footer" class="footer">
-    <div class="container text-center">     
-
-     
-      ©2018
-      <div class="credits">
-       
-        Designed by </a>
-      </div>
-    </div>
-  </footer>
-
-  <script src="js/jquery.min.js"></script>
-  <script src="js/jquery.easing.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/custom.js"></script>
-
-@if ($errors->all())  
-<script type="text/javascript">
-  $(document).ready(function () {
-    $('#loginModal').modal('show');
-    });
-</script>        
-@endif 
-
-</body>
-</html>
+  
 @show

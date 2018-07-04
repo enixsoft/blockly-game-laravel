@@ -15,9 +15,10 @@
   <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
-@extends('layout')
-@section('content')
-  <div class="banner">
+<body>
+@include('header')
+
+<div class="banner">
     <div class="bg-color">
       <div class="container">
         <div class="row">
@@ -29,7 +30,7 @@
               <p class="big-text">Ako sa naučiť programovať</p>
               <p class="small-text">                
                 Blockly je grafické programovacie prostredie, vyvinuté spoločnosťou Google v roku 2012. <br> Tento vizuálny jazyk vám umožní rýchlo pochopiť základy logického prenosu dát a inštrukcií, zoznámiť sa s cyklami, operátormi, postupmi, funkciami, premenné jazyka JavaScript a všeobecne umožňujú rozvíjať myslenie</p>
-              <a href="" class="btn get-quote btn-lg" style="size: ">SPUSTIŤ HRU</a>
+              <a href="{{ route('game') }}" class="btn get-quote btn-lg" style="size: ">SPUSTIŤ HRU</a>
             </div>
           
           </div>
@@ -158,6 +159,21 @@
       </div>
     </div>
   </section>
-@stop
+
+@include('footer')
+</body>
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.easing.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/custom.js"></script>
+
+@if ($errors->all())  
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('#loginModal').modal('show');
+    });
+</script>        
+@endif 
+</html>
 
 

@@ -19,6 +19,11 @@ Route::get('/registration', function () {
     return view('registration');
 });
 
+Route::get('/game', function () {
+    return view('game');
+})->name('game');
+
+
 Auth::routes();
 
 /*
