@@ -14,9 +14,10 @@
 }
 
 .leftside {  
- height: 100Vh;
-  margin-bottom: 0;
-  overflow:hidden;
+ height: calc(100vh - 63px);
+ margin-bottom: 0;
+ overflow:hidden;
+
 }
 .leftside .text {
   position: absolute;
@@ -29,11 +30,15 @@
   display: block;
 }
 .rightside { 
-   height: 100Vh;
-    margin-bottom: 0;
+  height: calc(100vh - 63px);
+  margin-bottom: 0;
   overflow:hidden;
+
 }
 .row-full > [class*='col-'] {
   padding-right: 0;
   padding-left: 0;
 }
+
+/* navbar size = 63px, requires padding on body */ 
+body { padding-top: 63px; }

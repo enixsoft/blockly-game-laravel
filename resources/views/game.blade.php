@@ -14,9 +14,25 @@
   <link rel="stylesheet" type="text/css" href="css/imagehover.min.css">
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <link rel="stylesheet" type="text/css" href="css/extrastyle.css">
+
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.easing.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/custom.js"></script>
+
+@if ($errors->all())  
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('#loginModal').modal('show');
+    });
+</script>        
+@endif
+
+
 </head>
 
 <body>
+
 @include('header')
 
 
@@ -30,11 +46,7 @@
       </div>
     </div>
     <div class="col-sm-6">
-      <div class="rightside">
-         <div class="centered">   
-    <h2>Blockly</h2>
-    <p>Blockly will go here.</p>
-  </div>
+      <div id="blocklyArea" class="rightside">      
       </div>
     </div>
   </div>
@@ -42,25 +54,54 @@
 
 
 
+<div id="blocklyDiv" style="position: absolute"></div>
+</div>
 
 
 
+<script src="blockly/blockly_compressed.js"></script>
+<script src="blockly/blocks_compressed.js"></script>
+<script src="blockly/msg/js/en.js"></script>
+
+
+<xml id="toolbox" style="display: none">
+  <block type="controls_if"></block>
+  <block type="controls_repeat_ext"></block>
+  <block type="logic_compare"></block>
+  <block type="math_number"></block>
+  <block type="math_arithmetic"></block>
+  <block type="text"></block>
+  <block type="text_print"></block>
+</xml>
+
+<script>
+  var blocklyArea = document.getElementById('blocklyArea');
+  var blocklyDiv = document.getElementById('blocklyDiv');
+  var workspacePlayground = Blockly.inject(blocklyDiv,
+      {toolbox: document.getElementById('toolbox')});
+  var onresize = function(e) {
+    // Compute the absolute coordinates and dimensions of blocklyArea.
+    var element = blocklyArea;
+    var x = 0;
+    var y = 0;
+    do {
+      x += element.offsetLeft;
+      y += element.offsetTop;
+      element = element.offsetParent;
+    } while (element);
+    // Position blocklyDiv over blocklyArea.
+    blocklyDiv.style.left = x + 'px';
+    blocklyDiv.style.top = y + 'px';
+    blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
+    blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
+  };
+  window.addEventListener('resize', onresize, false);
+  onresize();
+  Blockly.svgResize(workspacePlayground);
+</script>
 
 
 </body>
-
-<script src="js/jquery.min.js"></script>
-<script src="js/jquery.easing.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/custom.js"></script>
-
-@if ($errors->all())  
-<script type="text/javascript">
-  $(document).ready(function () {
-    $('#loginModal').modal('show');
-    });
-</script>        
-@endif 
 </html>
 
 
