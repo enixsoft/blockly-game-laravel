@@ -42,12 +42,15 @@
   <div class="row row-full">
     <div class="col-sm-6">
       <div class="leftside">
-       <iframe style="width:100%;height:100%;overflow:hidden;border:none;" src="https://playcanv.as/p/62c28f63/"></iframe>
+       <iframe id="app-frame" style="width:100%;height:100%;overflow:hidden;border:none;" src="https://playcanv.as/e/p/62c28f63/"></iframe>
       </div>
     </div>
     <div class="col-sm-6">
       <div id="blocklyArea" class="rightside">      
       </div>
+      <div>
+        <button type="button" id="click_button" class="btn btn-success btn-lg">Spustiť</button>
+      </div> 
     </div>
   </div>
 </div>
@@ -99,6 +102,26 @@
   onresize();
   Blockly.svgResize(workspacePlayground);
 </script>
+
+<script>
+  $(document).ready(function(){
+    $("#click_button").click(function(){
+        
+        alert('button clicked');
+        
+        var iframe = document.getElementById("app-frame");
+        
+        iframe.contentWindow.postMessage
+        (
+        { score: "123456", }, 
+        "https://playcanv.as/p/62c28f63/"
+        );  
+
+    });
+  });
+</script>
+
+
 
 
 </body>

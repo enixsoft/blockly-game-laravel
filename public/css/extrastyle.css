@@ -30,7 +30,7 @@
   display: block;
 }
 .rightside { 
-  height: calc(100vh - 63px);
+  height: calc(70vh - 63px);
   margin-bottom: 0;
   overflow:hidden;
 
