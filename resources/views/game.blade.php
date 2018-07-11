@@ -64,24 +64,23 @@
 
 <script src="blockly/blockly_compressed.js"></script>
 <script src="blockly/blocks_compressed.js"></script>
+<script src="blockly/javascript_compressed.js"></script>
 <script src="blockly/msg/js/en.js"></script>
+<script src="blockly_files/blockdefinitions.js"></script>
 
 
-<xml id="toolbox" style="display: none">
-  <block type="controls_if"></block>
-  <block type="controls_repeat_ext"></block>
-  <block type="logic_compare"></block>
-  <block type="math_number"></block>
-  <block type="math_arithmetic"></block>
-  <block type="text"></block>
-  <block type="text_print"></block>
-</xml>
+
+
 
 <script>
+ 
+  var toolbox = {!! json_encode($xmltest) !!};
+  
+
   var blocklyArea = document.getElementById('blocklyArea');
   var blocklyDiv = document.getElementById('blocklyDiv');
   var workspacePlayground = Blockly.inject(blocklyDiv,
-      {toolbox: document.getElementById('toolbox')});
+      {toolbox: toolbox });
   var onresize = function(e) {
     // Compute the absolute coordinates and dimensions of blocklyArea.
     var element = blocklyArea;

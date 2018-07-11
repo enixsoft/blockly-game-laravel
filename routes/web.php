@@ -12,7 +12,12 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    
+   
+ 
+  return view('welcome');
+
+
 })->name('/');
 
 Route::get('/registration', function () {
@@ -20,7 +25,11 @@ Route::get('/registration', function () {
 });
 
 Route::get('/game', function () {
-    return view('game');
+     
+    $xmlpath = "public/blockly_files/toolbox_level_0.xml";
+    $xmltest = file_get_contents($xmlpath);
+
+    return view('game', compact('xmltest'));
 })->name('game');
 
 
