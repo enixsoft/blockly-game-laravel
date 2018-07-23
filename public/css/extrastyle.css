@@ -14,7 +14,7 @@
 }
 
 .leftside {  
- height: calc(100vh - 63px);
+ height: calc(100vh - 94px);
  margin-bottom: 0;
  overflow:hidden;
 
@@ -30,7 +30,7 @@
   display: block;
 }
 .rightside { 
-  height: calc(70vh - 63px);
+  height: calc(70vh - 94px);
   margin-bottom: 0;
   overflow:hidden;
 
@@ -40,5 +40,50 @@
   padding-left: 0;
 }
 
-/* navbar size = 63px, requires padding on body */ 
-body { padding-top: 63px; }
+/* navbar size = 63px, requires padding on body body { padding-top: 63px; } */ 
+body { padding-top: 94px;
+
+ }
+
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+    pointer-events:none;
+}
+.vertical-align-center {
+    /* To center vertically */
+    display: table-cell;
+    vertical-align: middle;
+    pointer-events:none;
+}
+.modal-content {
+    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+    width:inherit;
+ 
+    height:inherit;
+    /* To center horizontally */
+    margin: 0 auto;
+    pointer-events:all;
+}
+
+
+
+.modal_image {
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+    margin-right: 30px;
+    border: solid 5px;
+    border-color: rgb(246,146,30);
+    border-radius: 12px;
+
+    background: #fbed21; /* Old browsers */
+    background: -moz-linear-gradient(top, #fbed21 0%, #faaf3b 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fbed21), color-stop(100%,#faaf3b)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #fbed21 0%,#faaf3b 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #fbed21 0%,#faaf3b 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #fbed21 0%,#faaf3b 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #fbed21 0%,#faaf3b 100%); /* W3C */
+}
+

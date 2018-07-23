@@ -26,15 +26,13 @@ Blockly.Blocks['player'] = {
 };
 
 Blockly.JavaScript['move_forward'] = function(block) {
-	
-  var value = Blockly.JSON.valueToCode(block, 'INPUT', Blockly.JavaScript.ORDER_NONE);
-  // TODO: Assemble JavaScript into code variable.
-  var code = '...;\n';
+  // TODO: Assemble JavaScript into code variable.	
+  var code = 'moveForward();\n';
   return code;
 };
 
 Blockly.JavaScript['player'] = function(block) {
   // TODO: Assemble JavaScript into code variable.
-  var code = '...;\n';
+  var code = 'Player:\n';
   return code;
 };

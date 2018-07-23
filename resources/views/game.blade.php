@@ -14,7 +14,7 @@
   <link rel="stylesheet" type="text/css" href="css/imagehover.min.css">
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <link rel="stylesheet" type="text/css" href="css/extrastyle.css">
-
+  
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.easing.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -39,20 +39,26 @@
 
 
 <div class="container-fluid">
-  <div class="row row-full">
-    <div class="col-sm-6">
-      <div class="leftside">
-       <iframe id="app-frame" style="width:100%;height:100%;overflow:hidden;border:none;" src="https://playcanv.as/e/p/62c28f63/"></iframe>
-      </div>
+    <div class="row row-full">
+        <div class="col-md-6">
+            <div class="leftside">
+                <iframe id="app-frame" style="width:100%;height:100%;overflow:hidden;border:none;"
+                src="https://playcanv.as/e/p/62c28f63/"></iframe>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div id="blocklyArea" class="rightside"></div>
+            <div>
+                <button type="button" id="click_button" class="btn btn-success btn-lg">Spustit</button>
+                <button type="button" class="btn btn-lg btn-primary"
+                data-toggle="modal" data-target="#myModal">Large modal</button>
+                <button class="btn btn-primary btn-lg" data-toggle="modal"
+                data-target="#myModal2">Launch demo modal 2</button>
+                     <button class="btn btn-primary btn-lg" data-toggle="modal"
+                data-target="#myModal3">Launch demo modal 3</button>
+            </div>
+        </div>
     </div>
-    <div class="col-sm-6">
-      <div id="blocklyArea" class="rightside">      
-      </div>
-      <div>
-        <button type="button" id="click_button" class="btn btn-success btn-lg">Spustiť</button>
-      </div> 
-    </div>
-  </div>
 </div>
 
 
@@ -104,15 +110,16 @@
 
 <script>
   $(document).ready(function(){
-    $("#click_button").click(function(){
+    $("#click_button").click( function(){
         
-        alert('button clicked');
-        
+        var code = Blockly.JavaScript.workspaceToCode(workspacePlayground);
+        console.log(code);
+
         var iframe = document.getElementById("app-frame");
         
         iframe.contentWindow.postMessage
         (
-        { score: "123456", }, 
+        { message: code, }, 
         "https://playcanv.as/p/62c28f63/"
         );  
 
@@ -120,6 +127,123 @@
   });
 </script>
 
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="vertical-alignment-helper">
+    <div class="vertical-align-center modal-dialog modal-lg">     
+    <div class="modal-content">       
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                    </button>
+          <!--<h4 class="modal-title text-center form-title">Prihlásenie</h4>-->
+
+        </div>
+  
+  <div class="modal-body">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6"><h2>Blockly je grafické programovacie prostredie, vyvinuté spoločnosťou Google v roku 2012. <br> Tento vizuálny jazyk vám umožní rýchlo pochopiť základy logického prenosu dát a inštrukcií, zoznámiť sa s cyklami, operátormi, postupmi, funkciami, premenné jazyka JavaScript a všeobecne umožňujú rozvíjať myslenie</h2></div>
+      <div class="col-md-6">
+        <div id="modal-mascot">
+                            <object width="100%" height="100%" data="blockly_files/SVG_Logo.svg" type="image/svg+xml"></object>
+        </div>
+      </div>
+      </div> 
+   
+      <div class="row">     
+      <div class="col-4 mx-auto"><button type="button" id="click_button" class="btn btn-success btn-lg">Spustiť</button></div>   
+     </div>
+    </div>
+                          
+  </div>
+  </div>
+      
+</div>
+</div>
+</div>
+
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center" style="width: 900px;" >
+            <div class="modal-content">
+                <div class="modal-header">
+                   
+                   
+                      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+
+                    </button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+    <div class="row">
+      <div class="col-md-6">Blockly je grafické programovacie prostredie, vyvinuté spoločnosťou Google v roku 2012. <br> Tento vizuálny jazyk vám umožní rýchlo pochopiť základy logického prenosu dát a inštrukcií, zoznámiť sa s cyklami, operátormi, postupmi, funkciami, premenné jazyka JavaScript a všeobecne umožňujú rozvíjať myslenie</div>
+      <div class="col-md-6">
+        <div id="modal-mascot">
+                            <object width="100%" height="100%" data="blockly_files/SVG_Logo.svg" type="image/svg+xml"></object>
+        </div>
+      </div>
+      </div>       
+      <div class="row">     
+      <div class="col-2 mx-auto"><button type="button" id="click_button" class="btn btn-success btn-lg">Spustiť</button></div>   
+     </div>
+    </div>
+                          
+  </div>
+
+
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">    
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                   
+                   
+                      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+
+                    </button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+    <div class="row">
+      <div class="col-md-6"><h2>Blockly je grafické programovacie prostredie, vyvinuté spoločnosťou Google v roku 2012. <br> Tento vizuálny jazyk vám umožní rýchlo pochopiť základy logického prenosu dát a inštrukcií, zoznámiť sa s cyklami, operátormi, postupmi, funkciami, premenné jazyka JavaScript a všeobecne umožňujú rozvíjať myslenie</h2></div>
+      <div class="col-md-6">
+        <div id="modal-mascot">
+                            <object width="100%" height="100%" data="blockly_files/SVG_Logo.svg" type="image/svg+xml"></object>
+        </div>
+      </div>
+      </div>       
+         
+      <div class="col-5 mx-auto"><button type="button" id="click_button" class="btn btn-success btn-lg">Spustiť</button></div>   
+   </div> 
+    </div>
+                          
+  </div>
+
+
+                </div>
+            
+            </div>
+        </div>
+    </div>
+
+
+
+              
 
 
 
