@@ -75,18 +75,46 @@
 <script src="blockly_files/blockdefinitions.js"></script>
 
 
+<xml id="startBlocks" style="display: none">
+    <block type="player" movable="false" inline="false" x="50" y="70">
+        </block>
+</xml>
 
+<script>
+// Create IE + others compatible event handler
+var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+var eventer = window[eventMethod];
+var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
 
+// Listen to message from child window
+eventer(messageEvent,function(e) {
+  console.log('parent received message!:  ',e.data);
+  if(e.data === "unlock")
+  { 
+      var button = document.getElementById('click_button');
+      button.disabled = false;
+      $("#click_button").removeClass("btn-danger").addClass("btn-success");
+
+  }
+},false);
+
+</script>
 
 <script>
  
-  var toolbox = {!! json_encode($xmltest) !!};
-  
+  var toolbox = {!! json_encode($xmltest) !!};  
 
   var blocklyArea = document.getElementById('blocklyArea');
   var blocklyDiv = document.getElementById('blocklyDiv');
+
   var workspacePlayground = Blockly.inject(blocklyDiv,
       {toolbox: toolbox });
+
+  Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
+                               workspacePlayground);
+  
+
+
   var onresize = function(e) {
     // Compute the absolute coordinates and dimensions of blocklyArea.
     var element = blocklyArea;
@@ -110,8 +138,15 @@
 
 <script>
   $(document).ready(function(){
-    $("#click_button").click( function(){
+    $("#click_button").click( function(){        
         
+
+        var button = document.getElementById('click_button'); 
+        button.disabled = true;       
+        $("#click_button").removeClass("btn-success").addClass("btn-danger");
+
+
+
         var code = Blockly.JavaScript.workspaceToCode(workspacePlayground);
         console.log(code);
 
@@ -121,7 +156,10 @@
         (
         { message: code, }, 
         "https://playcanv.as/p/62c28f63/"
-        );  
+        );
+
+
+
 
     });
   });
@@ -191,7 +229,7 @@
       </div>
       </div>       
       <div class="row">     
-      <div class="col-2 mx-auto"><button type="button" id="click_button" class="btn btn-success btn-lg">Spustiť</button></div>   
+      <div class="col-2 mx-auto"><button type="button" id="click_button" class="btn btn-success btn-lg" data-dismiss="modal">Spustiť</button></div>   
      </div>
     </div>
                           

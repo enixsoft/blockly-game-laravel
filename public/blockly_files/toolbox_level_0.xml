@@ -1,4 +1,4 @@
 <xml>
-<block type="player"></block>
-<block type="move_forward"></block>
+<block type="move_right"></block>
+<block type="move_left"></block>
 </xml>

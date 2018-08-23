@@ -17,7 +17,7 @@
                     </li>
                     @guest
                     <li class="btn-trial nav-item py-0"><a href="#" data-target="#loginModal" data-backdrop="static" data-toggle="modal"
-                        class="nav-link">Prihlasenie</a>
+                        class="nav-link">Prihlásenie</a>
                     </li>
                     @endguest 
                     @auth
