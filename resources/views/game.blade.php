@@ -8,6 +8,9 @@
   <meta name="description" content="">
   <meta name="keywords" content="">
 
+  <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+  <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans|Candal|Alegreya+Sans">
   <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
@@ -54,8 +57,8 @@
                 data-toggle="modal" data-target="#myModal">Large modal</button>
                 <button class="btn btn-primary btn-lg" data-toggle="modal"
                 data-target="#myModal2">Launch demo modal 2</button>
-                     <button class="btn btn-primary btn-lg" data-toggle="modal"
-                data-target="#myModal3">Launch demo modal 3</button>
+                     <button class="btn btn-danger
+                     btn-lg" id="restart_button">Restart</button>
             </div>
         </div>
     </div>
@@ -76,7 +79,7 @@
 
 
 <xml id="startBlocks" style="display: none">
-    <block type="player" movable="false" inline="false" x="50" y="70">
+    <block type="player" movable="false" deletable="false" inline="false" x="50" y="70">
         </block>
 </xml>
 
@@ -93,14 +96,20 @@ eventer(messageEvent,function(e) {
   { 
       var button = document.getElementById('click_button');
       button.disabled = false;
-      $("#click_button").removeClass("btn-danger").addClass("btn-success");
+      //$("#click_button").removeClass("btn-danger").addClass("btn-success");
+      workspacePlayground.highlightBlock(null);
+      
 
+
+  }
+  else
+  {
+    console.log(e.data);
+    highlightBlock(e.data);
   }
 },false);
 
-</script>
 
-<script>
  
   var toolbox = {!! json_encode($xmltest) !!};  
 
@@ -112,6 +121,7 @@ eventer(messageEvent,function(e) {
 
   Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
                                workspacePlayground);
+  
   
 
 
@@ -134,6 +144,12 @@ eventer(messageEvent,function(e) {
   window.addEventListener('resize', onresize, false);
   onresize();
   Blockly.svgResize(workspacePlayground);
+     
+
+  function highlightBlock(id) {
+      workspacePlayground.highlightBlock(id);      
+    }
+
 </script>
 
 <script>
@@ -143,12 +159,36 @@ eventer(messageEvent,function(e) {
 
         var button = document.getElementById('click_button'); 
         button.disabled = true;       
-        $("#click_button").removeClass("btn-success").addClass("btn-danger");
+        //$("#click_button").removeClass("btn-success").addClass("btn-danger");
 
 
+        Blockly.JavaScript.STATEMENT_PREFIX = '%1\n';
 
         var code = Blockly.JavaScript.workspaceToCode(workspacePlayground);
         console.log(code);
+
+        var blocks = workspacePlayground.getAllBlocks();
+        console.log(blocks)
+
+        var iframe = document.getElementById("app-frame");
+        
+        iframe.contentWindow.postMessage
+        (
+        { message: code, }, 
+        "https://playcanv.as/p/62c28f63/"
+        );
+
+
+
+
+    });
+  });
+
+  $(document).ready(function(){
+    $("#restart_button").click( function(){        
+        
+
+        var code = "restart\n";
 
         var iframe = document.getElementById("app-frame");
         
