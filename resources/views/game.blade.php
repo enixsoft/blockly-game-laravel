@@ -57,7 +57,9 @@
                 data-toggle="modal" data-target="#myModal">Large modal</button>
                 <button class="btn btn-primary btn-lg" data-toggle="modal"
                 data-target="#myModal2">Launch demo modal 2</button>
-                     <button class="btn btn-danger
+                <button type="button" id="camera_plus_button" class="btn btn-success btn-lg">Kamera +</button>
+                <button type="button" id="camera_minus_button" class="btn btn-success btn-lg">Kamera -</button>
+                <button class="btn btn-danger
                      btn-lg" id="restart_button">Restart</button>
             </div>
         </div>
@@ -105,12 +107,28 @@ eventer(messageEvent,function(e) {
   else
   {
     console.log(e.data);
-    highlightBlock(e.data);
+    if(e.data.action=="highlightProgress")
+    {
+    highlightBlock(e.data.id);
+    }
+    else
+    {
+
+      //COMMAND FAILED BLOCK IS RED
+    
+      console.log(workspacePlayground.getBlockById(e.data.id));
+      block = workspacePlayground.getBlockById(e.data.id);
+      block.setColour(0);
+      failedBlock.push(block);
+    }
   }
 },false);
 
+  var failedBlock = [];
+
 
  
+
   var toolbox = {!! json_encode($xmltest) !!};  
 
   var blocklyArea = document.getElementById('blocklyArea');
@@ -150,17 +168,19 @@ eventer(messageEvent,function(e) {
       workspacePlayground.highlightBlock(id);      
     }
 
-</script>
 
-<script>
   $(document).ready(function(){
     $("#click_button").click( function(){        
         
 
         var button = document.getElementById('click_button'); 
         button.disabled = true;       
-        //$("#click_button").removeClass("btn-success").addClass("btn-danger");
-
+        
+        if(failedBlock.length>0)
+        {
+          failedBlock[0].setColour(160);
+          failedBlock.splice(0);
+        }
 
         Blockly.JavaScript.STATEMENT_PREFIX = '%1\n';
 
@@ -189,6 +209,47 @@ eventer(messageEvent,function(e) {
         
 
         var code = "restart\n";
+
+        var iframe = document.getElementById("app-frame");
+        
+        iframe.contentWindow.postMessage
+        (
+        { message: code, }, 
+        "https://playcanv.as/p/62c28f63/"
+        );
+
+
+
+
+    });
+  });
+
+
+   $(document).ready(function(){
+    $("#camera_plus_button").click( function(){        
+        
+
+        var code = "camera+\n";
+
+        var iframe = document.getElementById("app-frame");
+        
+        iframe.contentWindow.postMessage
+        (
+        { message: code, }, 
+        "https://playcanv.as/p/62c28f63/"
+        );
+
+
+
+
+    });
+  });
+
+      $(document).ready(function(){
+    $("#camera_minus_button").click( function(){        
+        
+
+        var code = "camera-\n";
 
         var iframe = document.getElementById("app-frame");
         
