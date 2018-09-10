@@ -61,6 +61,8 @@
                 <button type="button" id="camera_minus_button" class="btn btn-success btn-lg">Kamera -</button>
                 <button class="btn btn-danger
                      btn-lg" id="restart_button">Restart</button>
+                <button class="btn btn-danger
+                     btn-lg" id="reload_button">Reload</button>
             </div>
         </div>
     </div>
@@ -103,6 +105,11 @@ eventer(messageEvent,function(e) {
       
 
 
+  }
+  else if (e.data === "death")
+  {
+    // you died window
+    workspacePlayground.highlightBlock(null);
   }
   else
   {
@@ -218,6 +225,16 @@ eventer(messageEvent,function(e) {
         "https://playcanv.as/p/62c28f63/"
         );
 
+
+
+
+    });
+  });
+ 
+  $(document).ready(function(){
+    $("#reload_button").click( function(){        
+        
+        document.getElementById("app-frame").src = document.getElementById("app-frame").src;
 
 
 

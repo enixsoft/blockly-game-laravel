@@ -57,7 +57,21 @@ Blockly.Blocks['attack'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("attack")
-        .appendField(new Blockly.FieldImage("https://png.icons8.com/color/sword.png", 20, 20, "*"))
+        .appendField(new Blockly.FieldImage("https://png.icons8.com/color/sword.png", 30, 30, "*"))
+        .appendField(new Blockly.FieldDropdown([["right","right"], ["left","left"], ["up","up"], ["down","down"]]), "direction");
+    this.setPreviousStatement(true, "Action");
+    this.setNextStatement(true, "Action");
+    this.setColour(160);
+ this.setTooltip("Character attacks");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['use'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("use")
+        .appendField(new Blockly.FieldImage("blockly_files/lever.png", 30, 30, "*"))
         .appendField(new Blockly.FieldDropdown([["right","right"], ["left","left"], ["up","up"], ["down","down"]]), "direction");
     this.setPreviousStatement(true, "Action");
     this.setNextStatement(true, "Action");
@@ -107,6 +121,13 @@ Blockly.JavaScript['attack'] = function(block) {
   // TODO: Assemble JavaScript into code variable.
   var dropdown_direction = block.getFieldValue('direction');	
   var code = 'attack(' + dropdown_direction + ');\n';
+  return code;
+};
+
+Blockly.JavaScript['use'] = function(block) {
+  // TODO: Assemble JavaScript into code variable.
+  var dropdown_direction = block.getFieldValue('direction');	
+  var code = 'use(' + dropdown_direction + ');\n';
   return code;
 };
 
