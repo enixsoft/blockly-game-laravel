@@ -81,6 +81,20 @@ Blockly.Blocks['use'] = {
   }
 };
 
+Blockly.Blocks['jump'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("jump")
+        .appendField(new Blockly.FieldImage("https://png.icons8.com/ios/50/000000/trampoline-park-filled.png", 20, 20, "*"))
+		.appendField(new Blockly.FieldDropdown([["right","right"], ["left","left"], ["up","up"], ["down","down"]]), "direction");
+    this.setPreviousStatement(true, "Action");
+    this.setNextStatement(true, "Action");
+    this.setColour(160);
+ this.setTooltip("The character jumps");
+ this.setHelpUrl("");
+  }
+};
+
 Blockly.Blocks['player'] = {
   init: function() {
     this.appendDummyInput()
@@ -128,6 +142,13 @@ Blockly.JavaScript['use'] = function(block) {
   // TODO: Assemble JavaScript into code variable.
   var dropdown_direction = block.getFieldValue('direction');	
   var code = 'use(' + dropdown_direction + ');\n';
+  return code;
+};
+
+Blockly.JavaScript['jump'] = function(block) {
+  // TODO: Assemble JavaScript into code variable.
+  var dropdown_direction = block.getFieldValue('direction');	
+  var code = 'jump(' + dropdown_direction + ');\n';
   return code;
 };
 
