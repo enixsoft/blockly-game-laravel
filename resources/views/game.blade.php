@@ -32,11 +32,15 @@
 @endif
 
 
+
+
+
 </head>
 
 <body>
 
 @include('header')
+
 
 
 
@@ -54,9 +58,7 @@
             <div>
                 <button type="button" id="click_button" class="btn btn-success btn-lg">Spustit</button>
                 <button type="button" class="btn btn-lg btn-primary"
-                data-toggle="modal" data-target="#myModal">Large modal</button>
-                <button class="btn btn-primary btn-lg" data-toggle="modal"
-                data-target="#myModal2">Launch demo modal 2</button>
+                data-toggle="modal" data-target="#mainModal">Main modal</button>               
                 <button type="button" id="camera_plus_button" class="btn btn-success btn-lg">Kamera +</button>
                 <button type="button" id="camera_minus_button" class="btn btn-success btn-lg">Kamera -</button>
                 <button class="btn btn-danger
@@ -83,10 +85,26 @@
 
 
 <xml id="startBlocks" style="display: none">
-    <block type="player" movable="false" deletable="false" inline="false" x="50" y="70">
+       <block type="player" movable="false" deletable="false" inline="false" x="50" y="70">
         </block>
 </xml>
 
+<!--<xml id="toolbox" style="display: none">
+  <block type="logic_operation"></block>
+  <label text="A label" web-class="myLabelStyle"></label>
+  <label text="Another label"></label>
+  <block type="logic_negate"></block>
+  <button text="A button" callbackKey="myFirstButtonPressed"></button>
+  <block type="logic_boolean"></block>
+</xml>
+
+<style>
+.myLabelStyle>.blocklyFlyoutLabelText {
+  font-style: italic;
+  fill: green;
+}
+</style>
+-->
 <script>
 // Create IE + others compatible event handler
 var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
@@ -96,6 +114,7 @@ var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
 // Listen to message from child window
 eventer(messageEvent,function(e) {
   console.log('parent received message!:  ',e.data);
+  
   if(e.data === "unlock")
   { 
       var button = document.getElementById('click_button');
@@ -110,6 +129,10 @@ eventer(messageEvent,function(e) {
   {
     // you died window
     workspacePlayground.highlightBlock(null);
+  }
+  else if (e.data === "uiHelp")
+  {    
+       $('#mainModal').modal('show');
   }
   else
   {
@@ -142,13 +165,46 @@ eventer(messageEvent,function(e) {
   var blocklyDiv = document.getElementById('blocklyDiv');
 
   var workspacePlayground = Blockly.inject(blocklyDiv,
-      {toolbox: toolbox });
+      {toolbox: toolbox, trashcan: true });
 
   Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
                                workspacePlayground);
   
   
 
+
+  var player = getBlocksByType("player");
+
+  disableContextMenus();
+
+  function blockClickController(event) {  
+
+
+    if(event.element=="click")
+    {     
+  
+      blockToCheck = Blockly.selected;
+     
+      if(blockToCheck.id == player[0].id)
+      {
+    
+        console.log("clicked")
+        blockToCheck.unselect();
+      }
+
+    }
+
+   
+
+
+    
+  }
+
+workspacePlayground.addChangeListener(blockClickController);
+disableContextMenus();
+
+
+  
 
   var onresize = function(e) {
     // Compute the absolute coordinates and dimensions of blocklyArea.
@@ -174,6 +230,30 @@ eventer(messageEvent,function(e) {
   function highlightBlock(id) {
       workspacePlayground.highlightBlock(id);      
     }
+
+  function disableContextMenus(){
+
+     Blockly.showContextMenu_ = function (e) {
+        };
+        Blockly.ContextMenu.show = function (e) {
+        };
+  }
+
+
+
+    //one type block only
+  function getBlocksByType(type) 
+  {
+  var blocks = [];
+  for (var blockID in workspacePlayground.blockDB_) 
+  {
+    if (workspacePlayground.blockDB_[blockID].type == type) {
+      blocks.push(workspacePlayground.blockDB_[blockID]);
+    }
+  }
+  return(blocks);
+  }
+
 
 
   $(document).ready(function(){
@@ -283,125 +363,7 @@ eventer(messageEvent,function(e) {
   });
 </script>
 
-
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="vertical-alignment-helper">
-    <div class="vertical-align-center modal-dialog modal-lg">     
-    <div class="modal-content">       
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-                    </button>
-          <!--<h4 class="modal-title text-center form-title">Prihlásenie</h4>-->
-
-        </div>
-  
-  <div class="modal-body">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6"><h2>Blockly je grafické programovacie prostredie, vyvinuté spoločnosťou Google v roku 2012. <br> Tento vizuálny jazyk vám umožní rýchlo pochopiť základy logického prenosu dát a inštrukcií, zoznámiť sa s cyklami, operátormi, postupmi, funkciami, premenné jazyka JavaScript a všeobecne umožňujú rozvíjať myslenie</h2></div>
-      <div class="col-md-6">
-        <div id="modal-mascot">
-                            <object width="100%" height="100%" data="blockly_files/SVG_Logo.svg" type="image/svg+xml"></object>
-        </div>
-      </div>
-      </div> 
-   
-      <div class="row">     
-      <div class="col-4 mx-auto"><button type="button" id="click_button" class="btn btn-success btn-lg">Spustiť</button></div>   
-     </div>
-    </div>
-                          
-  </div>
-  </div>
-      
-</div>
-</div>
-</div>
-
-
-
-
-
-
-<!-- Modal -->
-<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="vertical-alignment-helper">
-        <div class="modal-dialog vertical-align-center" style="width: 900px;" >
-            <div class="modal-content">
-                <div class="modal-header">
-                   
-                   
-                      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-
-                    </button>
-
-                </div>
-                <div class="modal-body">
-                    <div class="container">
-    <div class="row">
-      <div class="col-md-6">Blockly je grafické programovacie prostredie, vyvinuté spoločnosťou Google v roku 2012. <br> Tento vizuálny jazyk vám umožní rýchlo pochopiť základy logického prenosu dát a inštrukcií, zoznámiť sa s cyklami, operátormi, postupmi, funkciami, premenné jazyka JavaScript a všeobecne umožňujú rozvíjať myslenie</div>
-      <div class="col-md-6">
-        <div id="modal-mascot">
-                            <object width="100%" height="100%" data="blockly_files/SVG_Logo.svg" type="image/svg+xml"></object>
-        </div>
-      </div>
-      </div>       
-      <div class="row">     
-      <div class="col-2 mx-auto"><button type="button" id="click_button" class="btn btn-success btn-lg" data-dismiss="modal">Spustiť</button></div>   
-     </div>
-    </div>
-                          
-  </div>
-
-
-                </div>
-            
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">    
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                   
-                   
-                      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-
-                    </button>
-
-                </div>
-                <div class="modal-body">
-                    <div class="container">
-    <div class="row">
-      <div class="col-md-6"><h2>Blockly je grafické programovacie prostredie, vyvinuté spoločnosťou Google v roku 2012. <br> Tento vizuálny jazyk vám umožní rýchlo pochopiť základy logického prenosu dát a inštrukcií, zoznámiť sa s cyklami, operátormi, postupmi, funkciami, premenné jazyka JavaScript a všeobecne umožňujú rozvíjať myslenie</h2></div>
-      <div class="col-md-6">
-        <div id="modal-mascot">
-                            <object width="100%" height="100%" data="blockly_files/SVG_Logo.svg" type="image/svg+xml"></object>
-        </div>
-      </div>
-      </div>       
-         
-      <div class="col-5 mx-auto"><button type="button" id="click_button" class="btn btn-success btn-lg">Spustiť</button></div>   
-   </div> 
-    </div>
-                          
-  </div>
-
-
-                </div>
-            
-            </div>
-        </div>
-    </div>
-
-
-
-              
-
-
+@include('modals')
 
 </body>
 </html>
