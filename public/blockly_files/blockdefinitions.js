@@ -107,6 +107,64 @@ Blockly.Blocks['player'] = {
   }
 };
 
+Blockly.Blocks['run'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Run code ")
+        .appendField(new Blockly.FieldImage("blockly_files/arrow.png", 70, 70, "*"));   
+    this.setColour(100);
+ this.setTooltip("This block refers to Player.");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['cameraplus'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Camera+  ")
+        .appendField(new Blockly.FieldImage("blockly_files/plus.png", 70, 70, "*"));   
+    this.setColour(95);
+ this.setTooltip("This block refers to Player.");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['cameraminus'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Camera-  ")
+        .appendField(new Blockly.FieldImage("blockly_files/minus.png", 70, 70, "*"));   
+    this.setColour(95);
+ this.setTooltip("This block refers to Player.");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['restart'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Restart  ")
+        .appendField(new Blockly.FieldImage("blockly_files/logo-head-small.png", 70, 70, "*"));   
+    this.setColour(0);
+ this.setTooltip("This block refers to Player.");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['reload'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Reload  ")
+        .appendField(new Blockly.FieldImage("blockly_files/logo-head-small.png", 70, 70, "*"));   
+    this.setColour(0);
+ this.setTooltip("This block refers to Player.");
+ this.setHelpUrl("");
+  }
+};
+
+
+
+
 Blockly.JavaScript['move_left'] = function(block) {
   // TODO: Assemble JavaScript into code variable.	
   var code = 'moveLeft();\n';
@@ -155,5 +213,35 @@ Blockly.JavaScript['jump'] = function(block) {
 Blockly.JavaScript['player'] = function(block) {
   // TODO: Assemble JavaScript into code variable.
   var code = 'Player:\n';
+  return code;
+};
+
+Blockly.JavaScript['run'] = function(block) {
+  // TODO: Assemble JavaScript into code variable.
+  var code = '\n';
+  return code;
+};
+
+Blockly.JavaScript['cameraplus'] = function(block) {
+  // TODO: Assemble JavaScript into code variable.
+  var code = '\n';
+  return code;
+};
+
+Blockly.JavaScript['cameraminus'] = function(block) {
+  // TODO: Assemble JavaScript into code variable.
+  var code = '\n';
+  return code;
+};
+
+Blockly.JavaScript['restart'] = function(block) {
+  // TODO: Assemble JavaScript into code variable.
+  var code = '\n';
+  return code;
+};
+
+Blockly.JavaScript['reload'] = function(block) {
+  // TODO: Assemble JavaScript into code variable.
+  var code = '\n';
   return code;
 };

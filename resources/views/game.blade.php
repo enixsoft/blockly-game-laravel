@@ -55,17 +55,6 @@
         </div>
         <div class="col-md-6">
             <div id="blocklyArea" class="rightside"></div>
-            <div>
-                <button type="button" id="click_button" class="btn btn-success btn-lg">Spustit</button>
-                <button type="button" class="btn btn-lg btn-primary"
-                data-toggle="modal" data-target="#mainModal">Main modal</button>               
-                <button type="button" id="camera_plus_button" class="btn btn-success btn-lg">Kamera +</button>
-                <button type="button" id="camera_minus_button" class="btn btn-success btn-lg">Kamera -</button>
-                <button class="btn btn-danger
-                     btn-lg" id="restart_button">Restart</button>
-                <button class="btn btn-danger
-                     btn-lg" id="reload_button">Reload</button>
-            </div>
         </div>
     </div>
 </div>
@@ -85,8 +74,12 @@
 
 
 <xml id="startBlocks" style="display: none">
-       <block type="player" movable="false" deletable="false" inline="false" x="50" y="70">
-        </block>
+       <block type="player" movable="false" deletable="false" inline="false" x="50" y="70"></block>
+       <block type="run" movable="false" deletable="false" inline="false" x="50" y="1000"></block>
+       <block type="cameraplus" movable="false" deletable="false" inline="false" x="250" y="1000"></block> 
+       <block type="cameraminus" movable="false" deletable="false" inline="false" x="450" y="1000"></block>
+       <block type="restart" movable="false" deletable="false" inline="false" x="650" y="1000"></block>
+       <block type="reload" movable="false" deletable="false" inline="false" x="850" y="1000"></block>        
 </xml>
 
 <!--<xml id="toolbox" style="display: none">
@@ -117,10 +110,12 @@ eventer(messageEvent,function(e) {
   
   if(e.data === "unlock")
   { 
-      var button = document.getElementById('click_button');
-      button.disabled = false;
+      //var button = document.getElementById('click_button');
+      //button.disabled = false;
       //$("#click_button").removeClass("btn-danger").addClass("btn-success");
+      run[0].setColour(95);
       workspacePlayground.highlightBlock(null);
+      locked = false;
       
 
 
@@ -156,7 +151,7 @@ eventer(messageEvent,function(e) {
 
   var failedBlock = [];
 
-
+  
  
 
   var toolbox = {!! json_encode($xmltest) !!};  
@@ -165,15 +160,27 @@ eventer(messageEvent,function(e) {
   var blocklyDiv = document.getElementById('blocklyDiv');
 
   var workspacePlayground = Blockly.inject(blocklyDiv,
-      {toolbox: toolbox, trashcan: true });
+      {toolbox: toolbox, trashcan: true});
 
   Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
-                               workspacePlayground);
+                              workspacePlayground);
   
   
 
 
-  var player = getBlocksByType("player");
+
+  var run = getBlocksByType("run");
+  var cameraplus = getBlocksByType("cameraplus");
+  var cameraminus = getBlocksByType("cameraminus");
+  var restart = getBlocksByType("restart");
+  var reload = getBlocksByType("reload");
+  var locked = false;
+
+  //workspacePlayground.zoom(50, 1000, -1);
+
+  console.log(Blockly.mainWorkspace.getMetrics());
+
+
 
   disableContextMenus();
 
@@ -185,14 +192,39 @@ eventer(messageEvent,function(e) {
   
       blockToCheck = Blockly.selected;
      
-      if(blockToCheck.id == player[0].id)
+ 
+      if(blockToCheck.id == run[0].id)
       {
-    
-        console.log("clicked")
+        
+        if(locked==false)
+          runCode();
+        blockToCheck.unselect();
+      }
+        else if(blockToCheck.id == cameraplus[0].id)
+      {
+         cameraPlus();
+         blockToCheck.unselect();
+        
+      }
+      else if(blockToCheck.id == cameraminus[0].id)
+      {
+        cameraMinus();
+        blockToCheck.unselect();
+      }
+      else if(blockToCheck.id == restart[0].id)
+      {
+        console.log("cloiclke restart");
+        restartGame();
+        blockToCheck.unselect();
+      }
+      else if(blockToCheck.id == reload[0].id)
+      {
+        reloadIframe();
         blockToCheck.unselect();
       }
 
     }
+
 
    
 
@@ -239,30 +271,15 @@ disableContextMenus();
         };
   }
 
+  function runCode(){
 
-
-    //one type block only
-  function getBlocksByType(type) 
-  {
-  var blocks = [];
-  for (var blockID in workspacePlayground.blockDB_) 
-  {
-    if (workspacePlayground.blockDB_[blockID].type == type) {
-      blocks.push(workspacePlayground.blockDB_[blockID]);
-    }
-  }
-  return(blocks);
-  }
-
-
-
-  $(document).ready(function(){
-    $("#click_button").click( function(){        
+        //var button = document.getElementById('click_button'); 
+        //button.disabled = true;   
         
+        locked = true;
 
-        var button = document.getElementById('click_button'); 
-        button.disabled = true;       
-        
+        run[0].setColour(0);
+
         if(failedBlock.length>0)
         {
           failedBlock[0].setColour(160);
@@ -286,45 +303,9 @@ disableContextMenus();
         );
 
 
+  }
 
-
-    });
-  });
-
-  $(document).ready(function(){
-    $("#restart_button").click( function(){        
-        
-
-        var code = "restart\n";
-
-        var iframe = document.getElementById("app-frame");
-        
-        iframe.contentWindow.postMessage
-        (
-        { message: code, }, 
-        "https://playcanv.as/p/62c28f63/"
-        );
-
-
-
-
-    });
-  });
- 
-  $(document).ready(function(){
-    $("#reload_button").click( function(){        
-        
-        document.getElementById("app-frame").src = document.getElementById("app-frame").src;
-
-
-
-    });
-  });
-
-
-   $(document).ready(function(){
-    $("#camera_plus_button").click( function(){        
-        
+    function cameraPlus(){
 
         var code = "camera+\n";
 
@@ -337,16 +318,25 @@ disableContextMenus();
         );
 
 
+  }
+    function cameraMinus(){
 
+       var code = "camera-\n";
 
-    });
-  });
-
-      $(document).ready(function(){
-    $("#camera_minus_button").click( function(){        
+        var iframe = document.getElementById("app-frame");
         
+        iframe.contentWindow.postMessage
+        (
+        { message: code, }, 
+        "https://playcanv.as/p/62c28f63/"
+        );
 
-        var code = "camera-\n";
+  }
+     
+  function restartGame(){
+
+
+        var code = "restart\n";
 
         var iframe = document.getElementById("app-frame");
         
@@ -357,10 +347,27 @@ disableContextMenus();
         );
 
 
+  }
+    function reloadIframe(){
+
+      document.getElementById("app-frame").src = document.getElementById("app-frame").src;
+
+  }
+
+    //one type block only
+  function getBlocksByType(type) 
+  {
+  var blocks = [];
+  for (var blockID in workspacePlayground.blockDB_) 
+  {
+    if (workspacePlayground.blockDB_[blockID].type == type) {
+      blocks.push(workspacePlayground.blockDB_[blockID]);
+    }
+  }
+  return(blocks);
+  }
 
 
-    });
-  });
 </script>
 
 @include('modals')
