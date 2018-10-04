@@ -76,7 +76,21 @@ Blockly.Blocks['use'] = {
     this.setPreviousStatement(true, "Action");
     this.setNextStatement(true, "Action");
     this.setColour(160);
- this.setTooltip("Character attacks");
+ this.setTooltip("Character uses");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['open'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("open")
+        .appendField(new Blockly.FieldImage("blockly_files/chest.png", 30, 30, "*"))
+        .appendField(new Blockly.FieldDropdown([["right","right"], ["left","left"], ["up","up"], ["down","down"]]), "direction");
+    this.setPreviousStatement(true, "Action");
+    this.setNextStatement(true, "Action");
+    this.setColour(160);
+ this.setTooltip("Character opens");
  this.setHelpUrl("");
   }
 };
@@ -200,6 +214,13 @@ Blockly.JavaScript['use'] = function(block) {
   // TODO: Assemble JavaScript into code variable.
   var dropdown_direction = block.getFieldValue('direction');	
   var code = 'use(' + dropdown_direction + ');\n';
+  return code;
+};
+
+Blockly.JavaScript['open'] = function(block) {
+  // TODO: Assemble JavaScript into code variable.
+  var dropdown_direction = block.getFieldValue('direction');	
+  var code = 'open(' + dropdown_direction + ');\n';
   return code;
 };
 

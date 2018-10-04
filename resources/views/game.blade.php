@@ -116,9 +116,6 @@ eventer(messageEvent,function(e) {
       run[0].setColour(95);
       workspacePlayground.highlightBlock(null);
       locked = false;
-      
-
-
   }
   else if (e.data === "death")
   {
@@ -128,6 +125,11 @@ eventer(messageEvent,function(e) {
   else if (e.data === "uiHelp")
   {    
        $('#mainModal').modal('show');
+  }
+  else if (e.data === "uiPlay")
+  {    
+           if(locked==false)
+          runCode();
   }
   else
   {
@@ -149,9 +151,7 @@ eventer(messageEvent,function(e) {
   }
 },false);
 
-  var failedBlock = [];
-
-  
+  var failedBlock = []; 
  
 
   var toolbox = {!! json_encode($xmltest) !!};  
