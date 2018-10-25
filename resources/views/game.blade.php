@@ -108,47 +108,57 @@ var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
 eventer(messageEvent,function(e) {
   console.log('parent received message!:  ',e.data);
   
-  if(e.data === "unlock")
-  { 
-      //var button = document.getElementById('click_button');
-      //button.disabled = false;
-      //$("#click_button").removeClass("btn-danger").addClass("btn-success");
+  switch(e.data.action)
+  {
+     case "unlock":
+    {
       run[0].setColour(95);
       workspacePlayground.highlightBlock(null);
       locked = false;
-  }
-  else if (e.data === "death")
-  {
-    // you died window
-    workspacePlayground.highlightBlock(null);
-  }
-  else if (e.data === "uiHelp")
-  {    
-       $('#mainModal').modal('show');
-  }
-  else if (e.data === "uiPlay")
-  {    
-           if(locked==false)
-          runCode();
-  }
-  else
-  {
-    console.log(e.data);
-    if(e.data.action=="highlightProgress")
-    {
-    highlightBlock(e.data.id);
+      break;
     }
-    else
+     case "death":
     {
-
-      //COMMAND FAILED BLOCK IS RED
+       // you died window
+      workspacePlayground.highlightBlock(null);
+      break;
+    }
+     case "uiHelp":
+    {
+      $('#mainModal').modal('show');
+      break;     
+    }
+     case "uiPlay":
+    {
+     if(locked==false)
+          runCode();
+     break;     
+    }
+      case "highlightProgress":
+    {
+     highlightBlock(e.data.content);
+     break;     
+    }
+     case "highlightFailure":
+    {
+       //COMMAND FAILED BLOCK IS RED
     
-      console.log(workspacePlayground.getBlockById(e.data.id));
-      block = workspacePlayground.getBlockById(e.data.id);
+      console.log(workspacePlayground.getBlockById(e.data.content));
+      block = workspacePlayground.getBlockById(e.data.content);
       block.setColour(0);
       failedBlock.push(block);
+      break;     
     }
+    case "save":
+    {
+      console.log("save object arrived");
+      saveObjectToJson(e.data.content);
+      this.saveObject = e.data.content;
+      break;     
+    }
+
   }
+
 },false);
 
   var failedBlock = []; 
@@ -165,6 +175,7 @@ eventer(messageEvent,function(e) {
   Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
                               workspacePlayground);
   
+  this.saveObjectToString;
   
 
 
@@ -202,18 +213,20 @@ eventer(messageEvent,function(e) {
       }
         else if(blockToCheck.id == cameraplus[0].id)
       {
-         cameraPlus();
+         //cameraPlus();
+         saveGame();
          blockToCheck.unselect();
         
       }
       else if(blockToCheck.id == cameraminus[0].id)
       {
-        cameraMinus();
+        //cameraMinus();
+        loadGame();
         blockToCheck.unselect();
       }
       else if(blockToCheck.id == restart[0].id)
       {
-        console.log("cloiclke restart");
+        console.log("clicked restart");
         restartGame();
         blockToCheck.unselect();
       }
@@ -256,8 +269,16 @@ disableContextMenus();
   };
   window.addEventListener('resize', onresize, false);
   onresize();
+
+
   Blockly.svgResize(workspacePlayground);
      
+  function saveObjectToJson(object) {
+      var myJSON = JSON.stringify(object);
+      this.saveObjectToString = myJSON;
+      console.log(myJSON);   
+    }
+
 
   function highlightBlock(id) {
       workspacePlayground.highlightBlock(id);      
@@ -289,7 +310,7 @@ disableContextMenus();
         Blockly.JavaScript.STATEMENT_PREFIX = '%1\n';
 
         var code = Blockly.JavaScript.workspaceToCode(workspacePlayground);
-        console.log(code);
+        //console.log(code);
 
         var blocks = workspacePlayground.getAllBlocks();
         console.log(blocks)
@@ -332,7 +353,38 @@ disableContextMenus();
         );
 
   }
-     
+
+    function saveGame(){
+
+        var code = "save\n";
+
+        var iframe = document.getElementById("app-frame");
+        
+        iframe.contentWindow.postMessage
+        (
+        { message: code, }, 
+        "https://playcanv.as/p/62c28f63/"
+        );
+
+
+  }
+    function loadGame(){
+
+        var code = "load\n";
+
+        code +=  this.saveObjectToString;
+
+
+        var iframe = document.getElementById("app-frame");
+        
+        iframe.contentWindow.postMessage
+        (
+        { message: code, }, 
+        "https://playcanv.as/p/62c28f63/"
+        );
+
+
+  }
   function restartGame(){
 
 
