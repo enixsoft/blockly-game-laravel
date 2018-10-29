@@ -78,6 +78,8 @@
        <block type="run" movable="false" deletable="false" inline="false" x="50" y="1000"></block>
        <block type="cameraplus" movable="false" deletable="false" inline="false" x="250" y="1000"></block> 
        <block type="cameraminus" movable="false" deletable="false" inline="false" x="450" y="1000"></block>
+       <block type="save" movable="false" deletable="false" inline="false" x="250" y="900"></block>
+       <block type="load" movable="false" deletable="false" inline="false" x="450" y="900"></block>       
        <block type="restart" movable="false" deletable="false" inline="false" x="650" y="1000"></block>
        <block type="reload" movable="false" deletable="false" inline="false" x="850" y="1000"></block>        
 </xml>
@@ -177,19 +179,25 @@ eventer(messageEvent,function(e) {
   
   this.saveObjectToString;
   
-
+  var loggedIn = {{ auth()->check() ? 'true' : 'false' }};
+  if (loggedIn)
+    console.log("logged in");
+  else
+   console.log("guest");
 
 
   var run = getBlocksByType("run");
   var cameraplus = getBlocksByType("cameraplus");
   var cameraminus = getBlocksByType("cameraminus");
+  var load = getBlocksByType("load");
+  var save = getBlocksByType("save");
   var restart = getBlocksByType("restart");
   var reload = getBlocksByType("reload");
   var locked = false;
 
   //workspacePlayground.zoom(50, 1000, -1);
 
-  console.log(Blockly.mainWorkspace.getMetrics());
+  //console.log(Blockly.mainWorkspace.getMetrics());
 
 
 
@@ -213,15 +221,15 @@ eventer(messageEvent,function(e) {
       }
         else if(blockToCheck.id == cameraplus[0].id)
       {
-         //cameraPlus();
-         saveGame();
+         cameraPlus();
+        ;
          blockToCheck.unselect();
         
       }
       else if(blockToCheck.id == cameraminus[0].id)
       {
-        //cameraMinus();
-        loadGame();
+        cameraMinus();
+      
         blockToCheck.unselect();
       }
       else if(blockToCheck.id == restart[0].id)
@@ -235,6 +243,17 @@ eventer(messageEvent,function(e) {
         reloadIframe();
         blockToCheck.unselect();
       }
+       else if(blockToCheck.id == save[0].id)
+      {
+        saveGame();
+        blockToCheck.unselect();
+      }
+       else if(blockToCheck.id == load[0].id)
+      {
+         loadGame();
+         blockToCheck.unselect();
+      }
+      
 
     }
 
@@ -310,7 +329,7 @@ disableContextMenus();
         Blockly.JavaScript.STATEMENT_PREFIX = '%1\n';
 
         var code = Blockly.JavaScript.workspaceToCode(workspacePlayground);
-        //console.log(code);
+        console.log(code);
 
         var blocks = workspacePlayground.getAllBlocks();
         console.log(blocks)

@@ -154,6 +154,28 @@ Blockly.Blocks['cameraminus'] = {
   }
 };
 
+Blockly.Blocks['load'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Load  ")
+        .appendField(new Blockly.FieldImage("blockly_files/load.png", 70, 70, "*"));   
+    this.setColour(95);
+ this.setTooltip("This block refers to Player.");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['save'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Save  ")
+        .appendField(new Blockly.FieldImage("blockly_files/save.png", 70, 70, "*"));   
+    this.setColour(95);
+ this.setTooltip("This block refers to Player.");
+ this.setHelpUrl("");
+  }
+};
+
 Blockly.Blocks['restart'] = {
   init: function() {
     this.appendDummyInput()
@@ -250,6 +272,18 @@ Blockly.JavaScript['cameraplus'] = function(block) {
 };
 
 Blockly.JavaScript['cameraminus'] = function(block) {
+  // TODO: Assemble JavaScript into code variable.
+  var code = '\n';
+  return code;
+};
+
+Blockly.JavaScript['load'] = function(block) {
+  // TODO: Assemble JavaScript into code variable.
+  var code = '\n';
+  return code;
+};
+
+Blockly.JavaScript['save'] = function(block) {
   // TODO: Assemble JavaScript into code variable.
   var code = '\n';
   return code;
