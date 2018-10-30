@@ -24,14 +24,24 @@ Route::get('/registration', function () {
     return view('registration');
 });
 
-Route::get('/game', function () {
+/*Route::get('/game', function () {
      
     $xmlpath = "public/blockly_files/toolbox_level_0.xml";
     $xmltest = file_get_contents($xmlpath);
 
+
+
     return view('game', compact('xmltest'));
 })->name('game');
+*/
 
+Route::get('/game', 'GameController@runGame')->name('game');
+
+Route::post('/game/savegame', 'GameController@saveGame');
+
+
+
+//Route::post('/game/saveGame', 'GameController@saveGame')->name('saveGame'); 
 
 Auth::routes();
 

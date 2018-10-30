@@ -4,6 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
   <title>Blockly hra</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
@@ -145,7 +147,7 @@ eventer(messageEvent,function(e) {
     {
        //COMMAND FAILED BLOCK IS RED
     
-      console.log(workspacePlayground.getBlockById(e.data.content));
+      //console.log(workspacePlayground.getBlockById(e.data.content));
       block = workspacePlayground.getBlockById(e.data.content);
       block.setColour(0);
       failedBlock.push(block);
@@ -156,6 +158,8 @@ eventer(messageEvent,function(e) {
       console.log("save object arrived");
       saveObjectToJson(e.data.content);
       this.saveObject = e.data.content;
+
+
       break;     
     }
 
@@ -166,7 +170,13 @@ eventer(messageEvent,function(e) {
   var failedBlock = []; 
  
 
-  var toolbox = {!! json_encode($xmltest) !!};  
+  var toolbox = {!! json_encode($xmltest) !!};
+
+  var savedGame = {!! $savedGame !!};
+  console.log(savedGame);
+  this.saveObjectToString = savedGame.json;
+ 
+   
 
   var blocklyArea = document.getElementById('blocklyArea');
   var blocklyDiv = document.getElementById('blocklyDiv');
@@ -177,7 +187,7 @@ eventer(messageEvent,function(e) {
   Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
                               workspacePlayground);
   
-  this.saveObjectToString;
+  //this.saveObjectToString;
   
   var loggedIn = {{ auth()->check() ? 'true' : 'false' }};
   if (loggedIn)
@@ -295,8 +305,37 @@ disableContextMenus();
   function saveObjectToJson(object) {
       var myJSON = JSON.stringify(object);
       this.saveObjectToString = myJSON;
-      console.log(myJSON);   
+      console.log(myJSON);               
     }
+
+  function saveJsonToDatabase() {
+
+     var loggedIn = {{ auth()->check() ? 'true' : 'false' }};
+    
+     if (loggedIn)
+     {
+      
+      var user = {!! auth()->check() ? auth()->user() : 'guest' !!};
+
+    $.ajax({
+     headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    method: 'POST', 
+    url: 'game/savegame', 
+    data: {'save' : this.saveObjectToString, 'user' : user.username}, //category + level
+    success: function(response){ 
+        console.log("save object sent succesfully");  
+    },
+    error: function(textStatus, errorThrown) {        
+        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+    }
+    });
+
+  }
+                   
+  }
+
 
 
   function highlightBlock(id) {
@@ -375,6 +414,7 @@ disableContextMenus();
 
     function saveGame(){
 
+        /*
         var code = "save\n";
 
         var iframe = document.getElementById("app-frame");
@@ -384,7 +424,8 @@ disableContextMenus();
         { message: code, }, 
         "https://playcanv.as/p/62c28f63/"
         );
-
+        */
+         saveJsonToDatabase();
 
   }
     function loadGame(){
