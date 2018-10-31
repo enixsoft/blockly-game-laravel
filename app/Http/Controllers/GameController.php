@@ -26,7 +26,7 @@ class GameController extends Controller
 
     public function runGame()  
     {                                   
-            $xmlpath = "public/blockly_files/toolbox_level_0.xml";
+            $xmlpath = "public/blockly_files/toolbox0x0.xml";
             $xmltest = file_get_contents($xmlpath);
             
             $json0x0 = File::get("public/blockly_files/start0x0.json");

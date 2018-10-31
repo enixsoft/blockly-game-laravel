@@ -33,6 +33,11 @@
 </script>        
 @endif
 
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('#welcomeModal').modal('show');
+    });
+</script>    
 
 
 
@@ -103,14 +108,15 @@
 </style>
 -->
 <script>
-// Create IE + others compatible event handler
+
 var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
 var eventer = window[eventMethod];
 var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
 
-// Listen to message from child window
-eventer(messageEvent,function(e) {
-  console.log('parent received message!:  ',e.data);
+
+eventer(messageEvent,function(e) 
+{
+  console.log('parent received message!:  ', e.data);
   
   switch(e.data.action)
   {
@@ -137,7 +143,13 @@ eventer(messageEvent,function(e) {
      if(locked==false)
           runCode();
      break;     
+    }    
+    case "start":
+    {
+     startGame();
+     break;     
     }
+
       case "highlightProgress":
     {
      highlightBlock(e.data.content);
@@ -145,9 +157,8 @@ eventer(messageEvent,function(e) {
     }
      case "highlightFailure":
     {
-       //COMMAND FAILED BLOCK IS RED
-    
-      //console.log(workspacePlayground.getBlockById(e.data.content));
+       //COMMAND FAILED BLOCK IS RED    
+     
       block = workspacePlayground.getBlockById(e.data.content);
       block.setColour(0);
       failedBlock.push(block);
@@ -155,11 +166,8 @@ eventer(messageEvent,function(e) {
     }
     case "save":
     {
-      console.log("save object arrived");
+      console.log("save object arrived");    
       saveObjectToJson(e.data.content);
-      this.saveObject = e.data.content;
-
-
       break;     
     }
 
@@ -174,8 +182,9 @@ eventer(messageEvent,function(e) {
 
   var savedGame = {!! $savedGame !!};
   console.log(savedGame);
+  
   this.saveObjectToString = savedGame.json;
- 
+  this.autosaveEnabled = true;
    
 
   var blocklyArea = document.getElementById('blocklyArea');
@@ -187,7 +196,7 @@ eventer(messageEvent,function(e) {
   Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
                               workspacePlayground);
   
-  //this.saveObjectToString;
+  
   
   var loggedIn = {{ auth()->check() ? 'true' : 'false' }};
   if (loggedIn)
@@ -303,6 +312,7 @@ disableContextMenus();
   Blockly.svgResize(workspacePlayground);
      
   function saveObjectToJson(object) {
+      
       var myJSON = JSON.stringify(object);
       this.saveObjectToString = myJSON;
       console.log(myJSON);               
@@ -414,7 +424,7 @@ disableContextMenus();
 
     function saveGame(){
 
-        /*
+        
         var code = "save\n";
 
         var iframe = document.getElementById("app-frame");
@@ -424,8 +434,8 @@ disableContextMenus();
         { message: code, }, 
         "https://playcanv.as/p/62c28f63/"
         );
-        */
-         saveJsonToDatabase();
+        
+        //saveJsonToDatabase();
 
   }
     function loadGame(){
@@ -460,6 +470,28 @@ disableContextMenus();
 
 
   }
+
+  function startGame(){
+
+
+        var code = "start\n";
+
+        code +=  this.saveObjectToString;
+
+        console.log(code);
+
+
+        var iframe = document.getElementById("app-frame");
+        
+        iframe.contentWindow.postMessage
+        (
+        { message: code, }, 
+        "https://playcanv.as/p/62c28f63/"
+        );
+
+
+  }
+
     function reloadIframe(){
 
       document.getElementById("app-frame").src = document.getElementById("app-frame").src;
