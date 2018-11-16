@@ -3,7 +3,9 @@ var Blockly = Blockly || {};
 Blockly.Blocks['move_right'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("move right")
+        .appendField("choď o")		
+        .appendField(new Blockly.FieldNumber('1'), 'steps')
+		.appendField("doprava")
         .appendField(new Blockly.FieldImage("https://png.icons8.com/material/1600/right.png", 20, 20, "*"));
     this.setPreviousStatement(true, "Action");
     this.setNextStatement(true, "Action");
@@ -17,7 +19,9 @@ Blockly.Blocks['move_right'] = {
 Blockly.Blocks['move_left'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("move left")
+        .appendField("choď o")		
+        .appendField(new Blockly.FieldNumber('1'), 'steps')
+		.appendField("doľava")
         .appendField(new Blockly.FieldImage("https://png.icons8.com/material/1600/left.png", 20, 20, "*"));
     this.setPreviousStatement(true, "Action");
     this.setNextStatement(true, "Action");
@@ -30,7 +34,9 @@ Blockly.Blocks['move_left'] = {
 Blockly.Blocks['move_up'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("move up")
+        .appendField("choď o")		
+        .appendField(new Blockly.FieldNumber('1'), 'steps')
+		.appendField("hore")
         .appendField(new Blockly.FieldImage("https://png.icons8.com/material/1600/up.png", 20, 20, "*"));       
     this.setPreviousStatement(true, "Action");
     this.setNextStatement(true, "Action");
@@ -43,7 +49,9 @@ Blockly.Blocks['move_up'] = {
 Blockly.Blocks['move_down'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("move down")
+        .appendField("choď o")		
+        .appendField(new Blockly.FieldNumber('1'), 'steps')
+		.appendField("dole")
         .appendField(new Blockly.FieldImage("https://png.icons8.com/material/1600/down.png", 20, 20, "*"));
     this.setPreviousStatement(true, "Action");
     this.setNextStatement(true, "Action");
@@ -71,7 +79,7 @@ Blockly.Blocks['use'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("use")
-        .appendField(new Blockly.FieldImage("blockly_files/lever.png", 30, 30, "*"))
+        .appendField(new Blockly.FieldImage("http://localhost/blockly-web-project/blockly_files/lever.png", 30, 30, "*"))
         .appendField(new Blockly.FieldDropdown([["right","right"], ["left","left"], ["up","up"], ["down","down"]]), "direction");
     this.setPreviousStatement(true, "Action");
     this.setNextStatement(true, "Action");
@@ -85,7 +93,7 @@ Blockly.Blocks['open'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("open")
-        .appendField(new Blockly.FieldImage("blockly_files/chest.png", 30, 30, "*"))
+        .appendField(new Blockly.FieldImage("http://localhost/blockly-web-project/blockly_files/chest.png", 30, 30, "*"))
         .appendField(new Blockly.FieldDropdown([["right","right"], ["left","left"], ["up","up"], ["down","down"]]), "direction");
     this.setPreviousStatement(true, "Action");
     this.setNextStatement(true, "Action");
@@ -113,7 +121,7 @@ Blockly.Blocks['player'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("Player  ")
-        .appendField(new Blockly.FieldImage("blockly_files/logo-head-small.png", 70, 70, "*"));
+        .appendField(new Blockly.FieldImage("http://localhost/blockly-web-project/blockly_files/logo-head-small.png", 70, 70, "*"));
     this.setNextStatement(true, "Action");
     this.setColour(300);
  this.setTooltip("This block refers to Player.");
@@ -125,7 +133,7 @@ Blockly.Blocks['run'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("Run code ")
-        .appendField(new Blockly.FieldImage("blockly_files/arrow.png", 70, 70, "*"));   
+        .appendField(new Blockly.FieldImage("http://localhost/blockly-web-project/blockly_files/arrow.png", 70, 70, "*"));   
     this.setColour(100);
  this.setTooltip("This block refers to Player.");
  this.setHelpUrl("");
@@ -136,7 +144,7 @@ Blockly.Blocks['cameraplus'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("Camera+  ")
-        .appendField(new Blockly.FieldImage("blockly_files/plus.png", 70, 70, "*"));   
+        .appendField(new Blockly.FieldImage("http://localhost/blockly-web-project/blockly_files/plus.png", 70, 70, "*"));   
     this.setColour(95);
  this.setTooltip("This block refers to Player.");
  this.setHelpUrl("");
@@ -147,7 +155,7 @@ Blockly.Blocks['cameraminus'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("Camera-  ")
-        .appendField(new Blockly.FieldImage("blockly_files/minus.png", 70, 70, "*"));   
+        .appendField(new Blockly.FieldImage("http://localhost/blockly-web-project/blockly_files/minus.png", 70, 70, "*"));   
     this.setColour(95);
  this.setTooltip("This block refers to Player.");
  this.setHelpUrl("");
@@ -158,7 +166,7 @@ Blockly.Blocks['load'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("Load  ")
-        .appendField(new Blockly.FieldImage("blockly_files/load.png", 70, 70, "*"));   
+        .appendField(new Blockly.FieldImage("http://localhost/blockly-web-project/blockly_files/load.png", 70, 70, "*"));   
     this.setColour(95);
  this.setTooltip("This block refers to Player.");
  this.setHelpUrl("");
@@ -169,7 +177,7 @@ Blockly.Blocks['save'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("Save  ")
-        .appendField(new Blockly.FieldImage("blockly_files/save.png", 70, 70, "*"));   
+        .appendField(new Blockly.FieldImage("http://localhost/blockly-web-project/blockly_files/save.png", 70, 70, "*"));   
     this.setColour(95);
  this.setTooltip("This block refers to Player.");
  this.setHelpUrl("");
@@ -180,7 +188,7 @@ Blockly.Blocks['restart'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("Restart  ")
-        .appendField(new Blockly.FieldImage("blockly_files/logo-head-small.png", 70, 70, "*"));   
+        .appendField(new Blockly.FieldImage("http://localhost/blockly-web-project/blockly_files/logo-head-small.png", 70, 70, "*"));   
     this.setColour(0);
  this.setTooltip("This block refers to Player.");
  this.setHelpUrl("");
@@ -191,7 +199,7 @@ Blockly.Blocks['reload'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("Reload  ")
-        .appendField(new Blockly.FieldImage("blockly_files/logo-head-small.png", 70, 70, "*"));   
+        .appendField(new Blockly.FieldImage("http://localhost/blockly-web-project/blockly_files/logo-head-small.png", 70, 70, "*"));   
     this.setColour(0);
  this.setTooltip("This block refers to Player.");
  this.setHelpUrl("");
@@ -203,25 +211,29 @@ Blockly.Blocks['reload'] = {
 
 Blockly.JavaScript['move_left'] = function(block) {
   // TODO: Assemble JavaScript into code variable.	
-  var code = 'moveLeft();\n';
+  var steps = block.getFieldValue('steps');
+  var code = 'moveLeft(' + steps + ');\n';
   return code;
 };
 
 Blockly.JavaScript['move_right'] = function(block) {
   // TODO: Assemble JavaScript into code variable.	
-  var code = 'moveRight();\n';
+  var steps = block.getFieldValue('steps'); 
+  var code = 'moveRight(' + steps + ');\n';
   return code;
 };
 
 Blockly.JavaScript['move_up'] = function(block) {
   // TODO: Assemble JavaScript into code variable.	
-  var code = 'moveUp();\n';
+  var steps = block.getFieldValue('steps');  
+  var code = 'moveUp(' + steps + ');\n';
   return code;
 };
 
 Blockly.JavaScript['move_down'] = function(block) {
   // TODO: Assemble JavaScript into code variable.	
-  var code = 'moveDown();\n';
+  var steps = block.getFieldValue('steps'); 
+  var code = 'moveDown(' + steps + ');\n';
   return code;
 };
 

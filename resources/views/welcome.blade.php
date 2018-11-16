@@ -15,9 +15,9 @@
   <link rel="stylesheet" type="text/css" href="css/style.css">
   
 
-  <script src="js/jquery.min.js"></script>
-  <script src="js/jquery.easing.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
+  <script src="{{ asset('js/jquery.min.js') }}"></script>
+  <script src="{{ asset('js/jquery.easing.min.js') }}"></script>
+  <script src="{{ asset('bootstrap.min.js') }}"></script>
   <script src="js/custom.js"></script>
 
 </head>
@@ -36,8 +36,7 @@
             <div class="intro-para text-center quote">
               <p class="big-text">Ako sa naučiť programovať</p>
               <p class="small-text">                
-                Blockly je grafické programovacie prostredie, vyvinuté spoločnosťou Google v roku 2012. <br> Tento vizuálny jazyk vám umožní rýchlo pochopiť základy logického prenosu dát a inštrukcií, zoznámiť sa s cyklami, operátormi, postupmi, funkciami, premenné jazyka JavaScript a všeobecne umožňujú rozvíjať myslenie</p>
-              <a href="{{ route('game') }}" class="btn get-quote btn-lg" style="size: ">SPUSTIŤ HRU</a>
+                Blockly je grafické programovacie prostredie, vyvinuté spoločnosťou Google v roku 2012. <br> Tento vizuálny jazyk vám umožní rýchlo pochopiť základy logického prenosu dát a inštrukcií, zoznámiť sa s cyklami, operátormi, postupmi, funkciami, premenné jazyka JavaScript a všeobecne umožňujú rozvíjať myslenie</p>   
             </div>
           
           </div>
@@ -63,16 +62,20 @@
             <div class="row">
             <div class="col-lg-4">
                 <div class="heading float-right">
-                     <h4>Latest Technologies</h4>
-                    <p>Donec et lectus bibendum dolor dictum auctor in ac erat. Vestibulum egestas
-                        sollicitudin metus non urna in eros tincidunt convallis id id nisi in interdum.</p>
+                     <h4>Kategoria 1 - presné algoritmy</h4>
+                    <p>Level 1</p>
+                    <a href="{{ url('/')}}/game/1/1" class="btn get-quote btn-lg" style="size: ">SPUSTIŤ LEVEL 1</a> 
+                    <p>Level 2</p>
+                    <a href="{{ url('/')}}/game/1/2" class="btn get-quote btn-lg" style="size: ">SPUSTIŤ LEVEL 2</a>          
+                    <p>Level 3</p>
+                    <a href="{{ url('/')}}/game/1/3" class="btn get-quote btn-lg" style="size: ">SPUSTIŤ LEVEL 3</a>                            
                 </div>
                 <div class="fea-img float-left"> <i class="fa fa-css3"></i>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="heading float-right">
-                     <h4>Toons Background</h4>
+                     <h4>Kategoria 2 - otvorené prostredie</h4>
                     <p>Donec et lectus bibendum dolor dictum auctor in ac erat. Vestibulum egestas
                         sollicitudin metus non urna in eros tincidunt convallis id id nisi in interdum.</p>
                 </div>
@@ -81,7 +84,7 @@
             </div>
             <div class="col-lg-4">
                 <div class="heading float-right">
-                     <h4>Award Winning Design</h4>
+                     <h4>Kategoria 3 - multiplayer</h4>
                     <p>Donec et lectus bibendum dolor dictum auctor in ac erat. Vestibulum egestas
                         sollicitudin metus non urna in eros tincidunt convallis id id nisi in interdum.</p>
                 </div>

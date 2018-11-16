@@ -24,29 +24,34 @@ class GameController extends Controller
 
     
 
-    public function runGame()  
+    public function runGame($category, $level)  
     {                                   
-            $xmlpath = "public/blockly_files/toolbox0x0.xml";
-            $xmltest = file_get_contents($xmlpath);
+            $xmlToolboxPath = "public/blockly_files/toolbox" . $category . "x" . $level . ".xml";
+            $xmlToolbox = File::get($xmlToolboxPath);            
             
-            $json0x0 = File::get("public/blockly_files/start0x0.json");
-       
+            $jsonStartGamePath = "public/blockly_files/start" . $category . "x" . $level . ".json";
+            $jsonStartGame = File::get($jsonStartGamePath);
+            
+            //check progress first
+
             if(Auth::check())
             {
                 
                 $auth = Auth::user();
-                $savedGame = SavedGame::where('username', '=', $auth->username)->latest()->first();
+                $savedGame = SavedGame::where('username', '=', $auth->username)->where('category', '=', $category)->where('level', '=', $level)->latest()->first();
 
                 if($savedGame==null)
                 {
                   
                   //pokial ulozena hra este neexistuje, ako ulozena hra sa nacita startovaci stav v hre
-                  SavedGame::create(array('username' => $auth->username,
-                   'category' => 0,
-                   'level' => 0,
-                   'json' => $json0x0             
+                  
+                  $savedGame = SavedGame::create(array('username' => $auth->username,
+                   'category' => $category,
+                   'level' => $level,
+                   'json' => $jsonStartGame            
                    ));  
 
+                 
 
                 }
 
@@ -54,13 +59,13 @@ class GameController extends Controller
             else
             {   //pokial uzivatel nie je prihlaseny, ako ulozena hra sa nacita startovaci stav v hre
 
-                $savedGame = new SavedGame(['username' => '', 'category' => 0, 'level' => 0, 'json'=>  $json0x0 ]);
+                $savedGame = new SavedGame(['username' => '', 'category' => $category, 'level' => $level, 'json'=>  $jsonStartGame ]);
             }
         
             
      
           
-         return view("game", compact('xmltest', 'savedGame'));
+         return view("game", compact('xmlToolbox', 'savedGame'));
         
     }
 

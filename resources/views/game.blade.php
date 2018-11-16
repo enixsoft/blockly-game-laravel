@@ -14,16 +14,16 @@
   <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
 
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans|Candal|Alegreya+Sans">
-  <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="css/imagehover.min.css">
-  <link rel="stylesheet" type="text/css" href="css/style.css">
-  <link rel="stylesheet" type="text/css" href="css/extrastyle.css">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/imagehover.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/extrastyle.css') }}">
   
-<script src="js/jquery.min.js"></script>
-<script src="js/jquery.easing.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/custom.js"></script>
+ <script src="{{ asset('js/jquery.min.js') }}"></script>
+ <script src="{{ asset('js/jquery.easing.min.js') }}"></script>
+ <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+ <script src="{{ asset('js/custom.js') }}"></script>
 
 @if ($errors->all())  
 <script type="text/javascript">
@@ -33,11 +33,11 @@
 </script>        
 @endif
 
-<script type="text/javascript">
+<!--<script type="text/javascript">
   $(document).ready(function () {
     $('#welcomeModal').modal('show');
     });
-</script>    
+</script>-->    
 
 
 
@@ -73,11 +73,11 @@
 
 
 
-<script src="blockly/blockly_compressed.js"></script>
-<script src="blockly/blocks_compressed.js"></script>
-<script src="blockly/javascript_compressed.js"></script>
-<script src="blockly/msg/js/en.js"></script>
-<script src="blockly_files/blockdefinitions.js"></script>
+<script src="{{ asset('blockly/blockly_compressed.js') }}"></script>
+<script src="{{ asset('blockly/blocks_compressed.js') }}"></script>
+<script src="{{ asset('blockly/javascript_compressed.js') }}"></script>
+<script src="{{ asset('blockly/msg/js/en.js') }}"></script>
+<script src="{{ asset('blockly_files/blockdefinitions.js') }}"></script>
 
 
 <xml id="startBlocks" style="display: none">
@@ -88,7 +88,8 @@
        <block type="save" movable="false" deletable="false" inline="false" x="250" y="900"></block>
        <block type="load" movable="false" deletable="false" inline="false" x="450" y="900"></block>       
        <block type="restart" movable="false" deletable="false" inline="false" x="650" y="1000"></block>
-       <block type="reload" movable="false" deletable="false" inline="false" x="850" y="1000"></block>        
+       <block type="reload" movable="false" deletable="false" inline="false" x="850" y="1000"></block>     
+       
 </xml>
 
 <!--<xml id="toolbox" style="display: none">
@@ -98,6 +99,18 @@
   <block type="logic_negate"></block>
   <button text="A button" callbackKey="myFirstButtonPressed"></button>
   <block type="logic_boolean"></block>
+
+
+
+  <block type="run" movable="false" deletable="false" inline="false" x="50" y="1000"></block>
+       <block type="cameraplus" movable="false" deletable="false" inline="false" x="250" y="1000"></block> 
+       <block type="cameraminus" movable="false" deletable="false" inline="false" x="450" y="1000"></block>
+       <block type="save" movable="false" deletable="false" inline="false" x="250" y="900"></block>
+       <block type="load" movable="false" deletable="false" inline="false" x="450" y="900"></block>       
+       <block type="restart" movable="false" deletable="false" inline="false" x="650" y="1000"></block>
+       <block type="reload" movable="false" deletable="false" inline="false" x="850" y="1000"></block>        
+
+
 </xml>
 
 <style>
@@ -178,7 +191,7 @@ eventer(messageEvent,function(e)
   var failedBlock = []; 
  
 
-  var toolbox = {!! json_encode($xmltest) !!};
+  var toolbox = {!! json_encode($xmlToolbox) !!};
 
   var savedGame = {!! $savedGame !!};
   console.log(savedGame);
@@ -378,10 +391,10 @@ disableContextMenus();
         Blockly.JavaScript.STATEMENT_PREFIX = '%1\n';
 
         var code = Blockly.JavaScript.workspaceToCode(workspacePlayground);
-        console.log(code);
+        //console.log(code);
 
         var blocks = workspacePlayground.getAllBlocks();
-        console.log(blocks)
+        //console.log(blocks)
 
         var iframe = document.getElementById("app-frame");
         
@@ -476,9 +489,7 @@ disableContextMenus();
 
         var code = "start\n";
 
-        code +=  this.saveObjectToString;
-
-        console.log(code);
+        code +=  this.saveObjectToString;        
 
 
         var iframe = document.getElementById("app-frame");

@@ -35,7 +35,8 @@ Route::get('/registration', function () {
 })->name('game');
 */
 
-Route::get('/game', 'GameController@runGame')->name('game');
+Route::get('/game/{category}/{level}', 'GameController@runGame')->name('game');
+
 
 Route::post('/game/savegame', 'GameController@saveGame');
 
