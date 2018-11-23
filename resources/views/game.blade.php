@@ -47,7 +47,7 @@
 <body>
 
 @include('header')
-
+@include('modals')
 
 
 
@@ -177,6 +177,18 @@ eventer(messageEvent,function(e)
       failedBlock.push(block);
       break;     
     }
+
+    case "taskCompleted":
+    {
+      console.log("taskCompleted");
+      console.log(e.data.content);
+      workspacePlayground.highlightBlock(null);
+      //maybe change color of all blocks of correct algorithm ?
+      taskWasCompleted(e.data.content);
+      break;     
+    }
+
+
     case "save":
     {
       console.log("save object arrived");    
@@ -197,8 +209,8 @@ eventer(messageEvent,function(e)
   console.log(savedGame);
   
   this.saveObjectToString = savedGame.json;
-  this.autosaveEnabled = true;
-   
+  this.autosaveEnabled = true;  
+ 
 
   var blocklyArea = document.getElementById('blocklyArea');
   var blocklyDiv = document.getElementById('blocklyDiv');
@@ -394,44 +406,24 @@ disableContextMenus();
         //console.log(code);
 
         var blocks = workspacePlayground.getAllBlocks();
-        //console.log(blocks)
+        //console.log(blocks);
 
-        var iframe = document.getElementById("app-frame");
         
-        iframe.contentWindow.postMessage
-        (
-        { message: code, }, 
-        "https://playcanv.as/p/62c28f63/"
-        );
-
-
+        sendMessage(code);
   }
 
     function cameraPlus(){
 
         var code = "camera+\n";
-
-        var iframe = document.getElementById("app-frame");
         
-        iframe.contentWindow.postMessage
-        (
-        { message: code, }, 
-        "https://playcanv.as/p/62c28f63/"
-        );
+        sendMessage(code);
 
 
   }
     function cameraMinus(){
 
-       var code = "camera-\n";
-
-        var iframe = document.getElementById("app-frame");
-        
-        iframe.contentWindow.postMessage
-        (
-        { message: code, }, 
-        "https://playcanv.as/p/62c28f63/"
-        );
+      var code = "camera-\n";
+      sendMessage(code);
 
   }
 
@@ -440,13 +432,7 @@ disableContextMenus();
         
         var code = "save\n";
 
-        var iframe = document.getElementById("app-frame");
-        
-        iframe.contentWindow.postMessage
-        (
-        { message: code, }, 
-        "https://playcanv.as/p/62c28f63/"
-        );
+        sendMessage(code);
         
         //saveJsonToDatabase();
 
@@ -457,14 +443,7 @@ disableContextMenus();
 
         code +=  this.saveObjectToString;
 
-
-        var iframe = document.getElementById("app-frame");
-        
-        iframe.contentWindow.postMessage
-        (
-        { message: code, }, 
-        "https://playcanv.as/p/62c28f63/"
-        );
+        sendMessage(code);
 
 
   }
@@ -473,34 +452,17 @@ disableContextMenus();
 
         var code = "restart\n";
 
-        var iframe = document.getElementById("app-frame");
-        
-        iframe.contentWindow.postMessage
-        (
-        { message: code, }, 
-        "https://playcanv.as/p/62c28f63/"
-        );
+        sendMessage(code);
 
 
   }
 
   function startGame(){
 
-
-        var code = "start\n";
-
-        code +=  this.saveObjectToString;        
-
-
-        var iframe = document.getElementById("app-frame");
+        var message = "start\n";
+        message +=  this.saveObjectToString;        
         
-        iframe.contentWindow.postMessage
-        (
-        { message: code, }, 
-        "https://playcanv.as/p/62c28f63/"
-        );
-
-
+        sendMessage(message);
   }
 
     function reloadIframe(){
@@ -509,9 +471,10 @@ disableContextMenus();
 
   }
 
-    //one type block only
-  function getBlocksByType(type) 
-  {
+  
+  function getBlocksByType(type){
+
+  //one type block only
   var blocks = [];
   for (var blockID in workspacePlayground.blockDB_) 
   {
@@ -520,12 +483,95 @@ disableContextMenus();
     }
   }
   return(blocks);
+
   }
 
+  
+  function taskWasCompleted(task){
+
+     console.log(task);
+
+     var title = "Výborne! Splnili ste prvú úlohu!";
+
+     var text = "<b>Blockly je grafické programovacie prostredie, vyvinuté spoločnosťou Google v roku 2012.</b> <br><br> <h4>Čas:</h4> <br><br> <h4>Kód:</h4> <br><br> <h4>Hodnotenie:</h4> ";
+
+     var image = "{{ asset('blockly_files/SVG_logo.svg') }}";
+
+     showTaskCompleteModal(title, text, image);
+
+  }
+
+  function showTaskCompleteModal(title, text, image){
+
+     var html = '<div class="row">'
+     
+     html +=    '<div class="col-md-6">';
+     html +=    '<h3>' + title + '</h3>';
+     
+    if (!isUserLoggedIn())
+        text +=    "<br><br>  <b> Aby sa váš postup v hre ukladal, je potrebné byť prihlásený. </b>";   
+
+     html +=    text;
+     html +=    '</div>'; 
+
+     html +=    '<div class="col-md-6">';
+     html +=    '<div id="modal-mascot">';
+     html +=    '<object width="80%" height="80%" data="'+image+'" type="image/svg+xml"></object>';
+     html +=    '</div>';
+     html +=    '</div>';
+
+     html +=    '</div>';
+     html +=    '<div class="row">';     
+     html +=    '<div class="col-2 mx-auto"><button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="continueGame()">Pokračovať</button>';
+     html +=    '</div>';
+
+     html +=    '</div>';
+
+     var $modal = $('#taskCompleteModal').modal();
+     $modal
+      .find('.modal-body').find('.container').html(html).end()     
+      .modal('show');
+     
+
+     
+  }
+  function continueGame(){
+
+    sendMessage("continue\n");
+  }
+
+   function sendMessage(messageForGame){
+    
+
+        var iframe = document.getElementById("app-frame");
+        
+        iframe.contentWindow.postMessage
+        (
+        { message: messageForGame }, 
+        "https://playcanv.as/p/62c28f63/"
+        );
+
+  }
+
+  function isUserLoggedIn(){
+    
+  var loggedIn = {{ auth()->check() ? 'true' : 'false' }};
+  if (loggedIn)
+  {   
+    console.log("logged in");
+    return true;
+  }
+  else
+  {
+   console.log("guest");
+   return false;
+  }
+    
+
+  }
 
 </script>
 
-@include('modals')
 
 </body>
 </html>
