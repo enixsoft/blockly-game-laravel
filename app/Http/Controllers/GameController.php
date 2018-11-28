@@ -32,6 +32,9 @@ class GameController extends Controller
             $jsonStartGamePath = "public/blockly_files/start" . $category . "x" . $level . ".json";
             $jsonStartGame = File::get($jsonStartGamePath);
             
+            $jsonTasksPath = "public/blockly_files/modals" . $category . "x" . $level . ".json";
+            $jsonTasks = File::get($jsonTasksPath);
+
             //check progress first
 
             if(Auth::check())
@@ -65,7 +68,7 @@ class GameController extends Controller
             
      
           
-         return view("game", compact('xmlToolbox', 'savedGame'));
+         return view("game", compact('xmlToolbox', 'savedGame', 'jsonTasks'));
         
     }
 

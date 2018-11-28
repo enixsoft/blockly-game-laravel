@@ -178,13 +178,33 @@ eventer(messageEvent,function(e)
       break;     
     }
 
-    case "taskCompleted":
+    case "mainTaskCompleted":
     {
-      console.log("taskCompleted");
+      console.log("mainTaskCompleted");
       console.log(e.data.content);
       workspacePlayground.highlightBlock(null);
       //maybe change color of all blocks of correct algorithm ?
-      taskWasCompleted(e.data.content);
+      mainTaskCompleted(e.data.content);
+      break;     
+    }
+
+    case "mainTaskFailed":
+    {
+      console.log("mainTaskFailed");
+      console.log(e.data.content);
+      workspacePlayground.highlightBlock(null);
+      //maybe change color of all blocks of correct algorithm ?
+      mainTaskFailed(e.data.content);
+      break;     
+    }
+
+    case "nextMainTask":
+    {
+      console.log("nextMainTask");
+      console.log(e.data.content);
+      workspacePlayground.highlightBlock(null);
+      //maybe change color of all blocks of correct algorithm ?
+      nextMainTask(e.data.content);
       break;     
     }
 
@@ -206,7 +226,10 @@ eventer(messageEvent,function(e)
   var toolbox = {!! json_encode($xmlToolbox) !!};
 
   var savedGame = {!! $savedGame !!};
-  console.log(savedGame);
+
+  var tasks =  {!! $jsonTasks !!};
+
+
   
   this.saveObjectToString = savedGame.json;
   this.autosaveEnabled = true;  
@@ -237,7 +260,7 @@ eventer(messageEvent,function(e)
   var save = getBlocksByType("save");
   var restart = getBlocksByType("restart");
   var reload = getBlocksByType("reload");
-  var locked = false;
+  var locked = true;
 
   //workspacePlayground.zoom(50, 1000, -1);
 
@@ -465,6 +488,12 @@ disableContextMenus();
         sendMessage(message);
   }
 
+
+  function continueGame(){
+
+    sendMessage("continue\n");
+  }
+
     function reloadIframe(){
 
       document.getElementById("app-frame").src = document.getElementById("app-frame").src;
@@ -486,59 +515,143 @@ disableContextMenus();
 
   }
 
-  
-  function taskWasCompleted(task){
+  function mainTaskIntroduced(task){
 
-     console.log(task);
-
-     var title = "Výborne! Splnili ste prvú úlohu!";
-
-     var text = "<b>Blockly je grafické programovacie prostredie, vyvinuté spoločnosťou Google v roku 2012.</b> <br><br> <h4>Čas:</h4> <br><br> <h4>Kód:</h4> <br><br> <h4>Hodnotenie:</h4> ";
-
-     var image = "{{ asset('blockly_files/SVG_logo.svg') }}";
-
-     showTaskCompleteModal(title, text, image);
 
   }
 
-  function showTaskCompleteModal(title, text, image){
+  function mainTaskHelp(task){
 
-     var html = '<div class="row">'
+    
+  }
+
+  function mainTaskCompleted(task){
+
+     task = "mainTask" + task;
+
+     console.log(task);
+
+     var title = tasks[task].success_modal.title;
+
+     var text = tasks[task].success_modal.text;
+
+     var image = getModalImageLink(tasks[task].success_modal.image);
+
+     showMainTaskCompletedModal(title, text, image);
+
+  }
+
+    function mainTaskFailed(task){
+
+     task = "mainTask" + task;
+
+     console.log(task);
+
+     var title = tasks[task].failure_modal.title;
+
+     var text =  tasks[task].failure_modal.text; 
+
+     var image = getModalImageLink(tasks[task].failure_modal.image);
+
+     showMainTaskFailedModal(title, text, image);
+
+  }
+
+  function getModalImageLink(imageType)
+  {
+    
+    var success = "{{ asset('blockly_files/success.svg') }}";
+    var failure = "{{ asset('blockly_files/failure.svg') }}";
+
+    
+    switch(imageType)
+    {
+      case "success":
+      return success;  
+
+      case "failure":
+      return failure;     
+
+      default:
+      break;
+    }
+
+  }
+
+  function showMainTaskCompletedModal(title, text, image){
+
+     var html = '<div class="row">';     
      
-     html +=    '<div class="col-md-6">';
-     html +=    '<h3>' + title + '</h3>';
+     html +=    '<div class="col-md-6">'; 
      
-    if (!isUserLoggedIn())
-        text +=    "<br><br>  <b> Aby sa váš postup v hre ukladal, je potrebné byť prihlásený. </b>";   
+     html +=    '<br><h3>' + title + '</h3>';
+     html +=    '<b>' + text + '</b>';
+     html +=    '<br><br> <h4>Čas:</h4> <br><br> <h4>Kód:</h4> <br><br> <h4>Hodnotenie:</h4>';
+     
+     if (!isUserLoggedIn())
+        html +=    "<br><br>  <b> Aby sa váš postup v hre ukladal, je potrebné byť prihlásený. </b>"; 
 
-     html +=    text;
-     html +=    '</div>'; 
+     html +=    '</div>';               
 
-     html +=    '<div class="col-md-6">';
-     html +=    '<div id="modal-mascot">';
+     html +=    '<div class="col-md-6">'; 
+ 
+     html +=    '<div id="modal-mascot">';  
      html +=    '<object width="80%" height="80%" data="'+image+'" type="image/svg+xml"></object>';
      html +=    '</div>';
+
      html +=    '</div>';
 
      html +=    '</div>';
-     html +=    '<div class="row">';     
+
+     html +=    '<div class="row">';  
+
      html +=    '<div class="col-2 mx-auto"><button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="continueGame()">Pokračovať</button>';
      html +=    '</div>';
 
      html +=    '</div>';
 
-     var $modal = $('#taskCompleteModal').modal();
-     $modal
-      .find('.modal-body').find('.container').html(html).end()     
-      .modal('show');
+     var $modal = $('#centeredTaskModal').modal();
+     $modal.find('.modal-body').find('.container').html(html).end();    
+     $modal.modal('show');
      
 
      
   }
-  function continueGame(){
 
-    sendMessage("continue\n");
+  function showMainTaskFailedModal(title, text, image)
+  {
+     var html = '<div class="row">'
+     
+     html +=    '<div class="col-md-6">';
+     html +=    '<br><h3>' + title + '</h3>';
+     html +=    '<b>' + text + '</b>';
+
+     if (!isUserLoggedIn())
+        html +=    "<br><br>  <b> Aby sa váš postup v hre ukladal, je potrebné byť prihlásený. </b>"; 
+
+
+     html +=    '</div>'; 
+
+     html +=    '<div class="col-md-6">';
+
+     html +=    '<div id="modal-mascot">';  
+     html +=    '<object width="80%" height="80%" data="'+image+'" type="image/svg+xml"></object>';
+     html +=    '</div>';
+
+     html +=    '</div>';
+
+     html +=    '</div>';
+     html +=    '<div class="row">';     
+     html +=    '<div class="col-2 mx-auto"><button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="loadGame()">Skúsiť znova</button>';    
+     html +=    '</div>';
+
+     html +=    '</div>';
+
+     var $modal = $('#centeredTaskModal').modal();
+     $modal.find('.modal-body').find('.container').html(html).end();    
+     $modal.modal('show');
   }
+
 
    function sendMessage(messageForGame){
     

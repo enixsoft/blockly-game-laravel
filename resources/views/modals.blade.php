@@ -64,40 +64,19 @@
 </div>
 </div>
 
-<div class="modal fade" id="taskCompleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="vertical-alignment-helper">
-        <div class="modal-dialog vertical-align-center" style="width: 50%;">
-            <div class="modal-content">
-                <div class="modal-header">       
-                    <button type="button" class="close" data-dismiss="modal" onclick="continueGame()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                </div>
-            <div class="modal-body">
-              <div class="container"> 
-              </div>
-            </div>                          
-           </div>
-        </div>            
+<div class="modal fade" id="centeredTaskModal" tabindex="-1" role="dialog"  data-backdrop="static" data-keyboard="false" aria-labelledby="centeredTaskModalLabel" aria-hidden="true">
+  <div class="vertical-alignment-helper">
+  <div class="modal-dialog vertical-align-center" role="document" style="width: 50%;">
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom: none;"></div>     
+      <div class="modal-body">
+         <div class="container"></div>
+      </div>
+       <div class="modal-footer" style="border-top: none;"></div>     
     </div>
+  </div>
 </div>
-
-
-<div class="modal fade" id="taskFailedModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="vertical-alignment-helper">
-        <div class="modal-dialog vertical-align-center" style="width: 50%;">
-            <div class="modal-content">
-                <div class="modal-header">       
-                    <button type="button" class="close" data-dismiss="modal" onclick="continueGame()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                </div>
-            <div class="modal-body">
-              <div class="container"> 
-              </div>
-            </div>                          
-           </div>
-        </div>            
-    </div>
 </div>
-
-
         
 
 
