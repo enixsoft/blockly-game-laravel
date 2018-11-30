@@ -1,0 +1,34 @@
+{
+  "dizzy":{
+
+    
+    "modal": {
+    "title": "Chyba! (dizzy)",
+    "text": "Hrdina pri vykonávaní počtu krokov narazil do steny alebo prekážky.",
+    "image": "failure"
+  }
+    
+  },
+  
+    "zerosteps": {
+
+    "modal": {
+    "title": "Chyba! (zerosteps)",
+    "text": "Hrdina nedokáže vykonať 0 krokov.",
+    "image": "failure"
+  }
+    
+  },
+
+  
+  "death": {
+
+    "modal": {
+    "title": "death_modal_title",
+    "text": "death_modal_text",
+    "image": "failure"
+  }
+    
+  }
+
+}

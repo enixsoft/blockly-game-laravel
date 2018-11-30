@@ -1,2 +1,1 @@
-{"character":{"currentTile":[11,1],"facingDirection":"right","mainTaskArray":[["8x5","moved","active",0],["10x13","moved","inactive",1]],"secondaryTaskArray":[],"continueGameAfterTask":-1},"door1":{"state":0,"drawOrder":1},"door2":{"state":1,"drawOrder":4},"7x6":{"button":true,"state":0,"drawOrder":0},"7x9":{"button":true,"state":0,"drawOrder":0}}
-
+{"character":{"currentTile":[11,1],"facingDirection":"right","mainTaskArray":[["8x5","moved","active",0],["7x9","moved","inactive",1],["11x14","moved","inactive",2]],"secondaryTaskArray":[],"continueGameAfterTask":-1},"door1":{"state":0,"drawOrder":1},"door2":{"state":1,"drawOrder":4},"6x6":{"move":false},"6x9":{"move":true},"7x6":{"state":0,"drawOrder":0},"7x9":{"state":0,"drawOrder":0},"11x14":{"state":0,"drawOrder":0}}

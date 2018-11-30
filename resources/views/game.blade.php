@@ -188,12 +188,20 @@ eventer(messageEvent,function(e)
       break;     
     }
 
-    case "mainTaskFailed":
+    case "commandFailed": //death and dizzy
     {
-      console.log("mainTaskFailed");
+      console.log("commandFailed");
+      console.log(e.data.content);
+
+      commandFailed(e.data.content);
+      break;     
+    }
+
+    case "mainTaskFailed": //did not move enough etc.
+    {
+      console.log("commandFailed");
       console.log(e.data.content);
       workspacePlayground.highlightBlock(null);
-      //maybe change color of all blocks of correct algorithm ?
       mainTaskFailed(e.data.content);
       break;     
     }
@@ -204,7 +212,7 @@ eventer(messageEvent,function(e)
       console.log(e.data.content);
       workspacePlayground.highlightBlock(null);
       //maybe change color of all blocks of correct algorithm ?
-      nextMainTask(e.data.content);
+      mainTaskIntroduced(e.data.content);
       break;     
     }
 
@@ -229,7 +237,10 @@ eventer(messageEvent,function(e)
 
   var tasks =  {!! $jsonTasks !!};
 
+  var modals =  {!! $jsonModals !!};
 
+  this.category = tasks.level.category;
+  this.level =    tasks.level.level;
   
   this.saveObjectToString = savedGame.json;
   this.autosaveEnabled = true;  
@@ -363,7 +374,13 @@ disableContextMenus();
       
       var myJSON = JSON.stringify(object);
       this.saveObjectToString = myJSON;
-      console.log(myJSON);               
+      console.log(myJSON);  
+
+      if(this.autosaveEnabled)
+      {
+        saveJsonToDatabase();
+      }
+
     }
 
   function saveJsonToDatabase() {
@@ -380,8 +397,8 @@ disableContextMenus();
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     method: 'POST', 
-    url: 'game/savegame', 
-    data: {'save' : this.saveObjectToString, 'user' : user.username}, //category + level
+    url: 'http://localhost/blockly-web-project/game/savegame', 
+    data: {'save' : this.saveObjectToString, 'user' : user.username, 'category': this.category, 'level': this.level }, //category + level
     success: function(response){ 
         console.log("save object sent succesfully");  
     },
@@ -517,6 +534,21 @@ disableContextMenus();
 
   function mainTaskIntroduced(task){
 
+     
+
+     task = "mainTask" + task;
+
+     console.log("introducing" + task);
+
+     console.log(tasks[task].introduction_modal);
+
+     var title = tasks[task].introduction_modal.title;
+
+     var text = tasks[task].introduction_modal.text;
+
+     var image = getModalImageLink(tasks[task].introduction_modal.image);
+
+     showMainTaskIntroducedModal(title, text, image);
 
   }
 
@@ -529,7 +561,7 @@ disableContextMenus();
 
      task = "mainTask" + task;
 
-     console.log(task);
+     console.log("completing" + task);
 
      var title = tasks[task].success_modal.title;
 
@@ -545,7 +577,7 @@ disableContextMenus();
 
      task = "mainTask" + task;
 
-     console.log(task);
+     console.log(task); 
 
      var title = tasks[task].failure_modal.title;
 
@@ -556,6 +588,34 @@ disableContextMenus();
      showMainTaskFailedModal(title, text, image);
 
   }
+
+    function commandFailed(object){
+    
+     console.log(object);
+     
+     var title = "";
+     var text = "";
+     var image = "";
+
+     if(object.commandNumber==1)
+      text = "Tvoj prvý Blockly blok je chybný: <br>" 
+     else if(object.commandNumber==2)
+      text = "Tvoj prvý Blockly blok fungoval, ale v nasledujúcom nastala chyba: <br>"
+     else 
+      text = "Tvoje prvé " + (+ object.commandNumber - 1) + " Blockly bloky fungovali, ale potom nastala chyba: <br>"
+
+      title = modals[object.failureType].modal.title;
+      text +=  modals[object.failureType].modal.text; 
+      image = getModalImageLink(modals[object.failureType].modal.image);
+
+
+     text += "<br> Chybný blok je zafarbený na červeno."
+
+
+     showMainTaskFailedModal(title, text, image);
+
+  }
+
 
   function getModalImageLink(imageType)
   {
@@ -647,7 +707,42 @@ disableContextMenus();
 
      html +=    '</div>';
 
-     var $modal = $('#centeredTaskModal').modal();
+     var $modal = $('#centeredTaskModal2').modal();
+     $modal.find('.modal-body').find('.container').html(html).end();    
+     $modal.modal('show');
+  }
+
+
+    function showMainTaskIntroducedModal(title, text, image)
+  {
+     var html = '<div class="row">'
+     
+     html +=    '<div class="col-md-6">';
+     html +=    '<br><h3>' + title + '</h3>';
+     html +=    '<b>' + text + '</b>';
+
+     if (!isUserLoggedIn())
+        html +=    "<br><br>  <b> Aby sa váš postup v hre ukladal, je potrebné byť prihlásený. </b>"; 
+
+
+     html +=    '</div>'; 
+
+     html +=    '<div class="col-md-6">';
+
+     html +=    '<div id="modal-mascot">';  
+     html +=    '<object width="80%" height="80%" data="'+image+'" type="image/svg+xml"></object>';
+     html +=    '</div>';
+
+     html +=    '</div>';
+
+     html +=    '</div>';
+     html +=    '<div class="row">';     
+     html +=    '<div class="col-2 mx-auto"><button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="continueGame()">Pokračovať</button>';    
+     html +=    '</div>';
+
+     html +=    '</div>';
+
+     var $modal = $('#centeredTaskModal3').modal();
      $modal.find('.modal-body').find('.container').html(html).end();    
      $modal.modal('show');
   }
