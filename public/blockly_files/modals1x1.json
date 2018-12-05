@@ -11,7 +11,7 @@
   },
   
   "mainTask0":{
-    "progress": "33",
+    "progress": "25",
     
     "introduction_modal": {
     "title": "maintask0_introduction_modal_title",
@@ -37,7 +37,7 @@
   },
   
   "mainTask1": {
-    "progress": "66",  
+    "progress": "50",  
   
     "introduction_modal": {
     "title": "maintask1_introduction_modal_title",
@@ -65,7 +65,7 @@
 
 
   "mainTask2": {
-    "progress": "100",  
+    "progress": "75",  
   
     "introduction_modal": {
     "title": "maintask2_introduction_modal_title",
@@ -79,13 +79,39 @@
     "image": "failure"
   },
   "success_modal": {
-    "title": "Výborne! Splnili ste druhú úlohu!",
+    "title": "Výborne! Splnili ste tretiu úlohu!",
     "text": "Blockly je grafické programovacie prostredie, vyvinuté spoločnosťou Google v roku 2012.",
     "image": "success"
   },   
     "failure_modal": {
     "title": "maintask2_failure_modal_title",
     "text": "maintask2_failure_modal_text",
+    "image": "failure"
+  }
+  },
+  
+    "mainTask3": {
+    "progress": "100",  
+  
+    "introduction_modal": {
+    "title": "maintask3_introduction_modal_title",
+    "text": "maintask3_introduction_modal_text",
+    "image": "failure"
+  },
+    "help_modal": 
+    {
+    "title": "maintask3_help_modal_title",
+    "text": "maintask3_help_modal_text",
+    "image": "failure"
+  },
+  "success_modal": {
+    "title": "Výborne! Splnili ste štvrtú úlohu!",
+    "text": "Blockly je grafické programovacie prostredie, vyvinuté spoločnosťou Google v roku 2012.",
+    "image": "success"
+  },   
+    "failure_modal": {
+    "title": "maintask3_failure_modal_title",
+    "text": "maintask3_failure_modal_text",
     "image": "failure"
   }
   }

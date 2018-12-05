@@ -184,7 +184,9 @@ eventer(messageEvent,function(e)
       console.log(e.data.content);
       workspacePlayground.highlightBlock(null);
       //maybe change color of all blocks of correct algorithm ?
-      mainTaskCompleted(e.data.content);
+      mainTaskCompleted(e.data.content.currentMainTask);
+
+      //createLogOfGameplay(e.data.content);
       break;     
     }
 
@@ -194,15 +196,20 @@ eventer(messageEvent,function(e)
       console.log(e.data.content);
 
       commandFailed(e.data.content);
+
+      //createLogOfGameplay(e.data.content);
       break;     
     }
 
     case "mainTaskFailed": //did not move enough etc.
     {
-      console.log("commandFailed");
+      console.log("mainTaskFailed");
       console.log(e.data.content);
+
       workspacePlayground.highlightBlock(null);
-      mainTaskFailed(e.data.content);
+      mainTaskFailed(e.data.content.currentMainTask);
+
+      //createLogOfGameplay(e.data.content);
       break;     
     }
 
@@ -215,7 +222,14 @@ eventer(messageEvent,function(e)
       mainTaskIntroduced(e.data.content);
       break;     
     }
+    case "allMainTasksFinished":
+    {
+      console.log("allMainTasksFinished");
 
+      
+      //allMainTasksFinished();
+      break;     
+    }
 
     case "save":
     {
@@ -508,7 +522,11 @@ disableContextMenus();
 
   function continueGame(){
 
+    
+    //workspacePlayground.clear();
+
     sendMessage("continue\n");
+
   }
 
     function reloadIframe(){
@@ -613,6 +631,32 @@ disableContextMenus();
 
 
      showMainTaskFailedModal(title, text, image);
+
+  }
+
+  function createLogOfGameplay(object){
+
+    /*("commandFailed", 
+      {
+      currentMainTask: currentMainTask[3],
+      failureType: failuretype,
+      commandNumber: this.commandsCurrent,
+      commandArray: this.commandArray                                    
+      });
+
+      ("mainTaskFailed", {
+        currentMainTask: mainTaskNumber,                                                        
+        commandArray: this.commandArray
+
+        }); 
+
+      ("mainTaskCompleted", {
+        currentMainTask: taskNumber,                                                        
+        commandArray: this.entity.script.commandInterpreter.commandArray                                    
+      });
+    */
+
+
 
   }
 
