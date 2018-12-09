@@ -7,6 +7,7 @@ use Auth;
 
 use App\User;
 use App\Models\SavedGame;
+use App\Models\IngameProgress;
 
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
@@ -39,22 +40,38 @@ class GameController extends Controller
             $jsonModals = File::get($jsonModalsPath);
 
 
-            //check progress first
+         
 
             if(Auth::check())
             {
                 
                 $auth = Auth::user();
-                $savedGame = SavedGame::where('username', '=', $auth->username)->where('category', '=', $category)->where('level', '=', $level)->latest()->first();
 
-                if($savedGame==null)
+                $inGameProgress = IngameProgress::where('username', '=', $auth->username)->where('category', '=', $category)->where('level', '=', $level)->latest()->first();
+
+
+                if($inGameProgress!=null)
                 {
+                    $savedGame = SavedGame::where('username', '=', $auth->username)->where('category', '=', $category)->where('level', '=', $level)->where('progress', '=', $inGameProgress['progress'])->latest()->first();
+                }
+                else
+                {
+                 
+                 
+                  //no ingame progress in this category and level exists yet for this user, create 0 progress
                   
-                  //pokial ulozena hra este neexistuje, ako ulozena hra sa nacita startovaci stav v hre
+                 IngameProgress::create(['username' => $auth->username, 'category' => $category,
+                    'level' => $level,  
+                    'progress' => 0   
+                    ]);
+                
+                  
+                  //no saved game in this category and level exists yet for this user, create first saved game with 0 progress from startgame json
                   
                   $savedGame = SavedGame::create(array('username' => $auth->username,
                    'category' => $category,
                    'level' => $level,
+                   'progress' => 0,
                    'json' => $jsonStartGame            
                    ));  
 
@@ -64,9 +81,9 @@ class GameController extends Controller
 
             }
             else
-            {   //pokial uzivatel nie je prihlaseny, ako ulozena hra sa nacita startovaci stav v hre
+            {   //user is not logged in, as saved game will be used startgame json
 
-                $savedGame = new SavedGame(['username' => '', 'category' => $category, 'level' => $level, 'json'=>  $jsonStartGame ]);
+                $savedGame = new SavedGame(['username' => '', 'category' => $category, 'level' => $level, 'progress' => 0, 'json' =>  $jsonStartGame]);
             }
         
             
@@ -85,6 +102,7 @@ class GameController extends Controller
          SavedGame::create(array('username' => $data['user'],
                    'category' => $data['category'],
                    'level' => $data['level'],
+                   'progress' => $data['progress'],
                    'json' => $data['save']          
                    ));  
 
@@ -94,6 +112,40 @@ class GameController extends Controller
         //Log::debug($data);
         
     }
+
+    public function updateIngameProgress(Request $request)
+    {      
+
+        $data = $request->all(); 
+    
+        $inGameProgress = IngameProgress::where('username', '=', $data['user'])->where('category', '=', $data['category'])->where('level', '=', $data['level'])->latest()->first();   
+
+        if($inGameProgress!=null)
+        {
+          if($inGameProgress['progress'] < $data['progress'])
+          {
+            IngameProgress::updateOrCreate(['username' => $data['user'], 'category' => $data['category'],
+            'level' => $data['level']], [ 
+            'progress' => $data['progress']   
+            ]);
+
+          }
+
+         
+
+        }
+        else
+        {
+            IngameProgress::updateOrCreate(['username' => $data['user'], 'category' => $data['category'],
+            'level' => $data['level']], [ 
+            'progress' => $data['progress']   
+            ]);
+        }
+
+
+        
+    }
+
 
     
 

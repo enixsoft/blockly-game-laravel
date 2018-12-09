@@ -14,7 +14,7 @@
 
     "modal": {
     "title": "Chyba! (zerosteps)",
-    "text": "Hrdina nedokáže vykonať 0 krokov.",
+    "text": "Hrdina nedokáže vykonať zadaný počet krokov.",
     "image": "failure"
   }
     

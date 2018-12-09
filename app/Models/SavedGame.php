@@ -12,7 +12,7 @@ class SavedGame extends Model
     protected $table = 'savedgames';
 
     protected $fillable = [
-        'id', 'username', 'category', 'level', 'json'];
+        'id', 'username', 'category', 'level', 'progress', 'json'];
 
  
 }

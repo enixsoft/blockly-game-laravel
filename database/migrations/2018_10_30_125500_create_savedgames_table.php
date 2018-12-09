@@ -18,6 +18,7 @@ class CreateSavedgamesTable extends Migration
             $table->string('username');
             $table->integer('category');
             $table->integer('level');
+            $table->integer('progress');
             $table->text('json');
             $table->timestamps();          
         });

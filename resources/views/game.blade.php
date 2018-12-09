@@ -254,10 +254,11 @@ eventer(messageEvent,function(e)
   var modals =  {!! $jsonModals !!};
 
   this.category = tasks.level.category;
-  this.level =    tasks.level.level;
+  this.level    =    tasks.level.level;
+  this.progress = savedGame.progress;
   
   this.saveObjectToString = savedGame.json;
-  this.autosaveEnabled = true;  
+  this.saveToDatabaseEnabled = true;  
  
 
   var blocklyArea = document.getElementById('blocklyArea');
@@ -373,12 +374,21 @@ disableContextMenus();
       element = element.offsetParent;
     } while (element);
     // Position blocklyDiv over blocklyArea.
+
     blocklyDiv.style.left = x + 'px';
     blocklyDiv.style.top = y + 'px';
     blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
     blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
+
+    Blockly.svgResize(workspacePlayground); // o_O
+
   };
-  window.addEventListener('resize', onresize, false);
+  
+  
+  $(window).resize(function() {    
+    onresize();
+});
+  //window.addEventListener('resize', onresize, false);
   onresize();
 
 
@@ -386,11 +396,12 @@ disableContextMenus();
      
   function saveObjectToJson(object) {
       
+      
       var myJSON = JSON.stringify(object);
       this.saveObjectToString = myJSON;
       console.log(myJSON);  
 
-      if(this.autosaveEnabled)
+      if(this.saveToDatabaseEnabled)
       {
         saveJsonToDatabase();
       }
@@ -412,7 +423,7 @@ disableContextMenus();
     },
     method: 'POST', 
     url: 'http://localhost/blockly-web-project/game/savegame', 
-    data: {'save' : this.saveObjectToString, 'user' : user.username, 'category': this.category, 'level': this.level }, //category + level
+    data: {'save' : this.saveObjectToString, 'user' : user.username, 'category': this.category, 'level': this.level, 'progress': this.progress }, //category + level
     success: function(response){ 
         console.log("save object sent succesfully");  
     },
@@ -421,10 +432,41 @@ disableContextMenus();
     }
     });
 
-  }
+    }
                    
   }
 
+function updateIngameProgress(task) {
+
+var loggedIn = {{ auth()->check() ? 'true' : 'false' }};
+
+var progress = tasks[task].progress;
+console.log(tasks[task].progress);
+
+if (loggedIn)
+{
+ 
+ var user = {!! auth()->check() ? auth()->user() : 'guest' !!};
+
+$.ajax({
+headers: {
+'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+},
+method: 'POST', 
+url: 'http://localhost/blockly-web-project/game/updateingameprogress', 
+data: {'progress' : progress, 'user' : user.username, 'category': this.category, 'level': this.level }, //category + level
+success: function(response){ 
+   console.log("ingameprogress object sent succesfully");  
+},
+error: function(textStatus, errorThrown) {        
+   console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+   console.log(textStatus);
+}
+});
+
+}
+              
+}
 
 
   function highlightBlock(id) {
@@ -572,20 +614,24 @@ disableContextMenus();
 
   function mainTaskHelp(task){
 
-    
+  
   }
 
-  function mainTaskCompleted(task){
-
+  function mainTaskCompleted(task){    
+     
      task = "mainTask" + task;
 
      console.log("completing" + task);
+
+     this.progress = tasks[task].progress;
 
      var title = tasks[task].success_modal.title;
 
      var text = tasks[task].success_modal.text;
 
      var image = getModalImageLink(tasks[task].success_modal.image);
+
+     updateIngameProgress(task);
 
      showMainTaskCompletedModal(title, text, image);
 
