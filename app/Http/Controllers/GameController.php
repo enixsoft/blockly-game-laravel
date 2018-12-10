@@ -52,8 +52,16 @@ class GameController extends Controller
 
                 if($inGameProgress!=null)
                 {
-                    $savedGame = SavedGame::where('username', '=', $auth->username)->where('category', '=', $category)->where('level', '=', $level)->where('progress', '=', $inGameProgress['progress'])->latest()->first();
+                    if($inGameProgress['progress']==100)
+                    {
+                        $savedGame = SavedGame::where('username', '=', $auth->username)->where('category', '=', $category)->where('level', '=', $level)->latest()->first();   
+                    } 
+                    else
+                    {                    
+                        $savedGame = SavedGame::where('username', '=', $auth->username)->where('category', '=', $category)->where('level', '=', $level)->where('progress', '=', $inGameProgress['progress'])->latest()->first();
+                    }
                 }
+                           
                 else
                 {
                  

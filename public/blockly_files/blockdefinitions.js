@@ -106,9 +106,9 @@ Blockly.Blocks['open'] = {
 Blockly.Blocks['jump'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("jump")
+        .appendField("skoč")
         .appendField(new Blockly.FieldImage("https://png.icons8.com/ios/50/000000/trampoline-park-filled.png", 20, 20, "*"))
-		.appendField(new Blockly.FieldDropdown([["right","right"], ["left","left"], ["up","up"], ["down","down"]]), "direction");
+		.appendField(new Blockly.FieldDropdown([["doprava","right"], ["doľava","left"], ["hore","up"], ["dole","down"]]), "direction");
     this.setPreviousStatement(true, "Action");
     this.setNextStatement(true, "Action");
     this.setColour(160);

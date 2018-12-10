@@ -227,7 +227,7 @@ eventer(messageEvent,function(e)
       console.log("allMainTasksFinished");
 
       
-      //allMainTasksFinished();
+      allMainTasksFinished();
       break;     
     }
 
@@ -617,6 +617,20 @@ error: function(textStatus, errorThrown) {
   
   }
 
+    function allMainTasksFinished(){    
+     
+     console.log("finished all main tasks");    
+
+     var title = tasks.level.finish_modal.title;
+
+     var text = tasks.level.finish_modal.text;
+
+     var image = getModalImageLink(tasks.level.finish_modal.image);    
+
+     showAllMainTasksFinishedModal(title, text, image);
+
+  }
+
   function mainTaskCompleted(task){    
      
      task = "mainTask" + task;
@@ -727,6 +741,48 @@ error: function(textStatus, errorThrown) {
     }
 
   }
+
+    function showAllMainTasksFinishedModal(title, text, image){
+
+var html = '<div class="row">';     
+
+html +=    '<div class="col-md-6">'; 
+
+html +=    '<br><h3>' + title + '</h3>';
+html +=    '<b>' + text + '</b>';
+html +=    '<br><br> <h4>Čas:</h4> <br><br> <h4>Kód:</h4> <br><br> <h4>Hodnotenie:</h4>';
+
+if (!isUserLoggedIn())
+   html +=    "<br><br>  <b> Aby sa váš postup v hre ukladal, je potrebné byť prihlásený. </b>"; 
+
+html +=    '</div>';               
+
+html +=    '<div class="col-md-6">'; 
+
+html +=    '<div id="modal-mascot">';  
+html +=    '<object width="80%" height="80%" data="'+image+'" type="image/svg+xml"></object>';
+html +=    '</div>';
+
+html +=    '</div>';
+
+html +=    '</div>';
+
+html +=    '<div class="row">';  
+
+html +=    '<div class="col-2 mx-auto"><button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="window.location.href=\''; 
+html +=    '{{ url('/')}}' + '/game/1/' + (this.level+1) + '\';">Pokračovať</button>';  
+html +=    '</div>';
+
+html +=    '</div>';
+
+var $modal = $('#centeredTaskModal4').modal();
+$modal.find('.modal-body').find('.container').html(html).end();    
+$modal.modal('show');
+
+
+
+}
+
 
   function showMainTaskCompletedModal(title, text, image){
 
