@@ -64,9 +64,9 @@ Blockly.Blocks['move_down'] = {
 Blockly.Blocks['attack'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("attack")
+        .appendField("zaútoč")
         .appendField(new Blockly.FieldImage("https://png.icons8.com/color/sword.png", 30, 30, "*"))
-        .appendField(new Blockly.FieldDropdown([["right","right"], ["left","left"], ["up","up"], ["down","down"]]), "direction");
+        .appendField(new Blockly.FieldDropdown([["doprava","right"], ["doľava","left"], ["hore","up"], ["dole","down"]]), "direction");
     this.setPreviousStatement(true, "Action");
     this.setNextStatement(true, "Action");
     this.setColour(160);
