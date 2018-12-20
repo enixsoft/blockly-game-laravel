@@ -22,21 +22,33 @@ use DB;
 
 class GameController extends Controller
 {    
-
-    
+      
 
     public function runGame($category, $level)  
     {                                   
-            $xmlToolboxPath = "public/blockly_files/toolbox" . $category . "x" . $level . ".xml";
+        $levelMax=5;
+        $levelMin=1;
+        $categoryMax=1;
+        $categoryMin=1;
+
+        if($category>$categoryMax || $category<$categoryMin || $level < $levelMin || $level > $levelMax || !is_numeric($category) || !is_numeric($level))
+        {
+        abort(404);
+        }
+        else
+        {
+        
+
+            $xmlToolboxPath = "public/game/". $category . "x" . $level . "/toolbox" . $category . "x" . $level . ".xml";
             $xmlToolbox = File::get($xmlToolboxPath);            
             
-            $jsonStartGamePath = "public/blockly_files/start" . $category . "x" . $level . ".json";
+            $jsonStartGamePath = "public/game/". $category . "x" . $level . "/start" . $category . "x" . $level . ".json";
             $jsonStartGame = File::get($jsonStartGamePath);
             
-            $jsonTasksPath = "public/blockly_files/modals" . $category . "x" . $level . ".json";
+            $jsonTasksPath = "public/game/". $category . "x" . $level . "/modals" . $category . "x" . $level . ".json";
             $jsonTasks = File::get($jsonTasksPath);
 
-            $jsonModalsPath = "public/blockly_files/modals.json";
+            $jsonModalsPath = "public/game/modals.json";
             $jsonModals = File::get($jsonModalsPath);
 
 
@@ -97,8 +109,8 @@ class GameController extends Controller
             
      
           
-         return view("game", compact('xmlToolbox', 'savedGame', 'jsonTasks', 'jsonModals'));
-        
+         return view("game", compact('category', 'level', 'xmlToolbox', 'savedGame', 'jsonTasks', 'jsonModals'));
+        }
     }
 
 

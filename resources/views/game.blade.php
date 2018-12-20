@@ -56,8 +56,10 @@
     <div class="row row-full">
         <div class="col-md-6">
             <div class="leftside">
+                <!--<iframe id="app-frame" style="width:100%;height:100%;overflow:hidden;border:none;"
+                src="https://playcanv.as/e/p/62c28f63/"></iframe>-->
                 <iframe id="app-frame" style="width:100%;height:100%;overflow:hidden;border:none;"
-                src="https://playcanv.as/e/p/62c28f63/"></iframe>
+                src="http://localhost/blockly-web-project/public/game/playcanvas/{{$category}}x{{$level}}.html"></iframe>
             </div>
         </div>
         <div class="col-md-6">
@@ -77,7 +79,7 @@
 <script src="{{ asset('blockly/blocks_compressed.js') }}"></script>
 <script src="{{ asset('blockly/javascript_compressed.js') }}"></script>
 <script src="{{ asset('blockly/msg/js/en.js') }}"></script>
-<script src="{{ asset('blockly_files/blockdefinitions.js') }}"></script>
+<script src="{{ asset('game/blockdefinitions.js') }}"></script>
 
 
 <xml id="startBlocks" style="display: none">
@@ -86,9 +88,8 @@
        <block type="cameraplus" movable="false" deletable="false" inline="false" x="250" y="1000"></block> 
        <block type="cameraminus" movable="false" deletable="false" inline="false" x="450" y="1000"></block>
        <block type="save" movable="false" deletable="false" inline="false" x="250" y="900"></block>
-       <block type="load" movable="false" deletable="false" inline="false" x="450" y="900"></block>       
-       <block type="restart" movable="false" deletable="false" inline="false" x="650" y="1000"></block>
-       <block type="reload" movable="false" deletable="false" inline="false" x="850" y="1000"></block>     
+       <block type="load" movable="false" deletable="false" inline="false" x="450" y="900"></block> 
+       <block type="reload" movable="false" deletable="false" inline="false" x="650" y="1000"></block>     
        
 </xml>
 
@@ -284,7 +285,6 @@ eventer(messageEvent,function(e)
   var cameraminus = getBlocksByType("cameraminus");
   var load = getBlocksByType("load");
   var save = getBlocksByType("save");
-  var restart = getBlocksByType("restart");
   var reload = getBlocksByType("reload");
   var locked = true;
 
@@ -323,12 +323,6 @@ eventer(messageEvent,function(e)
       {
         cameraMinus();
       
-        blockToCheck.unselect();
-      }
-      else if(blockToCheck.id == restart[0].id)
-      {
-        console.log("clicked restart");
-        restartGame();
         blockToCheck.unselect();
       }
       else if(blockToCheck.id == reload[0].id)
@@ -533,6 +527,7 @@ error: function(textStatus, errorThrown) {
         //saveJsonToDatabase();
 
   }
+
     function loadGame(){
 
         var code = "load\n";
@@ -543,17 +538,8 @@ error: function(textStatus, errorThrown) {
 
 
   }
-  function restartGame(){
 
-
-        var code = "restart\n";
-
-        sendMessage(code);
-
-
-  }
-
-  function startGame(){
+   function startGame(){
 
         var message = "start\n";
         message +=  this.saveObjectToString;        
@@ -724,8 +710,8 @@ error: function(textStatus, errorThrown) {
   function getModalImageLink(imageType)
   {
     
-    var success = "{{ asset('blockly_files/success.svg') }}";
-    var failure = "{{ asset('blockly_files/failure.svg') }}";
+    var success = "{{ asset('game/success.svg') }}";
+    var failure = "{{ asset('game/failure.svg') }}";
 
     
     switch(imageType)
@@ -902,7 +888,8 @@ $modal.modal('show');
         iframe.contentWindow.postMessage
         (
         { message: messageForGame }, 
-        "https://playcanv.as/p/62c28f63/"
+        //"https://playcanv.as/p/62c28f63/"
+        "http://localhost/blockly-web-project/public/game/1x5/js/index.html"
         );
 
   }
