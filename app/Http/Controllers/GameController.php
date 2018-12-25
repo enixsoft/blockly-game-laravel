@@ -166,6 +166,46 @@ class GameController extends Controller
         
     }
 
+      public function betaGetProgress()
+    {      
+          if(Auth::check())
+            {
+                
+                $auth = Auth::user();
+
+                $inGameProgress = IngameProgress::where('username', '=', $auth->username);
+
+
+                return $inGameProgress;
+            }
+
+        
+    }
+
+          public function betaWelcome()
+    {      
+          if(Auth::check())
+            {
+                
+                $auth = Auth::user();
+
+                $inGameProgress = IngameProgress::where('username', '=', $auth->username)->get(['progress']);
+
+
+
+                return view("welcome", compact('inGameProgress')); 
+            }
+           else
+           {
+             return view("welcome");
+           } 
+
+        
+    }
+
+
+
+
 
     
 

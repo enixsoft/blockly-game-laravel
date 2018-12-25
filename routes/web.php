@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     
    
  
@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 
 })->name('/');
-
+*/
 Route::get('/registration', function () {
     return view('registration');
 });
@@ -36,10 +36,12 @@ Route::get('/registration', function () {
 */
 
 Route::get('/game/{category}/{level}', 'GameController@runGame')->name('game');
-
-
 Route::post('/game/savegame', 'GameController@saveGame');
 Route::post('/game/updateingameprogress', 'GameController@updateIngameProgress');
+
+// BETA ================================================================================================
+Route::get('/game/getProgress', 'GameController@betaGetProgress');
+Route::get('/', 'GameController@betaWelcome')->name('/');
 
 
 //Route::post('/game/saveGame', 'GameController@saveGame')->name('saveGame'); 
