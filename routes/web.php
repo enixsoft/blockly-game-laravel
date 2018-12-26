@@ -11,29 +11,6 @@
 |
 */
 
-/*Route::get('/', function () {
-    
-   
- 
-  return view('welcome');
-
-
-})->name('/');
-*/
-Route::get('/registration', function () {
-    return view('registration');
-});
-
-/*Route::get('/game', function () {
-     
-    $xmlpath = "public/blockly_files/toolbox_level_0.xml";
-    $xmltest = file_get_contents($xmlpath);
-
-
-
-    return view('game', compact('xmltest'));
-})->name('game');
-*/
 
 Route::get('/game/{category}/{level}', 'GameController@runGame')->name('game');
 Route::post('/game/savegame', 'GameController@saveGame');
@@ -42,9 +19,13 @@ Route::post('/game/updateingameprogress', 'GameController@updateIngameProgress')
 // BETA ================================================================================================
 Route::get('/game/getProgress', 'GameController@betaGetProgress');
 Route::get('/', 'GameController@betaWelcome')->name('/');
+Route::get('/play', 'GameController@betaStartNewGameOrContinue')->name('play');
+Route::get('/start/{category}/{level}', 'GameController@betaStartLevelAsNew')->name('start');
+Route::get('/continue/{category}/{level}', 'GameController@betaContinueLevel')->name('continue');
+
+Route::post('registerforbetatest', 'GameController@betaRegisterUser')->name('registerforbetatest');
 
 
-//Route::post('/game/saveGame', 'GameController@saveGame')->name('saveGame'); 
 
 Auth::routes();
 
@@ -68,5 +49,3 @@ Auth::routes();
 */
 
 
-
-Route::get('/home', 'HomeController@index')->name('home');

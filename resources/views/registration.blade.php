@@ -15,8 +15,8 @@
   <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
-@extends('layout')
-@section('content')
+@include('header')
+<body>
  <div class="banner">
     <div class="bg-color">
       <div class="container">
@@ -109,4 +109,5 @@
   </section>
 
 
-@stop
+</body>
+</html>

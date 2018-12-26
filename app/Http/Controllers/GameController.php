@@ -1,11 +1,17 @@
 <?php
 namespace App\Http\Controllers;
 use Illuminate\Routing\Controller;
-use Illuminate\Http\Request;
 
 use Auth;
 
+use Illuminate\Http\Request;
+
+
+
+use Illuminate\Database\Seeder;
+use Illuminate\Database\Eloquent\Model;
 use App\User;
+
 use App\Models\SavedGame;
 use App\Models\IngameProgress;
 
@@ -77,7 +83,32 @@ class GameController extends Controller
                 else
                 {
                  
-                 
+                  if($level>1)
+                  {
+                  $inGameProgressOfPreviousLevel = IngameProgress::where('username', '=', $auth->username)->where('category', '=', $category)->where('level', '=', $level-1)->latest()->first();
+                  if($inGameProgressOfPreviousLevel['progress']!=100)
+                  {
+                    return redirect()->route('/'); 
+                  }
+                  else
+                  {
+                    IngameProgress::create(['username' => $auth->username, 'category' => $category,
+                    'level' => $level,  
+                    'progress' => 0   
+                    ]);
+
+                    $savedGame = SavedGame::create(array('username' => $auth->username,
+                   'category' => $category,
+                   'level' => $level,
+                   'progress' => 0,
+                   'json' => $jsonStartGame            
+                   ));  
+                
+                  }
+                  }
+                  else
+                  {
+
                   //no ingame progress in this category and level exists yet for this user, create 0 progress
                   
                  IngameProgress::create(['username' => $auth->username, 'category' => $category,
@@ -94,8 +125,10 @@ class GameController extends Controller
                    'progress' => 0,
                    'json' => $jsonStartGame            
                    ));  
-
-                 
+                  
+                  
+                  }
+                  
 
                 }
 
@@ -103,7 +136,9 @@ class GameController extends Controller
             else
             {   //user is not logged in, as saved game will be used startgame json
 
-                $savedGame = new SavedGame(['username' => '', 'category' => $category, 'level' => $level, 'progress' => 0, 'json' =>  $jsonStartGame]);
+                //$savedGame = new SavedGame(['username' => '', 'category' => $category, 'level' => $level, 'progress' => 0, 'json' =>  $jsonStartGame]);
+
+                return redirect()->route('/');
             }
         
             
@@ -203,9 +238,136 @@ class GameController extends Controller
         
     }
 
+   public function betaStartNewGameOrContinue()
+    {      
+          if(Auth::check())
+            {
+                
+                $auth = Auth::user();
+
+                $inGameProgress = IngameProgress::where('username', '=', $auth->username)->latest()->first();
+
+                if($inGameProgress==null)
+                {
+                  //return $this->runGame(1,1);
+
+                  return redirect()->route('game', ['category' => 1, 'level' => 1]);
+
+                }
+                else if($inGameProgress['progress']==100 && $inGameProgress['level']<5)
+                {
+                  
+                    return redirect()->route('game', ['category' => 1, 'level' => $inGameProgress['level'] + 1]);
+                }
+                else  
+                {
+               
+                    return redirect()->route('game', ['category' => 1, 'level' => $inGameProgress['level']]);
+                }
+                
+            }
+           else
+           {
+             return view("welcome");
+           } 
+
+        
+    }
+
+       public function betaStartLevelAsNew($category, $level)
+    {      
+          if(Auth::check())
+            {
+                $auth = Auth::user();
+
+                $inGameProgress = IngameProgress::where('username', '=', $auth->username)->where('category', '=', $category)->where('level', '=', $level)->latest()->first();
+
+                if($inGameProgress!= null && $inGameProgress['progress']==100)
+                {
+                $jsonStartGamePath = "public/game/". $category . "x" . $level . "/start" . $category . "x" . $level . ".json";
+                $jsonStartGame = File::get($jsonStartGamePath);
+                
+
+                SavedGame::create(array('username' => $auth->username,
+                   'category' => $category,
+                   'level' => $level,
+                   'progress' => 0,
+                   'json' => $jsonStartGame            
+                   ));  
 
 
 
+                return redirect()->route('game', ['category' => $category, 'level' => $level]);
+                }
+                else 
+                return view("welcome");
+            }
+           else
+           {
+             return view("welcome");
+           } 
+
+        
+    }
+
+    public function betaContinueLevel($category, $level)
+    {      
+          if(Auth::check())
+            {
+
+                $auth = Auth::user();
+
+                $inGameProgress = IngameProgress::where('username', '=', $auth->username)->where('category', '=', $category)->where('level', '=', $level)->latest()->first();
+                
+
+                 if($inGameProgress!= null && $inGameProgress['progress']==100)
+                {
+
+                return redirect()->route('game', ['category' => $category, 'level' => $level]);
+
+                }
+                else           
+                return view("welcome");
+           
+
+            }
+           else
+           {
+             return view("welcome");
+           } 
+
+        
+    }
+
+    public function betaRegisterUser(Request $request)
+    {
+        if(Auth::check())
+        {
+        $auth = Auth::user();
+
+        if($auth->role=="admin")
+        {
+
+        $user = new User();
+        $user->username = $request['username'];
+        $user->password = bcrypt($request['password']);
+        $user->email = $request['username'] . '@blocklyhra.sk';
+        $user->role = 'user';
+        $user->remember_token = null;
+        $user->save();
+          
+        return redirect()->route('/');
+        } 
+        else           
+        return redirect()->route('/');
+
+        }
+
+        else
+        {
+        return redirect()->route('/');
+        }
+    }
 
     
 
