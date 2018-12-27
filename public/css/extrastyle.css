@@ -30,11 +30,38 @@
   display: block;
 }
 .rightside { 
-  height: calc(100vh - 94px);
+  height: calc(90vh - 94px);
   margin-bottom: 0;
   overflow:hidden;
 
 }
+
+.rightside3 {
+  
+margin-top: 2.5%;  
+margin-left: 15%;
+background-color:#E4E4E4;
+margin-bottom: 0;
+overflow:hidden;
+}
+
+.rightside2 { 
+
+height: 10vh; 
+position: relative;
+}
+
+.rightside2 .btn-group { 
+
+    margin: 0;   
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%) 
+}
+
+
 .row-full > [class*='col-'] {
   padding-right: 0;
   padding-left: 0;
@@ -44,6 +71,7 @@
 body { 
 
   padding-top: 94px;
+  background-color:#E4E4E4;
 
  }
 

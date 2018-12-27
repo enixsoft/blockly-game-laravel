@@ -8,41 +8,39 @@
   <meta name="description" content="">
   <meta name="keywords" content="">
 
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans|Candal|Alegreya+Sans">
-  <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="css/imagehover.min.css">
-
-  <link rel="stylesheet" type="text/css" href="css/style.css">
-  
+  <link rel="stylesheet" type="text/css" href="{{ asset('https://fonts.googleapis.com/css?family=Open+Sans|Candal|Alegreya+Sans') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/imagehover.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/extrastyle.css')}}">
 
   <script src="{{ asset('js/jquery.min.js') }}"></script>
   <script src="{{ asset('js/jquery.easing.min.js') }}"></script>
   <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-  <script src="js/custom.js"></script>
+  <script src="{{ asset('js/custom.js') }}"></script>
 
 
 
 
 <style>
-  .back {
-  background: #e2e2e2;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-}
+
 
 .div-center {
+     
+  margin-top: 5%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: auto;
+
   width: 50%;
-  height: 50%;
   background-color: #fff;
-  position: absolute;
+  position: relative;
   left: 0;
   right: 0;
-  top: 0;
+  
   bottom: 0;
-  margin: auto;
+
   max-width: 100%;
   max-height: 100%;
   overflow: auto;
@@ -136,7 +134,7 @@ div.content {
 
 <body>
    @include('header')
-   <div class="back">
+  
    <div class="div-center">
    <div class="content">
       @guest
@@ -161,7 +159,7 @@ div.content {
                </span>
                @endif                            
             </div>
-            <div class="col-md-2 mx-auto">
+            <div class="col-md-3 mx-auto">
                <div class="checkbox">
                   <label style="cursor:inherit;">
                   <input type="checkbox" id="remember" {{ old('remember') ? 'checked' : '' }}>
@@ -171,7 +169,7 @@ div.content {
                </div>
             </div>
             <hr/>
-            <div class="col-md-2 mx-auto">
+            <div class="col-md-3 mx-auto">
                <button class="btn btn-lg btn-success" type="submit">
                Prihlásiť sa
                </button>
@@ -260,6 +258,6 @@ div.content {
          @endif
          @endauth
       </div>
-   </div>
+  
 </body>
 </html>

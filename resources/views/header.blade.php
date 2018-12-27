@@ -18,8 +18,10 @@
 
                   <span class="caret"></span></a>
                     </li> 
+                      
+              
                       <li class="btn-trial nav-item py-0"><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" 
-                        class="nav-link">Odhlásiť sa</a></li>                   
+                        class="nav-link"> <i class="fa fa-sign-out" aria-hidden="true"></i> Odhlásiť sa</a></li>                   
                             @endauth
                    
                  </ul>

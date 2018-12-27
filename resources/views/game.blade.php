@@ -25,6 +25,7 @@
  <script src="{{ asset('js/bootstrap.min.js') }}"></script>
  <script src="{{ asset('js/custom.js') }}"></script>
 
+<!--
 @if ($errors->all())  
 <script type="text/javascript">
   $(document).ready(function () {
@@ -32,6 +33,7 @@
     });
 </script>        
 @endif
+--> 
 
 <!--<script type="text/javascript">
   $(document).ready(function () {
@@ -62,15 +64,48 @@
                 src="http://localhost/blockly-web-project/public/game/playcanvas/{{$category}}x{{$level}}.html"></iframe>
             </div>
         </div>
-        <div class="col-md-6">
-            <div id="blocklyArea" class="rightside"></div>
+        <div class="col-md-6" style="background-color:#E4E4E4;">            
+           <div id="blocklyArea" class="rightside"></div>
+           <!--<div class="container" style="max-height: 10vh;">
+           <div class="row justify-content-center" style="padding: 2.5vh 0;">
+                <button type="button" id="click_button" class="col-md-2 btn  btn-success mr-3">Spustiť</button>
+     
+                <button type="button" id="click_button" class="col-md-2 btn  btn-success mr-3">Úloha</button>
+                
+                <button type="button" id="click_button" class="col-md-3 btn  btn-success mr-3">Vymazať všetky bloky</button>
+                
+                <button type="button" id="click_button" class="col-md-2 btn  btn-success mr-3">Riešenie</button>      
+
+
+            </div>
+            </div>-->
+
+           <div class="rightside2">        
+                
+                <div class="btn-group" role="group">
+
+                <button type="button" id="send_code_button" class="btn btn-success mr-3">Spustiť bloky</button>
+     
+                <button type="button" id="show_task_button" class="btn btn-success mr-3">Zadanie úlohy</button>
+                
+                <button type="button" id="delete_blocks_button" class="btn btn-success mr-3">Vymazať všetky bloky</button>
+                
+                <button type="button" id="solution_tasl_button" class="btn btn-danger mr-3">Riešenie úlohy</button>      
+                  
+                </div>
+
+         
+            </div>
+
+         
+            </div>             
         </div>
     </div>
-</div>
 
 
 
-<div id="blocklyDiv" style="position: absolute"></div>
+
+<div id="blocklyDiv" style="position: absolute; height: 800px;"></div>
 </div>
 
 
@@ -84,12 +119,13 @@
 
 <xml id="startBlocks" style="display: none">
        <block type="player" movable="false" deletable="false" inline="false" x="50" y="70"></block>
-       <block type="run" movable="false" deletable="false" inline="false" x="50" y="1000"></block>
+       <!--<block type="run" movable="false" deletable="false" inline="false" x="50" y="1000"></block>
        <block type="cameraplus" movable="false" deletable="false" inline="false" x="250" y="1000"></block> 
        <block type="cameraminus" movable="false" deletable="false" inline="false" x="450" y="1000"></block>
        <block type="save" movable="false" deletable="false" inline="false" x="250" y="900"></block>
        <block type="load" movable="false" deletable="false" inline="false" x="450" y="900"></block> 
-       <block type="reload" movable="false" deletable="false" inline="false" x="650" y="1000"></block>     
+       <block type="reload" movable="false" deletable="false" inline="false" x="650" y="1000"></block>
+       -->      
        
 </xml>
 
@@ -122,6 +158,9 @@
 </style>
 -->
 <script>
+var button = document.getElementById('send_code_button'); 
+button.disabled = true;   
+        
 
 var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
 var eventer = window[eventMethod];
@@ -136,7 +175,11 @@ eventer(messageEvent,function(e)
   {
      case "unlock":
     {
-      run[0].setColour(95);
+      //run[0].setColour(95);
+      var button = document.getElementById('send_code_button'); 
+      button.disabled = false;   
+        
+
       workspacePlayground.highlightBlock(null);
       locked = false;
       break;
@@ -255,7 +298,7 @@ eventer(messageEvent,function(e)
   var modals =  {!! $jsonModals !!};
 
   this.category = tasks.level.category;
-  this.level    =    tasks.level.level;
+  this.level    = tasks.level.level;
   this.progress = savedGame.progress;
   
   this.saveObjectToString = savedGame.json;
@@ -280,12 +323,12 @@ eventer(messageEvent,function(e)
    console.log("guest");
 
 
-  var run = getBlocksByType("run");
-  var cameraplus = getBlocksByType("cameraplus");
-  var cameraminus = getBlocksByType("cameraminus");
-  var load = getBlocksByType("load");
-  var save = getBlocksByType("save");
-  var reload = getBlocksByType("reload");
+  //var run = getBlocksByType("run");
+  //var cameraplus = getBlocksByType("cameraplus");
+  //var cameraminus = getBlocksByType("cameraminus");
+  //var load = getBlocksByType("load");
+  //var save = getBlocksByType("save");
+  //var reload = getBlocksByType("reload");
   var locked = true;
 
   //workspacePlayground.zoom(50, 1000, -1);
@@ -294,7 +337,17 @@ eventer(messageEvent,function(e)
 
 
 
+   $(document).ready(function(){
+    $("#send_code_button").click( function(){
+         
+         if(locked==false)
+          runCode();
+  });
+  });
+
   disableContextMenus();
+
+
 
   function blockClickController(event) {  
 
@@ -381,7 +434,7 @@ disableContextMenus();
   
   $(window).resize(function() {    
     onresize();
-});
+  });
   //window.addEventListener('resize', onresize, false);
   onresize();
 
@@ -477,12 +530,12 @@ error: function(textStatus, errorThrown) {
 
   function runCode(){
 
-        //var button = document.getElementById('click_button'); 
-        //button.disabled = true;   
+        var button = document.getElementById('send_code_button'); 
+        button.disabled = true;   
         
         locked = true;
 
-        run[0].setColour(0);
+        //run[0].setColour(0);
 
         if(failedBlock.length>0)
         {
