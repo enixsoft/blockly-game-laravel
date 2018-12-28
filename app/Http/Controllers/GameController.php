@@ -12,8 +12,10 @@ use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
 
+
 use App\Models\SavedGame;
 use App\Models\IngameProgress;
+use App\Models\Gameplay;
 
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
@@ -167,7 +169,32 @@ class GameController extends Controller
         //Log::debug($data);
         
     }
+     public function createLogOfGameplay(Request $request)
+    {   
 
+      
+
+      $data = $request->all();
+
+      Log::debug('Some message.');
+      Log::debug($data);      
+
+      Gameplay::create([
+            'username' => $data['username'], 
+            'category' => $data['category'],
+            'level' => $data['level'],  
+            'level_start' => $data['level_start'],
+            'task' => $data['task'],
+            'task_start' => $data['task_start'],
+            'task_end' => $data['task_end'],
+            'task_elapsed_time' => $data['task_elapsed_time'],
+            'code' => $data['code'],
+            'result' => $data['result']
+            ]);
+
+
+
+    }
     public function updateIngameProgress(Request $request)
     {      
 

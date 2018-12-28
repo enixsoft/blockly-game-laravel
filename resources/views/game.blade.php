@@ -160,6 +160,7 @@
 <script>
 var button = document.getElementById('send_code_button'); 
 button.disabled = true;   
+
         
 
 var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
@@ -203,10 +204,28 @@ eventer(messageEvent,function(e)
     }    
     case "start":
     {
+     
      startGame();
      break;     
     }
+    case "introduction":
+    {
+    
+    console.log("introduction");
 
+    this.level_start = Date.now(); 
+
+    if(this.progress==0)
+    {     
+    levelIntroduced(e.data.content);
+    }
+     else
+    {   
+    mainTaskIntroduced(e.data.content);
+    }
+     break;     
+    }
+    
       case "highlightProgress":
     {
      highlightBlock(e.data.content);
@@ -230,7 +249,8 @@ eventer(messageEvent,function(e)
       //maybe change color of all blocks of correct algorithm ?
       mainTaskCompleted(e.data.content.currentMainTask);
 
-      //createLogOfGameplay(e.data.content);
+      this.task_end = Date.now();
+      createLogOfGameplay("mainTaskCompleted", e.data.content);
       break;     
     }
 
@@ -241,7 +261,7 @@ eventer(messageEvent,function(e)
 
       commandFailed(e.data.content);
 
-      //createLogOfGameplay(e.data.content);
+      createLogOfGameplay("commandFailed", e.data.content);
       break;     
     }
 
@@ -253,7 +273,7 @@ eventer(messageEvent,function(e)
       workspacePlayground.highlightBlock(null);
       mainTaskFailed(e.data.content.currentMainTask);
 
-      //createLogOfGameplay(e.data.content);
+      createLogOfGameplay("mainTaskFailed", e.data.content);
       break;     
     }
 
@@ -297,9 +317,16 @@ eventer(messageEvent,function(e)
 
   var modals =  {!! $jsonModals !!};
 
+  console.log(savedGame);
+
   this.category = tasks.level.category;
   this.level    = tasks.level.level;
   this.progress = savedGame.progress;
+  this.level_start = new Date();
+  this.task_start = new Date();
+  this.task_end = new Date();
+  this.code = "";
+
   
   this.saveObjectToString = savedGame.json;
   this.saveToDatabaseEnabled = true;  
@@ -493,7 +520,8 @@ console.log(tasks[task].progress);
 if (loggedIn)
 {
  
- var user = {!! auth()->check() ? auth()->user() : 'guest' !!};
+
+var user = {!! auth()->check() ? auth()->user() : 'guest' !!};
 
 $.ajax({
 headers: {
@@ -547,6 +575,8 @@ error: function(textStatus, errorThrown) {
 
         var code = Blockly.JavaScript.workspaceToCode(workspacePlayground);
         //console.log(code);
+        
+        this.code = code;
 
         var blocks = workspacePlayground.getAllBlocks();
         //console.log(blocks);
@@ -597,13 +627,16 @@ error: function(textStatus, errorThrown) {
         var message = "start\n";
         message +=  this.saveObjectToString;        
         
+
         sendMessage(message);
   }
 
 
   function continueGame(){
 
-    
+    //if(arg===0)
+    //this.task_start = Date.now();
+
     //workspacePlayground.clear();
 
     sendMessage("continue\n");
@@ -634,6 +667,7 @@ error: function(textStatus, errorThrown) {
   function mainTaskIntroduced(task){
 
      
+     this.task_start = Date.now();
 
      task = "mainTask" + task;
 
@@ -670,8 +704,24 @@ error: function(textStatus, errorThrown) {
 
   }
 
+  function levelIntroduced(task){        
+       
+
+     var title = tasks.level.welcome_modal.title;
+
+     var text = tasks.level.welcome_modal.text;
+
+     var image = getModalImageLink(tasks.level.welcome_modal.image);    
+
+     showLevelIntroducedModal(title, text, image, task);
+  }
+
+
   function mainTaskCompleted(task){    
      
+     
+     //this.task_end = Date.now();
+
      task = "mainTask" + task;
 
      console.log("completing" + task);
@@ -685,6 +735,8 @@ error: function(textStatus, errorThrown) {
      var image = getModalImageLink(tasks[task].success_modal.image);
 
      updateIngameProgress(task);
+
+
 
      showMainTaskCompletedModal(title, text, image);
 
@@ -733,7 +785,65 @@ error: function(textStatus, errorThrown) {
 
   }
 
-  function createLogOfGameplay(object){
+  function createLogOfGameplay(type, object){
+
+   if(isUserLoggedIn)
+   {
+   var user =  {!! auth()->check() ? auth()->user() : 'guest' !!};
+   
+
+
+   //var category = this.category;
+   //var level = this.level;
+
+
+   var level_start = convertDateToTime(this.level_start);
+   var task = object.currentMainTask;
+   var task_start = convertDateToTime(this.task_start);
+   var task_end = null;
+   var task_elapsed_time = null;
+   var code = String(object.commandArray);
+   var result = type;
+
+
+   switch(type)
+   {
+
+    case "mainTaskCompleted":
+    {
+      task_elapsed_time = this.task_end - this.task_start;      
+      task_elapsed_time = task_elapsed_time / 1000;
+      task_end = convertDateToTime(this.task_end);
+      break;
+
+    }
+    case "commandFailed":
+    {
+
+      result = object.failureType;
+      break;
+    }
+
+   }
+
+   $.ajax({
+     headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    method: 'POST', 
+    url: 'http://localhost/blockly-web-project/game/createlogofgameplay', 
+    data: {'username' : user.username, 'category': this.category, 'level': this.level, 'level_start': level_start,
+    'task': task, 'task_start': task_start, 'task_end': task_end, 'task_elapsed_time': task_elapsed_time, 'code': code, 'result': result}, 
+    success: function(response){ 
+    console.log("gameplay object sent succesfully");  
+    },
+    error: function(textStatus, errorThrown) {        
+   console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+   console.log(textStatus);
+    }
+    });
+
+    }
 
     /*("commandFailed", 
       {
@@ -759,6 +869,28 @@ error: function(textStatus, errorThrown) {
 
   }
 
+  function convertDateToTime(dateToConvert)
+  {
+  
+  function addZero(i) {
+     if (i < 10) {
+      i = "0" + i;
+      }
+     return i;
+    }
+
+  var date = new Date(dateToConvert);
+  
+  var h = addZero(date.getUTCHours());
+  var m = addZero(date.getUTCMinutes());
+  var s = addZero(date.getUTCSeconds());
+  var hms = h + ":" + m + ":" + s;
+  return hms;
+
+  }
+
+  
+
 
   function getModalImageLink(imageType)
   {
@@ -780,6 +912,47 @@ error: function(textStatus, errorThrown) {
     }
 
   }
+
+    
+    function showLevelIntroducedModal(title, text, image, task){
+
+var html = '<div class="row">';     
+
+html +=    '<div class="col-md-6">'; 
+
+html +=    '<br><h3>' + title + '</h3>';
+html +=    '<b>' + text + '</b>';
+html +=    '<br><br> <h4>Čas:</h4> <br><br> <h4>Kód:</h4> <br><br> <h4>Hodnotenie:</h4>';
+
+if (!isUserLoggedIn())
+   html +=    "<br><br>  <b> Aby sa váš postup v hre ukladal, je potrebné byť prihlásený. </b>"; 
+
+html +=    '</div>';               
+
+html +=    '<div class="col-md-6">'; 
+
+html +=    '<div id="modal-mascot">';  
+html +=    '<object width="80%" height="80%" data="'+image+'" type="image/svg+xml"></object>';
+html +=    '</div>';
+
+html +=    '</div>';
+
+html +=    '</div>';
+
+html +=    '<div class="row">';  
+
+html +=    '<div class="col-2 mx-auto"><button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="mainTaskIntroduced('+task+')">Pokračovať</button>';
+html +=    '</div>';
+
+html +=    '</div>';
+
+var $modal = $('#centeredTaskModal4').modal();
+$modal.find('.modal-body').find('.container').html(html).end();    
+$modal.modal('show');
+
+}
+
+
 
     function showAllMainTasksFinishedModal(title, text, image){
 
@@ -947,21 +1120,13 @@ $modal.modal('show');
 
   }
 
-  function isUserLoggedIn(){
+   function isUserLoggedIn(){
     
   var loggedIn = {{ auth()->check() ? 'true' : 'false' }};
-  if (loggedIn)
-  {   
-    console.log("logged in");
-    return true;
-  }
-  else
-  {
-   console.log("guest");
-   return false;
-  }
-    
-
+  if (loggedIn)  
+    return true;  
+  else   
+    return false;
   }
 
 </script>
