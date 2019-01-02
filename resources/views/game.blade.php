@@ -90,7 +90,7 @@
                 
                 <button type="button" id="delete_blocks_button" class="btn btn-success mr-3">Vymazať všetky bloky</button>
                 
-                <button type="button" id="solution_tasl_button" class="btn btn-danger mr-3">Riešenie úlohy</button>      
+                <button type="button" id="solution_task_button" class="btn btn-danger mr-3">Riešenie úlohy</button>      
                   
                 </div>
 
@@ -159,8 +159,7 @@
 -->
 <script>
 var button = document.getElementById('send_code_button'); 
-button.disabled = true;   
-
+button.disabled = true; 
         
 
 var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
@@ -182,7 +181,7 @@ eventer(messageEvent,function(e)
         
 
       workspacePlayground.highlightBlock(null);
-      locked = false;
+      this.locked = false;
       break;
     }
      case "death":
@@ -193,13 +192,12 @@ eventer(messageEvent,function(e)
     }
      case "uiHelp":
     {
-      $('#mainModal').modal('show');
+      // old game UI commands
       break;     
     }
      case "uiPlay":
     {
-     if(locked==false)
-          runCode();
+    // old game UI commands
      break;     
     }    
     case "start":
@@ -208,29 +206,34 @@ eventer(messageEvent,function(e)
      startGame();
      break;     
     }
+    
     case "introduction":
     {
     
-    console.log("introduction");
+    
 
     this.level_start = Date.now(); 
 
     if(this.progress==0)
     {     
-    levelIntroduced(e.data.content);
+    console.log("levelIntroduced");
+    levelIntroduced(e.data.content);    
     }
-     else
+    else 
     {   
+    console.log("mainTaskIntroduced");
     mainTaskIntroduced(e.data.content);
     }
+    
      break;     
     }
     
-      case "highlightProgress":
+    case "highlightProgress":
     {
      highlightBlock(e.data.content);
      break;     
     }
+
      case "highlightFailure":
     {
        //COMMAND FAILED BLOCK IS RED    
@@ -245,6 +248,7 @@ eventer(messageEvent,function(e)
     {
       console.log("mainTaskCompleted");
       console.log(e.data.content);
+
       workspacePlayground.highlightBlock(null);
       //maybe change color of all blocks of correct algorithm ?
       mainTaskCompleted(e.data.content.currentMainTask);
@@ -306,8 +310,7 @@ eventer(messageEvent,function(e)
 
 },false);
 
-  var failedBlock = []; 
- 
+  var failedBlock = [];  
 
   var toolbox = {!! json_encode($xmlToolbox) !!};
 
@@ -315,9 +318,11 @@ eventer(messageEvent,function(e)
 
   var tasks =  {!! $jsonTasks !!};
 
-  var modals =  {!! $jsonModals !!};
+  var modals =  {!! $jsonModals !!};  
 
-  console.log(savedGame);
+  
+  this.locked = true;
+  this.available_modal = 1;
 
   this.category = tasks.level.category;
   this.level    = tasks.level.level;
@@ -326,11 +331,9 @@ eventer(messageEvent,function(e)
   this.task_start = new Date();
   this.task_end = new Date();
   this.code = "";
-
   
   this.saveObjectToString = savedGame.json;
   this.saveToDatabaseEnabled = true;  
- 
 
   var blocklyArea = document.getElementById('blocklyArea');
   var blocklyDiv = document.getElementById('blocklyDiv');
@@ -339,15 +342,8 @@ eventer(messageEvent,function(e)
       {toolbox: toolbox, trashcan: true});
 
   Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
-                              workspacePlayground);
-  
-  
-  
-  var loggedIn = {{ auth()->check() ? 'true' : 'false' }};
-  if (loggedIn)
-    console.log("logged in");
-  else
-   console.log("guest");
+                              workspacePlayground); 
+  disableContextMenus();
 
 
   //var run = getBlocksByType("run");
@@ -355,24 +351,16 @@ eventer(messageEvent,function(e)
   //var cameraminus = getBlocksByType("cameraminus");
   //var load = getBlocksByType("load");
   //var save = getBlocksByType("save");
-  //var reload = getBlocksByType("reload");
-  var locked = true;
-
-  //workspacePlayground.zoom(50, 1000, -1);
-
-  //console.log(Blockly.mainWorkspace.getMetrics());
-
+  //var reload = getBlocksByType("reload"); 
 
 
    $(document).ready(function(){
     $("#send_code_button").click( function(){
          
-         if(locked==false)
+         if(!this.locked)
           runCode();
   });
-  });
-
-  disableContextMenus();
+  });  
 
 
 
@@ -388,14 +376,14 @@ eventer(messageEvent,function(e)
       if(blockToCheck.id == run[0].id)
       {
         
-        if(locked==false)
+        if(!this.locked==false)
           runCode();
         blockToCheck.unselect();
       }
         else if(blockToCheck.id == cameraplus[0].id)
       {
          cameraPlus();
-        ;
+        
          blockToCheck.unselect();
         
       }
@@ -431,10 +419,7 @@ eventer(messageEvent,function(e)
     
   }
 
-workspacePlayground.addChangeListener(blockClickController);
-disableContextMenus();
-
-
+  workspacePlayground.addChangeListener(blockClickController);
   
 
   var onresize = function(e) {
@@ -464,9 +449,6 @@ disableContextMenus();
   });
   //window.addEventListener('resize', onresize, false);
   onresize();
-
-
-  Blockly.svgResize(workspacePlayground);
      
   function saveObjectToJson(object) {
       
@@ -482,14 +464,12 @@ disableContextMenus();
 
     }
 
-  function saveJsonToDatabase() {
-
-     var loggedIn = {{ auth()->check() ? 'true' : 'false' }};
+  function saveJsonToDatabase() {     
     
-     if (loggedIn)
+     if(isUserLoggedIn())
      {
       
-      var user = {!! auth()->check() ? auth()->user() : 'guest' !!};
+    var user = {!! auth()->check() ? auth()->user() : 'guest' !!};
 
     $.ajax({
      headers: {
@@ -510,39 +490,39 @@ disableContextMenus();
                    
   }
 
-function updateIngameProgress(task) {
+  function updateIngameProgress(task) {
 
-var loggedIn = {{ auth()->check() ? 'true' : 'false' }};
+    var loggedIn = {{ auth()->check() ? 'true' : 'false' }};
 
-var progress = tasks[task].progress;
-console.log(tasks[task].progress);
+    var progress = tasks[task].progress;
+   
 
-if (loggedIn)
-{
+     if(isUserLoggedIn())
+     {
  
 
-var user = {!! auth()->check() ? auth()->user() : 'guest' !!};
+    var user = {!! auth()->check() ? auth()->user() : 'guest' !!};
 
-$.ajax({
-headers: {
-'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-},
-method: 'POST', 
-url: 'http://localhost/blockly-web-project/game/updateingameprogress', 
-data: {'progress' : progress, 'user' : user.username, 'category': this.category, 'level': this.level }, //category + level
-success: function(response){ 
+    $.ajax({
+    headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    method: 'POST', 
+    url: 'http://localhost/blockly-web-project/game/updateingameprogress', 
+    data: {'progress' : progress, 'user' : user.username, 'category': this.category, 'level': this.level }, //category + level
+    success: function(response){ 
    console.log("ingameprogress object sent succesfully");  
-},
-error: function(textStatus, errorThrown) {        
+    },
+    error: function(textStatus, errorThrown) {        
    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
    console.log(textStatus);
-}
-});
+    }
+    });
 
-}
+    }
               
-}
-
+  }
+  
 
   function highlightBlock(id) {
       workspacePlayground.highlightBlock(id);      
@@ -558,12 +538,12 @@ error: function(textStatus, errorThrown) {
 
   function runCode(){
 
-        var button = document.getElementById('send_code_button'); 
-        button.disabled = true;   
+      //run[0].setColour(0);
+      var button = document.getElementById('send_code_button'); 
+      button.disabled = true;   
         
-        locked = true;
-
-        //run[0].setColour(0);
+      this.locked = true;
+     
 
         if(failedBlock.length>0)
         {
@@ -573,15 +553,10 @@ error: function(textStatus, errorThrown) {
 
         Blockly.JavaScript.STATEMENT_PREFIX = '%1\n';
 
-        var code = Blockly.JavaScript.workspaceToCode(workspacePlayground);
-        //console.log(code);
+        var code = Blockly.JavaScript.workspaceToCode(workspacePlayground);        
         
         this.code = code;
 
-        var blocks = workspacePlayground.getAllBlocks();
-        //console.log(blocks);
-
-        
         sendMessage(code);
   }
 
@@ -595,8 +570,9 @@ error: function(textStatus, errorThrown) {
   }
     function cameraMinus(){
 
-      var code = "camera-\n";
-      sendMessage(code);
+        var code = "camera-\n";
+        
+        sendMessage(code);
 
   }
 
@@ -605,9 +581,8 @@ error: function(textStatus, errorThrown) {
         
         var code = "save\n";
 
-        sendMessage(code);
+        sendMessage(code);  
         
-        //saveJsonToDatabase();
 
   }
 
@@ -619,23 +594,19 @@ error: function(textStatus, errorThrown) {
 
         sendMessage(code);
 
-
   }
 
    function startGame(){
 
-        var message = "start\n";
-        message +=  this.saveObjectToString;        
+        var code = "start\n";
+        code +=  this.saveObjectToString;        
         
 
-        sendMessage(message);
+        sendMessage(code);
   }
 
 
   function continueGame(){
-
-    //if(arg===0)
-    //this.task_start = Date.now();
 
     //workspacePlayground.clear();
 
@@ -643,7 +614,7 @@ error: function(textStatus, errorThrown) {
 
   }
 
-    function reloadIframe(){
+  function reloadIframe(){
 
       document.getElementById("app-frame").src = document.getElementById("app-frame").src;
 
@@ -665,23 +636,21 @@ error: function(textStatus, errorThrown) {
   }
 
   function mainTaskIntroduced(task){
-
      
      this.task_start = Date.now();
 
      task = "mainTask" + task;
 
-     console.log("introducing" + task);
 
-     console.log(tasks[task].introduction_modal);
+     var modalStructure = {
+  
+     title: tasks[task].introduction_modal.title, 
+     text: tasks[task].introduction_modal.text,
+     image: getModalImageLink(tasks[task].introduction_modal.image)
 
-     var title = tasks[task].introduction_modal.title;
-
-     var text = tasks[task].introduction_modal.text;
-
-     var image = getModalImageLink(tasks[task].introduction_modal.image);
-
-     showMainTaskIntroducedModal(title, text, image);
+     };
+     
+     showDynamicModal("mainTaskIntroduced", modalStructure);
 
   }
 
@@ -690,78 +659,75 @@ error: function(textStatus, errorThrown) {
   
   }
 
-    function allMainTasksFinished(){    
+  function allMainTasksFinished(){    
      
-     console.log("finished all main tasks");    
+     var modalStructure = {
+  
+     title: tasks.level.finish_modal.title,
+     text: tasks.level.finish_modal.text,
+     image:  getModalImageLink(tasks.level.finish_modal.image)   
 
-     var title = tasks.level.finish_modal.title;
-
-     var text = tasks.level.finish_modal.text;
-
-     var image = getModalImageLink(tasks.level.finish_modal.image);    
-
-     showAllMainTasksFinishedModal(title, text, image);
-
+     };
+     
+     showDynamicModal("allMainTasksFinished", modalStructure);
   }
 
   function levelIntroduced(task){        
        
+    var modalStructure = {
+  
+     title: tasks.level.welcome_modal.title,
+     text:  tasks.level.welcome_modal.text,
+     image: getModalImageLink(tasks.level.welcome_modal.image),
+     task: task 
 
-     var title = tasks.level.welcome_modal.title;
+     };
 
-     var text = tasks.level.welcome_modal.text;
-
-     var image = getModalImageLink(tasks.level.welcome_modal.image);    
-
-     showLevelIntroducedModal(title, text, image, task);
+    showDynamicModal("levelIntroduced", modalStructure);
   }
 
+  function mainTaskCompleted(task){     
+    
 
-  function mainTaskCompleted(task){    
-     
-     
-     //this.task_end = Date.now();
-
-     task = "mainTask" + task;
-
-     console.log("completing" + task);
+     task = "mainTask" + task;    
 
      this.progress = tasks[task].progress;
 
-     var title = tasks[task].success_modal.title;
+     var modalStructure = {
+  
+     title: tasks[task].success_modal.title,
+     text:  tasks[task].success_modal.text,
+     image:  getModalImageLink(tasks[task].success_modal.image) 
 
-     var text = tasks[task].success_modal.text;
+     };
 
-     var image = getModalImageLink(tasks[task].success_modal.image);
+     showDynamicModal("mainTaskCompleted", modalStructure);
 
      updateIngameProgress(task);
 
-
-
-     showMainTaskCompletedModal(title, text, image);
-
   }
 
-    function mainTaskFailed(task){
+  function mainTaskFailed(task){
 
      task = "mainTask" + task;
+     
+     var modalStructure = {
+  
+     title: tasks[task].failure_modal.title,
+     text:  tasks[task].failure_modal.text,
+     image: getModalImageLink(tasks[task].failure_modal.image)
 
-     console.log(task); 
+     };
 
-     var title = tasks[task].failure_modal.title;
-
-     var text =  tasks[task].failure_modal.text; 
-
-     var image = getModalImageLink(tasks[task].failure_modal.image);
-
-     showMainTaskFailedModal(title, text, image);
+     showDynamicModal("mainTaskFailed", modalStructure);
 
   }
 
     function commandFailed(object){
     
-     console.log(object);
+     console.log(object);    
      
+
      var title = "";
      var text = "";
      var image = "";
@@ -781,13 +747,21 @@ error: function(textStatus, errorThrown) {
      text += "<br> Chybný blok je zafarbený na červeno."
 
 
-     showMainTaskFailedModal(title, text, image);
+     var modalStructure = {
+  
+     title: title,
+     text:  text,
+     image: image
+
+     };
+
+      showDynamicModal("mainTaskFailed", modalStructure);
 
   }
 
   function createLogOfGameplay(type, object){
 
-   if(isUserLoggedIn)
+   if(isUserLoggedIn())
    {
    var user =  {!! auth()->check() ? auth()->user() : 'guest' !!};
    
@@ -913,200 +887,153 @@ error: function(textStatus, errorThrown) {
 
   }
 
+
+
+  function showDynamicModal(type, modalStructure){
+
+      var modal = '';
+      var html = '';
+
+      if(this.available_modal==1)
+      {
+        this.available_modal=2;
+        modal = $('#centeredModal1').modal();
+      }
+      else
+      {
+        this.available_modal=1;
+        modal = $('#centeredModal2').modal(); 
+      }    
+
+
+    switch(type)
+    {
+
+    case "levelIntroduced":
+    {
+     
+    html =     '<br><h3>' + modalStructure.title + '</h3>';
+    html +=    '<b>' + modalStructure.text + '</b>';
     
-    function showLevelIntroducedModal(title, text, image, task){
+    
+    if (!isUserLoggedIn())
+    html +=    "<br><br>  <b> Aby sa váš postup v hre ukladal, je potrebné byť prihlásený. </b>";     
+    
+    modal.find('#modal-text').html(html).end();
 
-var html = '<div class="row">';     
+    html =    '<object width="80%" height="80%" data="' + modalStructure.image + '" type="image/svg+xml"></object>';
+    modal.find('#modal-image').html(html).end();   
 
-html +=    '<div class="col-md-6">'; 
+    html =    '<button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="mainTaskIntroduced('+ modalStructure.task +')">Pokračovať</button>';
+    modal.find('#modal-button').html(html).end();   
 
-html +=    '<br><h3>' + title + '</h3>';
-html +=    '<b>' + text + '</b>';
-html +=    '<br><br> <h4>Čas:</h4> <br><br> <h4>Kód:</h4> <br><br> <h4>Hodnotenie:</h4>';
+    break;
 
-if (!isUserLoggedIn())
-   html +=    "<br><br>  <b> Aby sa váš postup v hre ukladal, je potrebné byť prihlásený. </b>"; 
+    }
 
-html +=    '</div>';               
-
-html +=    '<div class="col-md-6">'; 
-
-html +=    '<div id="modal-mascot">';  
-html +=    '<object width="80%" height="80%" data="'+image+'" type="image/svg+xml"></object>';
-html +=    '</div>';
-
-html +=    '</div>';
-
-html +=    '</div>';
-
-html +=    '<div class="row">';  
-
-html +=    '<div class="col-2 mx-auto"><button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="mainTaskIntroduced('+task+')">Pokračovať</button>';
-html +=    '</div>';
-
-html +=    '</div>';
-
-var $modal = $('#centeredTaskModal4').modal();
-$modal.find('.modal-body').find('.container').html(html).end();    
-$modal.modal('show');
-
-}
-
-
-
-    function showAllMainTasksFinishedModal(title, text, image){
-
-var html = '<div class="row">';     
-
-html +=    '<div class="col-md-6">'; 
-
-html +=    '<br><h3>' + title + '</h3>';
-html +=    '<b>' + text + '</b>';
-html +=    '<br><br> <h4>Čas:</h4> <br><br> <h4>Kód:</h4> <br><br> <h4>Hodnotenie:</h4>';
-
-if (!isUserLoggedIn())
-   html +=    "<br><br>  <b> Aby sa váš postup v hre ukladal, je potrebné byť prihlásený. </b>"; 
-
-html +=    '</div>';               
-
-html +=    '<div class="col-md-6">'; 
-
-html +=    '<div id="modal-mascot">';  
-html +=    '<object width="80%" height="80%" data="'+image+'" type="image/svg+xml"></object>';
-html +=    '</div>';
-
-html +=    '</div>';
-
-html +=    '</div>';
-
-html +=    '<div class="row">';  
-
-html +=    '<div class="col-2 mx-auto"><button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="window.location.href=\''; 
-html +=    '{{ url('/')}}' + '/game/1/' + (this.level+1) + '\';">Pokračovať</button>';  
-html +=    '</div>';
-
-html +=    '</div>';
-
-var $modal = $('#centeredTaskModal4').modal();
-$modal.find('.modal-body').find('.container').html(html).end();    
-$modal.modal('show');
-
-
-
-}
-
-
-  function showMainTaskCompletedModal(title, text, image){
-
-     var html = '<div class="row">';     
+    case "mainTaskIntroduced":
+    {
      
-     html +=    '<div class="col-md-6">'; 
+    html =     '<br><h3>' + modalStructure.title + '</h3>';
+    html +=    '<b>' + modalStructure.text + '</b>';
+   
+    
+    if (!isUserLoggedIn())
+    html +=    "<br><br>  <b> Aby sa váš postup v hre ukladal, je potrebné byť prihlásený. </b>";     
+    
+    modal.find('#modal-text').html(html).end();
+
+    html =    '<object width="80%" height="80%" data="' + modalStructure.image + '" type="image/svg+xml"></object>';
+    modal.find('#modal-image').html(html).end();   
+
+    html =    '<button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="continueGame()">Pokračovať</button>';
+    modal.find('#modal-button').html(html).end();   
+
+    break;
+    }
+
+    case "mainTaskCompleted":
+    {
      
-     html +=    '<br><h3>' + title + '</h3>';
-     html +=    '<b>' + text + '</b>';
-     html +=    '<br><br> <h4>Čas:</h4> <br><br> <h4>Kód:</h4> <br><br> <h4>Hodnotenie:</h4>';
+    html =     '<br><h3>' + modalStructure.title + '</h3>';
+    html +=    '<b>' + modalStructure.text + '</b>';
+    html +=    '<br><br> <h4>Čas:</h4> <br><br> <h4>Kód:</h4> <br><br> <h4>Hodnotenie:</h4>';
+    
+    if (!isUserLoggedIn())
+    html +=    "<br><br>  <b> Aby sa váš postup v hre ukladal, je potrebné byť prihlásený. </b>";     
+    
+    modal.find('#modal-text').html(html).end();
+
+    html =    '<object width="80%" height="80%" data="' + modalStructure.image + '" type="image/svg+xml"></object>';
+    modal.find('#modal-image').html(html).end();   
+
+    html =    '<button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="continueGame()">Pokračovať</button>';
+    modal.find('#modal-button').html(html).end();   
+
+    break;
+    }
+
+
+    case "mainTaskFailed":
+    {
      
-     if (!isUserLoggedIn())
-        html +=    "<br><br>  <b> Aby sa váš postup v hre ukladal, je potrebné byť prihlásený. </b>"; 
+    html =     '<br><h3>' + modalStructure.title + '</h3>';
+    html +=    '<b>' + modalStructure.text + '</b>';
+    
+    
+    if (!isUserLoggedIn())
+    html +=    "<br><br>  <b> Aby sa váš postup v hre ukladal, je potrebné byť prihlásený. </b>";     
+    
+    modal.find('#modal-text').html(html).end();
 
-     html +=    '</div>';               
+    html =    '<object width="80%" height="80%" data="' + modalStructure.image + '" type="image/svg+xml"></object>';
+    modal.find('#modal-image').html(html).end();   
 
-     html +=    '<div class="col-md-6">'; 
- 
-     html +=    '<div id="modal-mascot">';  
-     html +=    '<object width="80%" height="80%" data="'+image+'" type="image/svg+xml"></object>';
-     html +=    '</div>';
+    html =    '<button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="loadGame()">Skúsiť znova</button>';   
+    modal.find('#modal-button').html(html).end();   
 
-     html +=    '</div>';
+    break;
+    }
 
-     html +=    '</div>';
 
-     html +=    '<div class="row">';  
-
-     html +=    '<div class="col-2 mx-auto"><button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="continueGame()">Pokračovať</button>';
-     html +=    '</div>';
-
-     html +=    '</div>';
-
-     var $modal = $('#centeredTaskModal').modal();
-     $modal.find('.modal-body').find('.container').html(html).end();    
-     $modal.modal('show');
+    case "allMainTasksFinished":
+    {
      
+    html =     '<br><h3>' + modalStructure.title + '</h3>';
+    html +=    '<b>' + modalStructure.text + '</b>';
+    html +=    '<br><br> <h4>Čas:</h4> <br><br> <h4>Kód:</h4> <br><br> <h4>Hodnotenie:</h4>';
+    
+    if (!isUserLoggedIn())
+    html +=    "<br><br>  <b> Aby sa váš postup v hre ukladal, je potrebné byť prihlásený. </b>";     
+    
+    modal.find('#modal-text').html(html).end();
 
-     
-  }
+    html =    '<object width="80%" height="80%" data="' + modalStructure.image + '" type="image/svg+xml"></object>';
+    modal.find('#modal-image').html(html).end();   
 
-  function showMainTaskFailedModal(title, text, image)
-  {
-     var html = '<div class="row">'
-     
-     html +=    '<div class="col-md-6">';
-     html +=    '<br><h3>' + title + '</h3>';
-     html +=    '<b>' + text + '</b>';
+    
+    html = '<button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="window.location.href=\''; 
+    html += '{{ url('/')}}' + '/game/1/' + (this.level+1) + '\';">Pokračovať</button>';  
+   
+    modal.find('#modal-button').html(html).end();   
 
-     if (!isUserLoggedIn())
-        html +=    "<br><br>  <b> Aby sa váš postup v hre ukladal, je potrebné byť prihlásený. </b>"; 
+    break;
+    }
 
 
-     html +=    '</div>'; 
 
-     html +=    '<div class="col-md-6">';
 
-     html +=    '<div id="modal-mascot">';  
-     html +=    '<object width="80%" height="80%" data="'+image+'" type="image/svg+xml"></object>';
-     html +=    '</div>';
 
-     html +=    '</div>';
+    } 
+    
 
-     html +=    '</div>';
-     html +=    '<div class="row">';     
-     html +=    '<div class="col-2 mx-auto"><button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="loadGame()">Skúsiť znova</button>';    
-     html +=    '</div>';
+    modal.modal('show');
 
-     html +=    '</div>';
 
-     var $modal = $('#centeredTaskModal2').modal();
-     $modal.find('.modal-body').find('.container').html(html).end();    
-     $modal.modal('show');
   }
 
 
-    function showMainTaskIntroducedModal(title, text, image)
-  {
-     var html = '<div class="row">'
-     
-     html +=    '<div class="col-md-6">';
-     html +=    '<br><h3>' + title + '</h3>';
-     html +=    '<b>' + text + '</b>';
-
-     if (!isUserLoggedIn())
-        html +=    "<br><br>  <b> Aby sa váš postup v hre ukladal, je potrebné byť prihlásený. </b>"; 
-
-
-     html +=    '</div>'; 
-
-     html +=    '<div class="col-md-6">';
-
-     html +=    '<div id="modal-mascot">';  
-     html +=    '<object width="80%" height="80%" data="'+image+'" type="image/svg+xml"></object>';
-     html +=    '</div>';
-
-     html +=    '</div>';
-
-     html +=    '</div>';
-     html +=    '<div class="row">';     
-     html +=    '<div class="col-2 mx-auto"><button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="continueGame()">Pokračovať</button>';    
-     html +=    '</div>';
-
-     html +=    '</div>';
-
-     var $modal = $('#centeredTaskModal3').modal();
-     $modal.find('.modal-body').find('.container').html(html).end();    
-     $modal.modal('show');
-  }
-
-
-   function sendMessage(messageForGame){
+  function sendMessage(messageForGame){
     
 
         var iframe = document.getElementById("app-frame");
@@ -1115,12 +1042,12 @@ $modal.modal('show');
         (
         { message: messageForGame }, 
         //"https://playcanv.as/p/62c28f63/"
-        "http://localhost/blockly-web-project/public/game/1x5/js/index.html"
+        "http://localhost/blockly-web-project/public/game/playcanvas/index.html"
         );
 
   }
 
-   function isUserLoggedIn(){
+  function isUserLoggedIn(){
     
   var loggedIn = {{ auth()->check() ? 'true' : 'false' }};
   if (loggedIn)  

@@ -3,10 +3,10 @@
     "category":1,
     "level":1,
     
-  "welcome_modal": {
+   "welcome_modal": {
     "title": "welcome_modal_title",
     "text": "welcome_modal_text",
-    "image": "failure"
+    "image": "success"
   },
   
    "finish_modal": {
@@ -109,7 +109,7 @@
     "title": "maintask3_help_modal_title",
     "text": "maintask3_help_modal_text",
     "image": "failure"
-  },
+  },  
   "success_modal": {
     "title": "Výborne! Splnili ste štvrtú úlohu!",
     "text": "Blockly je grafické programovacie prostredie, vyvinuté spoločnosťou Google v roku 2012.",
