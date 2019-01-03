@@ -869,21 +869,10 @@ eventer(messageEvent,function(e)
   function getModalImageLink(imageType)
   {
     
-    var success = "{{ asset('game/success.svg') }}";
-    var failure = "{{ asset('game/failure.svg') }}";
+    var modalImageUrl = "{{ asset('game') }}";    
 
-    
-    switch(imageType)
-    {
-      case "success":
-      return success;  
+    return modalImageUrl + '/' + this.category + 'x' + this.level + '/' + imageType + '.png';
 
-      case "failure":
-      return failure;     
-
-      default:
-      break;
-    }
 
   }
 
@@ -919,9 +908,11 @@ eventer(messageEvent,function(e)
     if (!isUserLoggedIn())
     html +=    "<br><br>  <b> Aby sa váš postup v hre ukladal, je potrebné byť prihlásený. </b>";     
     
-    modal.find('#modal-text').html(html).end();
+    modal.find('#modal-text').html(html).end();   
+    
 
-    html =    '<object width="80%" height="80%" data="' + modalStructure.image + '" type="image/svg+xml"></object>';
+
+    html =    '<img width="70%" height="90%" src="' + modalStructure.image + '" ></img>';
     modal.find('#modal-image').html(html).end();   
 
     html =    '<button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="mainTaskIntroduced('+ modalStructure.task +')">Pokračovať</button>';
@@ -943,7 +934,7 @@ eventer(messageEvent,function(e)
     
     modal.find('#modal-text').html(html).end();
 
-    html =    '<object width="80%" height="80%" data="' + modalStructure.image + '" type="image/svg+xml"></object>';
+    html =    '<img width="80%" height="90%" src="' + modalStructure.image + '" ></img>';
     modal.find('#modal-image').html(html).end();   
 
     html =    '<button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="continueGame()">Pokračovať</button>';
@@ -964,7 +955,7 @@ eventer(messageEvent,function(e)
     
     modal.find('#modal-text').html(html).end();
 
-    html =    '<object width="80%" height="80%" data="' + modalStructure.image + '" type="image/svg+xml"></object>';
+    html =    '<img width="70%" height="90%" src="' + modalStructure.image + '" ></img>';
     modal.find('#modal-image').html(html).end();   
 
     html =    '<button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="continueGame()">Pokračovať</button>';
@@ -986,7 +977,7 @@ eventer(messageEvent,function(e)
     
     modal.find('#modal-text').html(html).end();
 
-    html =    '<object width="80%" height="80%" data="' + modalStructure.image + '" type="image/svg+xml"></object>';
+    html =    '<img width="70%" height="90%" src="' + modalStructure.image + '" ></img>';
     modal.find('#modal-image').html(html).end();   
 
     html =    '<button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="loadGame()">Skúsiť znova</button>';   
@@ -1008,7 +999,7 @@ eventer(messageEvent,function(e)
     
     modal.find('#modal-text').html(html).end();
 
-    html =    '<object width="80%" height="80%" data="' + modalStructure.image + '" type="image/svg+xml"></object>';
+    html =    '<img width="70%" height="90%" src="' + modalStructure.image + '" ></img>';
     modal.find('#modal-image').html(html).end();   
 
     
