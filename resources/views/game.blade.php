@@ -934,7 +934,9 @@ eventer(messageEvent,function(e)
     
     modal.find('#modal-text').html(html).end();
 
-    html =    '<img width="80%" height="90%" src="' + modalStructure.image + '" ></img>';
+    html = '<br>';
+    html +=    '<img width="80%" height="90%" src="' + modalStructure.image + '" ></img>';
+    html += '<br>';
     modal.find('#modal-image').html(html).end();   
 
     html =    '<button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="continueGame()">Pokračovať</button>';

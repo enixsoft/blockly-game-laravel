@@ -34,7 +34,7 @@ class GameController extends Controller
 
     public function runGame($category, $level)  
     {                                   
-        $levelMax=5;
+        $levelMax=6;
         $levelMin=1;
         $categoryMax=1;
         $categoryMin=1;
@@ -42,6 +42,10 @@ class GameController extends Controller
         if($category>$categoryMax || $category<$categoryMin || $level < $levelMin || $level > $levelMax || !is_numeric($category) || !is_numeric($level))
         {
         abort(404);
+        }
+        else if($category==$categoryMax && $level==$levelMax)
+        {
+        return redirect()->route('/');
         }
         else
         {

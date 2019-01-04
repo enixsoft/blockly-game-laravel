@@ -5,14 +5,14 @@
     
    "welcome_modal": {
     "title": "Vitajte v Blockly hre!",
-    "text": "V prvej úrovni si prejdeme základ ovládania, ktorým je pohyb. Hrdina sa dokáže pohybovať v štyroch smeroch. Vyberte blok s potrebným smerom pohybu, pripojte ho k bloku hráča a  nastavte počet krokov. Potom kliknite na tlačidlo Spustiť bloky. Vaša herná postava sa potom pokúsi výkonať príkazy.",
+    "text": "V prvej úrovni si predstavíme základ ovládania, ktorým je pohyb. Hrdina sa dokáže pohybovať v štyroch smeroch. Vyberte blok s potrebným smerom pohybu, pripojte ho k bloku hráča a  nastavte počet krokov. Potom kliknite na tlačidlo Spustiť bloky. Vaša herná postava sa potom pokúsi výkonať príkazy.",
     "image": "welcome_modal"
   },
   
    "finish_modal": {
     "title": "Všetky úlohy boli splnené!",
     "text": "Úspešne ste sa naučili pohybovať s hrdinom. Nasleduje ďalšia úroveň.",
-    "image": "finish_modal"  
+    "image": "success"  
   }
   },
   
