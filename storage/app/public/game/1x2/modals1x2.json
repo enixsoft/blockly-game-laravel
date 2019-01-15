@@ -1,27 +1,27 @@
 {
   "level":{
     "category":1,
-    "level":5,
+    "level":2,
     
   "welcome_modal": {
     "title": "Vitajte v Blockly hre!",
-    "text": "V piatej úrovni hrdina získava novú schopnosť - otvorenie truhlice. Túto schopnosť bude potrebovať, aby mohol otvoriť dvere kľúčom, ktorý zoberie z truhlice. Okrem toho si precvičíte všetky doteraz získané schopnosti.",
+    "text": "V druhej úrovni hrdina získava novú schopnosť - skákanie. Túto schopnosť bude potrebovať, aby sa mohol dostať cez zatopenú časť hradu.",
     "image": "welcome_modal"
   },
   
    "finish_modal": {
     "title": "Všetky úlohy boli splnené!",
-    "text": "Úspešne ste sa naučili schopnosť otvárať truhlicu s hrdinom, ale aj pohyb, skákanie, útok mečom a použitie páky. Toto bola záverečná úroveň.",
+     "text": "Úspešne ste sa naučili skákať s hrdinom. Nasleduje ďalšia úroveň.",
     "image": "success"  
   }
   },
   
   "mainTask0":{
-    "progress": "20",
+    "progress": "25",
     
     "introduction_modal": {
     "title": "Zadanie prvej úlohy",
-	"text": "Cestu k prvému kamennému tlačidlu blokuje voda, krabica, pasca a zatvorené padacie dvere. Prekonajte prekážky a otvorte dvere.",
+    "text": "Váš hrdina potrebuje preskočiť miesta zatopené vodou, aby sa dostal na najbližšie kamenné tlačidlo v pravej časti. Spojte bloky pohybu a skoku tak, aby sa mu to podarilo.",
     "image": "maintask0_introduction_modal"
   },
     "help_modal": 
@@ -32,7 +32,7 @@
   },
   "success_modal": {
     "title": "Výborne! Splnili ste prvú úlohu!",
-    "text": "Váš prvý algoritmus v tejto úrovni umožnil hrdinovi dostať sa do miestnosti s truhlicami.",
+    "text": "Váš prvý algoritmus v tejto úrovni umožnil hrdinovi preskočiť zatopené časti.",
     "image": "success"
   },   
     "failure_modal": {
@@ -43,11 +43,11 @@
   },
   
   "mainTask1": {
-    "progress": "40",  
+    "progress": "50",  
   
     "introduction_modal": {
     "title": "Zadanie druhej úlohy",
-    "text": "Aby sa hrdina dostal ďalej, musí z truhice získať kľúč na otvorenie zamknutých dverí. Použite blok otvorenia truhlice a priveďte hrdinu na kamenné tlačidlo pred dverami.",
+    "text": "Cesta na tomto brehu ďalej nepokračuje a tak sa hrdina opäť musí vydať cez vodu, tentokrát na ostrov v ľavej časti. Spojte bloky pohybu a skoku tak, aby hrdina prišiel na kamenné tlačidlo pri stene s ohňom.",
     "image": "maintask1_introduction_modal"
   },
     "help_modal": 
@@ -58,7 +58,7 @@
   },
   "success_modal": {
     "title": "Výborne! Splnili ste druhú úlohu!",
-    "text": "Úspešne ste našli kľúč a otvorili dvere. Hrdina môže pokračovať ďalej v ceste.",
+    "text": "Hrdina dorazil do cieľa vďaka správnemu algoritmu.",
     "image": "success"
   },   
     "failure_modal": {
@@ -71,11 +71,11 @@
 
 
   "mainTask2": {
-    "progress": "60",  
+    "progress": "75",  
   
     "introduction_modal": {
     "title": "Zadanie tretej úlohy",
-    "text": "V tejto úlohe máme kamenné tlačidlo až za zatvorenými dverami, pred ktorými je aktivovaná pascu. Použite páky, aby ste sa dostali cez prekážky.",
+    "text": "V tejto úlohe hrdinovi stačí ísť a skákať jedným smerom, aby sa dostal na pravú stranu ku vzdialenému kamennému tlačidlu.",
     "image": "maintask2_introduction_modal"
   },
     "help_modal": 
@@ -86,7 +86,7 @@
   },
   "success_modal": {
     "title": "Výborne! Splnili ste tretiu úlohu!",
-    "text": "Vo vašom treťom algoritme ste použili obe páky a tak hrdina úspešne prekonal nebezpečnú prekážku.",
+    "text": "Hrdina úspešne prekonal zatopenú časť úrovne a blíži sa do cieľa.",
     "image": "success"
   },   
     "failure_modal": {
@@ -97,11 +97,11 @@
   },
   
     "mainTask3": {
-    "progress": "80",  
+    "progress": "100",  
   
     "introduction_modal": {
     "title": "Zadanie štvrtej úlohy",
-    "text": "Ku kamennému tlačidlu pre splnenie tejto úlohy vedie jedna cesta, avšak blokuje ho pasca, ktorej sa nedá vyhnúť. Vypnite ju pomocou páky.",
+    "text": "Hrdina už nemusí skákať cez vodu, no teraz má pred sebou nebezpečnú prekážku - aktivované pasce. Vyhnite sa im a dostaňte sa na kamenné tlačidlo pri schodisku do ďalšej úrovne.",
     "image": "maintask3_introduction_modal"
   },
     "help_modal": 
@@ -112,33 +112,7 @@
   },
   "success_modal": {
     "title": "Výborne! Splnili ste štvrtú úlohu!",
-    "text": "Dobrá práca, váš hrdina už má cieľ na dosah.",
-    "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
-}
-  },
-  
-      "mainTask4": {
-    "progress": "100",  
-  
-    "introduction_modal": {
-    "title": "Zadanie piatej úlohy",
-    "text": "V poslednej úlohe piatej úrovne použite páku na vypnutie pasce a preskočte zatopenú časť.",
-    "image": "maintask4_introduction_modal"
-  },
-    "help_modal": 
-    {
-    "title": "maintask4_help_modal_title",
-    "text": "maintask4_help_modal_text",
-    "image": "failure"
-  },
-  "success_modal": {
-    "title": "Výborne! Splnili ste štvrtú úlohu!",
-    "text": "Je zrejmé, že používanie páky pre odstránenie prekážok už zvládate dokonale.",
+    "text": "Zdá sa, že vám používanie skoku nerobí najmenší problém. Zvládli ste cestu cez vodu a pasce.",
     "image": "success"
   },   
     "failure_modal": {

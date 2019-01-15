@@ -20,6 +20,8 @@ use App\Models\Gameplay;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
 
+use Storage;
+
 use Validator;
 
 use Redirect;
@@ -51,17 +53,17 @@ class GameController extends Controller
         {
         
 
-            $xmlToolboxPath = "public/game/". $category . "x" . $level . "/toolbox" . $category . "x" . $level . ".xml";
-            $xmlToolbox = File::get($xmlToolboxPath);            
+            $xmlToolboxPath = "public/game" . "/" . $category . "x" . $level . "/toolbox" . $category . "x" . $level . ".xml";     
+            $xmlToolbox = Storage::get($xmlToolboxPath);            
             
             $jsonStartGamePath = "public/game/". $category . "x" . $level . "/start" . $category . "x" . $level . ".json";
-            $jsonStartGame = File::get($jsonStartGamePath);
+            $jsonStartGame = Storage::get($jsonStartGamePath);
             
             $jsonTasksPath = "public/game/". $category . "x" . $level . "/modals" . $category . "x" . $level . ".json";
-            $jsonTasks = File::get($jsonTasksPath);
+            $jsonTasks = Storage::get($jsonTasksPath);
 
             $jsonModalsPath = "public/game/modals.json";
-            $jsonModals = File::get($jsonModalsPath);
+            $jsonModals = Storage::get($jsonModalsPath);
 
 
          
@@ -315,8 +317,9 @@ class GameController extends Controller
 
                 if($inGameProgress!= null && $inGameProgress['progress']==100)
                 {
+                
                 $jsonStartGamePath = "public/game/". $category . "x" . $level . "/start" . $category . "x" . $level . ".json";
-                $jsonStartGame = File::get($jsonStartGamePath);
+                $jsonStartGame = Storage::get($jsonStartGamePath);
                 
 
                 SavedGame::create(array('username' => $auth->username,

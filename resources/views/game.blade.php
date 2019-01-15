@@ -61,7 +61,7 @@
                 <!--<iframe id="app-frame" style="width:100%;height:100%;overflow:hidden;border:none;"
                 src="https://playcanv.as/e/p/62c28f63/"></iframe>-->
                 <iframe id="app-frame" style="width:100%;height:100%;overflow:hidden;border:none;"
-                src="http://localhost/blockly-web-project/public/game/playcanvas/{{$category}}x{{$level}}.html"></iframe>
+                src="{{url('')}}/public/game/playcanvas/{{$category}}x{{$level}}.html"></iframe>
             </div>
         </div>
         <div class="col-md-6" style="background-color:#E4E4E4;">            
@@ -160,7 +160,13 @@
 <script>
 var button = document.getElementById('send_code_button'); 
 button.disabled = true; 
-        
+button = document.getElementById('solution_task_button'); 
+button.disabled = true;
+button = document.getElementById('show_task_button'); 
+button.disabled = true;
+button = document.getElementById('delete_blocks_button'); 
+button.disabled = true;   
+
 
 var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
 var eventer = window[eventMethod];
@@ -177,6 +183,10 @@ eventer(messageEvent,function(e)
     {
       //run[0].setColour(95);
       var button = document.getElementById('send_code_button'); 
+      button.disabled = false;   
+      button = document.getElementById('show_task_button'); 
+      button.disabled = false;
+      button = document.getElementById('delete_blocks_button'); 
       button.disabled = false;   
         
 
@@ -331,6 +341,8 @@ eventer(messageEvent,function(e)
   this.task_start = new Date();
   this.task_end = new Date();
   this.code = "";
+
+  this.main_task = 0;
   
   this.saveObjectToString = savedGame.json;
   this.saveToDatabaseEnabled = true;  
@@ -362,6 +374,50 @@ eventer(messageEvent,function(e)
   });
   });  
 
+
+  $(document).ready(function(){
+    $("#show_task_button").click( function(){
+         
+         if(!this.locked)
+        {       
+        showTaskButton();
+
+        }
+  });
+  });  
+  
+  $(document).ready(function(){
+    $("#delete_blocks_button").click( function(){
+         
+         if(!this.locked)
+        {       
+        deleteBlocksButton();
+        }
+  });
+  });  
+
+
+ function showTaskButton() {
+  
+          var modalStructure = {
+  
+          title: tasks[this.main_task].introduction_modal.title, 
+          text: tasks[this.main_task].introduction_modal.text,
+          image: getModalImageLink(tasks[this.main_task].introduction_modal.image)
+
+          };
+
+          showDynamicModal("mainTaskShowed", modalStructure);
+
+  }
+
+   function deleteBlocksButton() {
+  
+       workspacePlayground.clear();
+       Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
+                              workspacePlayground); 
+
+  }
 
 
   function blockClickController(event) {  
@@ -476,7 +532,7 @@ eventer(messageEvent,function(e)
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     method: 'POST', 
-    url: 'http://localhost/blockly-web-project/game/savegame', 
+    url: '{{url('')}}/game/savegame', 
     data: {'save' : this.saveObjectToString, 'user' : user.username, 'category': this.category, 'level': this.level, 'progress': this.progress }, //category + level
     success: function(response){ 
         console.log("save object sent succesfully");  
@@ -508,7 +564,7 @@ eventer(messageEvent,function(e)
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     method: 'POST', 
-    url: 'http://localhost/blockly-web-project/game/updateingameprogress', 
+    url: '{{url('')}}/game/updateingameprogress', 
     data: {'progress' : progress, 'user' : user.username, 'category': this.category, 'level': this.level }, //category + level
     success: function(response){ 
    console.log("ingameprogress object sent succesfully");  
@@ -538,11 +594,17 @@ eventer(messageEvent,function(e)
 
   function runCode(){
 
-      //run[0].setColour(0);
+      //run[0].setColour(0);      
       var button = document.getElementById('send_code_button'); 
       button.disabled = true;   
+      button = document.getElementById('show_task_button'); 
+      button.disabled = true;
+      button = document.getElementById('delete_blocks_button'); 
+      button.disabled = true;   
+
+
         
-      this.locked = true;
+       this.locked = true;
      
 
         if(failedBlock.length>0)
@@ -641,6 +703,7 @@ eventer(messageEvent,function(e)
 
      task = "mainTask" + task;
 
+     this.main_task = task;
 
      var modalStructure = {
   
@@ -805,7 +868,7 @@ eventer(messageEvent,function(e)
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     method: 'POST', 
-    url: 'http://localhost/blockly-web-project/game/createlogofgameplay', 
+    url: '{{url('')}}/game/createlogofgameplay', 
     data: {'username' : user.username, 'category': this.category, 'level': this.level, 'level_start': level_start,
     'task': task, 'task_start': task_start, 'task_end': task_end, 'task_elapsed_time': task_elapsed_time, 'code': code, 'result': result}, 
     success: function(response){ 
@@ -945,6 +1008,29 @@ eventer(messageEvent,function(e)
     break;
     }
 
+    case "mainTaskShowed":
+    {
+     
+    html =     '<br><h3>' + modalStructure.title + '</h3>';
+    html +=    '<b>' + modalStructure.text + '</b>';
+   
+    
+    if (!isUserLoggedIn())
+    html +=    "<br><br>  <b> Aby sa váš postup v hre ukladal, je potrebné byť prihlásený. </b>";     
+    
+    modal.find('#modal-text').html(html).end();
+
+    html = '<br>';
+    html +=    '<img width="80%" height="90%" src="' + modalStructure.image + '" ></img>';
+    html += '<br>';
+    modal.find('#modal-image').html(html).end();   
+
+    html =    '<button type="button" class="btn btn-success btn-lg" data-dismiss="modal">Pokračovať</button>';
+    modal.find('#modal-button').html(html).end();   
+
+    break;
+    }
+
     case "mainTaskCompleted":
     {
      
@@ -1035,7 +1121,7 @@ eventer(messageEvent,function(e)
         (
         { message: messageForGame }, 
         //"https://playcanv.as/p/62c28f63/"
-        "http://localhost/blockly-web-project/public/game/playcanvas/index.html"
+        "{{url('')}}/public/game/playcanvas/index.html"
         );
 
   }

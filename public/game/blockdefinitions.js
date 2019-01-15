@@ -120,7 +120,7 @@ Blockly.Blocks['jump'] = {
 Blockly.Blocks['player'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("Player  ")
+        .appendField("Hrdina  ")
         .appendField(new Blockly.FieldImage("http://localhost/blockly-web-project/game/logo-head-small.png", 70, 70, "*"));
     this.setNextStatement(true, "Action");
     this.setColour(300);

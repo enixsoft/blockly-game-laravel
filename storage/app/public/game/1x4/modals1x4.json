@@ -1,17 +1,17 @@
 {
   "level":{
     "category":1,
-    "level":1,
+    "level":4,
     
-   "welcome_modal": {
+  "welcome_modal": {
     "title": "Vitajte v Blockly hre!",
-    "text": "V prvej úrovni si predstavíme základ ovládania, ktorým je pohyb. Hrdina sa dokáže pohybovať v štyroch smeroch. Vyberte blok s potrebným smerom pohybu, pripojte ho k bloku hráča a  nastavte počet krokov. Potom kliknite na tlačidlo Spustiť bloky. Vaša herná postava sa potom pokúsi výkonať príkazy.",
+    "text": "Vo štvrtej úrovni hrdina získava novú schopnosť - použitie páky. Túto schopnosť bude potrebovať, aby mohol deaktivovať pasce ohrozujúce ho v ceste a aby mohol otvárať dvere.",
     "image": "welcome_modal"
   },
   
    "finish_modal": {
     "title": "Všetky úlohy boli splnené!",
-    "text": "Úspešne ste sa naučili pohybovať s hrdinom. Nasleduje ďalšia úroveň.",
+    "text": "Úspešne ste sa naučili schopnosť používať páku s hrdinom. Nasleduje ďalšia úroveň.",
     "image": "success"  
   }
   },
@@ -21,23 +21,22 @@
     
     "introduction_modal": {
     "title": "Zadanie prvej úlohy",
-    "text": "Váš hrdina potrebuje prejsť chodbou a dostať sa až na kamenné tlačidlo pred železnými dverámi. Spojte vyžadované bloky a nastavte im potrebný počet krokov, aby sa mu to podarilo.",
+    "text": "Cestu k prvému kamennému tlačidlu blokuje niekoľko sudov a zatvorené dvere. Zničte sudy a použite páku.",
     "image": "maintask0_introduction_modal"
   },
     "help_modal": 
     {
     "title": "maintask0_help_modal_title",
     "text": "maintask0_help_modal_text",
-    "image": "maintask0_help_modal"
+    "image": "failure"
   },
-  
   "success_modal": {
     "title": "Výborne! Splnili ste prvú úlohu!",
-    "text": "Váš prvý algoritmus umožnil hrdinovi úspešne doraziť ku železným dverám. Jeho cesta môže pokračovať ďalej.",
+    "text": "Váš prvý algoritmus v tejto úrovni umožnil hrdinovi rozsekať sudy stojace v ceste a otvoriť dvere pomocou páky.",
     "image": "success"
   },   
     "failure_modal": {
-    "title": "Hlavná úloha nebola splnená!",
+    "title": "Hlavná úloha nebola splnená",
     "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
     "image": "failure"
   }
@@ -48,7 +47,7 @@
   
     "introduction_modal": {
     "title": "Zadanie druhej úlohy",
-    "text": "Pred hrdinom sa otvorili padacie dvere a nasleduje krátka chodba, ktorá vedie k ďalšiemu kamennému tlačidlu za otvorenými dverami. Pošlite tam vášho hrdinu pomocou blokov.",
+    "text": "V tejto úlohe hrdinu čaká dlhšia cesta, ktorá obsahuje skákanie, zničenie krabice a obídenie pasce.",
     "image": "maintask1_introduction_modal"
   },
     "help_modal": 
@@ -59,11 +58,11 @@
   },
   "success_modal": {
     "title": "Výborne! Splnili ste druhú úlohu!",
-    "text": "Váš druhý algoritmus umožnil hrdinovi úspešne doraziť do skladu. Polovica cesty v tejto úrovni je už za ním.",
+    "text": "Váš druhý algoritmus umožnil hrdinovi úspešne dosiahnuť cieľ a prekonať všetky prekážky.",
     "image": "success"
   },   
     "failure_modal": {
-    "title": "Hlavná úloha nebola splnená!",
+    "title": "Hlavná úloha nebola splnená",
     "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
     "image": "failure"
   }
@@ -76,7 +75,7 @@
   
     "introduction_modal": {
     "title": "Zadanie tretej úlohy",
-    "text": "Hrdina sa nachádza v sklade plnom vecí, medzi ktorými sa musí pohybovať. Skúste nájsť správnu cestu k najbližšiemu kamennému tlačidlu.",
+    "text": "Cestu hrdinovi blokujú dve po sebe nasledujúce pasce, ktoré sa nedajú preskočiť. Našťastie páky na ich vypnutie sú nablízku, použite ich.",
     "image": "maintask2_introduction_modal"
   },
     "help_modal": 
@@ -87,11 +86,11 @@
   },
   "success_modal": {
     "title": "Výborne! Splnili ste tretiu úlohu!",
-    "text": "Váš tretí algoritmus umožnil hrdinovi úspešne prejsť polovicu skladu. Koniec úrovne je už na dohľad.",
+    "text": "Vo vašom treťom algoritme ste použili obe páky a tak hrdina úspešne prekonal nebezpečnú prekážku.",
     "image": "success"
   },   
     "failure_modal": {
-    "title": "Hlavná úloha nebola splnená!",
+    "title": "Hlavná úloha nebola splnená",
     "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
     "image": "failure"
   }
@@ -102,7 +101,7 @@
   
     "introduction_modal": {
     "title": "Zadanie štvrtej úlohy",
-    "text": "Dokončite úroveň 1 a prejdite s hrdinom k poslednému kamennému tlačidlu, za ktorým už sú schody do ďalšej úrovne.",
+    "text": "A už nasleduje posledná úloha tejto úrovne, v ktorej opäť treba otvoriť dvere. Otvorte ich pákou nachádzajúcou sa za vázou. ",
     "image": "maintask3_introduction_modal"
   },
     "help_modal": 
@@ -110,14 +109,14 @@
     "title": "maintask3_help_modal_title",
     "text": "maintask3_help_modal_text",
     "image": "failure"
-  },  
+  },
   "success_modal": {
     "title": "Výborne! Splnili ste štvrtú úlohu!",
-    "text": "Hrdina prešiel chodbami a skladom až ku schodom do ďalšej úrovne.",
+    "text": "Dokázali ste, že používanie páky vám ide tak dobre, ako skákanie a sekanie mečom.",
     "image": "success"
   },   
     "failure_modal": {
-    "title": "Hlavná úloha nebola splnená!",
+    "title": "Hlavná úloha nebola splnená",
     "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
     "image": "failure"
   }

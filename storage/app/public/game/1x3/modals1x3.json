@@ -1,17 +1,17 @@
 {
   "level":{
     "category":1,
-    "level":2,
+    "level":3,
     
   "welcome_modal": {
     "title": "Vitajte v Blockly hre!",
-    "text": "V druhej úrovni hrdina získava novú schopnosť - skákanie. Túto schopnosť bude potrebovať, aby sa mohol dostať cez zatopenú časť hradu.",
+    "text": "V tretej úrovni hrdina získava novú schopnosť - útok mečom. Túto schopnosť bude potrebovať, aby sa mohol dostať cez rôzne prekážky v ceste ako sú krabice či sudy.",
     "image": "welcome_modal"
   },
   
    "finish_modal": {
     "title": "Všetky úlohy boli splnené!",
-     "text": "Úspešne ste sa naučili skákať s hrdinom. Nasleduje ďalšia úroveň.",
+    "text": "Úspešne ste sa naučili ničiť prekážky s hrdinom. Nasleduje ďalšia úroveň.",
     "image": "success"  
   }
   },
@@ -21,7 +21,7 @@
     
     "introduction_modal": {
     "title": "Zadanie prvej úlohy",
-    "text": "Váš hrdina potrebuje preskočiť miesta zatopené vodou, aby sa dostal na najbližšie kamenné tlačidlo v pravej časti. Spojte bloky pohybu a skoku tak, aby sa mu to podarilo.",
+    "text": "Cestu k prvému kamennému tlačidlu blokuje niekoľko krabíc. Použite blok útoku spolu s blokom pohybu, aby ste sa cez ne dostali.",
     "image": "maintask0_introduction_modal"
   },
     "help_modal": 
@@ -32,7 +32,7 @@
   },
   "success_modal": {
     "title": "Výborne! Splnili ste prvú úlohu!",
-    "text": "Váš prvý algoritmus v tejto úrovni umožnil hrdinovi preskočiť zatopené časti.",
+    "text": "Váš prvý algoritmus v tejto úrovni umožnil hrdinovi rozsekať krabice stojace v ceste.",
     "image": "success"
   },   
     "failure_modal": {
@@ -47,7 +47,7 @@
   
     "introduction_modal": {
     "title": "Zadanie druhej úlohy",
-    "text": "Cesta na tomto brehu ďalej nepokračuje a tak sa hrdina opäť musí vydať cez vodu, tentokrát na ostrov v ľavej časti. Spojte bloky pohybu a skoku tak, aby hrdina prišiel na kamenné tlačidlo pri stene s ohňom.",
+    "text": "V tejto úlohe proti hrdinovi stoja sudy namiesto kabíc, avšak proti jeho meču nemajú šancu. Je potrebné už aj použiť skákanie a vyhnúť sa pasci pred kamenným tlačidlom.",
     "image": "maintask1_introduction_modal"
   },
     "help_modal": 
@@ -58,7 +58,7 @@
   },
   "success_modal": {
     "title": "Výborne! Splnili ste druhú úlohu!",
-    "text": "Hrdina dorazil do cieľa vďaka správnemu algoritmu.",
+    "text": "Váš druhý algoritmus umožnil hrdinovi rozsekať sudy stojace v ceste a úspešne dosiahnuť cieľ.",
     "image": "success"
   },   
     "failure_modal": {
@@ -75,7 +75,7 @@
   
     "introduction_modal": {
     "title": "Zadanie tretej úlohy",
-    "text": "V tejto úlohe hrdinovi postačuje ísť a skákať jedným smerom, aby sa dostal na pravú stranu ku vzdialenému kamennému tlačidlu.",
+    "text": "A do tretice hrdinu čakajú staré prázdne vázy, zničiť však pôjdu rovnako. Tak poďme na to.",
     "image": "maintask2_introduction_modal"
   },
     "help_modal": 
@@ -86,7 +86,7 @@
   },
   "success_modal": {
     "title": "Výborne! Splnili ste tretiu úlohu!",
-    "text": "Hrdina úspešne prekonal zatopenú časť úrovne a blíži sa do cieľa.",
+    "text": "Vyzerá to tak, že vášho hrdinu nemôže nič zastaviť. Len tak ďalej.",
     "image": "success"
   },   
     "failure_modal": {
@@ -101,7 +101,7 @@
   
     "introduction_modal": {
     "title": "Zadanie štvrtej úlohy",
-    "text": "Hrdina už nemusí skákať cez vodu, no teraz má pred sebou nebezpečnú prekážku - aktivované pasce. Vyhnite sa im a dostaňte sa na kamenné tlačidlo pri schodisku do ďalšej úrovne.",
+    "text": "V nasledujúcej štvrtej úlohe hrdinov postup bude skôr o skákaní ako o sekaní mečom. Dokážete nájsť správne bloky, ktoré privedú hrdinu ku kamennému tlačidlu?",
     "image": "maintask3_introduction_modal"
   },
     "help_modal": 
@@ -112,7 +112,33 @@
   },
   "success_modal": {
     "title": "Výborne! Splnili ste štvrtú úlohu!",
-    "text": "Zdá sa, že vám používanie skoku nerobí najmenší problém. Zvládli ste cestu cez vodu a pasce. Nasleduje ďalšia úroveň.",
+    "text": "Skvelá práca, koniec úrovne už má hrdina na dosah.",
+    "image": "success"
+  },   
+    "failure_modal": {
+    "title": "Hlavná úloha nebola splnená",
+    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
+    "image": "failure"
+  }
+  },
+  
+    "mainTask4": {
+    "progress": "100",  
+  
+    "introduction_modal": {
+    "title": "Zadanie piatej úlohy",
+    "text": "Ostáva už len jedno kamenné tlačidlo, na ktoré sa hrdina musí dostať. V ceste mu stojí už len posledná váza a pasce.",
+    "image": "maintask4_introduction_modal"
+  },
+    "help_modal": 
+    {
+    "title": "maintask4_help_modal_title",
+    "text": "maintask4_help_modal_text",
+    "image": "failure"
+  },
+  "success_modal": {
+    "title": "Výborne! Splnili ste piatu úlohu!",
+    "text": "Dokázali ste, že sekanie mečom vám ide tak dobre, ako skákanie.",
     "image": "success"
   },   
     "failure_modal": {
