@@ -1,0 +1,10 @@
+<xml>
+<block type="move_right"></block>
+<block type="move_left"></block>
+<block type="move_up"></block>
+<block type="move_down"></block>
+<block type="jump"></block>
+<block type="attack"></block>
+<block type="use"></block>
+<block type="open"></block>
+</xml>

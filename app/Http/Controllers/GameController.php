@@ -5,11 +5,9 @@ use Illuminate\Routing\Controller;
 use Auth;
 
 use Illuminate\Http\Request;
-
-
-
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+
 use App\User;
 
 
@@ -36,10 +34,22 @@ class GameController extends Controller
 
     public function runGame($category, $level)  
     {                                   
-        $levelMax=6;
+        $categoryHasLevelsArray = array(6, 2); // maximum is increased +1 for last level redirect
+
+        $categoryMin = 1;
+        $categoryMax = sizeof($categoryHasLevelsArray);
+        
+        if($category <= $categoryMax && $category >= $categoryMin)
+        {
+         $levelMax=$categoryHasLevelsArray[$category-1];  
+        }
+        else
+        {
+         $levelMax=0;  
+        }
+       
         $levelMin=1;
-        $categoryMax=1;
-        $categoryMin=1;
+  
 
         if($category>$categoryMax || $category<$categoryMin || $level < $levelMin || $level > $levelMax || !is_numeric($category) || !is_numeric($level))
         {

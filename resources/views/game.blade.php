@@ -58,10 +58,10 @@
     <div class="row row-full">
         <div class="col-md-6">
             <div class="leftside">
-                <!--<iframe id="app-frame" style="width:100%;height:100%;overflow:hidden;border:none;"
-                src="https://playcanv.as/e/p/62c28f63/"></iframe>-->
                 <iframe id="app-frame" style="width:100%;height:100%;overflow:hidden;border:none;"
-                src="{{url('')}}/public/game/playcanvas/{{$category}}x{{$level}}.html"></iframe>
+                src="https://playcanv.as/e/p/62c28f63/"></iframe>
+                <!--<iframe id="app-frame" style="width:100%;height:100%;overflow:hidden;border:none;"
+                src="{{url('')}}/public/game/playcanvas/{{$category}}x{{$level}}.html"></iframe>-->
             </div>
         </div>
         <div class="col-md-6" style="background-color:#E4E4E4;">            
@@ -122,7 +122,9 @@
        <!--<block type="run" movable="false" deletable="false" inline="false" x="50" y="1000"></block>
        <block type="cameraplus" movable="false" deletable="false" inline="false" x="250" y="1000"></block> 
        <block type="cameraminus" movable="false" deletable="false" inline="false" x="450" y="1000"></block>
+       -->
        <block type="save" movable="false" deletable="false" inline="false" x="250" y="900"></block>
+       <!--
        <block type="load" movable="false" deletable="false" inline="false" x="450" y="900"></block> 
        <block type="reload" movable="false" deletable="false" inline="false" x="650" y="1000"></block>
        -->      
@@ -161,7 +163,7 @@
 var button = document.getElementById('send_code_button'); 
 button.disabled = true; 
 button = document.getElementById('solution_task_button'); 
-button.disabled = true;
+button.disabled = false;
 button = document.getElementById('show_task_button'); 
 button.disabled = true;
 button = document.getElementById('delete_blocks_button'); 
@@ -362,7 +364,7 @@ eventer(messageEvent,function(e)
   //var cameraplus = getBlocksByType("cameraplus");
   //var cameraminus = getBlocksByType("cameraminus");
   //var load = getBlocksByType("load");
-  //var save = getBlocksByType("save");
+  var save = getBlocksByType("save");
   //var reload = getBlocksByType("reload"); 
 
 
@@ -396,6 +398,16 @@ eventer(messageEvent,function(e)
   });
   });  
 
+    $(document).ready(function(){
+    $("#solution_task_button").click( function(){
+         
+         if(!this.locked)
+        {       
+        solutionTaskButton();
+        }
+  });
+  });  
+
 
  function showTaskButton() {
   
@@ -419,6 +431,18 @@ eventer(messageEvent,function(e)
 
   }
 
+  function solutionTaskButton() {
+
+     var run = getBlocksByType("player");
+
+     console.log(run);
+     console.log(run[0]);
+
+     run[0].setFieldValue("http://localhost/blockly-web-project/game/arrow.png", "facingDirection_image");
+
+
+  }
+
 
   function blockClickController(event) {  
 
@@ -427,8 +451,14 @@ eventer(messageEvent,function(e)
     {     
   
       blockToCheck = Blockly.selected;
+
+      if(blockToCheck.id == save[0].id)
+      {
+        saveGame();
+        blockToCheck.unselect();
+      }
      
- 
+      /*
       if(blockToCheck.id == run[0].id)
       {
         
@@ -465,7 +495,7 @@ eventer(messageEvent,function(e)
          blockToCheck.unselect();
       }
       
-
+      */
     }
 
 
@@ -1120,8 +1150,8 @@ eventer(messageEvent,function(e)
         iframe.contentWindow.postMessage
         (
         { message: messageForGame }, 
-        //"https://playcanv.as/p/62c28f63/"
-        "{{url('')}}/public/game/playcanvas/index.html"
+        "https://playcanv.as/p/62c28f63/"
+        //"{{url('')}}/public/game/playcanvas/index.html"
         );
 
   }

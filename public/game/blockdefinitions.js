@@ -121,7 +121,8 @@ Blockly.Blocks['player'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("Hrdina  ")
-        .appendField(new Blockly.FieldImage("http://localhost/blockly-web-project/game/logo-head-small.png", 70, 70, "*"));
+        .appendField(new Blockly.FieldImage("http://localhost/blockly-web-project/game/logo-head-small.png", 70, 70, "*"))		
+        .appendField(new Blockly.FieldImage("https://png.icons8.com/material/1600/right.png", 70, 70, "*"),"facingDirection_image");   
     this.setNextStatement(true, "Action");
     this.setColour(300);
  this.setTooltip("This block refers to Player.");
