@@ -124,9 +124,9 @@
        <block type="cameraminus" movable="false" deletable="false" inline="false" x="450" y="1000"></block>
        -->
        <block type="save" movable="false" deletable="false" inline="false" x="250" y="900"></block>
+       <block type="reload" movable="false" deletable="false" inline="false" x="50" y="900"></block>
        <!--
-       <block type="load" movable="false" deletable="false" inline="false" x="450" y="900"></block> 
-       <block type="reload" movable="false" deletable="false" inline="false" x="650" y="1000"></block>
+       <block type="load" movable="false" deletable="false" inline="false" x="450" y="900"></block>       
        -->      
        
 </xml>
@@ -220,8 +220,7 @@ eventer(messageEvent,function(e)
     }
     
     case "introduction":
-    {
-    
+    {   
     
 
     this.level_start = Date.now(); 
@@ -318,6 +317,16 @@ eventer(messageEvent,function(e)
       break;     
     }
 
+    case "changeFacingDirection":
+    {
+      console.log("change facing direction");  
+
+      changeFacingDirectionImage(e.data.content);
+
+    }
+
+
+
   }
 
 },false);
@@ -339,6 +348,9 @@ eventer(messageEvent,function(e)
   this.category = tasks.level.category;
   this.level    = tasks.level.level;
   this.progress = savedGame.progress;
+
+
+
   this.level_start = new Date();
   this.task_start = new Date();
   this.task_end = new Date();
@@ -347,7 +359,7 @@ eventer(messageEvent,function(e)
   this.main_task = 0;
   
   this.saveObjectToString = savedGame.json;
-  this.saveToDatabaseEnabled = true;  
+  this.saveToDatabaseEnabled = false;
 
   var blocklyArea = document.getElementById('blocklyArea');
   var blocklyDiv = document.getElementById('blocklyDiv');
@@ -359,13 +371,17 @@ eventer(messageEvent,function(e)
                               workspacePlayground); 
   disableContextMenus();
 
+  this.savedGameParsed = JSON.parse(savedGame.json);
+  this.facingDirection = "";
+  changeFacingDirectionImage(savedGameParsed.character.facingDirection);
+  
 
   //var run = getBlocksByType("run");
   //var cameraplus = getBlocksByType("cameraplus");
   //var cameraminus = getBlocksByType("cameraminus");
   //var load = getBlocksByType("load");
   var save = getBlocksByType("save");
-  //var reload = getBlocksByType("reload"); 
+  var reload = getBlocksByType("reload"); 
 
 
    $(document).ready(function(){
@@ -431,17 +447,51 @@ eventer(messageEvent,function(e)
 
   }
 
-  function solutionTaskButton() {
+  function solutionTaskButton() {     
 
-     var run = getBlocksByType("player");
-
-     console.log(run);
-     console.log(run[0]);
-
-     run[0].setFieldValue("http://localhost/blockly-web-project/game/arrow.png", "facingDirection_image");
-
+    console.log(this.facingDirection);
 
   }
+
+  function changeFacingDirectionImage(direction) {
+
+    var player = getBlocksByType("player"); 
+
+    this.facingDirection = direction;
+
+    switch(direction)
+    {
+        case "right":
+        {
+          
+          player[0].setFieldValue("http://localhost/blockly-web-project/game/right.png", "facingDirection_image");
+          break;
+        }
+        
+        case "left":
+        {
+          player[0].setFieldValue("http://localhost/blockly-web-project/game/left.png", "facingDirection_image");
+          break;
+        }
+
+        case "up":
+        {
+          player[0].setFieldValue("http://localhost/blockly-web-project/game/up.png", "facingDirection_image");
+          break;
+        }
+
+        case "down":
+        {
+          player[0].setFieldValue("http://localhost/blockly-web-project/game/down.png", "facingDirection_image");
+          break;
+        }
+
+
+    }  
+
+  
+   }
+
 
 
   function blockClickController(event) {  
@@ -455,6 +505,11 @@ eventer(messageEvent,function(e)
       if(blockToCheck.id == save[0].id)
       {
         saveGame();
+        blockToCheck.unselect();
+      }
+      else if(blockToCheck.id == reload[0].id)
+      {
+        reloadIframe();
         blockToCheck.unselect();
       }
      
@@ -649,6 +704,7 @@ eventer(messageEvent,function(e)
         
         this.code = code;
 
+        console.log(this.code);
         sendMessage(code);
   }
 
@@ -1098,7 +1154,7 @@ eventer(messageEvent,function(e)
     html =    '<img width="70%" height="90%" src="' + modalStructure.image + '" ></img>';
     modal.find('#modal-image').html(html).end();   
 
-    html =    '<button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="loadGame()">Skúsiť znova</button>';   
+    html =    '<button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="reloadIframe()">Skúsiť znova</button>';   
     modal.find('#modal-button').html(html).end();   
 
     break;

@@ -1,10 +1,7 @@
 <xml>
-<block type="move_right"></block>
-<block type="move_left"></block>
-<block type="move_up"></block>
-<block type="move_down"></block>
-<block type="jump"></block>
-<block type="attack"></block>
-<block type="use"></block>
-<block type="open"></block>
+<block type="move_forward"></block>
+<block type="jump_forward"></block>
+<block type="rotate_character_left"></block>
+<block type="rotate_character_right"></block>
+<block type="do_while_not_finished"></block>
 </xml>

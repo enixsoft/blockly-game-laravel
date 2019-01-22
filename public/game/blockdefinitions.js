@@ -1,5 +1,60 @@
 var Blockly = Blockly || {};
 
+Blockly.Blocks['do_while_not_finished'] = {
+  init: function() {
+    this.appendDummyInput()       
+        .appendField("opakuj pokiaľ nie je hrdina v cieli")
+		.appendField(new Blockly.FieldImage("https://png.icons8.com/icon/6454/cycle-arrows", 25, 25, "*"))
+    this.appendStatementInput("NAME")
+        .setCheck(null);
+    this.setInputsInline(false);
+	this.setPreviousStatement(true, null);    
+    this.setColour(230);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['move_forward'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("choď o 1 krok v smere")
+		.appendField(new Blockly.FieldImage("https://png.icons8.com/icon/6454/resize-corners", 20, 20, "*"));		
+    this.setPreviousStatement(true, "Action");
+    this.setNextStatement(true, "Action");
+    this.setColour(160);
+ this.setTooltip("Move the character right");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['rotate_character_left'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("otočiť hrdinu doľava")
+		.appendField(new Blockly.FieldImage("https://png.icons8.com/icon/6454/right-up2", 20, 20, "*"));		
+    this.setPreviousStatement(true, "Action");
+    this.setNextStatement(true, "Action");
+    this.setColour(160);
+ this.setTooltip("Move the character right");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['rotate_character_right'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("otočiť hrdinu doprava")
+		.appendField(new Blockly.FieldImage("https://png.icons8.com/icon/6454/right-down2", 20, 20, "*"));		
+    this.setPreviousStatement(true, "Action");
+    this.setNextStatement(true, "Action");
+    this.setColour(160);
+ this.setTooltip("Move the character right");
+ this.setHelpUrl("");
+  }
+};
+
+
 Blockly.Blocks['move_right'] = {
   init: function() {
     this.appendDummyInput()
@@ -117,12 +172,27 @@ Blockly.Blocks['jump'] = {
   }
 };
 
+Blockly.Blocks['jump_forward'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("skoč dopredu v smere")
+		.appendField(new Blockly.FieldImage("https://png.icons8.com/ios/50/000000/trampoline-park-filled.png", 20, 20, "*"));	
+    this.setPreviousStatement(true, "Action");
+    this.setNextStatement(true, "Action");
+    this.setColour(160);
+  this.setTooltip("The character jumps");
+ this.setHelpUrl("");
+  }
+};
+
+
+
 Blockly.Blocks['player'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("Hrdina  ")
         .appendField(new Blockly.FieldImage("http://localhost/blockly-web-project/game/logo-head-small.png", 70, 70, "*"))		
-        .appendField(new Blockly.FieldImage("https://png.icons8.com/material/1600/right.png", 70, 70, "*"),"facingDirection_image");   
+        .appendField(new Blockly.FieldImage("http://localhost/blockly-web-project/game/nodirection.png", 70, 70, "*"),"facingDirection_image");   
     this.setNextStatement(true, "Action");
     this.setColour(300);
  this.setTooltip("This block refers to Player.");
@@ -194,6 +264,36 @@ Blockly.Blocks['reload'] = {
  this.setTooltip("This block refers to Player.");
  this.setHelpUrl("");
   }
+};
+
+
+Blockly.JavaScript['move_forward'] = function(block) {
+  // TODO: Assemble JavaScript into code variable.
+  var steps = 1;
+  var code = 'moveForward(' + steps + ');\n';
+  return code;
+};
+
+Blockly.JavaScript['rotate_character_left'] = function(block) {
+  // TODO: Assemble JavaScript into code variable.
+  var direction = "left";
+  var code = 'rotateCharacter(' + direction + ');\n';
+  return code;
+};
+
+Blockly.JavaScript['rotate_character_right'] = function(block) {
+  // TODO: Assemble JavaScript into code variable.
+  var direction = "right";
+  var code = 'rotateCharacter(' + direction + ');\n';
+  return code;
+};
+
+
+Blockly.JavaScript['jump_forward'] = function(block) {
+  // TODO: Assemble JavaScript into code variable.
+  var steps = 1;
+  var code = 'jumpForward(' + steps + ');\n';
+  return code;
 };
 
 Blockly.JavaScript['move_left'] = function(block) {
@@ -291,5 +391,11 @@ Blockly.JavaScript['save'] = function(block) {
 Blockly.JavaScript['reload'] = function(block) {
   // TODO: Assemble JavaScript into code variable.
   var code = '\n';
+  return code;
+};
+
+Blockly.JavaScript['do_while_not_finished'] = function(block) {  
+  var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME'); 
+  var code = 'doWhileNotFinished(' + statements_name + ');\n';
   return code;
 };
