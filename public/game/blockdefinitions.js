@@ -8,12 +8,31 @@ Blockly.Blocks['do_while_not_finished'] = {
     this.appendStatementInput("NAME")
         .setCheck(null);
     this.setInputsInline(false);
-	this.setPreviousStatement(true, null);    
+	this.setPreviousStatement(true, null);		
     this.setColour(230);
  this.setTooltip("");
  this.setHelpUrl("");
   }
 };
+
+Blockly.Blocks['for'] = {
+  init: function() {
+    this.appendDummyInput()       
+        .appendField("opakuj ")
+		.appendField(new Blockly.FieldNumber('1'), 'count')
+		.appendField("krát")
+		.appendField(new Blockly.FieldImage("https://png.icons8.com/icon/6454/cycle-arrows", 25, 25, "*"))
+    this.appendStatementInput("NAME")
+        .setCheck(null);
+    this.setInputsInline(false);
+	this.setPreviousStatement(true, null); 
+	this.setNextStatement(true, "Action");	
+    this.setColour(230);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
+
 
 Blockly.Blocks['move_forward'] = {
   init: function() {
@@ -396,6 +415,13 @@ Blockly.JavaScript['reload'] = function(block) {
 
 Blockly.JavaScript['do_while_not_finished'] = function(block) {  
   var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME'); 
-  var code = 'doWhileNotFinished(' + statements_name + ');\n';
-  return code;
+  var code = 'doWhileNotFinished(){\n' + statements_name + '};\n';
+  return code;  
+};
+
+Blockly.JavaScript['for'] = function(block) {  
+  var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+  var count = block.getFieldValue('count');    
+  var code = 'for(' + count + '){\n' + statements_name + '};\n';
+  return code;  
 };
