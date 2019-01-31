@@ -694,7 +694,32 @@ eventer(messageEvent,function(e)
 
         if(failedBlock.length>0)
         {
-          failedBlock[0].setColour(160);
+          
+          switch(failedBlock[0].type)
+          {
+            case "do_while_not_finished":
+            failedBlock[0].setColour(230);
+            break;
+
+            case "for":
+            failedBlock[0].setColour(230);
+            break;
+
+            case "if_current_tile_is":
+            failedBlock[0].setColour(210);
+            break;
+
+            case "if_next_tile_is":
+            failedBlock[0].setColour(210);
+            break;
+
+            default:
+            failedBlock[0].setColour(160);
+            break;
+
+
+          }
+          
           failedBlock.splice(0);
         }
 

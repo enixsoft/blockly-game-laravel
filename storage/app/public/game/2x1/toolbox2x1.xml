@@ -5,4 +5,6 @@
 <block type="rotate_character_right"></block>
 <block type="do_while_not_finished"></block>
 <block type="for"></block>
+<block type="if_current_tile_is"></block>
+<block type="if_next_tile_is"></block>
 </xml>
