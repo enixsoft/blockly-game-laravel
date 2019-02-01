@@ -34,7 +34,7 @@ class GameController extends Controller
 
     public function runGame($category, $level)  
     {                                   
-        $categoryHasLevelsArray = array(6, 2); // maximum is increased +1 for last level redirect
+        $categoryHasLevelsArray = array(6, 6); // maximum is increased +1 for last level redirect
 
         $categoryMin = 1;
         $categoryMax = sizeof($categoryHasLevelsArray);

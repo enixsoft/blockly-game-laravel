@@ -1179,7 +1179,7 @@ eventer(messageEvent,function(e)
     html =    '<img width="70%" height="90%" src="' + modalStructure.image + '" ></img>';
     modal.find('#modal-image').html(html).end();   
 
-    html =    '<button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="reloadIframe()">Skúsiť znova</button>';   
+    html =    '<button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="loadGame()">Skúsiť znova</button>';   
     modal.find('#modal-button').html(html).end();   
 
     break;

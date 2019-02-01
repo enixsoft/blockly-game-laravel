@@ -1,6 +1,7 @@
 <xml>
 <block type="move_forward"></block>
 <block type="jump_forward"></block>
+<block type="use_forward"></block>
 <block type="rotate_character_left"></block>
 <block type="rotate_character_right"></block>
 <block type="do_while_not_finished"></block>

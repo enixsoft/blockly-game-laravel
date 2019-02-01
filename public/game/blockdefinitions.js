@@ -197,6 +197,20 @@ Blockly.Blocks['use'] = {
   }
 };
 
+Blockly.Blocks['use_forward'] = {
+  init: function() {
+    this.appendDummyInput()        
+		.appendField("použi ")		
+        .appendField(new Blockly.FieldImage("http://localhost/blockly-web-project/game/lever.png", 30, 30, "*"))      
+		.appendField("v smere");
+    this.setPreviousStatement(true, "Action");
+    this.setNextStatement(true, "Action");
+    this.setColour(160);
+ this.setTooltip("Character uses");
+ this.setHelpUrl("");
+  }
+};
+
 Blockly.Blocks['open'] = {
   init: function() {
     this.appendDummyInput()
@@ -388,6 +402,12 @@ Blockly.JavaScript['use'] = function(block) {
   // TODO: Assemble JavaScript into code variable.
   var dropdown_direction = block.getFieldValue('direction');	
   var code = 'use(' + dropdown_direction + ');\n';
+  return code;
+};
+
+Blockly.JavaScript['use_forward'] = function(block) { 
+
+  var code = 'useForward();\n';
   return code;
 };
 
