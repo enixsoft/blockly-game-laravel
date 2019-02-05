@@ -119,10 +119,9 @@
 
 <xml id="startBlocks" style="display: none">
        <block type="player" movable="false" deletable="false" inline="false" x="50" y="70"></block>
-       <!--<block type="run" movable="false" deletable="false" inline="false" x="50" y="1000"></block>
-       <block type="cameraplus" movable="false" deletable="false" inline="false" x="250" y="1000"></block> 
-       <block type="cameraminus" movable="false" deletable="false" inline="false" x="450" y="1000"></block>
-       -->
+       <!--<block type="run" movable="false" deletable="false" inline="false" x="50" y="1000"></block>-->
+       <block type="cameraplus" movable="false" deletable="false" inline="false" x="650" y="900"></block> 
+       <block type="cameraminus" movable="false" deletable="false" inline="false" x="450" y="900"></block>       
        <block type="save" movable="false" deletable="false" inline="false" x="250" y="900"></block>
        <block type="reload" movable="false" deletable="false" inline="false" x="50" y="900"></block>
        <!--
@@ -359,7 +358,7 @@ eventer(messageEvent,function(e)
   this.main_task = 0;
   
   this.saveObjectToString = savedGame.json;
-  this.saveToDatabaseEnabled = false;
+  this.saveToDatabaseEnabled = true;
 
   var blocklyArea = document.getElementById('blocklyArea');
   var blocklyDiv = document.getElementById('blocklyDiv');
@@ -377,8 +376,8 @@ eventer(messageEvent,function(e)
   
 
   //var run = getBlocksByType("run");
-  //var cameraplus = getBlocksByType("cameraplus");
-  //var cameraminus = getBlocksByType("cameraminus");
+  var cameraplus = getBlocksByType("cameraplus");
+  var cameraminus = getBlocksByType("cameraminus");
   //var load = getBlocksByType("load");
   var save = getBlocksByType("save");
   var reload = getBlocksByType("reload"); 
@@ -520,7 +519,7 @@ eventer(messageEvent,function(e)
         if(!this.locked==false)
           runCode();
         blockToCheck.unselect();
-      }
+      }*/
         else if(blockToCheck.id == cameraplus[0].id)
       {
          cameraPlus();
@@ -534,7 +533,7 @@ eventer(messageEvent,function(e)
       
         blockToCheck.unselect();
       }
-      else if(blockToCheck.id == reload[0].id)
+      /*else if(blockToCheck.id == reload[0].id)
       {
         reloadIframe();
         blockToCheck.unselect();
@@ -1203,7 +1202,7 @@ eventer(messageEvent,function(e)
 
     
     html = '<button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="window.location.href=\''; 
-    html += '{{ url('/')}}' + '/game/1/' + (this.level+1) + '\';">Pokračovať</button>';  
+    html += '{{ url('/')}}' + '/game/' + this.category + '/' + (this.level+1) + '\';">Pokračovať</button>';  
    
     modal.find('#modal-button').html(html).end();   
 

@@ -183,6 +183,20 @@ Blockly.Blocks['attack'] = {
   }
 };
 
+Blockly.Blocks['attack_forward'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("zaútoč")
+        .appendField(new Blockly.FieldImage("https://png.icons8.com/color/sword.png", 30, 30, "*"))
+        .appendField("v smere");
+    this.setPreviousStatement(true, "Action");
+    this.setNextStatement(true, "Action");
+    this.setColour(160);
+ this.setTooltip("Character attacks");
+ this.setHelpUrl("");
+  }
+};
+
 Blockly.Blocks['use'] = {
   init: function() {
     this.appendDummyInput()
@@ -217,6 +231,20 @@ Blockly.Blocks['open'] = {
         .appendField("otvor")
         .appendField(new Blockly.FieldImage("http://localhost/blockly-web-project/game/chest.png", 30, 30, "*"))
         .appendField(new Blockly.FieldDropdown([["napravo","right"], ["naľavo","left"], ["hore","up"], ["dole","down"]]), "direction");
+    this.setPreviousStatement(true, "Action");
+    this.setNextStatement(true, "Action");
+    this.setColour(160);
+ this.setTooltip("Character opens");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['open_forward'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("otvor")
+        .appendField(new Blockly.FieldImage("http://localhost/blockly-web-project/game/chest.png", 30, 30, "*"))
+        .appendField("v smere");
     this.setPreviousStatement(true, "Action");
     this.setNextStatement(true, "Action");
     this.setColour(160);
@@ -398,8 +426,14 @@ Blockly.JavaScript['attack'] = function(block) {
   return code;
 };
 
+Blockly.JavaScript['attack_forward'] = function(block) {
+  
+  var code = 'attackForward();\n';
+  return code;
+};
+
 Blockly.JavaScript['use'] = function(block) {
-  // TODO: Assemble JavaScript into code variable.
+  
   var dropdown_direction = block.getFieldValue('direction');	
   var code = 'use(' + dropdown_direction + ');\n';
   return code;
@@ -415,6 +449,12 @@ Blockly.JavaScript['open'] = function(block) {
   // TODO: Assemble JavaScript into code variable.
   var dropdown_direction = block.getFieldValue('direction');	
   var code = 'open(' + dropdown_direction + ');\n';
+  return code;
+};
+
+Blockly.JavaScript['open_forward'] = function(block) {
+
+  var code = 'openForward();\n';
   return code;
 };
 
