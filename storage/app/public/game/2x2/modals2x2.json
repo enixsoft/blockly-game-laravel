@@ -17,7 +17,7 @@
   },
   
   "mainTask0":{
-    "progress": "25",
+    "progress": "20",
     
     "introduction_modal": {
     "title": "Zadanie prvej úlohy",
@@ -43,7 +43,7 @@
   },
   
   "mainTask1": {
-    "progress": "50",  
+    "progress": "40",  
   
     "introduction_modal": {
     "title": "Zadanie druhej úlohy",
@@ -71,7 +71,7 @@
 
 
   "mainTask2": {
-    "progress": "75",  
+    "progress": "60",  
   
     "introduction_modal": {
     "title": "Zadanie tretej úlohy",
@@ -97,7 +97,7 @@
   },
   
     "mainTask3": {
-    "progress": "100",  
+    "progress": "80",  
   
     "introduction_modal": {
     "title": "Zadanie štvrtej úlohy",
@@ -120,8 +120,33 @@
     "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
     "image": "failure"
 }
-  }
+  },
   
+      "mainTask4": {
+    "progress": "100",  
+  
+    "introduction_modal": {
+    "title": "Zadanie štvrtej úlohy",
+    "text": "Ku kamennému tlačidlu pre splnenie tejto úlohy vedie jedna cesta, avšak blokuje ho pasca, ktorej sa nedá vyhnúť. Vypnite ju pomocou páky.",
+    "image": "maintask3_introduction_modal"
+  },
+    "help_modal": 
+    {
+    "title": "maintask4_help_modal_title",
+    "text": "maintask4_help_modal_text",
+    "image": "failure"
+  },
+  "success_modal": {
+    "title": "Výborne! Splnili ste štvrtú úlohu!",
+    "text": "Dobrá práca, váš hrdina už má cieľ na dosah.",
+    "image": "success"
+  },   
+    "failure_modal": {
+    "title": "Hlavná úloha nebola splnená",
+    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
+    "image": "failure"
+}
+  }
 
 
 }
