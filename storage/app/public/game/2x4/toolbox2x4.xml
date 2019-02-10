@@ -1,0 +1,13 @@
+<xml>
+<block type="move_forward"></block>
+<block type="rotate_character_left"></block>
+<block type="rotate_character_right"></block>
+<block type="jump_forward"></block>
+<block type="attack_forward"></block>
+<block type="use_forward"></block>
+<block type="open_forward"></block>
+<block type="do_while_not_finished"></block>
+<block type="for"></block>
+<block type="if_current_tile_is"></block>
+<block type="if_next_tile_is"></block>
+</xml>

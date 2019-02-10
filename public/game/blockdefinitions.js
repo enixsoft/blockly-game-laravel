@@ -38,7 +38,7 @@ Blockly.Blocks['if_current_tile_is'] = {
     this.appendDummyInput()       
         .appendField("ak hrdina stojí na ")		
 		.appendField(new Blockly.FieldDropdown([["tlačidle", "button"], ["akejkoľvek dlaždici", "any"]]), "type")
-		.appendField(new Blockly.FieldImage("https://png.icons8.com/icon/6454/cycle-arrows", 25, 25, "*"))
+		.appendField(new Blockly.FieldImage("https://png.icons8.com/icon/6454/refresh", 25, 25, "*"))
     this.appendStatementInput("NAME")
         .setCheck(null);
     this.setInputsInline(false);
@@ -55,7 +55,7 @@ Blockly.Blocks['if_next_tile_is'] = {
     this.appendDummyInput()       
         .appendField("ak v smere nasleduje ")		
 		.appendField(new Blockly.FieldDropdown([["tlačidlo", "button"], ["akákoľvek dlaždica", "any"], ["voda", "water"], ["stena", "wall"]]), "type")
-		.appendField(new Blockly.FieldImage("https://png.icons8.com/icon/6454/cycle-arrows", 25, 25, "*"))
+		.appendField(new Blockly.FieldImage("https://png.icons8.com/icon/6454/refresh", 25, 25, "*"))
     this.appendStatementInput("NAME")
         .setCheck(null);
     this.setInputsInline(false);
@@ -85,7 +85,7 @@ Blockly.Blocks['rotate_character_left'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("otočiť hrdinu doľava")
-		.appendField(new Blockly.FieldImage("https://png.icons8.com/icon/6454/right-up2", 20, 20, "*"));		
+		.appendField(new Blockly.FieldImage("https://png.icons8.com/icon/6454/rotate-left", 20, 20, "*"));		
     this.setPreviousStatement(true, "Action");
     this.setNextStatement(true, "Action");
     this.setColour(160);
@@ -98,7 +98,7 @@ Blockly.Blocks['rotate_character_right'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("otočiť hrdinu doprava")
-		.appendField(new Blockly.FieldImage("https://png.icons8.com/icon/6454/right-down2", 20, 20, "*"));		
+		.appendField(new Blockly.FieldImage("https://png.icons8.com/icon/6454/rotate-right", 20, 20, "*"));		
     this.setPreviousStatement(true, "Action");
     this.setNextStatement(true, "Action");
     this.setColour(160);
