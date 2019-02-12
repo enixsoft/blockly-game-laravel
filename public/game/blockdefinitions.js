@@ -54,7 +54,7 @@ Blockly.Blocks['if_next_tile_is'] = {
   init: function() {
     this.appendDummyInput()       
         .appendField("ak v smere nasleduje ")		
-		.appendField(new Blockly.FieldDropdown([["tlačidlo", "button"], ["akákoľvek dlaždica", "any"], ["voda", "water"], ["stena", "wall"]]), "type")
+		.appendField(new Blockly.FieldDropdown([["dlaždica", "ground"], ["voda", "water"], ["stena", "wall"], ["tlačidlo", "button"]]), "type")
 		.appendField(new Blockly.FieldImage("https://png.icons8.com/icon/6454/refresh", 25, 25, "*"))
     this.appendStatementInput("NAME")
         .setCheck(null);
@@ -67,6 +67,23 @@ Blockly.Blocks['if_next_tile_is'] = {
   }
 };
 
+
+Blockly.Blocks['if_next_tile_has'] = {
+  init: function() {
+    this.appendDummyInput()       
+        .appendField("ak v smere na dlaždici je ")		
+		.appendField(new Blockly.FieldDropdown([["zničiteľná vec", "destructible"], ["páka", "lever"], ["truhlica", "chest"], ["pasca", "trap"]]), "type")
+		.appendField(new Blockly.FieldImage("https://png.icons8.com/icon/6454/refresh", 25, 25, "*"))
+    this.appendStatementInput("NAME")
+        .setCheck(null);
+    this.setInputsInline(false);
+	this.setPreviousStatement(true, null); 
+	this.setNextStatement(true, "Action");	
+    this.setColour(210);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
 
 Blockly.Blocks['move_forward'] = {
   init: function() {
@@ -531,5 +548,12 @@ Blockly.JavaScript['if_next_tile_is'] = function(block) {
   var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
   var type = block.getFieldValue('type');    
   var code = 'ifNextTileIs(' + type + '){\n' + statements_name + '};\n';
+  return code;  
+};
+
+Blockly.JavaScript['if_next_tile_has'] = function(block) {  
+  var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+  var type = block.getFieldValue('type');    
+  var code = 'ifNextTileHas(' + type + '){\n' + statements_name + '};\n';
   return code;  
 };

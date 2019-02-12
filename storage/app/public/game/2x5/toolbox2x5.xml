@@ -5,6 +5,7 @@
 <block type="jump_forward"></block>
 <block type="attack_forward"></block>
 <block type="use_forward"></block>
+<block type="open_forward"></block>
 <block type="do_while_not_finished"></block>
 <block type="for"></block>
 <block type="if_next_tile_is"></block>
