@@ -33,23 +33,6 @@ Blockly.Blocks['for'] = {
   }
 };
 
-Blockly.Blocks['if_current_tile_is'] = {
-  init: function() {
-    this.appendDummyInput()       
-        .appendField("ak hrdina stojí na ")		
-		.appendField(new Blockly.FieldDropdown([["tlačidle", "button"], ["akejkoľvek dlaždici", "any"]]), "type")
-		.appendField(new Blockly.FieldImage("https://png.icons8.com/icon/6454/refresh", 25, 25, "*"))
-    this.appendStatementInput("NAME")
-        .setCheck(null);
-    this.setInputsInline(false);
-	this.setPreviousStatement(true, null); 
-	this.setNextStatement(true, "Action");	
-    this.setColour(210);
- this.setTooltip("");
- this.setHelpUrl("");
-  }
-};
-
 Blockly.Blocks['if_next_tile_is'] = {
   init: function() {
     this.appendDummyInput()       
@@ -537,12 +520,6 @@ Blockly.JavaScript['for'] = function(block) {
   return code;  
 };
 
-Blockly.JavaScript['if_current_tile_is'] = function(block) {  
-  var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
-  var type = block.getFieldValue('type');    
-  var code = 'ifCurrentTileIs(' + type + '){\n' + statements_name + '};\n';
-  return code;  
-};
 
 Blockly.JavaScript['if_next_tile_is'] = function(block) {  
   var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');

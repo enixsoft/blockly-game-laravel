@@ -176,7 +176,7 @@ var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
 
 eventer(messageEvent,function(e) 
 {
-  console.log('parent received message!:  ', e.data);
+  console.log('web-side script received message from game!:  ', e.data);
   
   switch(e.data.action)
   {
@@ -195,22 +195,7 @@ eventer(messageEvent,function(e)
       this.locked = false;
       break;
     }
-     case "death":
-    {
-       // you died window
-      workspacePlayground.highlightBlock(null);
-      break;
-    }
-     case "uiHelp":
-    {
-      // old game UI commands
-      break;     
-    }
-     case "uiPlay":
-    {
-    // old game UI commands
-     break;     
-    }    
+    
     case "start":
     {
      
@@ -245,11 +230,10 @@ eventer(messageEvent,function(e)
     }
 
      case "highlightFailure":
-    {
-       //COMMAND FAILED BLOCK IS RED    
+    {   
      
       block = workspacePlayground.getBlockById(e.data.content);
-      block.setColour(0);
+      block.setColour(0); //COMMAND FAILED BLOCK IS RED 
       failedBlock.push(block);
       break;     
     }
@@ -260,7 +244,7 @@ eventer(messageEvent,function(e)
       console.log(e.data.content);
 
       workspacePlayground.highlightBlock(null);
-      //maybe change color of all blocks of correct algorithm ?
+      
       mainTaskCompleted(e.data.content.currentMainTask);
 
       this.task_end = Date.now();
@@ -295,8 +279,7 @@ eventer(messageEvent,function(e)
     {
       console.log("nextMainTask");
       console.log(e.data.content);
-      workspacePlayground.highlightBlock(null);
-      //maybe change color of all blocks of correct algorithm ?
+      workspacePlayground.highlightBlock(null);      
       mainTaskIntroduced(e.data.content);
       break;     
     }
@@ -304,7 +287,6 @@ eventer(messageEvent,function(e)
     {
       console.log("allMainTasksFinished");
 
-      
       allMainTasksFinished();
       break;     
     }
@@ -349,7 +331,6 @@ eventer(messageEvent,function(e)
   this.progress = savedGame.progress;
 
 
-
   this.level_start = new Date();
   this.task_start = new Date();
   this.task_end = new Date();
@@ -375,7 +356,7 @@ eventer(messageEvent,function(e)
   changeFacingDirectionImage(savedGameParsed.character.facingDirection);
   
 
-  //var run = getBlocksByType("run");
+  
   var cameraplus = getBlocksByType("cameraplus");
   var cameraminus = getBlocksByType("cameraminus");
   //var load = getBlocksByType("load");
@@ -430,7 +411,7 @@ eventer(messageEvent,function(e)
   
           title: tasks[this.main_task].introduction_modal.title, 
           text: tasks[this.main_task].introduction_modal.text,
-          image: getModalImageLink(tasks[this.main_task].introduction_modal.image)
+          image: getModalImageLink(tasks[this.main_task].introduction_modal.image, "level")
 
           };
 
@@ -587,7 +568,7 @@ eventer(messageEvent,function(e)
   $(window).resize(function() {    
     onresize();
   });
-  //window.addEventListener('resize', onresize, false);
+ 
   onresize();
      
   function saveObjectToJson(object) {
@@ -632,14 +613,10 @@ eventer(messageEvent,function(e)
 
   function updateIngameProgress(task) {
 
-    var loggedIn = {{ auth()->check() ? 'true' : 'false' }};
-
-    var progress = tasks[task].progress;
-   
-
-     if(isUserLoggedIn())
-     {
+    if(isUserLoggedIn())
+    {
  
+    var progress = tasks[task].progress;
 
     var user = {!! auth()->check() ? auth()->user() : 'guest' !!};
 
@@ -678,7 +655,7 @@ eventer(messageEvent,function(e)
 
   function runCode(){
 
-      //run[0].setColour(0);      
+       
       var button = document.getElementById('send_code_button'); 
       button.disabled = true;   
       button = document.getElementById('show_task_button'); 
@@ -704,13 +681,14 @@ eventer(messageEvent,function(e)
             failedBlock[0].setColour(230);
             break;
 
-            case "if_current_tile_is":
-            failedBlock[0].setColour(210);
-            break;
-
             case "if_next_tile_is":
             failedBlock[0].setColour(210);
             break;
+
+            case "if_next_tile_has":
+            failedBlock[0].setColour(210);
+            break;
+
 
             default:
             failedBlock[0].setColour(160);
@@ -724,12 +702,10 @@ eventer(messageEvent,function(e)
 
         Blockly.JavaScript.STATEMENT_PREFIX = '%1\n';
 
-        var code = Blockly.JavaScript.workspaceToCode(workspacePlayground);        
+        this.code = Blockly.JavaScript.workspaceToCode(workspacePlayground);   
         
-        this.code = code;
-
         console.log(this.code);
-        sendMessage(code);
+        sendMessage(this.code);
   }
 
     function cameraPlus(){
@@ -819,7 +795,7 @@ eventer(messageEvent,function(e)
   
      title: tasks[task].introduction_modal.title, 
      text: tasks[task].introduction_modal.text,
-     image: getModalImageLink(tasks[task].introduction_modal.image)
+     image: getModalImageLink(tasks[task].introduction_modal.image, "level")
 
      };
      
@@ -838,7 +814,7 @@ eventer(messageEvent,function(e)
   
      title: tasks.level.finish_modal.title,
      text: tasks.level.finish_modal.text,
-     image:  getModalImageLink(tasks.level.finish_modal.image)   
+     image:  getModalImageLink(tasks.level.finish_modal.image, "level")   
 
      };
      
@@ -851,7 +827,7 @@ eventer(messageEvent,function(e)
   
      title: tasks.level.welcome_modal.title,
      text:  tasks.level.welcome_modal.text,
-     image: getModalImageLink(tasks.level.welcome_modal.image),
+     image: getModalImageLink(tasks.level.welcome_modal.image, "level"),
      task: task 
 
      };
@@ -870,7 +846,7 @@ eventer(messageEvent,function(e)
   
      title: tasks[task].success_modal.title,
      text:  tasks[task].success_modal.text,
-     image:  getModalImageLink(tasks[task].success_modal.image) 
+     image:  getModalImageLink(tasks[task].success_modal.image, "common") 
 
      };
 
@@ -888,7 +864,7 @@ eventer(messageEvent,function(e)
   
      title: tasks[task].failure_modal.title,
      text:  tasks[task].failure_modal.text,
-     image: getModalImageLink(tasks[task].failure_modal.image)
+     image: getModalImageLink(tasks[task].failure_modal.image, "common")
 
      };
 
@@ -906,15 +882,15 @@ eventer(messageEvent,function(e)
      var image = "";
 
      if(object.commandNumber==1)
-      text = "Tvoj prvý Blockly blok je chybný: <br>" 
+      text = "Váš prvý Blockly blok je chybný: <br>" 
      else if(object.commandNumber==2)
-      text = "Tvoj prvý Blockly blok fungoval, ale v nasledujúcom nastala chyba: <br>"
+      text = "Váš prvý Blockly blok fungoval, ale v nasledujúcom nastala chyba: <br>"
      else 
-      text = "Tvoje prvé " + (+ object.commandNumber - 1) + " Blockly bloky fungovali, ale potom nastala chyba: <br>"
+      text = "Niekoľko vašich Blockly blokov fungovalo, ale potom nastala chyba: <br>"
 
       title = modals[object.failureType].modal.title;
-      text +=  modals[object.failureType].modal.text; 
-      image = getModalImageLink(modals[object.failureType].modal.image);
+      text += modals[object.failureType].modal.text; 
+      image = getModalImageLink(modals[object.failureType].modal.image, "common");
 
 
      text += "<br> Chybný blok je zafarbený na červeno."
@@ -937,11 +913,6 @@ eventer(messageEvent,function(e)
    if(isUserLoggedIn())
    {
    var user =  {!! auth()->check() ? auth()->user() : 'guest' !!};
-   
-
-
-   //var category = this.category;
-   //var level = this.level;
 
 
    var level_start = convertDateToTime(this.level_start);
@@ -1039,12 +1010,20 @@ eventer(messageEvent,function(e)
   
 
 
-  function getModalImageLink(imageType)
+  function getModalImageLink(imageType, location)
   {
-    
     var modalImageUrl = "{{ asset('game') }}";    
 
+    if(location==="level")
+    {    
+
     return modalImageUrl + '/' + this.category + 'x' + this.level + '/' + imageType + '.png';
+
+    }
+    else
+    {
+      return modalImageUrl + '/' + "common" + '/' + imageType + '.png';
+    }
 
 
   }

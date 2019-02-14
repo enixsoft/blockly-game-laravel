@@ -3,32 +3,38 @@
 
     
     "modal": {
-    "title": "Chyba! (dizzy)",
+    "title": "Chyba!",
     "text": "Hrdina pri vykonávaní počtu krokov narazil do steny alebo prekážky.",
     "image": "dizzy"
-  }
-    
+  }    
   },
   
     "zerosteps": {
 
     "modal": {
-    "title": "Chyba! (zerosteps)",
+    "title": "Chyba!",
     "text": "Hrdina nedokáže vykonať zadaný počet krokov.",
     "image": "zerosteps"
-  }
-    
+  }    
   },
 
   
   "death": {
 
     "modal": {
-    "title": "death_modal_title",
-    "text": "death_modal_text",
+    "title": "Chyba!",
+    "text": "Hrdina vošiel do nastraženej pasce.",
     "image": "death"
-  }
-    
+  }    
+  },
+  
+    "functionerror": {
+
+    "modal": {
+    "title": "Chyba!",
+    "text": "Medzi blokmi sa nachádza prázdna podmienka alebo prázdny cyklus. Vložte do nich nejaký príkaz alebo ich odstráňte.",
+    "image": "functionerror"
+  }    
   }
 
 }
