@@ -27,11 +27,10 @@
 goog.provide('Blockly.BlockDragger');
 
 goog.require('Blockly.BlockAnimations');
-goog.require('Blockly.DraggedConnectionManager');
+goog.require('Blockly.InsertionMarkerManager');
 goog.require('Blockly.Events.BlockMove');
 
 goog.require('goog.math.Coordinate');
-goog.require('goog.asserts');
 
 
 /**
@@ -58,10 +57,10 @@ Blockly.BlockDragger = function(block, workspace) {
 
   /**
    * Object that keeps track of connections on dragged blocks.
-   * @type {!Blockly.DraggedConnectionManager}
+   * @type {!Blockly.InsertionMarkerManager}
    * @private
    */
-  this.draggedConnectionManager_ = new Blockly.DraggedConnectionManager(
+  this.draggedConnectionManager_ = new Blockly.InsertionMarkerManager(
       this.draggingBlock_);
 
   /**
@@ -145,14 +144,27 @@ Blockly.BlockDragger.initIconData_ = function(block) {
  * Start dragging a block.  This includes moving it to the drag surface.
  * @param {!goog.math.Coordinate} currentDragDeltaXY How far the pointer has
  *     moved from the position at mouse down, in pixel units.
- * @param {boolean} healStack whether or not to heal the stack after disconnecting
+ * @param {boolean} healStack Whether or not to heal the stack after
+ *     disconnecting.
  * @package
  */
-Blockly.BlockDragger.prototype.startBlockDrag = function(currentDragDeltaXY, healStack) {
+Blockly.BlockDragger.prototype.startBlockDrag = function(currentDragDeltaXY,
+    healStack) {
   if (!Blockly.Events.getGroup()) {
     Blockly.Events.setGroup(true);
   }
 
+  // Mutators don't have the same type of z-ordering as the normal workspace
+  // during a drag.  They have to rely on the order of the blocks in the SVG.
+  // For performance reasons that usually happens at the end of a drag,
+  // but do it at the beginning for mutators.
+  if (this.workspace_.isMutator) {
+    this.draggingBlock_.bringToFront();
+  }
+
+  // During a drag there may be a lot of rerenders, but not field changes.
+  // Turn the cache on so we don't do spurious remeasures during the drag.
+  Blockly.Field.startCache();
   this.workspace_.setResizesEnabled(false);
   Blockly.BlockAnimations.disconnectUiStop();
 
@@ -212,6 +224,8 @@ Blockly.BlockDragger.prototype.endBlockDrag = function(e, currentDragDeltaXY) {
   // Make sure internal state is fresh.
   this.dragBlock(e, currentDragDeltaXY);
   this.dragIconData_ = [];
+
+  Blockly.Field.stopCache();
 
   Blockly.BlockAnimations.disconnectUiStop();
 
@@ -336,4 +350,20 @@ Blockly.BlockDragger.prototype.dragIcons_ = function(dxy) {
     var data = this.dragIconData_[i];
     data.icon.setIconLocation(goog.math.Coordinate.sum(data.location, dxy));
   }
+};
+
+/**
+ * Get a list of the insertion markers that currently exist.  Drags have 0, 1,
+ * or 2 insertion markers.
+ * @return {!Array.<!Blockly.BlockSvg>} A possibly empty list of insertion
+ *     marker blocks.
+ * @package
+ */
+Blockly.BlockDragger.prototype.getInsertionMarkers = function() {
+  // No insertion markers with the old style of dragged connection managers.
+  if (this.draggedConnectionManager_ &&
+      this.draggedConnectionManager_.getInsertionMarkers) {
+    return this.draggedConnectionManager_.getInsertionMarkers();
+  }
+  return [];
 };

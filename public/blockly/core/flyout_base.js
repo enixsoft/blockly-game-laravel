@@ -33,9 +33,10 @@ goog.require('Blockly.Events.VarCreate');
 goog.require('Blockly.FlyoutButton');
 goog.require('Blockly.Gesture');
 goog.require('Blockly.Touch');
+goog.require('Blockly.utils');
 goog.require('Blockly.WorkspaceSvg');
-goog.require('goog.dom');
-goog.require('goog.events');
+goog.require('Blockly.Xml');
+
 goog.require('goog.math.Rect');
 
 
@@ -227,6 +228,7 @@ Blockly.Flyout.prototype.createDom = function(tagName) {
 Blockly.Flyout.prototype.init = function(targetWorkspace) {
   this.targetWorkspace_ = targetWorkspace;
   this.workspace_.targetWorkspace = targetWorkspace;
+
   // Add scrollbar.
   this.scrollbar_ = new Blockly.Scrollbar(this.workspace_,
       this.horizontalLayout_, false, 'blocklyFlyoutScrollbar');
@@ -276,7 +278,7 @@ Blockly.Flyout.prototype.dispose = function() {
     this.workspace_ = null;
   }
   if (this.svgGroup_) {
-    goog.dom.removeNode(this.svgGroup_);
+    Blockly.utils.removeNode(this.svgGroup_);
     this.svgGroup_ = null;
   }
   this.svgBackground_ = null;
@@ -386,6 +388,10 @@ Blockly.Flyout.prototype.positionAt_ = function(width, height, x, y) {
     // Set the scrollbars origin to be the top left of the flyout.
     this.scrollbar_.setOrigin(x, y);
     this.scrollbar_.resize();
+    // Set the position again so that if the metrics were the same (and the
+    // resize failed) our position is still updated.
+    this.scrollbar_.setPosition_(
+        this.scrollbar_.position_.x, this.scrollbar_.position_.y);
   }
 };
 
@@ -426,11 +432,14 @@ Blockly.Flyout.prototype.show = function(xmlList) {
   if (typeof xmlList == 'string') {
     var fnToApply = this.workspace_.targetWorkspace.getToolboxCategoryCallback(
         xmlList);
-    goog.asserts.assert(goog.isFunction(fnToApply),
-        'Couldn\'t find a callback function when opening a toolbox category.');
+    if (typeof fnToApply != 'function') {
+      throw TypeError('Couldn\'t find a callback function when opening' +
+          ' a toolbox category.');
+    }
     xmlList = fnToApply(this.workspace_.targetWorkspace);
-    goog.asserts.assert(goog.isArray(xmlList),
-        'The result of a toolbox category callback must be an array.');
+    if (!Array.isArray(xmlList)) {
+      throw TypeError('Result of toolbox category callback must be an array.');
+    }
   }
 
   this.setVisible(true);
@@ -524,7 +533,7 @@ Blockly.Flyout.prototype.clearOldBlocks_ = function() {
   for (var j = 0; j < this.mats_.length; j++) {
     var rect = this.mats_[j];
     if (rect) {
-      goog.dom.removeNode(rect);
+      Blockly.utils.removeNode(rect);
     }
   }
   this.mats_.length = 0;
@@ -588,6 +597,18 @@ Blockly.Flyout.prototype.onMouseDown_ = function(e) {
   if (gesture) {
     gesture.handleFlyoutStart(e, this);
   }
+};
+
+/**
+ * Does this flyout allow you to create a new instance of the given block?
+ * Used for deciding if a block can be "dragged out of" the flyout.
+ * @param {!Blockly.BlockSvg} block The block to copy from the flyout.
+ * @return {!boolean} True if you can create a new instance of the block, false
+ *    otherwise.
+ * @package
+ */
+Blockly.Flyout.prototype.isBlockCreatable_ = function(block) {
+  return !block.disabled;
 };
 
 /**
@@ -720,12 +741,15 @@ Blockly.Flyout.prototype.moveRectToBlock_ = function(rect, block) {
  * @private
  */
 Blockly.Flyout.prototype.filterForCapacity_ = function() {
-  var remainingCapacity = this.targetWorkspace_.remainingCapacity();
   var blocks = this.workspace_.getTopBlocks(false);
   for (var i = 0, block; block = blocks[i]; i++) {
     if (this.permanentlyDisabled_.indexOf(block) == -1) {
-      var allBlocks = block.getDescendants(false);
-      block.setDisabled(allBlocks.length > remainingCapacity);
+      var disable = !this.targetWorkspace_
+          .isCapacityAvailable(Blockly.utils.getBlockTypeCounts(block));
+      while (block) {
+        block.setDisabled(disable);
+        block = block.getNextBlock();
+      }
     }
   }
 };
@@ -762,7 +786,7 @@ Blockly.Flyout.prototype.placeNewBlock_ = function(oldBlock) {
   var targetWorkspace = this.targetWorkspace_;
   var svgRootOld = oldBlock.getSvgRoot();
   if (!svgRootOld) {
-    throw 'oldBlock is not rendered.';
+    throw Error('oldBlock is not rendered.');
   }
 
   // Create the new block by cloning the block in the flyout (via XML).
@@ -776,7 +800,7 @@ Blockly.Flyout.prototype.placeNewBlock_ = function(oldBlock) {
   var block = Blockly.Xml.domToBlock(xml, targetWorkspace);
   var svgRootNew = block.getSvgRoot();
   if (!svgRootNew) {
-    throw 'block is not rendered.';
+    throw Error('block is not rendered.');
   }
 
   // The offset in pixels between the main workspace's origin and the upper left

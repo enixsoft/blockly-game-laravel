@@ -162,7 +162,7 @@ class GameController extends Controller
             
      
           
-         return view("game", compact('category', 'level', 'xmlToolbox', 'savedGame', 'jsonTasks', 'jsonModals'));
+         return view("game2", compact('category', 'level', 'xmlToolbox', 'savedGame', 'jsonTasks', 'jsonModals'));
         }
     }
 
@@ -280,6 +280,8 @@ class GameController extends Controller
 
         
     }
+
+
 
    public function betaStartNewGameOrContinue()
     {      

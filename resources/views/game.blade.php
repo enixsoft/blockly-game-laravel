@@ -65,7 +65,7 @@
             </div>
         </div>
         <div class="col-md-6" style="background-color:#E4E4E4;">            
-           <div id="blocklyArea" class="rightside"></div>
+           <div id="blocklyArea" class="col-lg-12"></div>
            <!--<div class="container" style="max-height: 10vh;">
            <div class="row justify-content-center" style="padding: 2.5vh 0;">
                 <button type="button" id="click_button" class="col-md-2 btn  btn-success mr-3">Spustiť</button>

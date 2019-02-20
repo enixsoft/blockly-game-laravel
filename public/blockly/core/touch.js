@@ -27,12 +27,12 @@
 /**
  * @name Blockly.Touch
  * @namespace
- **/
+ */
 goog.provide('Blockly.Touch');
 
-goog.require('goog.events');
+goog.require('Blockly.utils');
+
 goog.require('goog.events.BrowserFeature');
-goog.require('goog.string');
 
 
 /**
@@ -152,8 +152,8 @@ Blockly.Touch.shouldHandleEvent = function(e) {
 Blockly.Touch.getTouchIdentifierFromEvent = function(e) {
   return e.pointerId != undefined ? e.pointerId :
       (e.changedTouches && e.changedTouches[0] &&
-      e.changedTouches[0].identifier != undefined &&
-      e.changedTouches[0].identifier != null) ?
+      e.changedTouches[0].identifier !== undefined &&
+      e.changedTouches[0].identifier !== null) ?
       e.changedTouches[0].identifier : 'mouse';
 };
 
@@ -174,13 +174,14 @@ Blockly.Touch.checkTouchIdentifier = function(e) {
 
   // if (Blockly.touchIdentifier_ )is insufficient because Android touch
   // identifiers may be zero.
-  if (Blockly.Touch.touchIdentifier_ != undefined &&
-      Blockly.Touch.touchIdentifier_ != null) {
+  if (Blockly.Touch.touchIdentifier_ !== undefined &&
+      Blockly.Touch.touchIdentifier_ !== null) {
     // We're already tracking some touch/mouse event.  Is this from the same
     // source?
     return Blockly.Touch.touchIdentifier_ == identifier;
   }
-  if (e.type == 'mousedown' || e.type == 'touchstart' || e.type == 'pointerdown') {
+  if (e.type == 'mousedown' || e.type == 'touchstart' ||
+      e.type == 'pointerdown') {
     // No identifier set yet, and this is the start of a drag.  Set it and
     // return.
     Blockly.Touch.touchIdentifier_ = identifier;
@@ -198,7 +199,7 @@ Blockly.Touch.checkTouchIdentifier = function(e) {
  * @param {!Event} e A touch event.
  */
 Blockly.Touch.setClientFromTouch = function(e) {
-  if (goog.string.startsWith(e.type, 'touch')) {
+  if (Blockly.utils.startsWith(e.type, 'touch')) {
     // Map the touch event's properties to the event.
     var touchPoint = e.changedTouches[0];
     e.clientX = touchPoint.clientX;
@@ -212,9 +213,9 @@ Blockly.Touch.setClientFromTouch = function(e) {
  * @return {boolean} true if it is a mouse or touch event; false otherwise.
  */
 Blockly.Touch.isMouseOrTouchEvent = function(e) {
-  return goog.string.startsWith(e.type, 'touch') ||
-      goog.string.startsWith(e.type, 'mouse') ||
-      goog.string.startsWith(e.type, 'pointer');
+  return Blockly.utils.startsWith(e.type, 'touch') ||
+      Blockly.utils.startsWith(e.type, 'mouse') ||
+      Blockly.utils.startsWith(e.type, 'pointer');
 };
 
 /**
@@ -223,8 +224,8 @@ Blockly.Touch.isMouseOrTouchEvent = function(e) {
  * @return {boolean} true if it is a touch event; false otherwise.
  */
 Blockly.Touch.isTouchEvent = function(e) {
-  return goog.string.startsWith(e.type, 'touch') ||
-      goog.string.startsWith(e.type, 'pointer');
+  return Blockly.utils.startsWith(e.type, 'touch') ||
+      Blockly.utils.startsWith(e.type, 'pointer');
 };
 
 /**

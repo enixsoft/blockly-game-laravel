@@ -33,10 +33,10 @@ goog.provide('Blockly.ContextMenu');
 goog.require('Blockly.Events.BlockCreate');
 goog.require('Blockly.utils');
 goog.require('Blockly.utils.uiMenu');
+goog.require('Blockly.Xml');
 
-goog.require('goog.dom');
 goog.require('goog.events');
-goog.require('goog.style');
+goog.require('goog.math.Coordinate');
 goog.require('goog.ui.Menu');
 goog.require('goog.ui.MenuItem');
 goog.require('goog.userAgent');
@@ -241,7 +241,8 @@ Blockly.ContextMenu.blockDeleteOption = function(block) {
  * @package
  */
 Blockly.ContextMenu.blockHelpOption = function(block) {
-  var url = goog.isFunction(block.helpUrl) ? block.helpUrl() : block.helpUrl;
+  var url = (typeof block.helpUrl == 'function') ?
+      block.helpUrl() : block.helpUrl;
   var helpOption = {
     enabled: !!url,
     text: Blockly.Msg['HELP'],
@@ -259,11 +260,7 @@ Blockly.ContextMenu.blockHelpOption = function(block) {
  * @package
  */
 Blockly.ContextMenu.blockDuplicateOption = function(block) {
-  var enabled = true;
-  if (block.getDescendants(false).length >
-      block.workspace.remainingCapacity()) {
-    enabled = false;
-  }
+  var enabled = block.isDuplicatable();
   var duplicateOption = {
     text: Blockly.Msg['DUPLICATE_BLOCK'],
     enabled: enabled,

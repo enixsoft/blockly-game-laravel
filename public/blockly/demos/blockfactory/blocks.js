@@ -603,7 +603,9 @@ Blockly.Blocks['field_image'] = {
         .appendField('height')
         .appendField(new Blockly.FieldNumber('15', 0, NaN, 1), 'HEIGHT')
         .appendField('alt text')
-        .appendField(new Blockly.FieldTextInput('*'), 'ALT');
+        .appendField(new Blockly.FieldTextInput('*'), 'ALT')
+        .appendField('flip RTL')
+        .appendField(new Blockly.FieldCheckbox('false'), 'FLIP_RTL');
     this.setPreviousStatement(true, 'Field');
     this.setNextStatement(true, 'Field');
     this.setTooltip('Static image (JPEG, PNG, GIF, SVG, BMP).\n' +
@@ -866,7 +868,7 @@ function fieldNameCheck(referenceBlock) {
   }
   var name = referenceBlock.getFieldValue('FIELDNAME').toLowerCase();
   var count = 0;
-  var blocks = referenceBlock.workspace.getAllBlocks();
+  var blocks = referenceBlock.workspace.getAllBlocks(false);
   for (var i = 0, block; block = blocks[i]; i++) {
     var otherName = block.getFieldValue('FIELDNAME');
     if (!block.disabled && !block.getInheritedDisabled() &&
@@ -891,7 +893,7 @@ function inputNameCheck(referenceBlock) {
   }
   var name = referenceBlock.getFieldValue('INPUTNAME').toLowerCase();
   var count = 0;
-  var blocks = referenceBlock.workspace.getAllBlocks();
+  var blocks = referenceBlock.workspace.getAllBlocks(false);
   for (var i = 0, block; block = blocks[i]; i++) {
     var otherName = block.getFieldValue('INPUTNAME');
     if (!block.disabled && !block.getInheritedDisabled() &&

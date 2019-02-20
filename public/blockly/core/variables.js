@@ -27,13 +27,15 @@
 /**
  * @name Blockly.Variables
  * @namespace
- **/
+ */
 goog.provide('Blockly.Variables');
 
 goog.require('Blockly.Blocks');
 goog.require('Blockly.constants');
 goog.require('Blockly.VariableModel');
 goog.require('Blockly.Workspace');
+goog.require('Blockly.Xml');
+
 goog.require('goog.string');
 
 
@@ -53,7 +55,7 @@ Blockly.Variables.NAME_TYPE = Blockly.VARIABLE_CATEGORY_NAME;
  * @return {!Array.<!Blockly.VariableModel>} Array of variable models.
  */
 Blockly.Variables.allUsedVarModels = function(ws) {
-  var blocks = ws.getAllBlocks();
+  var blocks = ws.getAllBlocks(false);
   var variableHash = Object.create(null);
   // Iterate through every block and add each variable to the hash.
   for (var x = 0; x < blocks.length; x++) {
@@ -90,6 +92,12 @@ Blockly.Variables.allUsedVariables = function() {
 };
 
 /**
+ * @private
+ * @type {Object<string,boolean>}
+ */
+Blockly.Variables.ALL_DEVELOPER_VARS_WARNINGS_BY_BLOCK_TYPE_ = {};
+
+/**
  * Find all developer variables used by blocks in the workspace.
  * Developer variables are never shown to the user, but are declared as global
  * variables in the generated code.
@@ -100,12 +108,25 @@ Blockly.Variables.allUsedVariables = function() {
  * @return {!Array.<string>} A list of non-duplicated variable names.
  */
 Blockly.Variables.allDeveloperVariables = function(workspace) {
-  var blocks = workspace.getAllBlocks();
+  var blocks = workspace.getAllBlocks(false);
   var hash = {};
   for (var i = 0; i < blocks.length; i++) {
     var block = blocks[i];
-    if (block.getDeveloperVars) {
-      var devVars = block.getDeveloperVars();
+    var getDeveloperVariables = block.getDeveloperVariables;
+    if (!getDeveloperVariables && block.getDeveloperVars) {
+      // August 2018: getDeveloperVars() was deprecated and renamed
+      // getDeveloperVariables().
+      getDeveloperVariables = block.getDeveloperVars;
+      if (!Blockly.Variables.ALL_DEVELOPER_VARS_WARNINGS_BY_BLOCK_TYPE_[
+          block.type]) {
+        console.warn('Function getDeveloperVars() deprecated. Use ' +
+          'getDeveloperVariables() (block type \'' + block.type + '\')');
+        Blockly.Variables.ALL_DEVELOPER_VARS_WARNINGS_BY_BLOCK_TYPE_[
+            block.type] = true;
+      }
+    }
+    if (getDeveloperVariables) {
+      var devVars = getDeveloperVariables();
       for (var j = 0; j < devVars.length; j++) {
         hash[devVars[j]] = devVars[j];
       }
@@ -128,7 +149,7 @@ Blockly.Variables.allDeveloperVariables = function(workspace) {
  */
 Blockly.Variables.flyoutCategory = function(workspace) {
   var xmlList = [];
-  var button = goog.dom.createDom('button');
+  var button = document.createElement('button');
   button.setAttribute('text', '%{BKY_NEW_VARIABLE}');
   button.setAttribute('callbackKey', 'CREATE_VARIABLE');
 
@@ -278,7 +299,8 @@ Blockly.Variables.createVariableButtonHandler = function(
                 var msg = Blockly.Msg['VARIABLE_ALREADY_EXISTS'].replace(
                     '%1', lowerCase);
               } else {
-                var msg = Blockly.Msg['VARIABLE_ALREADY_EXISTS_FOR_ANOTHER_TYPE'];
+                var msg =
+                    Blockly.Msg['VARIABLE_ALREADY_EXISTS_FOR_ANOTHER_TYPE'];
                 msg = msg.replace('%1', lowerCase).replace('%2', existing.type);
               }
               Blockly.alert(msg,
@@ -418,8 +440,8 @@ Blockly.Variables.nameUsedWithOtherType_ = function(name, type, workspace) {
  * @param {string} name The name to search for.
  * @param {!Blockly.Workspace} workspace The workspace to search for the
  *     variable.
- * @return {?Blockly.VariableModel} The variable with the given name, or null if
- *    none was found.
+ * @return {?Blockly.VariableModel} The variable with the given name,
+ *     or null if none was found.
  * @private
  */
 Blockly.Variables.nameUsedWithAnyType_ = function(name, workspace) {
@@ -442,8 +464,8 @@ Blockly.Variables.nameUsedWithAnyType_ = function(name, workspace) {
  * @package
  */
 Blockly.Variables.generateVariableFieldXmlString = function(variableModel) {
-  // The variable name may be user input, so it may contain characters that need
-  // to be escaped to create valid XML.
+  // The variable name may be user input, so it may contain characters that
+  // need to be escaped to create valid XML.
   var typeString = variableModel.type;
   if (typeString == '') {
     typeString = '\'\'';
@@ -500,10 +522,10 @@ Blockly.Variables.getOrCreateVariablePackage = function(workspace, id, opt_name,
  * @param {!Blockly.Workspace} workspace The workspace to search for the
  *     variable.  It may be a flyout workspace or main workspace.
  * @param {string} id The ID to use to look up the variable, or null.
- * @param {string=} opt_name The string to use to look up the variable.  Only
- *     used if lookup by ID fails.
- * @param {string=} opt_type The type to use to look up the variable.  Only used
- *     if lookup by ID fails.
+ * @param {string=} opt_name The string to use to look up the variable.
+ *     Only used if lookup by ID fails.
+ * @param {string=} opt_type The type to use to look up the variable.
+ *     Only used if lookup by ID fails.
  * @return {?Blockly.VariableModel} The variable corresponding to the given ID
  *     or name + type combination, or null if not found.
  * @package
@@ -517,9 +539,15 @@ Blockly.Variables.getVariable = function(workspace, id, opt_name, opt_type) {
     if (!variable && potentialVariableMap) {
       variable = potentialVariableMap.getVariableById(id);
     }
-  } else if (opt_name) {
+    if (variable) {
+      return variable;
+    }
+  }
+  // If there was no ID, or there was an ID but it didn't match any variables,
+  // look up by name and type.
+  if (opt_name) {
     if (opt_type == undefined) {
-      throw new Error('Tried to look up a variable by name without a type');
+      throw Error('Tried to look up a variable by name without a type');
     }
     // Otherwise look up by name and type.
     var variable = workspace.getVariable(opt_name, opt_type);
@@ -566,9 +594,9 @@ Blockly.Variables.createVariable_ = function(workspace, id, opt_name,
  * @param {!Blockly.Workspace} workspace The workspace to inspect.
  * @param {!Array.<!Blockly.VariableModel>} originalVariables The array of
  *     variables that existed in the workspace before adding the new block.
- * @return {!Array.<!Blockly.VariableModel>} The new array of variables that were
- *     freshly added to the workspace after creating the new block, or [] if no
- *     new variables were added to the workspace.
+ * @return {!Array.<!Blockly.VariableModel>} The new array of variables that
+ *     were freshly added to the workspace after creating the new block,
+ *     or [] if no new variables were added to the workspace.
  * @package
  */
 Blockly.Variables.getAddedVariables = function(workspace, originalVariables) {

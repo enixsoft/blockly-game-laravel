@@ -32,9 +32,7 @@ goog.require('Blockly.Field');
 goog.require('Blockly.utils');
 goog.require('Blockly.utils.uiMenu');
 
-goog.require('goog.dom');
 goog.require('goog.events');
-goog.require('goog.style');
 goog.require('goog.ui.Menu');
 goog.require('goog.ui.MenuItem');
 goog.require('goog.userAgent');
@@ -53,7 +51,7 @@ goog.require('goog.userAgent');
  * @constructor
  */
 Blockly.FieldDropdown = function(menuGenerator, opt_validator) {
-  if (!goog.isFunction(menuGenerator)) {
+  if (typeof menuGenerator != 'function') {
     Blockly.FieldDropdown.validateOptions_(menuGenerator);
   }
   this.menuGenerator_ = menuGenerator;
@@ -101,7 +99,7 @@ Blockly.FieldDropdown.prototype.CURSOR = 'default';
 /**
  * Language-neutral currently selected string or image object.
  * @type {string|!Object}
- * @private
+ * @protected
  */
 Blockly.FieldDropdown.prototype.value_ = '';
 
@@ -291,7 +289,7 @@ Blockly.FieldDropdown.prototype.trimOptions_ = function() {
   this.prefixField = null;
   this.suffixField = null;
   var options = this.menuGenerator_;
-  if (!goog.isArray(options)) {
+  if (!Array.isArray(options)) {
     return;
   }
   var hasImages = false;
@@ -345,7 +343,8 @@ Blockly.FieldDropdown.prototype.trimOptions_ = function() {
  * @param {number} suffixLength The length of the common suffix
  * @return {!Array.<!Array>} A new array with all of the option text trimmed.
  */
-Blockly.FieldDropdown.applyTrim_ = function(options, prefixLength, suffixLength) {
+Blockly.FieldDropdown.applyTrim_ = function(options,
+    prefixLength, suffixLength) {
   var newOptions = [];
   // Remove the prefix and suffix from the options.
   for (var i = 0; i < options.length; i++) {
@@ -362,7 +361,7 @@ Blockly.FieldDropdown.applyTrim_ = function(options, prefixLength, suffixLength)
  *     Otherwise false.
  */
 Blockly.FieldDropdown.prototype.isOptionListDynamic = function() {
-  return goog.isFunction(this.menuGenerator_);
+  return typeof this.menuGenerator_ == 'function';
 };
 
 /**
@@ -372,7 +371,7 @@ Blockly.FieldDropdown.prototype.isOptionListDynamic = function() {
  * @throws If generated options are incorrectly structured.
  */
 Blockly.FieldDropdown.prototype.getOptions = function() {
-  if (goog.isFunction(this.menuGenerator_)) {
+  if (this.isOptionListDynamic()) {
     var generatedOptions = this.menuGenerator_.call(this);
     Blockly.FieldDropdown.validateOptions_(generatedOptions);
     return generatedOptions;
@@ -438,9 +437,14 @@ Blockly.FieldDropdown.prototype.render_ = function() {
     // Update arrow's colour.
     this.arrow_.style.fill = this.sourceBlock_.getColour();
   }
-  goog.dom.removeChildren(/** @type {!Element} */ (this.textElement_));
-  goog.dom.removeNode(this.imageElement_);
-  this.imageElement_ = null;
+  var child;
+  while ((child = this.textElement_.firstChild)) {
+    this.textElement_.removeChild(child);
+  }
+  if (this.imageElement_) {
+    Blockly.utils.removeNode(this.imageElement_);
+    this.imageElement_ = null;
+  }
 
   if (this.imageJson_) {
     this.renderSelectedImage_();
@@ -512,7 +516,8 @@ Blockly.FieldDropdown.prototype.updateWidth = function() {
   if (this.imageJson_ && (goog.userAgent.IE || goog.userAgent.EDGE)) {
     // Recalculate the full width.
     var arrowWidth = Blockly.Field.getCachedWidth(this.arrow_);
-    var width = Number(this.imageJson_.width) + arrowWidth + Blockly.BlockSvg.SEP_SPACE_X;
+    var width = Number(this.imageJson_.width) + arrowWidth +
+        Blockly.BlockSvg.SEP_SPACE_X;
     if (this.borderRect_) {
       this.borderRect_.setAttribute('width', width);
     }
@@ -537,23 +542,24 @@ Blockly.FieldDropdown.prototype.dispose = function() {
  * @private
  */
 Blockly.FieldDropdown.validateOptions_ = function(options) {
-  if (!goog.isArray(options)) {
-    throw 'FieldDropdown options must be an array.';
+  if (!Array.isArray(options)) {
+    throw TypeError('FieldDropdown options must be an array.');
   }
   var foundError = false;
   for (var i = 0; i < options.length; ++i) {
     var tuple = options[i];
-    if (!goog.isArray(options)) {
+    if (!Array.isArray(tuple)) {
       foundError = true;
       console.error(
           'Invalid option[' + i + ']: Each FieldDropdown option must be an ' +
           'array. Found: ', tuple);
-    } else if (!goog.isString(tuple[1])) {
+    } else if (typeof tuple[1] != 'string') {
       foundError = true;
       console.error(
           'Invalid option[' + i + ']: Each FieldDropdown option id must be ' +
           'a string. Found ' + tuple[1] + ' in: ', tuple);
-    } else if (!goog.isString(tuple[0]) && !goog.isString(tuple[0].src)) {
+    } else if ((typeof tuple[0] != 'string') &&
+               (typeof tuple[0].src != 'string')) {
       foundError = true;
       console.error(
           'Invalid option[' + i + ']: Each FieldDropdown option must have a ' +
@@ -562,7 +568,7 @@ Blockly.FieldDropdown.validateOptions_ = function(options) {
     }
   }
   if (foundError) {
-    throw 'Found invalid FieldDropdown options.';
+    throw TypeError('Found invalid FieldDropdown options.');
   }
 };
 

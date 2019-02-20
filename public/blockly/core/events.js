@@ -30,8 +30,7 @@
  */
 goog.provide('Blockly.Events');
 
-goog.require('goog.array');
-goog.require('goog.math.Coordinate');
+goog.require('Blockly.utils');
 
 
 /**
@@ -151,6 +150,11 @@ Blockly.Events.COMMENT_CHANGE = 'comment_change';
 Blockly.Events.COMMENT_MOVE = 'comment_move';
 
 /**
+ * Name of event that records a workspace load.
+ */
+Blockly.Events.FINISHED_LOADING = 'finished_loading';
+
+/**
  * List of events queued for firing.
  * @private
  */
@@ -193,7 +197,7 @@ Blockly.Events.fireNow_ = function() {
  * @return {!Array.<!Blockly.Events.Abstract>} Array of filtered events.
  */
 Blockly.Events.filter = function(queueIn, forward) {
-  var queue = goog.array.clone(queueIn);
+  var queue = queueIn.slice();  // Shallow copy of queue.
   if (!forward) {
     // Undo is merged in reverse order.
     queue.reverse();
@@ -233,7 +237,8 @@ Blockly.Events.filter = function(queueIn, forward) {
         // Merge click events.
         lastEvent.newValue = event.newValue;
       } else {
-        // Collision: newer events should merge into this event to maintain order
+        // Collision: newer events should merge into this event to maintain
+        // order.
         hash[key] = { event: event, index: 1};
         mergedQueue.push(event);
       }
@@ -372,7 +377,7 @@ Blockly.Events.fromJson = function(json, workspace) {
       event = new Blockly.Events.CommentDelete(null);
       break;
     default:
-      throw 'Unknown event type.';
+      throw Error('Unknown event type.');
   }
   event.fromJson(json);
   event.workspaceId = workspace.id;

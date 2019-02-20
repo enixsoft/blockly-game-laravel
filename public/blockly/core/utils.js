@@ -29,12 +29,10 @@
 /**
  * @name Blockly.utils
  * @namespace
- **/
+ */
 goog.provide('Blockly.utils');
 
-goog.require('Blockly.Touch');
 goog.require('goog.dom');
-goog.require('goog.events.BrowserFeature');
 goog.require('goog.math.Coordinate');
 goog.require('goog.userAgent');
 
@@ -114,6 +112,16 @@ Blockly.utils.removeClass = function(element, className) {
 Blockly.utils.hasClass = function(element, className) {
   var classes = element.getAttribute('class');
   return (' ' + classes + ' ').indexOf(' ' + className + ' ') != -1;
+};
+
+/**
+ * Removes a node from its parent. No-op if not attached to a parent.
+ * @param {Node} node The node to remove.
+ * @return {Node} The node removed if removed; else, null.
+ */
+// Copied from Closure goog.dom.removeNode
+Blockly.utils.removeNode = function(node) {
+  return node && node.parentNode ? node.parentNode.removeChild(node) : null;
 };
 
 /**
@@ -403,7 +411,7 @@ Blockly.utils.tokenizeInterpolation = function(message) {
  * @return {!string} String with message references replaced.
  */
 Blockly.utils.replaceMessageReferences = function(message) {
-  if (!goog.isString(message)) {
+  if (typeof message != 'string') {
     return message;
   }
   var interpolatedResult = Blockly.utils.tokenizeInterpolation_(message, false);
@@ -424,14 +432,16 @@ Blockly.utils.checkMessageReferences = function(message) {
 
   var msgTable = Blockly.Msg;
 
-  // TODO(#1169): Implement support for other string tables, prefixes other than BKY_.
+  // TODO (#1169): Implement support for other string tables,
+  // prefixes other than BKY_.
   var regex = /%{(BKY_[A-Z][A-Z0-9_]*)}/gi;
   var match = regex.exec(message);
   while (match) {
     var msgKey = match[1];
     msgKey = msgKey.toUpperCase();
     if (msgKey.substr(0, 4) != 'BKY_') {
-      console.log('WARNING: Unsupported message table prefix in %{' + match[1] + '}.');
+      console.log('WARNING: Unsupported message table prefix in %{' +
+          match[1] + '}.');
       validSoFar = false;  // Continue to report other errors.
     } else if (msgTable[msgKey.substr(4)] == undefined) {
       console.log('WARNING: No message string for %{' + match[1] + '}.');
@@ -511,9 +521,9 @@ Blockly.utils.tokenizeInterpolation_ = function(message,
     } else if (state == 3) {  // String table reference
       if (c == '') {
         // Premature end before closing '}'
-        buffer.splice(0, 0, '%{'); // Re-insert leading delimiter
+        buffer.splice(0, 0, '%{');  // Re-insert leading delimiter
         i--;  // Parse this char again.
-        state = 0; // and parse as string literal.
+        state = 0;  // and parse as string literal.
       } else if (c != '}') {
         buffer.push(c);
       } else  {
@@ -523,13 +533,13 @@ Blockly.utils.tokenizeInterpolation_ = function(message,
           var keyUpper = rawKey.toUpperCase();
 
           // BKY_ is the prefix used to namespace the strings used in Blockly
-          // core files and the predefined blocks in ../blocks/. These strings
-          // are defined in ../msgs/ files.
-          var bklyKey = goog.string.startsWith(keyUpper, 'BKY_') ?
+          // core files and the predefined blocks in ../blocks/.
+          // These strings are defined in ../msgs/ files.
+          var bklyKey = Blockly.utils.startsWith(keyUpper, 'BKY_') ?
               keyUpper.substring(4) : null;
           if (bklyKey && bklyKey in Blockly.Msg) {
             var rawValue = Blockly.Msg[bklyKey];
-            if (goog.isString(rawValue)) {
+            if (typeof rawValue == 'string') {
               // Attempt to dereference substrings, too, appending to the end.
               Array.prototype.push.apply(tokens,
                   Blockly.utils.tokenizeInterpolation_(
@@ -551,7 +561,7 @@ Blockly.utils.tokenizeInterpolation_ = function(message,
         } else {
           tokens.push('%{' + rawKey + '}');
           buffer.length = 0;
-          state = 0; // and parse as string literal.
+          state = 0;  // and parse as string literal.
         }
       }
     }
@@ -833,13 +843,13 @@ Blockly.utils.is3dSupported = function() {
  * Contrast with node.insertBefore function.
  * @param {!Element} newNode New element to insert.
  * @param {!Element} refNode Existing element to precede new node.
- * @private
+ * @package
  */
-Blockly.utils.insertAfter_ = function(newNode, refNode) {
+Blockly.utils.insertAfter = function(newNode, refNode) {
   var siblingNode = refNode.nextSibling;
   var parentNode = refNode.parentNode;
   if (!parentNode) {
-    throw 'Reference node has no parent.';
+    throw Error('Reference node has no parent.');
   }
   if (siblingNode) {
     parentNode.insertBefore(newNode, siblingNode);
@@ -855,14 +865,14 @@ Blockly.utils.insertAfter_ = function(newNode, refNode) {
  */
 Blockly.utils.runAfterPageLoad = function(fn) {
   if (typeof document != 'object') {
-    throw new Error('Blockly.utils.runAfterPageLoad() requires browser document.');
+    throw Error('Blockly.utils.runAfterPageLoad() requires browser document.');
   }
-  if (document.readyState === 'complete') {
+  if (document.readyState == 'complete') {
     fn();  // Page has already loaded. Call immediately.
   } else {
     // Poll readyState.
     var readyStateCheckInterval = setInterval(function() {
-      if (document.readyState === 'complete') {
+      if (document.readyState == 'complete') {
         clearInterval(readyStateCheckInterval);
         fn();
       }
@@ -900,4 +910,96 @@ Blockly.utils.getViewportBBox = function() {
     top: scrollOffset.y,
     left: scrollOffset.x
   };
+};
+
+/**
+ * Fast prefix-checker.
+ * Copied from Closure's goog.string.startsWith.
+ * @param {string} str The string to check.
+ * @param {string} prefix A string to look for at the start of `str`.
+ * @return {boolean} True if `str` begins with `prefix`.
+ * @package
+ */
+Blockly.utils.startsWith = function(str, prefix) {
+  return str.lastIndexOf(prefix, 0) == 0;
+};
+
+/**
+ * Removes the first occurrence of a particular value from an array.
+ * @param {!Array} arr Array from which to remove
+ *     value.
+ * @param {*} obj Object to remove.
+ * @return {boolean} True if an element was removed.
+ * @package
+ */
+Blockly.utils.arrayRemove = function(arr, obj) {
+  var i = arr.indexOf(obj);
+  if (i == -1) {
+    return false;
+  }
+  arr.splice(i, 1);
+  return true;
+};
+
+/**
+ * Converts degrees to radians.
+ * Copied from Closure's goog.math.toRadians.
+ * @param {number} angleDegrees Angle in degrees.
+ * @return {number} Angle in radians.
+ * @package
+ */
+Blockly.utils.toRadians = function(angleDegrees) {
+  return angleDegrees * Math.PI / 180;
+};
+
+/**
+ * Converts radians to degrees.
+ * Copied from Closure's goog.math.toDegrees.
+ * @param {number} angleRadians Angle in radians.
+ * @return {number} Angle in degrees.
+ * @package
+ */
+Blockly.utils.toDegrees = function(angleRadians) {
+  return angleRadians * 180 / Math.PI;
+};
+
+/**
+ * Whether a node contains another node.
+ * @param {!Node} parent The node that should contain the other node.
+ * @param {!Node} descendant The node to test presence of.
+ * @return {boolean} Whether the parent node contains the descendant node.
+ * @package
+ */
+Blockly.utils.containsNode = function(parent, descendant) {
+  return !!(parent.compareDocumentPosition(descendant) &
+            Node.DOCUMENT_POSITION_CONTAINED_BY);
+};
+
+/**
+ * Get a map of all the block's descendants mapping their type to the number of
+ *    children with that type.
+ * @param {!Blockly.Block} block The block to map.
+ * @param {boolean=} opt_stripFollowing Optionally ignore all following
+ *    statements (blocks that are not inside a value or statement input
+ *    of the block).
+ * @returns {!Object} Map of types to type counts for descendants of the bock.
+ */
+Blockly.utils.getBlockTypeCounts = function(block, opt_stripFollowing) {
+  var typeCountsMap = Object.create(null);
+  var descendants = block.getDescendants(true);
+  if (opt_stripFollowing) {
+    var nextBlock = block.getNextBlock();
+    if (nextBlock) {
+      var index = descendants.indexOf(nextBlock);
+      descendants.splice(index, descendants.length - index);
+    }
+  }
+  for (var i = 0, checkBlock; checkBlock = descendants[i]; i++) {
+    if (typeCountsMap[checkBlock.type]) {
+      typeCountsMap[checkBlock.type]++;
+    } else {
+      typeCountsMap[checkBlock.type] = 1;
+    }
+  }
+  return typeCountsMap;
 };

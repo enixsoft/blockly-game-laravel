@@ -30,6 +30,8 @@ goog.require('Blockly.Bubble');
 goog.require('Blockly.Events.BlockChange');
 goog.require('Blockly.Events.Ui');
 goog.require('Blockly.Icon');
+goog.require('Blockly.utils');
+
 goog.require('goog.userAgent');
 
 
@@ -122,7 +124,8 @@ Blockly.Comment.prototype.createEditor_ = function() {
   body.appendChild(textarea);
   this.textarea_ = textarea;
   this.foreignObject_.appendChild(body);
-  Blockly.bindEventWithChecks_(textarea, 'mouseup', this, this.textareaFocus_, true, true);
+  Blockly.bindEventWithChecks_(textarea, 'mouseup', this, this.textareaFocus_,
+      true, true);
   // Don't zoom with mousewheel.
   Blockly.bindEventWithChecks_(textarea, 'wheel', this, function(e) {
     e.stopPropagation();

@@ -27,7 +27,7 @@
 /**
  * The top level namespace used to access the Blockly library.
  * @namespace Blockly
- **/
+ */
 goog.provide('Blockly');
 
 goog.require('Blockly.BlockSvg.render');
@@ -53,6 +53,7 @@ goog.require('Blockly.WorkspaceSvg');
 goog.require('Blockly.constants');
 goog.require('Blockly.inject');
 goog.require('Blockly.utils');
+goog.require('Blockly.Xml');
 
 goog.require('goog.color');
 
@@ -98,11 +99,25 @@ Blockly.clipboardXml_ = null;
 Blockly.clipboardSource_ = null;
 
 /**
+ * Map of types to type counts for the clipboard object and descendants.
+ * @type {Object}
+ * @private
+ */
+Blockly.clipboardTypeCounts_ = null;
+
+/**
  * Cached value for whether 3D is supported.
  * @type {!boolean}
  * @private
  */
 Blockly.cache3dSupported_ = null;
+
+/**
+ * Holds all Blockly style attributes.
+ * @type {?Blockly.Theme}
+ * @private
+ */
+Blockly.theme_ = null;
 
 /**
  * Convert a hue (HSV model) into an RGB hex triplet.
@@ -168,14 +183,21 @@ Blockly.svgResize = function(workspace) {
 };
 
 /**
- * Handle a key-down on SVG drawing surface.
+ * Handle a key-down on SVG drawing surface. Does nothing if the main workspace
+ * is not visible.
  * @param {!Event} e Key down event.
  * @private
  */
+// TODO (https://github.com/google/blockly/issues/1998) handle cases where there
+// are multiple workspaces and non-main workspaces are able to accept input.
 Blockly.onKeyDown_ = function(e) {
-  if (Blockly.mainWorkspace.options.readOnly || Blockly.utils.isTargetInput(e)) {
+  var workspace = Blockly.mainWorkspace;
+  if (workspace.options.readOnly || Blockly.utils.isTargetInput(e)
+      || (workspace.rendered && !workspace.isVisible())) {
     // No key actions on readonly workspaces.
     // When focused on an HTML text input widget, don't trap any keys.
+    // Ignore keypresses on rendered workspaces that have been explicitly
+    // hidden.
     return;
   }
   var deleteBlock = false;
@@ -189,7 +211,7 @@ Blockly.onKeyDown_ = function(e) {
     // data loss.
     e.preventDefault();
     // Don't delete while dragging.  Jeez.
-    if (Blockly.mainWorkspace.isDragging()) {
+    if (workspace.isDragging()) {
       return;
     }
     if (Blockly.selected && Blockly.selected.isDeletable()) {
@@ -197,7 +219,7 @@ Blockly.onKeyDown_ = function(e) {
     }
   } else if (e.altKey || e.ctrlKey || e.metaKey) {
     // Don't use meta keys during drags.
-    if (Blockly.mainWorkspace.isDragging()) {
+    if (workspace.isDragging()) {
       return;
     }
     if (Blockly.selected &&
@@ -219,20 +241,23 @@ Blockly.onKeyDown_ = function(e) {
     if (e.keyCode == 86) {
       // 'v' for paste.
       if (Blockly.clipboardXml_) {
-        Blockly.Events.setGroup(true);
-        // Pasting always pastes to the main workspace, even if the copy started
-        // in a flyout workspace.
+        // Pasting always pastes to the main workspace, even if the copy
+        // started in a flyout workspace.
         var workspace = Blockly.clipboardSource_;
         if (workspace.isFlyout) {
           workspace = workspace.targetWorkspace;
         }
-        workspace.paste(Blockly.clipboardXml_);
-        Blockly.Events.setGroup(false);
+        if (Blockly.clipboardTypeCounts_ &&
+            workspace.isCapacityAvailable(Blockly.clipboardTypeCounts_)) {
+          Blockly.Events.setGroup(true);
+          workspace.paste(Blockly.clipboardXml_);
+          Blockly.Events.setGroup(false);
+        }
       }
     } else if (e.keyCode == 90) {
       // 'z' for undo 'Z' is for redo.
       Blockly.hideChaff();
-      Blockly.mainWorkspace.undo(e.shiftKey);
+      workspace.undo(e.shiftKey);
     }
   }
   // Common code for delete and cut.
@@ -247,8 +272,8 @@ Blockly.onKeyDown_ = function(e) {
 
 /**
  * Copy a block or workspace comment onto the local clipboard.
- * @param {!Blockly.Block | !Blockly.WorkspaceComment} toCopy Block or Workspace Comment
- *    to be copied.
+ * @param {!Blockly.Block | !Blockly.WorkspaceComment} toCopy Block or
+ *    Workspace Comment to be copied.
  * @private
  */
 Blockly.copy_ = function(toCopy) {
@@ -265,6 +290,8 @@ Blockly.copy_ = function(toCopy) {
   }
   Blockly.clipboardXml_ = xml;
   Blockly.clipboardSource_ = toCopy.workspace;
+  Blockly.clipboardTypeCounts_ = toCopy.isComment ? null :
+      Blockly.utils.getBlockTypeCounts(toCopy, true);
 };
 
 /**
@@ -306,8 +333,14 @@ Blockly.onContextMenu_ = function(e) {
 Blockly.hideChaff = function(opt_allowToolbox) {
   Blockly.Tooltip.hide();
   Blockly.WidgetDiv.hide();
+  // For now the trashcan flyout always autocloses because it overlays the
+  // trashcan UI (no trashcan to click to close it)
+  var workspace = Blockly.getMainWorkspace();
+  if (workspace.trashcan &&
+      workspace.trashcan.flyout_) {
+    workspace.trashcan.flyout_.hide();
+  }
   if (!opt_allowToolbox) {
-    var workspace = Blockly.getMainWorkspace();
     if (workspace.toolbox_ &&
         workspace.toolbox_.flyout_ &&
         workspace.toolbox_.flyout_.autoClose) {
@@ -386,7 +419,6 @@ Blockly.prompt = function(message, defaultValue, callback) {
  * @private
  */
 Blockly.jsonInitFactory_ = function(jsonDef) {
-  /** @this Blockly.Block */
   return function() {
     this.jsonInit(jsonDef);
   };
@@ -433,8 +465,8 @@ Blockly.defineBlocksWithJsonArray = function(jsonArray) {
  * @param {Object} thisObject The value of 'this' in the function.
  * @param {!Function} func Function to call when event is triggered.
  * @param {boolean=} opt_noCaptureIdentifier True if triggering on this event
- *     should not block execution of other event handlers on this touch or other
- *     simultaneous touches.
+ *     should not block execution of other event handlers on this touch or
+ *     other simultaneous touches.
  * @param {boolean=} opt_noPreventDefault True if triggering on this event
  *     should prevent the default handler.  False by default.  If
  *     opt_noPreventDefault is provided, opt_noCaptureIdentifier must also be
@@ -646,6 +678,64 @@ Blockly.checkBlockColourConstant_ = function(
     var warning = warningPattern.replace('%1', namePath).replace('%2', msgName);
     console.warn(warning);
   }
+};
+
+
+/**
+ * Sets the theme for blockly and refreshes all blocks in the toolbox and workspace.
+ * @param {Blockly.Theme} theme Theme for blockly.
+ */
+Blockly.setTheme = function(theme) {
+  this.theme_ = theme;
+  var ws = Blockly.getMainWorkspace();
+
+  //update all blocks in workspace that have a style name
+  this.updateBlockStyles_(ws.getAllBlocks().filter(
+      function(block){
+        return block.getStyleName() !== undefined;
+      }
+  ));
+
+  //update blocks in the flyout
+  if (!ws.toolbox_ && ws.flyout_ && ws.flyout_.workspace_) {
+    this.updateBlockStyles_(ws.flyout_.workspace_.getAllBlocks());
+  } else {
+    ws.refreshToolboxSelection();
+  }
+
+  //update colours on the categories
+  if (ws.toolbox_) {
+    ws.toolbox_.updateColourFromTheme();
+  }
+
+  var event = new Blockly.Events.Ui(null, 'theme');
+  event.workspaceId = ws.id;
+  Blockly.Events.fire(event);
+};
+
+/**
+ * Updates all the blocks with new style.
+ * @param {!Array.<Blockly.Block>} blocks List of blocks to update the style on.
+ * @private
+ */
+Blockly.updateBlockStyles_ = function(blocks) {
+  for (var i = 0; i < blocks.length; i++) {
+    var block = blocks[i];
+    var blockStyleName = block.getStyleName();
+
+    block.setStyle(blockStyleName);
+    if (block.mutator) {
+      block.mutator.updateBlockStyle(blockStyleName);
+    }
+  }
+};
+
+/**
+ * Gets the theme.
+ * @return {?Blockly.Theme} theme Theme for blockly.
+ */
+Blockly.getTheme = function() {
+  return this.theme_;
 };
 
 // IE9 does not have a console.  Create a stub to stop errors.

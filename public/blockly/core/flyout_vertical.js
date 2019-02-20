@@ -30,10 +30,8 @@ goog.require('Blockly.Block');
 goog.require('Blockly.Events');
 goog.require('Blockly.Flyout');
 goog.require('Blockly.FlyoutButton');
-goog.require('Blockly.utils');
 goog.require('Blockly.WorkspaceSvg');
-goog.require('goog.dom');
-goog.require('goog.events');
+
 goog.require('goog.math.Rect');
 goog.require('goog.userAgent');
 
@@ -125,7 +123,7 @@ Blockly.VerticalFlyout.prototype.setMetrics_ = function(xyRatio) {
   if (!metrics) {
     return;
   }
-  if (goog.isNumber(xyRatio.y)) {
+  if (typeof xyRatio.y == 'number') {
     this.workspace_.scrollY = -metrics.contentHeight * xyRatio.y;
   }
   this.workspace_.translate(this.workspace_.scrollX + metrics.absoluteLeft,
@@ -387,15 +385,13 @@ Blockly.VerticalFlyout.prototype.reflowInternal_ = function() {
       // With the flyoutWidth known, right-align the buttons.
       for (var i = 0, button; button = this.buttons_[i]; i++) {
         var y = button.getPosition().y;
-        var x = flyoutWidth / this.workspace_.scale - button.width - this.MARGIN -
-            Blockly.BlockSvg.TAB_WIDTH;
+        var x = flyoutWidth / this.workspace_.scale - button.width -
+            this.MARGIN - Blockly.BlockSvg.TAB_WIDTH;
         button.moveTo(x, y);
       }
     }
     // Record the width for .getMetrics_ and .position.
     this.width_ = flyoutWidth;
-    // Call this since it is possible the trash and zoom buttons need
-    // to move. e.g. on a bottom positioned flyout when zoom is clicked.
-    this.targetWorkspace_.resize();
+    this.position();
   }
 };

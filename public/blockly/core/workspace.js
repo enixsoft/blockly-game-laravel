@@ -26,10 +26,9 @@
 
 goog.provide('Blockly.Workspace');
 
+goog.require('Blockly.utils');
 goog.require('Blockly.VariableMap');
 goog.require('Blockly.WorkspaceComment');
-goog.require('goog.array');
-goog.require('goog.math');
 
 
 /**
@@ -86,6 +85,11 @@ Blockly.Workspace = function(opt_options) {
    * @private
    */
   this.blockDB_ = Object.create(null);
+  /**
+   * @type {!Object}
+   * @private
+   */
+  this.typedBlocksDB_ = Object.create(null);
 
   /**
    * A map from variable type to list of variable names.  The lists contain all
@@ -123,7 +127,8 @@ Blockly.Workspace.prototype.rendered = false;
 Blockly.Workspace.prototype.isClearing = false;
 
 /**
- * Maximum number of undo events in stack. `0` turns off undo, `Infinity` sets it to unlimited.
+ * Maximum number of undo events in stack. `0` turns off undo, `Infinity` sets
+ * it to unlimited.
  * @type {number}
  */
 Blockly.Workspace.prototype.MAX_UNDO = 1024;
@@ -148,6 +153,24 @@ Blockly.Workspace.prototype.dispose = function() {
 Blockly.Workspace.SCAN_ANGLE = 3;
 
 /**
+ * Compare function for sorting objects (blocks, comments, etc) by position;
+ *    top to bottom (with slight LTR or RTL bias).
+ * @param {!Blockly.Block | !Blockly.WorkspaceComment} a The first object to
+ *    compare.
+ * @param {!Blockly.Block | !Blockly.WorkspaceComment} b The second object to
+ *    compare.
+ * @returns {number} The comparison value. This tells Array.sort() how to change
+ *    object a's index.
+ * @private
+ */
+Blockly.Workspace.prototype.sortObjects_ = function(a, b) {
+  var aXY = a.getRelativeToSurfaceXY();
+  var bXY = b.getRelativeToSurfaceXY();
+  return (aXY.y + Blockly.Workspace.prototype.sortObjects_.offset * aXY.x) -
+      (bXY.y + Blockly.Workspace.prototype.sortObjects_.offset * bXY.x);
+};
+
+/**
  * Add a block to the list of top blocks.
  * @param {!Blockly.Block} block Block to add.
  */
@@ -160,8 +183,8 @@ Blockly.Workspace.prototype.addTopBlock = function(block) {
  * @param {!Blockly.Block} block Block to remove.
  */
 Blockly.Workspace.prototype.removeTopBlock = function(block) {
-  if (!goog.array.remove(this.topBlocks_, block)) {
-    throw 'Block not present in workspace\'s list of top-most blocks.';
+  if (!Blockly.utils.arrayRemove(this.topBlocks_, block)) {
+    throw Error('Block not present in workspace\'s list of top-most blocks.');
   }
 };
 
@@ -175,15 +198,58 @@ Blockly.Workspace.prototype.getTopBlocks = function(ordered) {
   // Copy the topBlocks_ list.
   var blocks = [].concat(this.topBlocks_);
   if (ordered && blocks.length > 1) {
-    var offset = Math.sin(goog.math.toRadians(Blockly.Workspace.SCAN_ANGLE));
+    this.sortObjects_.offset =
+        Math.sin(Blockly.utils.toRadians(Blockly.Workspace.SCAN_ANGLE));
     if (this.RTL) {
-      offset *= -1;
+      this.sortObjects_.offset *= -1;
     }
-    blocks.sort(function(a, b) {
-      var aXY = a.getRelativeToSurfaceXY();
-      var bXY = b.getRelativeToSurfaceXY();
-      return (aXY.y + offset * aXY.x) - (bXY.y + offset * bXY.x);
-    });
+    blocks.sort(this.sortObjects_);
+  }
+  return blocks;
+};
+
+/**
+ * Add a block to the list of blocks keyed by type.
+ * @param {!Blockly.Block} block Block to add.
+ */
+Blockly.Workspace.prototype.addTypedBlock = function(block) {
+  if (!this.typedBlocksDB_[block.type]) {
+    this.typedBlocksDB_[block.type] = [];
+  }
+  this.typedBlocksDB_[block.type].push(block);
+};
+
+/**
+ * Remove a block from the list of blocks keyed by type.
+ * @param {!Blockly.Block} block Block to remove.
+ */
+Blockly.Workspace.prototype.removeTypedBlock = function(block) {
+  this.typedBlocksDB_[block.type].splice(this.typedBlocksDB_[block.type]
+      .indexOf(block), 1);
+  if (!this.typedBlocksDB_[block.type].length) {
+    delete this.typedBlocksDB_[block.type];
+  }
+};
+
+/**
+ * Finds the blocks with the associated type and returns them. Blocks are
+ * optionally sorted by position; top to bottom (with slight LTR or RTL bias).
+ * @param {string} type The type of block to search for.
+ * @param {boolean} ordered Sort the list if true.
+ * @return {!Array.<!Blockly.Block>} The blocks of the given type.
+ */
+Blockly.Workspace.prototype.getBlocksByType = function(type, ordered) {
+  if (!this.typedBlocksDB_[type]) {
+    return [];
+  }
+  var blocks = this.typedBlocksDB_[type].slice(0);
+  if (ordered && blocks.length > 1) {
+    this.sortObjects_.offset =
+        Math.sign(Blockly.utils.toRadians(Blockly.Workspace.SCAN_ANGLE));
+    if (this.RTL) {
+      this.sortObjects_.offset *= -1;
+    }
+    blocks.sort(this.sortObjects_);
   }
   return blocks;
 };
@@ -211,8 +277,9 @@ Blockly.Workspace.prototype.addTopComment = function(comment) {
  * @package
  */
 Blockly.Workspace.prototype.removeTopComment = function(comment) {
-  if (!goog.array.remove(this.topComments_, comment)) {
-    throw 'Comment not present in workspace\'s list of top-most comments.';
+  if (!Blockly.utils.arrayRemove(this.topComments_, comment)) {
+    throw Error('Comment not present in workspace\'s list of top-most ' +
+        'comments.');
   }
   // Note: If the comment database starts to hold block comments, this may need
   // to move to a separate function.
@@ -220,8 +287,8 @@ Blockly.Workspace.prototype.removeTopComment = function(comment) {
 };
 
 /**
- * Finds the top-level comments and returns them.  Comments are optionally sorted
- * by position; top to bottom (with slight LTR or RTL bias).
+ * Finds the top-level comments and returns them.  Comments are optionally
+ * sorted by position; top to bottom (with slight LTR or RTL bias).
  * @param {boolean} ordered Sort the list if true.
  * @return {!Array.<!Blockly.WorkspaceComment>} The top-level comment objects.
  * @package
@@ -230,15 +297,12 @@ Blockly.Workspace.prototype.getTopComments = function(ordered) {
   // Copy the topComments_ list.
   var comments = [].concat(this.topComments_);
   if (ordered && comments.length > 1) {
-    var offset = Math.sin(goog.math.toRadians(Blockly.Workspace.SCAN_ANGLE));
+    this.sortObjects_.offset =
+        Math.sin(Blockly.utils.toRadians(Blockly.Workspace.SCAN_ANGLE));
     if (this.RTL) {
-      offset *= -1;
+      this.sortObjects_.offset *= -1;
     }
-    comments.sort(function(a, b) {
-      var aXY = a.getRelativeToSurfaceXY();
-      var bXY = b.getRelativeToSurfaceXY();
-      return (aXY.y + offset * aXY.x) - (bXY.y + offset * bXY.x);
-    });
+    comments.sort(this.sortObjects_);
   }
   return comments;
 };
@@ -264,7 +328,14 @@ Blockly.Workspace.prototype.getAllBlocks = function(ordered) {
       blocks.push.apply(blocks, blocks[i].getChildren(false));
     }
   }
-  return blocks;
+
+  // Insertion markers exist on the workspace for rendering reasons, but aren't
+  // "real" blocks from a developer perspective.
+  var filtered = blocks.filter(function(block) {
+    return !block.isInsertionMarker();
+  });
+
+  return filtered;
 };
 
 /**
@@ -340,8 +411,8 @@ Blockly.Workspace.prototype.deleteVariableById = function(id) {
 };
 
 /**
- * Deletes a variable and all of its uses from this workspace without asking the
- * user for confirmation.
+ * Deletes a variable and all of its uses from this workspace without asking
+ * the user for confirmation.
  * @param {!Blockly.VariableModel} variable Variable to delete.
  * @param {!Array.<!Blockly.Block>} uses An array of uses of the variable.
  * @private
@@ -449,7 +520,58 @@ Blockly.Workspace.prototype.remainingCapacity = function() {
   if (isNaN(this.options.maxBlocks)) {
     return Infinity;
   }
+
   return this.options.maxBlocks - this.getAllBlocks().length;
+};
+
+/**
+ * The number of blocks of the given type that may be added to the workspace
+ *    before reaching the maxInstances allowed for that type.
+ * @param {string} type Type of block to return capacity for.
+ * @return {number} Number of blocks of type left.
+ */
+Blockly.Workspace.prototype.remainingCapacityOfType = function(type) {
+  if (!this.options.maxInstances) {
+    return Infinity;
+  }
+  return (this.options.maxInstances[type] || Infinity) -
+      this.getBlocksByType(type).length;
+};
+
+/**
+ * Check if there is remaining capacity for blocks of the given counts to be
+ *    created. If the total number of blocks represented by the map is more than
+ *    the total remaining capacity, it returns false. If a type count is more
+ *    than the remaining capacity for that type, it returns false.
+ * @param {!Object} typeCountsMap A map of types to counts (usually representing
+ *    blocks to be created).
+ * @returns {boolean} True if there is capacity for the given map,
+ *    false otherwise.
+ */
+Blockly.Workspace.prototype.isCapacityAvailable = function(typeCountsMap) {
+  if (!this.hasBlockLimits()) {
+    return true;
+  }
+  var copyableBlocksCount = 0;
+  for (var type in typeCountsMap) {
+    if (typeCountsMap[type] > this.remainingCapacityOfType(type)) {
+      return false;
+    }
+    copyableBlocksCount += typeCountsMap[type];
+  }
+  if (copyableBlocksCount > this.remainingCapacity()) {
+    return false;
+  }
+  return true;
+};
+
+/**
+ * Checks if the workspace has any limits on the maximum number of blocks,
+ *    or the maximum number of blocks of specific types.
+ * @returns {boolean} True if it has block limits, false otherwise.
+ */
+Blockly.Workspace.prototype.hasBlockLimits = function() {
+  return this.options.maxBlocks != Infinity || !!this.options.maxInstances;
 };
 
 /**
@@ -510,7 +632,7 @@ Blockly.Workspace.prototype.addChangeListener = function(func) {
  * @param {Function} func Function to stop calling.
  */
 Blockly.Workspace.prototype.removeChangeListener = function(func) {
-  goog.array.remove(this.listeners_, func);
+  Blockly.utils.arrayRemove(this.listeners_, func);
 };
 
 /**
@@ -521,8 +643,8 @@ Blockly.Workspace.prototype.fireChangeListener = function(event) {
   if (event.recordUndo) {
     this.undoStack_.push(event);
     this.redoStack_.length = 0;
-    if (this.undoStack_.length > this.MAX_UNDO) {
-      this.undoStack_.unshift();
+    while (this.undoStack_.length > this.MAX_UNDO && this.MAX_UNDO >= 0) {
+      this.undoStack_.shift();
     }
   }
   for (var i = 0, func; func = this.listeners_[i]; i++) {
@@ -557,7 +679,8 @@ Blockly.Workspace.prototype.getCommentById = function(id) {
  *     whether shadow blocks are counted as filled. Defaults to true.
  * @return {boolean} True if all inputs are filled, false otherwise.
  */
-Blockly.Workspace.prototype.allInputsFilled = function(opt_shadowBlocksAreFilled) {
+Blockly.Workspace.prototype.allInputsFilled = function(
+    opt_shadowBlocksAreFilled) {
   var blocks = this.getTopBlocks(false);
   for (var i = 0, block; block = blocks[i]; i++) {
     if (!block.allInputsFilled(opt_shadowBlocksAreFilled)) {
@@ -568,8 +691,8 @@ Blockly.Workspace.prototype.allInputsFilled = function(opt_shadowBlocksAreFilled
 };
 
 /**
- * Return the variable map that contains "potential" variables.  These exist in
- * the flyout but not in the workspace.
+ * Return the variable map that contains "potential" variables.
+ * These exist in the flyout but not in the workspace.
  * @return {?Blockly.VariableMap} The potential variable map.
  * @package
  */

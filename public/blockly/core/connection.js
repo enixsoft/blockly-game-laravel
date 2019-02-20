@@ -27,9 +27,7 @@
 goog.provide('Blockly.Connection');
 
 goog.require('Blockly.Events.BlockMove');
-
-goog.require('goog.asserts');
-goog.require('goog.dom');
+goog.require('Blockly.Xml');
 
 
 /**
@@ -160,7 +158,7 @@ Blockly.Connection.prototype.connect_ = function(childConnection) {
       // Value connections.
       // If female block is already connected, disconnect and bump the male.
       if (!orphanBlock.outputConnection) {
-        throw 'Orphan block does not have an output connection.';
+        throw Error('Orphan block does not have an output connection.');
       }
       // Attempt to reattach the orphan at the end of the newly inserted
       // block.  Since this block may be a row, walk down to the end
@@ -176,7 +174,7 @@ Blockly.Connection.prototype.connect_ = function(childConnection) {
       // Statement blocks may be inserted into the middle of a stack.
       // Split the stack.
       if (!orphanBlock.previousConnection) {
-        throw 'Orphan block does not have a previous connection.';
+        throw Error('Orphan block does not have a previous connection.');
       }
       // Attempt to reattach the orphan at the bottom of the newly inserted
       // block.  Since this block may be a stack, walk down to the end.
@@ -238,7 +236,7 @@ Blockly.Connection.prototype.connect_ = function(childConnection) {
  */
 Blockly.Connection.prototype.dispose = function() {
   if (this.isConnected()) {
-    throw 'Disconnect connection before disposing of it.';
+    throw Error('Disconnect connection before disposing of it.');
   }
   if (this.inDB_) {
     this.db_.removeConnection_(this);
@@ -317,23 +315,59 @@ Blockly.Connection.prototype.checkConnection_ = function(target) {
     case Blockly.Connection.CAN_CONNECT:
       break;
     case Blockly.Connection.REASON_SELF_CONNECTION:
-      throw 'Attempted to connect a block to itself.';
+      throw Error('Attempted to connect a block to itself.');
     case Blockly.Connection.REASON_DIFFERENT_WORKSPACES:
       // Usually this means one block has been deleted.
-      throw 'Blocks not on same workspace.';
+      throw Error('Blocks not on same workspace.');
     case Blockly.Connection.REASON_WRONG_TYPE:
-      throw 'Attempt to connect incompatible types.';
+      throw Error('Attempt to connect incompatible types.');
     case Blockly.Connection.REASON_TARGET_NULL:
-      throw 'Target connection is null.';
+      throw Error('Target connection is null.');
     case Blockly.Connection.REASON_CHECKS_FAILED:
       var msg = 'Connection checks failed. ';
       msg += this + ' expected '  + this.check_ + ', found ' + target.check_;
-      throw msg;
+      throw Error(msg);
     case Blockly.Connection.REASON_SHADOW_PARENT:
-      throw 'Connecting non-shadow to shadow block.';
+      throw Error('Connecting non-shadow to shadow block.');
     default:
-      throw 'Unknown connection failure: this should never happen!';
+      throw Error('Unknown connection failure: this should never happen!');
   }
+};
+
+/**
+ * Check if the two connections can be dragged to connect to each other.
+ * This is used by the connection database when searching for the closest
+ * connection.
+ * @param {!Blockly.Connection} candidate A nearby connection to check, which
+ *     must be a previous connection.
+ * @return {boolean} True if the connection is allowed, false otherwise.
+ * @private
+ */
+Blockly.Connection.prototype.canConnectToPrevious_ = function(candidate) {
+  if (this.targetConnection) {
+    // This connection is already occupied.
+    // A next connection will never disconnect itself mid-drag.
+    return false;
+  }
+
+  // Don't let blocks try to connect to themselves or ones they nest.
+  if (Blockly.draggingConnections_.indexOf(candidate) != -1) {
+    return false;
+  }
+
+  if (!candidate.targetConnection) {
+    return true;
+  }
+
+  var targetBlock = candidate.targetBlock();
+  // If it is connected to a real block, game over.
+  if (!targetBlock.isInsertionMarker()) {
+    return false;
+  }
+  // If it's connected to an insertion marker but that insertion marker
+  // is the first block in a stack, it's still fine.  If that insertion
+  // marker is in the middle of a stack, it won't work.
+  return !targetBlock.getPreviousBlock();
 };
 
 /**
@@ -342,41 +376,55 @@ Blockly.Connection.prototype.checkConnection_ = function(target) {
  * @return {boolean} True if the connection is allowed, false otherwise.
  */
 Blockly.Connection.prototype.isConnectionAllowed = function(candidate) {
+  // Don't consider insertion markers.
+  if (candidate.sourceBlock_.isInsertionMarker()) {
+    return false;
+  }
   // Type checking.
   var canConnect = this.canConnectWithReason_(candidate);
   if (canConnect != Blockly.Connection.CAN_CONNECT) {
     return false;
   }
 
-  // Don't offer to connect an already connected left (male) value plug to
-  // an available right (female) value plug.  Don't offer to connect the
-  // bottom of a statement block to one that's already connected.
-  if (candidate.type == Blockly.OUTPUT_VALUE ||
-      candidate.type == Blockly.PREVIOUS_STATEMENT) {
-    if (candidate.isConnected() || this.isConnected()) {
-      return false;
+  switch (candidate.type) {
+    case Blockly.PREVIOUS_STATEMENT:
+      return this.canConnectToPrevious_(candidate);
+    case Blockly.OUTPUT_VALUE: {
+      // Don't offer to connect an already connected left (male) value plug to
+      // an available right (female) value plug.
+      if ((candidate.isConnected() &&
+          !candidate.targetBlock().isInsertionMarker()) ||
+          this.isConnected()) {
+        return false;
+      }
+      break;
     }
-  }
-
-  // Offering to connect the left (male) of a value block to an already
-  // connected value pair is ok, we'll splice it in.
-  // However, don't offer to splice into an immovable block.
-  if (candidate.type == Blockly.INPUT_VALUE && candidate.isConnected() &&
-      !candidate.targetBlock().isMovable() &&
-      !candidate.targetBlock().isShadow()) {
-    return false;
-  }
-
-  // Don't let a block with no next connection bump other blocks out of the
-  // stack.  But covering up a shadow block or stack of shadow blocks is fine.
-  // Similarly, replacing a terminal statement with another terminal statement
-  // is allowed.
-  if (this.type == Blockly.PREVIOUS_STATEMENT &&
-      candidate.isConnected() &&
-      !this.sourceBlock_.nextConnection &&
-      !candidate.targetBlock().isShadow() &&
-      candidate.targetBlock().nextConnection) {
-    return false;
+    case Blockly.INPUT_VALUE: {
+      // Offering to connect the left (male) of a value block to an already
+      // connected value pair is ok, we'll splice it in.
+      // However, don't offer to splice into an immovable block.
+      if (candidate.isConnected() &&
+          !candidate.targetBlock().isMovable() &&
+          !candidate.targetBlock().isShadow()) {
+        return false;
+      }
+      break;
+    }
+    case Blockly.NEXT_STATEMENT: {
+      // Don't let a block with no next connection bump other blocks out of the
+      // stack.  But covering up a shadow block or stack of shadow blocks is
+      // fine.  Similarly, replacing a terminal statement with another terminal
+      // statement is allowed.
+      if (candidate.isConnected() &&
+          !this.sourceBlock_.nextConnection &&
+          !candidate.targetBlock().isShadow() &&
+          candidate.targetBlock().nextConnection) {
+        return false;
+      }
+      break;
+    }
+    default:
+      throw Error('Unknown connection type in isConnectionAllowed');
   }
 
   // Don't let blocks try to connect to themselves or ones they nest.
@@ -414,7 +462,9 @@ Blockly.Connection.prototype.connect = function(otherConnection) {
  * @private
  */
 Blockly.Connection.connectReciprocally_ = function(first, second) {
-  goog.asserts.assert(first && second, 'Cannot connect null connections.');
+  if (!first || !second) {
+    throw Error('Cannot connect null connections.');
+  }
   first.targetConnection = second;
   second.targetConnection = first;
 };
@@ -474,10 +524,12 @@ Blockly.Connection.lastConnectionInRow_ = function(startBlock, orphanBlock) {
  */
 Blockly.Connection.prototype.disconnect = function() {
   var otherConnection = this.targetConnection;
-  goog.asserts.assert(otherConnection, 'Source connection not connected.');
-  goog.asserts.assert(otherConnection.targetConnection == this,
-      'Target connection not connected to source connection.');
-
+  if (!otherConnection) {
+    throw Error('Source connection not connected.');
+  }
+  if (otherConnection.targetConnection != this) {
+    throw Error('Target connection not connected to source connection.');
+  }
   var parentBlock, childBlock, parentConnection;
   if (this.isSuperior()) {
     // Superior block.
@@ -531,7 +583,7 @@ Blockly.Connection.prototype.respawnShadow_ = function() {
     } else if (blockShadow.previousConnection) {
       this.connect(blockShadow.previousConnection);
     } else {
-      throw 'Child block does not have output or previous statement.';
+      throw Error('Child block does not have output or previous statement.');
     }
   }
 };
@@ -591,7 +643,7 @@ Blockly.Connection.prototype.onCheckChanged_ = function() {
 Blockly.Connection.prototype.setCheck = function(check) {
   if (check) {
     // Ensure that check is in an array.
-    if (!goog.isArray(check)) {
+    if (!Array.isArray(check)) {
       check = [check];
     }
     this.check_ = check;
@@ -600,6 +652,16 @@ Blockly.Connection.prototype.setCheck = function(check) {
     this.check_ = null;
   }
   return this;
+};
+
+/**
+ * Get a connection's compatibility.
+ * @return {Array} List of compatible value types.  Null if
+ *     all types are compatible.
+ * @public
+ */
+Blockly.Connection.prototype.getCheck = function() {
+  return this.check_;
 };
 
 /**
@@ -651,9 +713,13 @@ Blockly.Connection.prototype.toString = function() {
   } else if (block.nextConnection == this) {
     msg = 'Next Connection of ';
   } else {
-    var parentInput = goog.array.find(block.inputList, function(input) {
-      return input.connection == this;
-    }, this);
+    var parentInput = null;
+    for (var i = 0, input; input = block.inputList[i]; i++) {
+      if (input.connection == this) {
+        parentInput = input;
+        break;
+      }
+    }
     if (parentInput) {
       msg = 'Input "' + parentInput.name + '" connection on ';
     } else {

@@ -19,11 +19,48 @@
  */
 'use strict';
 
+goog.provide('Blockly.TestBlocks');
+
 Blockly.defineBlocksWithJsonArray([  // BEGIN JSON EXTRACT
   {
     "type": "empty_block",
     "message0": "",
     "args0": []
+  },
+  {
+    "type": "value_to_stack",
+    "message0": "value to stack",
+    "nextStatement": null,
+    "output": null,
+    "style": "math_blocks"
+  },
+  {
+    "type": "value_to_statement",
+    "message0": "value to statement %1",
+    "args0": [
+      {
+        "type": "input_statement",
+        "name": "STATEMENT"
+      }
+    ],
+    "output": null,
+    "style": "math_blocks"
+  },
+  {
+    "type": "limit_instances",
+    "message0": "limit 3 instances %1 %2",
+    "args0": [
+      {
+        "type": "input_dummy"
+      },
+      {
+        "type": "input_statement",
+        "name": "STATEMENT"
+      }
+    ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "style": "math_blocks",
   },
   {
     "type": "example_dropdown_long",
@@ -74,22 +111,23 @@ Blockly.defineBlocksWithJsonArray([  // BEGIN JSON EXTRACT
     "message0": "%1",
     "args0": [
       {
+        "NOTE": "The following paths are relative to playground.html",
         "type": "field_dropdown",
         "name": "FIELDNAME",
         "options": [
-          [{"src": "../media/test_a.png", "width": 32, "height": 32, "alt": "A"}, "A"],
-          [{"src": "../media/test_b.png", "width": 32, "height": 32, "alt": "B"}, "B"],
-          [{"src": "../media/test_c.png", "width": 32, "height": 32, "alt": "C"}, "C"],
-          [{"src": "../media/test_d.png", "width": 32, "height": 32, "alt": "D"}, "D"],
-          [{"src": "../media/test_e.png", "width": 32, "height": 32, "alt": "E"}, "E"],
-          [{"src": "../media/test_f.png", "width": 32, "height": 32, "alt": "F"}, "F"],
-          [{"src": "../media/test_g.png", "width": 32, "height": 32, "alt": "G"}, "G"],
-          [{"src": "../media/test_h.png", "width": 32, "height": 32, "alt": "H"}, "H"],
-          [{"src": "../media/test_i.png", "width": 32, "height": 32, "alt": "I"}, "I"],
-          [{"src": "../media/test_j.png", "width": 32, "height": 32, "alt": "J"}, "J"],
-          [{"src": "../media/test_k.png", "width": 32, "height": 32, "alt": "K"}, "K"],
-          [{"src": "../media/test_l.png", "width": 32, "height": 32, "alt": "L"}, "L"],
-          [{"src": "../media/test_m.png", "width": 32, "height": 32, "alt": "M"}, "M"]
+          [{"src": "media/a.png", "width": 32, "height": 32, "alt": "A"}, "A"],
+          [{"src": "media/b.png", "width": 32, "height": 32, "alt": "B"}, "B"],
+          [{"src": "media/c.png", "width": 32, "height": 32, "alt": "C"}, "C"],
+          [{"src": "media/d.png", "width": 32, "height": 32, "alt": "D"}, "D"],
+          [{"src": "media/e.png", "width": 32, "height": 32, "alt": "E"}, "E"],
+          [{"src": "media/f.png", "width": 32, "height": 32, "alt": "F"}, "F"],
+          [{"src": "media/g.png", "width": 32, "height": 32, "alt": "G"}, "G"],
+          [{"src": "media/h.png", "width": 32, "height": 32, "alt": "H"}, "H"],
+          [{"src": "media/i.png", "width": 32, "height": 32, "alt": "I"}, "I"],
+          [{"src": "media/j.png", "width": 32, "height": 32, "alt": "J"}, "J"],
+          [{"src": "media/k.png", "width": 32, "height": 32, "alt": "K"}, "K"],
+          [{"src": "media/l.png", "width": 32, "height": 32, "alt": "L"}, "L"],
+          [{"src": "media/m.png", "width": 32, "height": 32, "alt": "M"}, "M"]
         ]
       }
     ]
@@ -103,20 +141,20 @@ Blockly.defineBlocksWithJsonArray([  // BEGIN JSON EXTRACT
         "name": "FIELDNAME",
         "options": [
           ["images and text", "IMAGES AND TEXT"],
-          [{"src": "../media/test_a.png", "width": 32, "height": 32, "alt": "A"}, "A"],
-          [{"src": "../media/test_b.png", "width": 32, "height": 32, "alt": "B"}, "B"],
-          [{"src": "../media/test_c.png", "width": 32, "height": 32, "alt": "C"}, "C"],
-          [{"src": "../media/test_d.png", "width": 32, "height": 32, "alt": "D"}, "D"],
-          [{"src": "../media/test_e.png", "width": 32, "height": 32, "alt": "E"}, "E"],
-          [{"src": "../media/test_f.png", "width": 32, "height": 32, "alt": "F"}, "F"],
-          [{"src": "../media/test_g.png", "width": 32, "height": 32, "alt": "G"}, "G"],
-          [{"src": "../media/test_h.png", "width": 32, "height": 32, "alt": "H"}, "H"],
+          [{"src": "media/a.png", "width": 32, "height": 32, "alt": "A"}, "A"],
+          [{"src": "media/b.png", "width": 32, "height": 32, "alt": "B"}, "B"],
+          [{"src": "media/c.png", "width": 32, "height": 32, "alt": "C"}, "C"],
+          [{"src": "media/d.png", "width": 32, "height": 32, "alt": "D"}, "D"],
+          [{"src": "media/e.png", "width": 32, "height": 32, "alt": "E"}, "E"],
+          [{"src": "media/f.png", "width": 32, "height": 32, "alt": "F"}, "F"],
+          [{"src": "media/g.png", "width": 32, "height": 32, "alt": "G"}, "G"],
+          [{"src": "media/h.png", "width": 32, "height": 32, "alt": "H"}, "H"],
           ["xyz", "LMNOP"],
-          [{"src": "../media/test_i.png", "width": 32, "height": 32, "alt": "I"}, "I"],
-          [{"src": "../media/test_j.png", "width": 32, "height": 32, "alt": "J"}, "J"],
-          [{"src": "../media/test_k.png", "width": 32, "height": 32, "alt": "K"}, "K"],
-          [{"src": "../media/test_l.png", "width": 32, "height": 32, "alt": "L"}, "L"],
-          [{"src": "../media/test_m.png", "width": 32, "height": 32, "alt": "M"}, "M"]
+          [{"src": "media/i.png", "width": 32, "height": 32, "alt": "I"}, "I"],
+          [{"src": "media/j.png", "width": 32, "height": 32, "alt": "J"}, "J"],
+          [{"src": "media/k.png", "width": 32, "height": 32, "alt": "K"}, "K"],
+          [{"src": "media/l.png", "width": 32, "height": 32, "alt": "L"}, "L"],
+          [{"src": "media/m.png", "width": 32, "height": 32, "alt": "M"}, "M"]
         ]
       }
     ]
@@ -125,17 +163,17 @@ Blockly.defineBlocksWithJsonArray([  // BEGIN JSON EXTRACT
     "type": "example_angle",
     "message0": "angle: %1",
     "args0": [
-        {
-          "type": "field_angle",
-          "name": "FIELDNAME",
-          "angle": "90",
-          "alt":
-            {
-              "type": "field_label",
-              "text": "NO ANGLE FIELD"
-            }
-        }
-      ]
+      {
+        "type": "field_angle",
+        "name": "FIELDNAME",
+        "angle": "90",
+        "alt":
+          {
+            "type": "field_label",
+            "text": "NO ANGLE FIELD"
+          }
+      }
+    ]
   },
   {
     "type": "example_date",
@@ -163,7 +201,7 @@ Blockly.defineBlocksWithJsonArray([  // BEGIN JSON EXTRACT
         "text": "0"
       }
     ],
-    "colour": 230,
+    "style": "math_blocks",
     "output": "Number",
     "tooltip": "A number."
   },
@@ -178,7 +216,7 @@ Blockly.defineBlocksWithJsonArray([  // BEGIN JSON EXTRACT
         "text": "0"
       }
     ],
-    "colour": 230,
+    "style": "math_blocks",
     "output": "Number",
     "tooltip": "An integer."
   },
@@ -193,7 +231,7 @@ Blockly.defineBlocksWithJsonArray([  // BEGIN JSON EXTRACT
         "text": "0"
       }
     ],
-    "colour": 230,
+    "style": "math_blocks",
     "output": "Number",
     "tooltip": "A dollar amount."
   },
@@ -210,7 +248,7 @@ Blockly.defineBlocksWithJsonArray([  // BEGIN JSON EXTRACT
         "text": "0"
       }
     ],
-    "colour": 230,
+    "style": "math_blocks",
     "output": "Note",
     "tooltip": "A midi note."
   },
@@ -226,7 +264,7 @@ Blockly.defineBlocksWithJsonArray([  // BEGIN JSON EXTRACT
         "alt": "*"
       }
     ],
-    "colour": 160
+    "style": "text_blocks"
   },
   {
     "type": "image_small",
@@ -234,13 +272,13 @@ Blockly.defineBlocksWithJsonArray([  // BEGIN JSON EXTRACT
     "args0": [
       {
         "type": "field_image",
-        "src": "../media/test_30px.png",
+        "src": "media/30px.png",
         "width": 50,
         "height": 50,
         "alt": "*"
       }
     ],
-    "colour": 160
+    "style": "text_blocks"
   },
   {
     "type": "image_large",
@@ -248,10 +286,25 @@ Blockly.defineBlocksWithJsonArray([  // BEGIN JSON EXTRACT
     "args0": [
       {
         "type": "field_image",
-        "src": "../media/test_200px.png",
+        "src": "media/200px.png",
         "width": 50,
         "height": 50,
         "alt": "*"
+      }
+    ],
+    "style": "text_blocks"
+  },
+  {
+    "type": "image_fliprtl",
+    "message0": "Image flipped RTL %1",
+    "args0": [
+      {
+        "type": "field_image",
+        "src": "media/arrow.png",
+        "width": 50,
+        "height": 50,
+        "alt": "*",
+        "flipRtl": true
       }
     ],
     "colour": 160
@@ -268,7 +321,7 @@ Blockly.defineBlocksWithJsonArray([  // BEGIN JSON EXTRACT
         "alt": "*"
       }
     ],
-    "colour": 160
+    "style": "text_blocks"
   },
   {
     "type": "test_with_lots_of_network_icons",
@@ -279,56 +332,56 @@ Blockly.defineBlocksWithJsonArray([  // BEGIN JSON EXTRACT
       },
       {
         "type": "field_image",
-        "src": "https://blockly-demo.appspot.com/static/media/test_a.png",
+        "src": "https://blockly-demo.appspot.com/static/tests/media/a.png",
         "width": 32,
         "height": 32,
         "alt": "A"
       },
       {
         "type": "field_image",
-        "src": "https://blockly-demo.appspot.com/static/media/test_b.png",
+        "src": "https://blockly-demo.appspot.com/static/tests/media/b.png",
         "width": 32,
         "height": 32,
         "alt": "B"
       },
       {
         "type": "field_image",
-        "src": "https://blockly-demo.appspot.com/static/media/test_c.png",
+        "src": "https://blockly-demo.appspot.com/static/tests/media/c.png",
         "width": 32,
         "height": 32,
         "alt": "C"
       },
       {
         "type": "field_image",
-        "src": "https://blockly-demo.appspot.com/static/media/test_d.png",
+        "src": "https://blockly-demo.appspot.com/static/tests/media/d.png",
         "width": 32,
         "height": 32,
         "alt": "D"
       },
       {
         "type": "field_image",
-        "src": "https://blockly-demo.appspot.com/static/media/test_e.png",
+        "src": "https://blockly-demo.appspot.com/static/tests/media/e.png",
         "width": 32,
         "height": 32,
         "alt": "E"
       },
       {
         "type": "field_image",
-        "src": "https://blockly-demo.appspot.com/static/media/test_f.png",
+        "src": "https://blockly-demo.appspot.com/static/tests/media/f.png",
         "width": 32,
         "height": 32,
         "alt": "F"
       },
       {
         "type": "field_image",
-        "src": "https://blockly-demo.appspot.com/static/media/test_g.png",
+        "src": "https://blockly-demo.appspot.com/static/tests/media/g.png",
         "width": 32,
         "height": 32,
         "alt": "G"
       },
       {
         "type": "field_image",
-        "src": "https://blockly-demo.appspot.com/static/media/test_h.png",
+        "src": "https://blockly-demo.appspot.com/static/tests/media/h.png",
         "width": 32,
         "height": 32,
         "alt": "H"
@@ -338,71 +391,68 @@ Blockly.defineBlocksWithJsonArray([  // BEGIN JSON EXTRACT
       },
       {
         "type": "field_image",
-        "src": "https://blockly-demo.appspot.com/static/media/test_a.png",
+        "src": "https://blockly-demo.appspot.com/static/tests/media/a.png",
         "width": 32,
         "height": 32,
         "alt": "A"
       },
       {
         "type": "field_image",
-        "src": "https://blockly-demo.appspot.com/static/media/test_b.png",
+        "src": "https://blockly-demo.appspot.com/static/tests/media/b.png",
         "width": 32,
         "height": 32,
         "alt": "B"
       },
       {
         "type": "field_image",
-        "src": "https://blockly-demo.appspot.com/static/media/test_c.png",
+        "src": "https://blockly-demo.appspot.com/static/tests/media/c.png",
         "width": 32,
         "height": 32,
         "alt": "C"
       },
       {
         "type": "field_image",
-        "src": "https://blockly-demo.appspot.com/static/media/test_d.png",
+        "src": "https://blockly-demo.appspot.com/static/tests/media/d.png",
         "width": 32,
         "height": 32,
         "alt": "D"
       },
       {
         "type": "field_image",
-        "src": "https://blockly-demo.appspot.com/static/media/test_e.png",
+        "src": "https://blockly-demo.appspot.com/static/tests/media/e.png",
         "width": 32,
         "height": 32,
         "alt": "E"
       },
       {
         "type": "field_image",
-        "src": "https://blockly-demo.appspot.com/static/media/test_f.png",
+        "src": "https://blockly-demo.appspot.com/static/tests/media/f.png",
         "width": 32,
         "height": 32,
         "alt": "F"
       },
       {
         "type": "field_image",
-        "src": "https://blockly-demo.appspot.com/static/media/test_g.png",
+        "src": "https://blockly-demo.appspot.com/static/tests/media/g.png",
         "width": 32,
         "height": 32,
         "alt": "G"
       },
       {
         "type": "field_image",
-        "src": "https://blockly-demo.appspot.com/static/media/test_h.png",
+        "src": "https://blockly-demo.appspot.com/static/tests/media/h.png",
         "width": 32,
         "height": 32,
         "alt": "H"
       }
     ],
-    "colour": 160
+    "style": "text_blocks"
   },
   {
     "type": "styled_event_cap",
     "message0": "Hat block (event)",
     "nextStatement": null,
-    "colour": 330,
-    "style": {
-      "hat": "cap"
-    }
+    "style": "hat_blocks"
   },
   {
     "type": "block_colour_hex1",
@@ -522,4 +572,71 @@ Blockly.Blocks['empty_block_with_mutator'] = {
   init: function() {
     this.setMutator(new Blockly.Mutator(['math_number']));
   }
+};
+
+Blockly.Blocks['test_dropdown_dynamic'] = {
+  init: function() {
+    var dropdown = new Blockly.FieldDropdown(this.dynamicOptions);
+    this.appendDummyInput()
+      .appendField('dynamic')
+      .appendField(dropdown, 'OPTIONS');
+  },
+
+  dynamicOptions: function() {
+    if (!Blockly.TestBlocks.dynamicDropdownOptions_.length) {
+      return [['', 'OPTION0']];
+    }
+    return Blockly.TestBlocks.dynamicDropdownOptions_;
+  }
+};
+
+/**
+ * An array of options for the dynamic dropdown.
+ * @type {!Array<!Array>}
+ * @package
+ */
+Blockly.TestBlocks.dynamicDropdownOptions_ = [];
+
+/**
+ * Handles "add option" button in the field test category. This will prompt
+ * the user for an option to add.
+ * @package
+ */
+Blockly.TestBlocks.addDynamicDropdownOption_ = function() {
+  Blockly.prompt('Add an option?',
+      'option '  + Blockly.TestBlocks.dynamicDropdownOptions_.length,
+      function(text) {
+    if (text) {
+      // Do not remove this log! Helps you know if it was added correctly.
+      console.log('Adding option: ' + text);
+      // The option is an array containing human-readable text and a
+      // language-neutral id.
+      Blockly.TestBlocks.dynamicDropdownOptions_.push(
+          [text, 'OPTION' + Blockly.TestBlocks.dynamicDropdownOptions_.length]);
+    }
+  })
+};
+
+/**
+ * Handles "remove option" button in the field test category. This will prompt
+ * the user for an option to remove. May remove multiple options with the
+ * same name.
+ * @package
+ */
+Blockly.TestBlocks.removeDynamicDropdownOption_ = function() {
+  var defaultText = Blockly.TestBlocks.dynamicDropdownOptions_[0] ?
+      Blockly.TestBlocks.dynamicDropdownOptions_[0][0] : '';
+  Blockly.prompt('Remove an option?', defaultText, function(text) {
+    for (var i = 0, option;
+         option = Blockly.TestBlocks.dynamicDropdownOptions_[i];
+         i++) {
+      // The option is an array containing human-readable text and a
+      // language-neutral id, we'll compare against the human-readable text.
+      if (option[0] == text) {
+        // Do not remove this log! Helps you know if it was removed correctly.
+        console.log('Removing option: ' + text);
+        Blockly.TestBlocks.dynamicDropdownOptions_.splice(i, 1);
+      }
+    }
+  })
 };

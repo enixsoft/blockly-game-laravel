@@ -27,6 +27,9 @@
 goog.provide('Blockly.RenderedConnection');
 
 goog.require('Blockly.Connection');
+goog.require('Blockly.utils');
+
+goog.require('goog.math.Coordinate');
 
 
 /**
@@ -94,8 +97,10 @@ Blockly.RenderedConnection.prototype.bumpAwayFrom_ = function(staticConnection) 
   // Raise it to the top for extra visibility.
   var selected = Blockly.selected == rootBlock;
   selected || rootBlock.addSelect();
-  var dx = (staticConnection.x_ + Blockly.SNAP_RADIUS) - this.x_;
-  var dy = (staticConnection.y_ + Blockly.SNAP_RADIUS) - this.y_;
+  var dx = (staticConnection.x_ + Blockly.SNAP_RADIUS +
+      Math.floor(Math.random() * Blockly.BUMP_RANDOMNESS)) - this.x_;
+  var dy = (staticConnection.y_ + Blockly.SNAP_RADIUS +
+      Math.floor(Math.random() * Blockly.BUMP_RANDOMNESS)) - this.y_;
   if (reverse) {
     // When reversing a bump due to an uneditable block, bump up.
     dy = -dy;
@@ -166,7 +171,7 @@ Blockly.RenderedConnection.prototype.tighten_ = function() {
     var block = this.targetBlock();
     var svgRoot = block.getSvgRoot();
     if (!svgRoot) {
-      throw 'block is not rendered.';
+      throw Error('block is not rendered.');
     }
     // Workspace coordinates.
     var xy = Blockly.utils.getRelativeXY(svgRoot);
@@ -259,7 +264,7 @@ Blockly.RenderedConnection.prototype.unhideAll = function() {
  * Remove the highlighting around this connection.
  */
 Blockly.RenderedConnection.prototype.unhighlight = function() {
-  goog.dom.removeNode(Blockly.Connection.highlightedPath_);
+  Blockly.utils.removeNode(Blockly.Connection.highlightedPath_);
   delete Blockly.Connection.highlightedPath_;
 };
 
@@ -351,7 +356,7 @@ Blockly.RenderedConnection.prototype.respawnShadow_ = function() {
     Blockly.RenderedConnection.superClass_.respawnShadow_.call(this);
     var blockShadow = this.targetBlock();
     if (!blockShadow) {
-      throw 'Couldn\'t respawn the shadow block that should exist here.';
+      throw Error('Couldn\'t respawn the shadow block that should exist here.');
     }
     blockShadow.initSvg();
     blockShadow.render(false);

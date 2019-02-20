@@ -36,6 +36,7 @@ goog.require('goog.math.Coordinate');
  * Class that controls updates to connections during drags.  It is primarily
  * responsible for finding the closest eligible connection and highlighting or
  * unhiglighting it as needed during a drag.
+ * @deprecated July 2018. Use InsertionMarkerManager.
  * @param {!Blockly.BlockSvg} block The top block in the stack being dragged.
  * @constructor
  */
@@ -60,8 +61,8 @@ Blockly.DraggedConnectionManager = function(block) {
 
   /**
    * The connections on the dragging blocks that are available to connect to
-   * other blocks.  This includes all open connections on the top block, as well
-   * as the last connection on the block stack.
+   * other blocks.  This includes all open connections on the top block,
+   * as well as the last connection on the block stack.
    * Does not change during a drag.
    * @type {!Array.<!Blockly.RenderedConnection>}
    * @private
@@ -128,7 +129,8 @@ Blockly.DraggedConnectionManager.prototype.wouldDeleteBlock = function() {
 /**
  * Return whether the block would be connected if dropped immediately, based on
  * information from the most recent move event.
- * @return {boolean} true if the block would be connected if dropped immediately.
+ * @return {boolean} true if the block would be connected if dropped
+ *     immediately.
  * @package
  */
 Blockly.DraggedConnectionManager.prototype.wouldConnectBlock = function() {

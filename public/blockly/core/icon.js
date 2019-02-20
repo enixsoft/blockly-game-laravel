@@ -26,7 +26,8 @@
 
 goog.provide('Blockly.Icon');
 
-goog.require('goog.dom');
+goog.require('Blockly.utils');
+
 goog.require('goog.math.Coordinate');
 
 
@@ -95,7 +96,7 @@ Blockly.Icon.prototype.createIcon = function() {
  */
 Blockly.Icon.prototype.dispose = function() {
   // Dispose of and unlink the icon.
-  goog.dom.removeNode(this.iconGroup_);
+  Blockly.utils.removeNode(this.iconGroup_);
   this.iconGroup_ = null;
   // Dispose of and unlink the bubble.
   this.setVisible(false);
@@ -146,7 +147,8 @@ Blockly.Icon.prototype.updateColour = function() {
  * @return {number} Horizontal offset for next item to draw.
  */
 Blockly.Icon.prototype.renderIcon = function(cursorX) {
-  if (this.collapseHidden && this.block_.isCollapsed()) {
+  if ((this.collapseHidden && this.block_.isCollapsed()) ||
+      this.block_.isInsertionMarker()) {
     this.iconGroup_.setAttribute('display', 'none');
     return cursorX;
   }

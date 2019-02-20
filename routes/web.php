@@ -28,6 +28,7 @@ Route::post('registerforbetatest', 'GameController@betaRegisterUser')->name('reg
 
 
 
+
 Auth::routes();
 
 /*

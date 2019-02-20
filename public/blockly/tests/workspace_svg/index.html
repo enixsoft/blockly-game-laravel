@@ -51,7 +51,11 @@ h1 {
   <div id="blocklyDiv"></div>
 
   <h1>Blockly Workspace testing</h1>
+  <script src="../jsunit/test_utilities.js"></script>
   <script src="workspace_svg_test.js"></script>
+  <script src="procedure_svg_test.js"></script>
+  <!-- TODO (#1960): Uncomment once comment deletion is fixed. -->
+  <!--<script src="event_svg_test.js"></script>-->
 
   <xml id="toolbox-simple" style="display: none">
     <block type="controls_ifelse"></block>
@@ -198,6 +202,18 @@ h1 {
         </value>
       </block>
       <block type="math_random_float"></block>
+      <block type="math_atan2">
+        <value name="X">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+        <value name="Y">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+      </block>
     </category>
     <category name="Text" colour="160">
       <block type="text"></block>
