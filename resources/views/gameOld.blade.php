@@ -1,87 +1,88 @@
 <!DOCTYPE html>
 <html lang="sk">
 
-  <head>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+  <title>Blockly hra</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
 
-    <title>Blockly hra</title>
+  <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+  <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
 
-    <!-- Bootstrap core CSS -->
-    <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans|Candal|Alegreya+Sans">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/imagehover.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/extrastyle.css') }}">
+  
+ <script src="{{ asset('js/jquery.min.js') }}"></script>
+ <script src="{{ asset('js/jquery.easing.min.js') }}"></script>
+ <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+ <script src="{{ asset('js/custom.js') }}"></script>
 
-    <!-- Custom fonts for this template -->
-    <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+<!--
+@if ($errors->all())  
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('#loginModal').modal('show');
+    });
+</script>        
+@endif
+--> 
 
-    <link rel="stylesheet" href="{{ asset('vendor/simple-line-icons/css/simple-line-icons.css') }}">
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+<!--<script type="text/javascript">
+  $(document).ready(function () {
+    $('#welcomeModal').modal('show');
+    });
+</script>-->    
 
-   
-    <!-- Custom styles for this template
-    RENAME AND MINIFY
-     -->
-    <link href="{{ asset('css/new-age.css') }}" rel="stylesheet">
 
-  </head>
 
-  <body id="page-top">
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-      <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">BLOCKLY HRA</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          
-          <i class="fas fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#features">O hre</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#game">Spustiť hru</a>
-            </li>
+</head>
 
-        @auth             
-        <li class="nav-item dropdown">          
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-user-circle"></i> {{ Auth::user()->username }}
-          </a>        
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Odhlásiť sa</a>
-          </div>
-        </li>
-        @endauth         
-          </ul>
-        </div>
-      </div>
-    </nav>
+<body>
 
-  <header class="masthead2">
-  <div class="game-container">
-          <div class="row h-100 w-100 nopadding">
+@include('headerOld')
+@include('modalsOld')
 
-          <div class="col-lg-6">   
-         
-          <iframe id="app-frame" style="width:100%; height:100%; border:none; overflow:hidden;" 
+
+
+
+<div class="container-fluid">
+    <div class="row row-full">
+        <div class="col-md-6">
+            <div class="leftside">
+                <iframe id="app-frame" style="width:100%;height:100%;overflow:hidden;border:none;"
                 src="https://playcanv.as/e/p/62c28f63/"></iframe>
-          </div>
+                <!--<iframe id="app-frame" style="width:100%;height:100%;overflow:hidden;border:none;"
+                src="{{url('')}}/public/game/playcanvas/{{$category}}x{{$level}}.html"></iframe>-->
+            </div>
+        </div>
+        <div class="col-md-6" style="background-color:#E4E4E4;">            
+           <div id="blocklyArea" class="rightside"></div>
+           <!--<div class="container" style="max-height: 10vh;">
+           <div class="row justify-content-center" style="padding: 2.5vh 0;">
+                <button type="button" id="click_button" class="col-md-2 btn  btn-success mr-3">Spustiť</button>
+     
+                <button type="button" id="click_button" class="col-md-2 btn  btn-success mr-3">Úloha</button>
+                
+                <button type="button" id="click_button" class="col-md-3 btn  btn-success mr-3">Vymazať všetky bloky</button>
+                
+                <button type="button" id="click_button" class="col-md-2 btn  btn-success mr-3">Riešenie</button>      
 
 
-          
-          <div class="col-lg-6">
-          <div class="row h-100 w-100 nopadding">
-          <div class="col-lg-12 rightside" id="blocklyArea">            
-          </div>
-    
-         
-          <div class= "col-lg-9 rightside2 ml-auto mb-auto mr-auto btn-group" role="group">
+            </div>
+            </div>-->
+
+           <div class="rightside2">        
+                
+                <div class="btn-group" role="group">
 
                 <button type="button" id="send_code_button" class="btn btn-success mr-3">Spustiť bloky</button>
      
@@ -89,32 +90,25 @@
                 
                 <button type="button" id="delete_blocks_button" class="btn btn-success mr-3">Vymazať všetky bloky</button>
                 
-                <button type="button" id="solution_task_button" class="btn btn-danger mr-3">Riešenie úlohy</button>     
-          </div>
-          </div>  
-          </div>   
- 
+                <button type="button" id="solution_task_button" class="btn btn-danger mr-3">Riešenie úlohy</button>      
+                  
+                </div>
 
-          </div>
+         
             </div>
-        
-  
 
-        
-        
-
-
-    
+         
+            </div>             
+        </div>
+    </div>
 
 
 
-</header>
 
-
-<div id="blocklyDiv" style="position: absolute;"></div>
+<div id="blocklyDiv" style="position: absolute; height: 800px;"></div>
 </div>
 
-@include('modals')
+
 
 <script src="{{ asset('blockly/blockly_compressed.js') }}"></script>
 <script src="{{ asset('blockly/blocks_compressed.js') }}"></script>
@@ -136,21 +130,35 @@
        
 </xml>
 
+<!--<xml id="toolbox" style="display: none">
+  <block type="logic_operation"></block>
+  <label text="A label" web-class="myLabelStyle"></label>
+  <label text="Another label"></label>
+  <block type="logic_negate"></block>
+  <button text="A button" callbackKey="myFirstButtonPressed"></button>
+  <block type="logic_boolean"></block>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
-    <!-- Plugin JavaScript -->
-    <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 
-    <!-- Custom scripts for this template -->
-    <script src="{{ asset('js/new-age.min.js') }}"></script>
+  <block type="run" movable="false" deletable="false" inline="false" x="50" y="1000"></block>
+       <block type="cameraplus" movable="false" deletable="false" inline="false" x="250" y="1000"></block> 
+       <block type="cameraminus" movable="false" deletable="false" inline="false" x="450" y="1000"></block>
+       <block type="save" movable="false" deletable="false" inline="false" x="250" y="900"></block>
+       <block type="load" movable="false" deletable="false" inline="false" x="450" y="900"></block>       
+       <block type="restart" movable="false" deletable="false" inline="false" x="650" y="1000"></block>
+       <block type="reload" movable="false" deletable="false" inline="false" x="850" y="1000"></block>        
 
+
+</xml>
+
+<style>
+.myLabelStyle>.blocklyFlyoutLabelText {
+  font-style: italic;
+  fill: green;
+}
+</style>
+-->
 <script>
-
-//var Promise = document.body.requestFullscreen();
-
 var button = document.getElementById('send_code_button'); 
 button.disabled = true; 
 button = document.getElementById('solution_task_button'); 
@@ -336,16 +344,8 @@ eventer(messageEvent,function(e)
   var blocklyArea = document.getElementById('blocklyArea');
   var blocklyDiv = document.getElementById('blocklyDiv');
 
-  // if(this.mobile)
-  //var workspacePlayground = Blockly.inject(blocklyDiv,
-  //    {toolbox: toolbox, scrollbars:  true, toolboxPosition: 'end', horizontalLayout:true, trashcan: true, zoom: {wheel: true}});
   var workspacePlayground = Blockly.inject(blocklyDiv,
-    {toolbox: toolbox, trashcan: true});
-
-  
-  console.log(workspacePlayground);
-  //workspacePlayground.scale = 0.6;
-
+      {toolbox: toolbox, trashcan: true});
 
   Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
                               workspacePlayground); 
@@ -363,7 +363,7 @@ eventer(messageEvent,function(e)
   var save = getBlocksByType("save");
   var reload = getBlocksByType("reload"); 
 
-  
+
    $(document).ready(function(){
     $("#send_code_button").click( function(){
          
@@ -404,7 +404,7 @@ eventer(messageEvent,function(e)
   });
   });  
 
-  
+
  function showTaskButton() {
   
           var modalStructure = {
@@ -1226,6 +1226,8 @@ eventer(messageEvent,function(e)
 
 </script>
 
-</body>
 
+</body>
 </html>
+
+

@@ -10,6 +10,9 @@
 
     <title>Blockly hra</title>
 
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -31,6 +34,10 @@
   </head>
 
   <body id="page-top">
+
+    @auth   
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
+    @endauth
 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
@@ -55,7 +62,7 @@
           <i class="fa fa-user-circle"></i> {{ Auth::user()->username }}
           </a>        
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Odhlásiť sa</a>
+          <a class="dropdown-item" href="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Odhlásiť sa</a>
           </div>
         </li>
         @endauth         

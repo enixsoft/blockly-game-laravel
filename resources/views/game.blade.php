@@ -1,114 +1,103 @@
 <!DOCTYPE html>
 <html lang="sk">
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <head>
 
-  <title>Blockly hra</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, minimal-ui">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-  <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
-  <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    <title>Blockly hra</title>
 
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans|Candal|Alegreya+Sans">
-  <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ asset('css/imagehover.min.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ asset('css/extrastyle.css') }}">
-  
- <script src="{{ asset('js/jquery.min.js') }}"></script>
- <script src="{{ asset('js/jquery.easing.min.js') }}"></script>
- <script src="{{ asset('js/bootstrap.min.js') }}"></script>
- <script src="{{ asset('js/custom.js') }}"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 
-<!--
-@if ($errors->all())  
-<script type="text/javascript">
-  $(document).ready(function () {
-    $('#loginModal').modal('show');
-    });
-</script>        
-@endif
---> 
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
 
-<!--<script type="text/javascript">
-  $(document).ready(function () {
-    $('#welcomeModal').modal('show');
-    });
-</script>-->    
+    <!-- Custom fonts for this template -->
+    <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
 
+    <link rel="stylesheet" href="{{ asset('vendor/simple-line-icons/css/simple-line-icons.css') }}">
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
 
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
 
+   
+    <!-- Custom styles for this template
+    RENAME AND MINIFY
+     -->
+    <link href="{{ asset('css/new-age.css') }}" rel="stylesheet">
 
-</head>
+  </head>
 
-<body>
+  <body id="page-top">
 
-@include('header')
-@include('modals')
+    @auth   
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
+    @endauth
 
-
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand" href="{{ route('/') }}">BLOCKLY HRA</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
 
 
-<div class="container-fluid">
-    <div class="row row-full">
-        <div class="col-md-6">
-            <div class="leftside">
-                <iframe id="app-frame" style="width:100%;height:100%;overflow:hidden;border:none;"
-                src="https://playcanv.as/e/p/62c28f63/"></iframe>
-                <!--<iframe id="app-frame" style="width:100%;height:100%;overflow:hidden;border:none;"
-                src="{{url('')}}/public/game/playcanvas/{{$category}}x{{$level}}.html"></iframe>-->
-            </div>
+        @auth            
+        <li class="nav-item dropdown">          
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-user-circle"></i> {{ Auth::user()->username }}
+          </a>        
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+         <a class="dropdown-item" href="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Odhlásiť sa</a>
+          </div>
+        </li>
+        @endauth         
+          </ul>
         </div>
-        <div class="col-md-6" style="background-color:#E4E4E4;">            
-           <div id="blocklyArea" class="col-lg-12"></div>
-           <!--<div class="container" style="max-height: 10vh;">
-           <div class="row justify-content-center" style="padding: 2.5vh 0;">
-                <button type="button" id="click_button" class="col-md-2 btn  btn-success mr-3">Spustiť</button>
-     
-                <button type="button" id="click_button" class="col-md-2 btn  btn-success mr-3">Úloha</button>
-                
-                <button type="button" id="click_button" class="col-md-3 btn  btn-success mr-3">Vymazať všetky bloky</button>
-                
-                <button type="button" id="click_button" class="col-md-2 btn  btn-success mr-3">Riešenie</button>      
+      </div>
+    </nav>
 
-
+<header class="game-header">
+   <div class="game-container">
+      <div class="row h-100 w-100 no-padding">
+         <div class="col-lg-6 no-padding">   
+            <iframe id="app-frame" class="game-playcanvas"           
+               src="{{url('')}}/public/game/playcanvas/{{$category}}x{{$level}}.html"></iframe>
+               <!--src="https://playcanv.as/e/p/62c28f63/"></iframe>-->
+         </div>
+         <div class="col-lg-6 no-padding">
+            <div class="row h-100 w-100 no-padding">
+               <div class="col-lg-12 game-blockly" id="blocklyArea">            
+               </div>
+               <div class= "col-lg-12 game-buttons mx-auto text-center">
+                  <div class= "btn-group" role="group">
+                     <button type="button" id="send_code_button" class="btn btn-success mr-3"><i class="fas fa-play"></i> Spustiť bloky</button>
+                     <button type="button" id="show_task_button" class="btn btn-success mr-3"><i class="fas fa-tasks"></i> Zadanie úlohy</button>
+                     <button type="button" id="delete_blocks_button" class="btn btn-success mr-3"><i class="fas fa-trash"></i> Vymazať všetky bloky</button>
+                     <button type="button" id="report_bug_button" class="btn btn-danger mr-3"><i class="fas fa-bug"></i> Nahlásiť chybu</button>     
+                  </div>
+               </div>
             </div>
-            </div>-->
-
-           <div class="rightside2">        
-                
-                <div class="btn-group" role="group">
-
-                <button type="button" id="send_code_button" class="btn btn-success mr-3">Spustiť bloky</button>
-     
-                <button type="button" id="show_task_button" class="btn btn-success mr-3">Zadanie úlohy</button>
-                
-                <button type="button" id="delete_blocks_button" class="btn btn-success mr-3">Vymazať všetky bloky</button>
-                
-                <button type="button" id="solution_task_button" class="btn btn-danger mr-3">Riešenie úlohy</button>      
-                  
-                </div>
-
-         
-            </div>
-
-         
-            </div>             
-        </div>
-    </div>
+         </div>
+      </div>
+   </div>
+</header>
 
 
-
-
-<div id="blocklyDiv" style="position: absolute; height: 800px;"></div>
+<div id="blocklyDiv" style="position: absolute;"></div>
 </div>
 
-
+@include('modals')
 
 <script src="{{ asset('blockly/blockly_compressed.js') }}"></script>
 <script src="{{ asset('blockly/blocks_compressed.js') }}"></script>
@@ -130,43 +119,40 @@
        
 </xml>
 
-<!--<xml id="toolbox" style="display: none">
-  <block type="logic_operation"></block>
-  <label text="A label" web-class="myLabelStyle"></label>
-  <label text="Another label"></label>
-  <block type="logic_negate"></block>
-  <button text="A button" callbackKey="myFirstButtonPressed"></button>
-  <block type="logic_boolean"></block>
 
+<!-- Bootstrap core JavaScript -->
+<script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
+<!-- Plugin JavaScript -->
+<script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 
-  <block type="run" movable="false" deletable="false" inline="false" x="50" y="1000"></block>
-       <block type="cameraplus" movable="false" deletable="false" inline="false" x="250" y="1000"></block> 
-       <block type="cameraminus" movable="false" deletable="false" inline="false" x="450" y="1000"></block>
-       <block type="save" movable="false" deletable="false" inline="false" x="250" y="900"></block>
-       <block type="load" movable="false" deletable="false" inline="false" x="450" y="900"></block>       
-       <block type="restart" movable="false" deletable="false" inline="false" x="650" y="1000"></block>
-       <block type="reload" movable="false" deletable="false" inline="false" x="850" y="1000"></block>        
+<!-- Custom scripts for this template -->
+<script src="{{ asset('js/new-age.min.js') }}"></script>
 
-
-</xml>
-
-<style>
-.myLabelStyle>.blocklyFlyoutLabelText {
-  font-style: italic;
-  fill: green;
-}
-</style>
--->
 <script>
+ 
+if (/Mobi|Android/i.test(navigator.userAgent)) {
+    this.mobile = true;
+    screen.orientation.lock();
+ 
+
+}
+else
+{
+  this.mobile = false;
+}
+
+
+
 var button = document.getElementById('send_code_button'); 
 button.disabled = true; 
-button = document.getElementById('solution_task_button'); 
-button.disabled = false;
 button = document.getElementById('show_task_button'); 
 button.disabled = true;
 button = document.getElementById('delete_blocks_button'); 
-button.disabled = true;   
+button.disabled = true;
+button = document.getElementById('report_bug_button'); 
+button.disabled = true;
 
 
 var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
@@ -188,7 +174,9 @@ eventer(messageEvent,function(e)
       button = document.getElementById('show_task_button'); 
       button.disabled = false;
       button = document.getElementById('delete_blocks_button'); 
-      button.disabled = false;   
+      button.disabled = false; 
+      button = document.getElementById('report_bug_button'); 
+      button.disabled = false;  
         
 
       workspacePlayground.highlightBlock(null);
@@ -252,7 +240,7 @@ eventer(messageEvent,function(e)
       break;     
     }
 
-    case "commandFailed": //death and dizzy
+    case "commandFailed": 
     {
       console.log("commandFailed");
       console.log(e.data.content);
@@ -263,7 +251,7 @@ eventer(messageEvent,function(e)
       break;     
     }
 
-    case "mainTaskFailed": //did not move enough etc.
+    case "mainTaskFailed": 
     {
       console.log("mainTaskFailed");
       console.log(e.data.content);
@@ -344,8 +332,21 @@ eventer(messageEvent,function(e)
   var blocklyArea = document.getElementById('blocklyArea');
   var blocklyDiv = document.getElementById('blocklyDiv');
 
+  if(this.mobile)
+  {
   var workspacePlayground = Blockly.inject(blocklyDiv,
-      {toolbox: toolbox, trashcan: true});
+   {toolbox: toolbox, scrollbars:  true, toolboxPosition: 'end', horizontalLayout:true, trashcan: true, zoom: {wheel: true}});
+  workspacePlayground.scale = 0.6;
+  }
+  else
+  {
+  var workspacePlayground = Blockly.inject(blocklyDiv,
+    {toolbox: toolbox, trashcan: true, }); 
+  }
+
+  
+  
+
 
   Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
                               workspacePlayground); 
@@ -363,7 +364,7 @@ eventer(messageEvent,function(e)
   var save = getBlocksByType("save");
   var reload = getBlocksByType("reload"); 
 
-
+  
    $(document).ready(function(){
     $("#send_code_button").click( function(){
          
@@ -395,16 +396,16 @@ eventer(messageEvent,function(e)
   });  
 
     $(document).ready(function(){
-    $("#solution_task_button").click( function(){
+    $("#report_bug_button").click( function(){
          
          if(!this.locked)
         {       
-        solutionTaskButton();
+        reportBugButton();
         }
   });
   });  
 
-
+  
  function showTaskButton() {
   
           var modalStructure = {
@@ -427,7 +428,7 @@ eventer(messageEvent,function(e)
 
   }
 
-  function solutionTaskButton() {     
+  function reportBugButton() {     
 
     console.log(this.facingDirection);
 
@@ -665,7 +666,7 @@ eventer(messageEvent,function(e)
 
 
         
-       this.locked = true;
+      this.locked = true;
      
 
         if(failedBlock.length>0)
@@ -1053,21 +1054,18 @@ eventer(messageEvent,function(e)
     case "levelIntroduced":
     {
      
-    html =     '<br><h3>' + modalStructure.title + '</h3>';
-    html +=    '<b>' + modalStructure.text + '</b>';
-    
-    
-    if (!isUserLoggedIn())
-    html +=    "<br><br>  <b> Aby sa váš postup v hre ukladal, je potrebné byť prihlásený. </b>";     
-    
-    modal.find('#modal-text').html(html).end();   
-    
+    html = modalStructure.title;
+    modal.find('#modal-heading').html(html).end();
 
+    html = modalStructure.text;
+    modal.find('#modal-text').html(html).end();
 
-    html =    '<img width="70%" height="90%" src="' + modalStructure.image + '" ></img>';
-    modal.find('#modal-image').html(html).end();   
+    html = modalStructure.image;
+    modal.find('#modal-image').attr("src", html).end(); 
 
-    html =    '<button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="mainTaskIntroduced('+ modalStructure.task +')">Pokračovať</button>';
+    html =    'mainTaskIntroduced('+ modalStructure.task +')';
+    modal.find('#modal-button').attr("onclick", html).end(); 
+    html = 'Pokračovať';
     modal.find('#modal-button').html(html).end();   
 
     break;
@@ -1077,22 +1075,19 @@ eventer(messageEvent,function(e)
     case "mainTaskIntroduced":
     {
      
-    html =     '<br><h3>' + modalStructure.title + '</h3>';
-    html +=    '<b>' + modalStructure.text + '</b>';
-   
-    
-    if (!isUserLoggedIn())
-    html +=    "<br><br>  <b> Aby sa váš postup v hre ukladal, je potrebné byť prihlásený. </b>";     
-    
+    html = modalStructure.title;
+    modal.find('#modal-heading').html(html).end();
+
+    html = modalStructure.text;
     modal.find('#modal-text').html(html).end();
 
-    html = '<br>';
-    html +=    '<img width="80%" height="90%" src="' + modalStructure.image + '" ></img>';
-    html += '<br>';
-    modal.find('#modal-image').html(html).end();   
+    html = modalStructure.image;
+    modal.find('#modal-image').attr("src", html).end(); 
 
-    html =    '<button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="continueGame()">Pokračovať</button>';
-    modal.find('#modal-button').html(html).end();   
+    html =    'continueGame()';
+    modal.find('#modal-button').attr("onclick", html).end(); 
+    html = 'Pokračovať';
+    modal.find('#modal-button').html(html).end();     
 
     break;
     }
@@ -1100,22 +1095,19 @@ eventer(messageEvent,function(e)
     case "mainTaskShowed":
     {
      
-    html =     '<br><h3>' + modalStructure.title + '</h3>';
-    html +=    '<b>' + modalStructure.text + '</b>';
-   
-    
-    if (!isUserLoggedIn())
-    html +=    "<br><br>  <b> Aby sa váš postup v hre ukladal, je potrebné byť prihlásený. </b>";     
-    
+    html = modalStructure.title;
+    modal.find('#modal-heading').html(html).end();
+
+    html = modalStructure.text;
     modal.find('#modal-text').html(html).end();
 
-    html = '<br>';
-    html +=    '<img width="80%" height="90%" src="' + modalStructure.image + '" ></img>';
-    html += '<br>';
-    modal.find('#modal-image').html(html).end();   
+    html = modalStructure.image;
+    modal.find('#modal-image').attr("src", html).end(); 
 
-    html =    '<button type="button" class="btn btn-success btn-lg" data-dismiss="modal">Pokračovať</button>';
-    modal.find('#modal-button').html(html).end();   
+    html =    '';
+    modal.find('#modal-button').attr("onclick", html).end(); 
+    html = 'Pokračovať';
+    modal.find('#modal-button').html(html).end();    
 
     break;
     }
@@ -1123,19 +1115,21 @@ eventer(messageEvent,function(e)
     case "mainTaskCompleted":
     {
      
-    html =     '<br><h3>' + modalStructure.title + '</h3>';
-    html +=    '<b>' + modalStructure.text + '</b>';
-    html +=    '<br><br> <h4>Čas:</h4> <br><br> <h4>Kód:</h4> <br><br> <h4>Hodnotenie:</h4>';
-    
-    if (!isUserLoggedIn())
-    html +=    "<br><br>  <b> Aby sa váš postup v hre ukladal, je potrebné byť prihlásený. </b>";     
-    
-    modal.find('#modal-text').html(html).end();
+    html = modalStructure.title;
+    modal.find('#modal-heading').html(html).end();
 
-    html =    '<img width="70%" height="90%" src="' + modalStructure.image + '" ></img>';
-    modal.find('#modal-image').html(html).end();   
+    html = modalStructure.text;
+    html += '<br><br> <h4>Čas:</h4> <br><br> <h4>Kód:</h4> <br><br> <h4>Hodnotenie:</h4>';
+    modal.find('#modal-text').html(html).end();  
+  
 
-    html =    '<button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="continueGame()">Pokračovať</button>';
+
+    html = modalStructure.image;
+    modal.find('#modal-image').attr("src", html).end(); 
+
+    html =    'continueGame()';
+    modal.find('#modal-button').attr("onclick", html).end(); 
+    html = 'Pokračovať';
     modal.find('#modal-button').html(html).end();   
 
     break;
@@ -1145,20 +1139,21 @@ eventer(messageEvent,function(e)
     case "mainTaskFailed":
     {
      
-    html =     '<br><h3>' + modalStructure.title + '</h3>';
-    html +=    '<b>' + modalStructure.text + '</b>';
-    
-    
-    if (!isUserLoggedIn())
-    html +=    "<br><br>  <b> Aby sa váš postup v hre ukladal, je potrebné byť prihlásený. </b>";     
-    
+    html = modalStructure.title;
+    modal.find('#modal-heading').html(html).end();
+
+    html = modalStructure.text;
     modal.find('#modal-text').html(html).end();
 
-    html =    '<img width="70%" height="90%" src="' + modalStructure.image + '" ></img>';
-    modal.find('#modal-image').html(html).end();   
+    html = modalStructure.image;
+    modal.find('#modal-image').attr("src", html).end(); 
 
-    html =    '<button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="loadGame()">Skúsiť znova</button>';   
-    modal.find('#modal-button').html(html).end();   
+    html =    'loadGame()';
+    modal.find('#modal-button').attr("onclick", html).end(); 
+    html = 'Skúsiť znova';
+    modal.find('#modal-button').html(html).end();     
+
+  
 
     break;
     }
@@ -1167,33 +1162,28 @@ eventer(messageEvent,function(e)
     case "allMainTasksFinished":
     {
      
-    html =     '<br><h3>' + modalStructure.title + '</h3>';
-    html +=    '<b>' + modalStructure.text + '</b>';
-    html +=    '<br><br> <h4>Čas:</h4> <br><br> <h4>Kód:</h4> <br><br> <h4>Hodnotenie:</h4>';
-    
-    if (!isUserLoggedIn())
-    html +=    "<br><br>  <b> Aby sa váš postup v hre ukladal, je potrebné byť prihlásený. </b>";     
-    
-    modal.find('#modal-text').html(html).end();
+    html = modalStructure.title;
+    modal.find('#modal-heading').html(html).end();
 
-    html =    '<img width="70%" height="90%" src="' + modalStructure.image + '" ></img>';
-    modal.find('#modal-image').html(html).end();   
+    html = modalStructure.text;
+    html += '<br><br> <h4>Čas:</h4> <br><br> <h4>Kód:</h4> <br><br> <h4>Hodnotenie:</h4>';
+    modal.find('#modal-text').html(html).end();  
+
+
+    html = modalStructure.image;
+    modal.find('#modal-image').attr("src", html).end(); 
 
     
-    html = '<button type="button" class="btn btn-success btn-lg" data-dismiss="modal" onclick="window.location.href=\''; 
-    html += '{{ url('/')}}' + '/game/' + this.category + '/' + (this.level+1) + '\';">Pokračovať</button>';  
-   
-    modal.find('#modal-button').html(html).end();   
+    html = 'window.location.href=\''; 
+    html += '{{ url('/')}}' + '/game/' + this.category + '/' + (this.level+1) + '\';';    
+    modal.find('#modal-button').attr("onclick", html).end(); 
+    html = 'Ďalšia úroveň';
+    modal.find('#modal-button').html(html).end();    
 
     break;
     }
 
-
-
-
-
-    } 
-    
+    }     
 
     modal.modal('show');
 
@@ -1209,8 +1199,8 @@ eventer(messageEvent,function(e)
         iframe.contentWindow.postMessage
         (
         { message: messageForGame }, 
-        "https://playcanv.as/p/62c28f63/"
-        //"{{url('')}}/public/game/playcanvas/index.html"
+        //"https://playcanv.as/p/62c28f63/"
+        "{{url('')}}"
         );
 
   }
@@ -1226,8 +1216,6 @@ eventer(messageEvent,function(e)
 
 </script>
 
-
 </body>
+
 </html>
-
-

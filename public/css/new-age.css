@@ -68,6 +68,7 @@ section h2 {
   font-family: 'Catamaran', 'Helvetica', 'Arial', 'sans-serif';
   font-weight: 200;
   letter-spacing: 1px;
+ 
 }
 
 #mainNav .navbar-brand {
@@ -204,6 +205,24 @@ header.masthead .device-container .screen img {
   }
 }
 
+
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+    pointer-events:none;
+}
+
+.vertical-align-center {
+
+    display: table-cell;
+    vertical-align: middle;
+    pointer-events:none;
+    padding-left: 25%;
+    padding-right: 25%;
+
+}
+
 .game-container {
   height: 100%;
   width: 100%;
@@ -216,22 +235,15 @@ header.masthead .device-container .screen img {
 }
 
 
-.leftside {  
- height: 50vh;
- margin-bottom: 0;
- overflow:hidden;
+.game-playcanvas {  
+width:100%; 
+height:100%; 
+border:none; 
+overflow:hidden;
 
 }
 
-@media (min-width: 992px) {
-.leftside {
-
-    height: 100vh;
-}
-
-}
-
-.rightside {  
+.game-blockly {  
  height: 40vh;
  margin-bottom: 0;
  overflow:hidden;
@@ -239,31 +251,23 @@ header.masthead .device-container .screen img {
 }
 
 @media (min-width: 992px) {
-.rightside {
+.game-blockly {
 
-    height: 85%; 
+    height: 90%; 
 }
 
 }
 
-.rightside2 {  
- height: 10vh;
+.game-buttons {  
+ height: auto;
  overflow: overlay;
 
-
 }
 
-@media (min-width: 992px) {
-.rightside2 {
-
-    height: 5%;
-}
-
-}
 
 
 @media (max-width: 991.8px) {
-   .nopadding {
+   .no-padding {
    padding: 0 !important;
    margin: 0 !important;
 }
@@ -271,11 +275,11 @@ header.masthead .device-container .screen img {
 }
 
 
-header.masthead2 {
+header.game-header {
   position: relative;
   width: 100%;  
   color: white;
-  padding-top: 80px;
+  padding-top: 74px;
   height: 100vh;  
   background: url("../img/bg-pattern.png"), #7b4397;
   background: url("../img/bg-pattern.png"), -webkit-gradient(linear, right top, left top, from(#7b4397), to(#dc2430));
@@ -284,7 +288,7 @@ header.masthead2 {
 
 
 @media (min-width: 992px) {
-  header.masthead2 {
+  header.game-header {
     height: 100vh;   
     padding-top: 80px;
     padding-bottom: 0;
