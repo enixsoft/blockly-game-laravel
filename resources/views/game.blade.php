@@ -5,6 +5,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, minimal-ui">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -231,12 +232,15 @@ eventer(messageEvent,function(e)
       console.log("mainTaskCompleted");
       console.log(e.data.content);
 
-      workspacePlayground.highlightBlock(null);
+      workspacePlayground.highlightBlock(null);      
       
-      mainTaskCompleted(e.data.content.currentMainTask);
-
       this.task_end = Date.now();
-      createLogOfGameplay("mainTaskCompleted", e.data.content);
+
+      //mainTaskCompleted(e.data.content.currentMainTask);
+      mainTaskCompleted(e.data.content);
+
+      //this.task_end = Date.now();
+      //createLogOfGameplay("mainTaskCompleted", e.data.content);
       break;     
     }
 
@@ -247,7 +251,7 @@ eventer(messageEvent,function(e)
 
       commandFailed(e.data.content);
 
-      createLogOfGameplay("commandFailed", e.data.content);
+      //createLogOfGameplay("commandFailed", e.data.content);
       break;     
     }
 
@@ -257,9 +261,10 @@ eventer(messageEvent,function(e)
       console.log(e.data.content);
 
       workspacePlayground.highlightBlock(null);
-      mainTaskFailed(e.data.content.currentMainTask);
 
-      createLogOfGameplay("mainTaskFailed", e.data.content);
+      mainTaskFailed(e.data.content);
+
+      //createLogOfGameplay("mainTaskFailed", e.data.content);
       break;     
     }
 
@@ -308,7 +313,9 @@ eventer(messageEvent,function(e)
 
   var tasks =  {!! $jsonTasks !!};
 
-  var modals =  {!! $jsonModals !!};  
+  var modals =  {!! $jsonModals !!}; 
+
+  var ratings =  {!! $jsonRatings !!}; 
 
   
   this.locked = true;
@@ -317,6 +324,7 @@ eventer(messageEvent,function(e)
   this.category = tasks.level.category;
   this.level    = tasks.level.level;
   this.progress = savedGame.progress;
+  this.rating   = 0;
 
 
   this.level_start = new Date();
@@ -836,10 +844,15 @@ eventer(messageEvent,function(e)
     showDynamicModal("levelIntroduced", modalStructure);
   }
 
-  function mainTaskCompleted(task){     
+  function mainTaskCompleted(object){     
     
+     console.log(object);
 
-     task = "mainTask" + task;    
+     var task = "mainTask" + object.currentMainTask;    
+
+     if(rateMainTaskCompletion(object))
+     {
+
 
      this.progress = tasks[task].progress;
 
@@ -855,11 +868,24 @@ eventer(messageEvent,function(e)
 
      updateIngameProgress(task);
 
+     createLogOfGameplay("mainTaskCompleted", object);
+
+     //saveRatingToDatabase();
+
+     }
+     else
+     { 
+     // new function needed
+     mainTaskFailed(object);
+
+     }
+
+
   }
 
-  function mainTaskFailed(task){
+  function mainTaskFailed(object){
 
-     task = "mainTask" + task;
+     var task = "mainTask" + object.currentMainTask;
      
      var modalStructure = {
   
@@ -871,7 +897,93 @@ eventer(messageEvent,function(e)
 
      showDynamicModal("mainTaskFailed", modalStructure);
 
+     createLogOfGameplay("mainTaskFailed", object);
+
   }
+
+
+  function rateMainTaskCompletion(object)
+  {
+      var task = "mainTask" + object.currentMainTask;
+
+      var isCorrect = true;
+      var mistakeCount = 0;
+      var playerSolution = String(object.commandArray);      
+      playerSolution = playerSolution.split(",");
+      this.code = playerSolution;
+
+      console.log(ratings);
+
+      var solution = ratings[task].solution;
+      solution = solution.split(",");
+
+      //check if player's solution is same as defined solution
+      if(playerSolution.length==solution.length)
+      {
+
+      for(var i=0; i<solution.length; i++)
+      {
+        if(playerSolution[i]!==solution[i])
+          {
+            mistakeCount++;   
+          }
+      }
+      
+
+      if(mistakeCount < 4)
+        this.rating = 5 - mistakeCount;
+      else
+        this.rating = 1;
+
+
+      }
+      else //player's solution has different length than defined solution
+      {
+          if(ratings[task].hasOwnProperty("rules"))
+          {
+            //check if rules were followed... 
+            //if not isCorrect is false 
+
+          }
+          else
+          {
+              if(playerSolution.length > solution.length)
+              {
+              
+              mistakeCount = + playerSolution.length - solution.length;
+                
+              if(mistakeCount < 4)
+                this.rating = 5 - mistakeCount;
+              else
+                this.rating = 1;
+
+
+              }
+              else
+              {
+                this.rating = 5;
+              }
+
+          }
+
+      }
+
+      console.log(playerSolution);
+      console.log(solution);
+      console.log("mistakeCount" + mistakeCount);
+
+      //if(isCorrect) ? return true : return false; 
+      
+      if(isCorrect)    
+        return true; 
+      else 
+        return false; 
+
+      
+
+  }
+
+
 
     function commandFailed(object){
     
@@ -907,21 +1019,25 @@ eventer(messageEvent,function(e)
 
       showDynamicModal("mainTaskFailed", modalStructure);
 
+      createLogOfGameplay("commandFailed", object);
+
   }
 
-  function createLogOfGameplay(type, object){
+  function createLogOfGameplay(type, object)
+  {
 
    if(isUserLoggedIn())
-   {
-   var user =  {!! auth()->check() ? auth()->user() : 'guest' !!};
+   {   
 
+   var user =  {!! auth()->check() ? auth()->user() : 'guest' !!};   
 
    var level_start = convertDateToTime(this.level_start);
-   var task = object.currentMainTask;
+   var task = String(object.currentMainTask);
    var task_start = convertDateToTime(this.task_start);
    var task_end = null;
    var task_elapsed_time = null;
    var code = String(object.commandArray);
+
    var result = type;
 
 
@@ -1008,7 +1124,33 @@ eventer(messageEvent,function(e)
 
   }
 
-  
+  function convertRatingToStars()
+  {
+
+    var result = '';
+    for(var i=0; i < this.rating; i++)
+    {
+      result += '<i class="fas fa-star" style="color:#F9C10A"></i>';     
+    }
+
+    return result;
+
+    // +some text about rating?
+  }
+
+    function convertCodeForModal()
+  {
+
+    var result = '';
+    for(var i=0; i < this.code.length; i++)
+    {
+      result += this.code[i] + '<br>';     
+    }
+
+    return result;
+
+    // +some text about rating?
+  }
 
 
   function getModalImageLink(imageType, location)
@@ -1119,7 +1261,18 @@ eventer(messageEvent,function(e)
     modal.find('#modal-heading').html(html).end();
 
     html = modalStructure.text;
-    html += '<br><br> <h4>Čas:</h4> <br><br> <h4>Kód:</h4> <br><br> <h4>Hodnotenie:</h4>';
+    
+    var task_elapsed_time = this.task_end - this.task_start; 
+    task_elapsed_time = convertDateToTime(task_elapsed_time);
+
+    html += '<br><br> <h4><i class="fas fa-stopwatch"></i> Čas:</h4>'+ task_elapsed_time;
+    html += '<br><br> <h4><a data-toggle="collapse" href="#collapseCode"><i class="fas fa-code"></i> Kód:</a></h4>'
+    html += '<div class="collapse" id="collapseCode">';
+    html += '<div><code>';
+    html += convertCodeForModal();
+    html += '</div></code>';
+    html += '</div>';
+    html += '<br><br> <h4><i class="fas fa-star-half-alt"></i> Hodnotenie:</h4>' + convertRatingToStars();
     modal.find('#modal-text').html(html).end();  
   
 
@@ -1207,7 +1360,7 @@ eventer(messageEvent,function(e)
 
   function isUserLoggedIn(){
     
-  var loggedIn = {{ auth()->check() ? 'true' : 'false' }};
+  var loggedIn = {{ auth()->check() ? true : false }};
   if (loggedIn)  
     return true;  
   else   

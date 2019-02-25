@@ -72,6 +72,9 @@ class GameController extends Controller
             $jsonTasksPath = "public/game/". $category . "x" . $level . "/modals" . $category . "x" . $level . ".json";
             $jsonTasks = Storage::get($jsonTasksPath);
 
+            $jsonRatingsPath = "public/game/". $category . "x" . $level . "/ratings" . $category . "x" . $level . ".json";
+            $jsonRatings = Storage::get($jsonRatingsPath);            
+
             $jsonModalsPath = "public/game/modals.json";
             $jsonModals = Storage::get($jsonModalsPath);
 
@@ -162,7 +165,7 @@ class GameController extends Controller
             
      
           
-         return view("game", compact('category', 'level', 'xmlToolbox', 'savedGame', 'jsonTasks', 'jsonModals'));
+         return view("game", compact('category', 'level', 'xmlToolbox', 'savedGame', 'jsonTasks', 'jsonModals', 'jsonRatings'));
         }
     }
 
