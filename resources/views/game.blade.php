@@ -108,6 +108,8 @@
 
 
 <xml id="startBlocks" style="display: none">
+       
+         <!--<block type="run" movable="false" deletable="false" inline="false" x="50" y="1000"></block>-->
        <block type="player" movable="false" deletable="false" inline="false" x="50" y="70"></block>
        <!--<block type="run" movable="false" deletable="false" inline="false" x="50" y="1000"></block>-->
        <block type="cameraplus" movable="false" deletable="false" inline="false" x="650" y="900"></block> 
@@ -132,18 +134,11 @@
 <script src="{{ asset('js/new-age.min.js') }}"></script>
 
 <script>
- 
-if (/Mobi|Android/i.test(navigator.userAgent)) {
+
+if (/Mobi|Android/i.test(navigator.userAgent)) 
     this.mobile = true;
-    screen.orientation.lock();
- 
-
-}
 else
-{
   this.mobile = false;
-}
-
 
 
 var button = document.getElementById('send_code_button'); 
@@ -335,7 +330,7 @@ eventer(messageEvent,function(e)
   this.main_task = 0;
   
   this.saveObjectToString = savedGame.json;
-  this.saveToDatabaseEnabled = true;
+  
 
   var blocklyArea = document.getElementById('blocklyArea');
   var blocklyDiv = document.getElementById('blocklyDiv');
@@ -433,6 +428,8 @@ eventer(messageEvent,function(e)
        workspacePlayground.clear();
        Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
                               workspacePlayground); 
+
+       //direction arrows fix needed
 
   }
 
@@ -582,12 +579,13 @@ eventer(messageEvent,function(e)
      
   function saveObjectToJson(object) {
       
+      var saveToDatabaseEnabled = true;
       
       var myJSON = JSON.stringify(object);
       this.saveObjectToString = myJSON;
       console.log(myJSON);  
 
-      if(this.saveToDatabaseEnabled)
+      if(saveToDatabaseEnabled)
       {
         saveJsonToDatabase();
       }
@@ -823,7 +821,7 @@ eventer(messageEvent,function(e)
   
      title: tasks.level.finish_modal.title,
      text: tasks.level.finish_modal.text,
-     image:  getModalImageLink(tasks.level.finish_modal.image, "level")   
+     image:  getModalImageLink(tasks.level.finish_modal.image, "common")   
 
      };
      
@@ -869,13 +867,12 @@ eventer(messageEvent,function(e)
      updateIngameProgress(task);
 
      createLogOfGameplay("mainTaskCompleted", object);
-
-     //saveRatingToDatabase();
+   
 
      }
      else
      { 
-     // new function needed
+     // new function needed for rules
      mainTaskFailed(object);
 
      }
@@ -1036,6 +1033,7 @@ eventer(messageEvent,function(e)
    var task_start = convertDateToTime(this.task_start);
    var task_end = null;
    var task_elapsed_time = null;
+   var rating = null;
    var code = String(object.commandArray);
 
    var result = type;
@@ -1049,6 +1047,7 @@ eventer(messageEvent,function(e)
       task_elapsed_time = this.task_end - this.task_start;      
       task_elapsed_time = task_elapsed_time / 1000;
       task_end = convertDateToTime(this.task_end);
+      rating = this.rating;
       break;
 
     }
@@ -1068,7 +1067,7 @@ eventer(messageEvent,function(e)
     method: 'POST', 
     url: '{{url('')}}/game/createlogofgameplay', 
     data: {'username' : user.username, 'category': this.category, 'level': this.level, 'level_start': level_start,
-    'task': task, 'task_start': task_start, 'task_end': task_end, 'task_elapsed_time': task_elapsed_time, 'code': code, 'result': result}, 
+    'task': task, 'task_start': task_start, 'task_end': task_end, 'task_elapsed_time': task_elapsed_time, 'rating': rating, 'code': code, 'result': result}, 
     success: function(response){ 
     console.log("gameplay object sent succesfully");  
     },
@@ -1319,7 +1318,7 @@ eventer(messageEvent,function(e)
     modal.find('#modal-heading').html(html).end();
 
     html = modalStructure.text;
-    html += '<br><br> <h4>Čas:</h4> <br><br> <h4>Kód:</h4> <br><br> <h4>Hodnotenie:</h4>';
+    //html += '<br><br> <h4>Čas:</h4> <br><br> <h4>Kód:</h4> <br><br> <h4>Hodnotenie:</h4>';
     modal.find('#modal-text').html(html).end();  
 
 

@@ -12,7 +12,7 @@ use App\User;
 
 
 use App\Models\SavedGame;
-use App\Models\IngameProgress;
+use App\Models\Progress;
 use App\Models\Gameplay;
 
 use Illuminate\Support\Facades\Input;
@@ -86,7 +86,7 @@ class GameController extends Controller
                 
                 $auth = Auth::user();
 
-                $inGameProgress = IngameProgress::where('username', '=', $auth->username)->where('category', '=', $category)->where('level', '=', $level)->latest()->first();
+                $inGameProgress = Progress::where('username', '=', $auth->username)->where('category', '=', $category)->where('level', '=', $level)->latest()->first();
 
 
                 if($inGameProgress!=null)
@@ -106,14 +106,14 @@ class GameController extends Controller
                  
                   if($level>1)
                   {
-                  $inGameProgressOfPreviousLevel = IngameProgress::where('username', '=', $auth->username)->where('category', '=', $category)->where('level', '=', $level-1)->latest()->first();
+                  $inGameProgressOfPreviousLevel = Progress::where('username', '=', $auth->username)->where('category', '=', $category)->where('level', '=', $level-1)->latest()->first();
                   if($inGameProgressOfPreviousLevel['progress']!=100)
                   {
                     return redirect()->route('/'); 
                   }
                   else
                   {
-                    IngameProgress::create(['username' => $auth->username, 'category' => $category,
+                    Progress::create(['username' => $auth->username, 'category' => $category,
                     'level' => $level,  
                     'progress' => 0   
                     ]);
@@ -132,7 +132,7 @@ class GameController extends Controller
 
                   //no ingame progress in this category and level exists yet for this user, create 0 progress
                   
-                 IngameProgress::create(['username' => $auth->username, 'category' => $category,
+                 Progress::create(['username' => $auth->username, 'category' => $category,
                     'level' => $level,  
                     'progress' => 0   
                     ]);
@@ -195,8 +195,8 @@ class GameController extends Controller
 
       $data = $request->all();
 
-      Log::debug('Some message.');
-      Log::debug($data);      
+      //Log::debug('Gameplay logged.');
+      //Log::debug($data);      
 
       Gameplay::create([
             'username' => $data['username'], 
@@ -207,6 +207,7 @@ class GameController extends Controller
             'task_start' => $data['task_start'],
             'task_end' => $data['task_end'],
             'task_elapsed_time' => $data['task_elapsed_time'],
+            'rating' => $data['rating'],
             'code' => $data['code'],
             'result' => $data['result']
             ]);
@@ -219,13 +220,13 @@ class GameController extends Controller
 
         $data = $request->all(); 
     
-        $inGameProgress = IngameProgress::where('username', '=', $data['user'])->where('category', '=', $data['category'])->where('level', '=', $data['level'])->latest()->first();   
+        $inGameProgress = Progress::where('username', '=', $data['user'])->where('category', '=', $data['category'])->where('level', '=', $data['level'])->latest()->first();   
 
         if($inGameProgress!=null)
         {
           if($inGameProgress['progress'] < $data['progress'])
           {
-            IngameProgress::updateOrCreate(['username' => $data['user'], 'category' => $data['category'],
+            Progress::updateOrCreate(['username' => $data['user'], 'category' => $data['category'],
             'level' => $data['level']], [ 
             'progress' => $data['progress']   
             ]);
@@ -237,7 +238,7 @@ class GameController extends Controller
         }
         else
         {
-            IngameProgress::updateOrCreate(['username' => $data['user'], 'category' => $data['category'],
+            Progress::updateOrCreate(['username' => $data['user'], 'category' => $data['category'],
             'level' => $data['level']], [ 
             'progress' => $data['progress']   
             ]);
@@ -254,7 +255,7 @@ class GameController extends Controller
                 
                 $auth = Auth::user();
 
-                $inGameProgress = IngameProgress::where('username', '=', $auth->username);
+                $inGameProgress = Progress::where('username', '=', $auth->username);
 
 
                 return $inGameProgress;
@@ -270,7 +271,7 @@ class GameController extends Controller
                 
                 $auth = Auth::user();
 
-                $inGameProgress = IngameProgress::where('username', '=', $auth->username)->get(['progress']);
+                $inGameProgress = Progress::where('username', '=', $auth->username)->get(['progress']);
 
 
 
@@ -293,7 +294,7 @@ class GameController extends Controller
                 
                 $auth = Auth::user();
 
-                $inGameProgress = IngameProgress::where('username', '=', $auth->username)->latest()->first();
+                $inGameProgress = Progress::where('username', '=', $auth->username)->latest()->first();
 
                 if($inGameProgress==null)
                 {
@@ -328,7 +329,7 @@ class GameController extends Controller
             {
                 $auth = Auth::user();
 
-                $inGameProgress = IngameProgress::where('username', '=', $auth->username)->where('category', '=', $category)->where('level', '=', $level)->latest()->first();
+                $inGameProgress = Progress::where('username', '=', $auth->username)->where('category', '=', $category)->where('level', '=', $level)->latest()->first();
 
                 if($inGameProgress!= null && $inGameProgress['progress']==100)
                 {
@@ -366,7 +367,7 @@ class GameController extends Controller
 
                 $auth = Auth::user();
 
-                $inGameProgress = IngameProgress::where('username', '=', $auth->username)->where('category', '=', $category)->where('level', '=', $level)->latest()->first();
+                $inGameProgress = Progress::where('username', '=', $auth->username)->where('category', '=', $category)->where('level', '=', $level)->latest()->first();
                 
 
                  if($inGameProgress!= null && $inGameProgress['progress']==100)

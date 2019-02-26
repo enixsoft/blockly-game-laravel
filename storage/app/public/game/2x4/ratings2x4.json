@@ -1,0 +1,31 @@
+{
+  "level":{
+    "category":2,
+    "level":4,	
+	},
+	
+	"mainTask0":{
+	
+	"solution": "doWhileNotFinished(){,ifNextTileIs(water){,rotateCharacter(left);,};,ifNextTileIs(wall){,rotateCharacter(right);,};,moveForward(1);,};"
+	
+	},
+	
+	"mainTask1":{
+	
+	"solution": "doWhileNotFinished(){,ifNextTileIs(wall){,rotateCharacter(left);,};,ifNextTileHas(lever){,useForward();,};,jumpForward(1);,};"
+	
+	},
+	
+	"mainTask2":{
+	
+	"solution": "doWhileNotFinished(){,ifNextTileIs(water){,rotateCharacter(right);,};,ifNextTileIs(wall){,rotateCharacter(left);,};,ifNextTileHas(destructible){,attackForward();,};,moveForward(1);,};"
+	
+	},
+	
+	"mainTask3":{
+	
+	"solution": "rotateCharacter(right);,rotateCharacter(right);,doWhileNotFinished(){,ifNextTileIs(water){,jumpForward(1);,};,ifNextTileHas(trap){,jumpForward(1);,};,ifNextTileIs(wall){,rotateCharacter(right);,};,moveForward(1);,};"
+	
+	}
+		
+}

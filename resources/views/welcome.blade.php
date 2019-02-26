@@ -221,7 +221,7 @@
                            <div class="progress-bar bg-success" role="progressbar" 
                               aria-valuenow="{{ isset($inGameProgress[$i-1] ) ? $inGameProgress[$i-1]['progress'] : 0 }}" aria-valuemin="0" 
                               aria-valuemax="100" style="width: {{ isset($inGameProgress[$i-1] ) ? $inGameProgress[$i-1]['progress'] : 0 }}%;">
-                              <span style="text-align: center;">{{ isset($inGameProgress[$i-1] ) ? $inGameProgress[$i-1]['progress'] : 0 }}% </span>
+                              <span style="text-align: center; font-weight: bold;">{{ isset($inGameProgress[$i-1] ) ? $inGameProgress[$i-1]['progress'] : 0 }}% </span>
                            </div>
                         </div>
                      </td>

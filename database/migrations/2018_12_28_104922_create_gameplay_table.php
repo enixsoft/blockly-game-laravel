@@ -24,6 +24,7 @@ class CreateGameplayTable extends Migration
             $table->time('task_start');
             $table->time('task_end')->nullable();
             $table->integer('task_elapsed_time')->nullable();
+            $table->integer('rating')->nullable();
             $table->text('code');
             $table->string('result');           
 
