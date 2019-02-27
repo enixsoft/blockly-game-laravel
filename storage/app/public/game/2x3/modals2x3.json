@@ -5,13 +5,13 @@
     
   "welcome_modal": {
     "title": "Vitajte v Blockly hre!",
-    "text": "V piatej úrovni hrdina získava novú schopnosť - otvorenie truhlice. Túto schopnosť bude potrebovať, aby mohol otvoriť dvere kľúčom, ktorý zoberie z truhlice. Okrem toho si precvičíte všetky doteraz získané schopnosti.",
+    "text": "V tretej úrovni hrdina získavate nový blok - opakuj pokiaľ nie je hrdina v cieli. Tento blok, ktorý je cyklom typu doWhile funguje podobne ako blok opakuj x-krát, až na to, že nemusíte nastavovať počet opakovaní. Bude sa teda opakovať až kým úloha nebude splnená alebo nedôjde k chybe pri plnení nejakého bloku.",
     "image": "welcome_modal"
   },
   
    "finish_modal": {
     "title": "Všetky úlohy boli splnené!",
-    "text": "Úspešne ste sa naučili schopnosť otvárať truhlicu s hrdinom, ale aj pohyb, skákanie, útok mečom a použitie páky. Toto bola záverečná úroveň.",
+    "text": "Úspešne ste sa naučili používať blok opakuj pokiaľ nie je hrdina v cieli.",
     "image": "success"  
   }
   },
@@ -21,7 +21,7 @@
     
     "introduction_modal": {
     "title": "Zadanie prvej úlohy",
-    "text": "Cestu k prvému kamennému tlačidlu blokuje voda, krabica, pasca a zatvorené padacie dvere. Prekonajte prekážky a otvorte dvere.",
+    "text": "Cestu k prvému kamennému tlačidlu je priama a bez žiadnych prekážok. Použite nový blok.",
     "image": "maintask0_introduction_modal"
   },
     "help_modal": 
@@ -32,7 +32,7 @@
   },
   "success_modal": {
     "title": "Výborne! Splnili ste prvú úlohu!",
-    "text": "Váš prvý algoritmus v tejto úrovni umožnil hrdinovi dostať sa do miestnosti s truhlicami.",
+    "text": "Cyklus typu doWhile je jednoduchý a beží vynikajúco. Uvidíme, ako to pôjde na zložitejších úlohách.",
     "image": "success"
   },   
     "failure_modal": {
@@ -47,7 +47,7 @@
   
     "introduction_modal": {
     "title": "Zadanie druhej úlohy",
-    "text": "Aby sa hrdina dostal ďalej, musí z truhice získať kľúč na otvorenie zamknutých dverí. Použite blok otvorenia truhlice a potom priveďte hrdinu na kamenné tlačidlo pred dverami.",
+    "text": "Aby sa hrdina dostal ďalej, musíte okrem nového bloku použiť aj blok opakuj x-krát, ktorý vložíte dovnútra.",
     "image": "maintask1_introduction_modal"
   },
     "help_modal": 
@@ -58,7 +58,7 @@
   },
   "success_modal": {
     "title": "Výborne! Splnili ste druhú úlohu!",
-    "text": "Úspešne ste našli kľúč a otvorili dvere. Hrdina môže pokračovať ďalej v ceste.",
+    "text": "Úspešne ste skombinovali dva cykly. Hrdina môže pokračovať ďalej v ceste.",
     "image": "success"
   },   
     "failure_modal": {
@@ -75,7 +75,7 @@
   
     "introduction_modal": {
     "title": "Zadanie tretej úlohy",
-    "text": "V tejto úlohe máme kamenné tlačidlo až za zatvorenými dverami, pred ktorými je aktivovaná pasca. Použite páky, aby ste sa dostali cez prekážky.",
+    "text": "V tejto úlohe sa ku kamennému tlačidlo hrdina dostane skokmi. Blok opakuj x-krát tu netreba použiť.",
     "image": "maintask2_introduction_modal"
   },
     "help_modal": 
@@ -86,7 +86,7 @@
   },
   "success_modal": {
     "title": "Výborne! Splnili ste tretiu úlohu!",
-    "text": "Vo vašom treťom algoritme ste použili obe páky a tak hrdina úspešne prekonal nebezpečnú prekážku.",
+    "text": "Zdá sa, že vám používanie cyklu typu doWhile nerobí žiaden problém.",
     "image": "success"
   },   
     "failure_modal": {
@@ -101,7 +101,7 @@
   
     "introduction_modal": {
     "title": "Zadanie štvrtej úlohy",
-    "text": "Ku kamennému tlačidlu pre splnenie tejto úlohy vedie jedna cesta, avšak blokuje ho pasca, ktorej sa nedá vyhnúť. Vypnite ju pomocou páky.",
+    "text": "Dostať sa ku ďalšiemu kamennému tlačidlu je tentokrát ťažšie, na jednom z blokov sa nachádza pasca. Vypnite ju pomocou páky. Opäť použite aj blok opakuj x-krát, ktorý vložíte dovnútra.",
     "image": "maintask3_introduction_modal"
   },
     "help_modal": 
@@ -122,12 +122,12 @@
 }
   },
   
-      "mainTask4": {
+    "mainTask4": {
     "progress": "100",  
   
     "introduction_modal": {
     "title": "Zadanie piatej úlohy",
-    "text": "V poslednej úlohe piatej úrovne použite páku na vypnutie pasce a preskočte zatopenú časť.",
+    "text": "V poslednej úlohe tretej úrovne použite opäť oba cykly - pričom cyklus for sa bude nachádzať vnútri cyklu doWhile. Pred použítím cyklu doWhile hrdinu otočte raz doprava.",
     "image": "maintask4_introduction_modal"
   },
     "help_modal": 
@@ -137,8 +137,8 @@
     "image": "failure"
   },
   "success_modal": {
-    "title": "Výborne! Splnili ste štvrtú úlohu!",
-    "text": "Je zrejmé, že používanie páky pre odstránenie prekážok už zvládate dokonale.",
+    "title": "Výborne! Splnili ste piatu úlohu!",
+    "text": "Je zrejmé, že používanie oboch cyklov už zvládate dokonale.",
     "image": "success"
   },   
     "failure_modal": {

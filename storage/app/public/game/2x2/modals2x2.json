@@ -5,23 +5,23 @@
     
   "welcome_modal": {
     "title": "Vitajte v Blockly hre!",
-    "text": "V piatej úrovni hrdina získava novú schopnosť - otvorenie truhlice. Túto schopnosť bude potrebovať, aby mohol otvoriť dvere kľúčom, ktorý zoberie z truhlice. Okrem toho si precvičíte všetky doteraz získané schopnosti.",
+    "text": "V druhej úrovni druhej kategórie hrdina získavate nový blok - opakuj x-krát. Ide o cyklus typu for, ktorý vykoná všetky bloky, ktoré k nemu pripojíte, toľko krát, koľko nastavíte. Toto sa hodí, pokiaľ k splneniu úlohy stačí vykonať postupnosť nejakých blokov viac krát za sebou.",
     "image": "welcome_modal"
   },
   
    "finish_modal": {
     "title": "Všetky úlohy boli splnené!",
-    "text": "Úspešne ste sa naučili schopnosť otvárať truhlicu s hrdinom, ale aj pohyb, skákanie, útok mečom a použitie páky. Toto bola záverečná úroveň.",
+    "text": "Úspešne ste sa naučili pracovať s cyklom typu for.",
     "image": "success"  
   }
   },
   
   "mainTask0":{
-    "progress": "20",
+    "progress": "25",
     
     "introduction_modal": {
     "title": "Zadanie prvej úlohy",
-    "text": "Cestu k prvému kamennému tlačidlu blokuje voda, krabica, pasca a zatvorené padacie dvere. Prekonajte prekážky a otvorte dvere.",
+    "text": "V prvej úlohe vám stačia bloky pohybu o jeden krok a otáčania. Umiestnite ich do bloku opakuj x-krát a nastavte správne počet opakovaní. Na začiatku je hrdina nasmerovaný doprava.",
     "image": "maintask0_introduction_modal"
   },
     "help_modal": 
@@ -32,7 +32,7 @@
   },
   "success_modal": {
     "title": "Výborne! Splnili ste prvú úlohu!",
-    "text": "Váš prvý algoritmus v tejto úrovni umožnil hrdinovi dostať sa do miestnosti s truhlicami.",
+    "text": "Vo vašom prvom algoritme ste správne použili a nastavili cyklus for a tým umožnili hrdinovi prejsť na prvé kamenné tlačidlo.",
     "image": "success"
   },   
     "failure_modal": {
@@ -47,7 +47,7 @@
   
     "introduction_modal": {
     "title": "Zadanie druhej úlohy",
-    "text": "Aby sa hrdina dostal ďalej, musí z truhice získať kľúč na otvorenie zamknutých dverí. Použite blok otvorenia truhlice a potom priveďte hrdinu na kamenné tlačidlo pred dverami.",
+    "text": "Teraz hrdina čaká skákanie cez vodu. To sa dá skvele optimalizovať pomocou bloku opakuj x-krát a na splnenie tejto úlohy je treba použiť dva také bloky. Začnite nasmerovaním hrdinu smerom hore, a potom použite bloky opakovania tak, že druhý bude vnútri prvého.",
     "image": "maintask1_introduction_modal"
   },
     "help_modal": 
@@ -58,7 +58,7 @@
   },
   "success_modal": {
     "title": "Výborne! Splnili ste druhú úlohu!",
-    "text": "Úspešne ste našli kľúč a otvorili dvere. Hrdina môže pokračovať ďalej v ceste.",
+    "text": "Zvládli ste použiť vnorený cyklus for a hrdina môže pokračovať ďalej v ceste.",
     "image": "success"
   },   
     "failure_modal": {
@@ -75,7 +75,7 @@
   
     "introduction_modal": {
     "title": "Zadanie tretej úlohy",
-    "text": "V tejto úlohe máme kamenné tlačidlo až za zatvorenými dverami, pred ktorými je aktivovaná pasca. Použite páky, aby ste sa dostali cez prekážky.",
+    "text": "V tejto úlohe máme kamenné tlačidlo až za zatvorenými dverami, ktoré sú zamknuté kľúčom, ktorý musíme nájsť v truhlici. Hrdina teda potrebuje otvoriť všetky truhlice. Použite blok opakuj x-krát, blok pohybu a otáčania doprava.",
     "image": "maintask2_introduction_modal"
   },
     "help_modal": 
@@ -86,7 +86,7 @@
   },
   "success_modal": {
     "title": "Výborne! Splnili ste tretiu úlohu!",
-    "text": "Vo vašom treťom algoritme ste použili obe páky a tak hrdina úspešne prekonal nebezpečnú prekážku.",
+    "text": "Vo vašom treťom algoritme ste otvorili 6 truhlíc,  hrdina našiel kľúč a dostal sa cez zatvorené dvere.",
     "image": "success"
   },   
     "failure_modal": {
@@ -101,7 +101,7 @@
   
     "introduction_modal": {
     "title": "Zadanie štvrtej úlohy",
-    "text": "Ku kamennému tlačidlu pre splnenie tejto úlohy vedie jedna cesta, avšak blokuje ho pasca, ktorej sa nedá vyhnúť. Vypnite ju pomocou páky.",
+    "text": "Cesta ku kamennému tlačidlu pre splnenie tejto úlohy je blokovaná vázami, ktoré treba zničiť. Opäť dva razy použite blok opakuj x-krát.",
     "image": "maintask3_introduction_modal"
   },
     "help_modal": 
@@ -112,7 +112,7 @@
   },
   "success_modal": {
     "title": "Výborne! Splnili ste štvrtú úlohu!",
-    "text": "Dobrá práca, váš hrdina už má cieľ na dosah.",
+    "text": "Zdá sa, že optimalizovať algoritmy pomocou cyklu typu for vám nerobí žiaden problém. Ešte jedna úloha a ste v cieli.",
     "image": "success"
   },   
     "failure_modal": {
@@ -127,7 +127,7 @@
   
     "introduction_modal": {
     "title": "Zadanie štvrtej úlohy",
-    "text": "Ku kamennému tlačidlu pre splnenie tejto úlohy vedie jedna cesta, avšak blokuje ho pasca, ktorej sa nedá vyhnúť. Vypnite ju pomocou páky.",
+    "text": "A na dokončenie úrovne stačí už len použiť dve páky, aby ste zneškodnili pasce blokujúce prístup do cieľa. Dva razy použite blok opakuj x-krát.",
     "image": "maintask3_introduction_modal"
   },
     "help_modal": 

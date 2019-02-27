@@ -5,4 +5,5 @@
 <block type="rotate_character_left"></block>
 <block type="rotate_character_right"></block>
 <block type="do_while_not_finished"></block>
+<block type="for"></block>
 </xml>

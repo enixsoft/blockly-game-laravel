@@ -6,31 +6,90 @@
 	
 	"mainTask0":{
 	
-	"solution": "doWhileNotFinished(){,moveForward(1);,};"
+	"solution": "doWhileNotFinished(){,moveForward(1);,};",
+	"rules":{
+	"0": {
+		"blocks": "doWhile",
+		"count": 1,
+		"error": "Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj pokiaľ nie je hrdina v cieli tak, ako bolo zadané. Skúste to znova."
+		
+	}
+	}
 	
 	},
 	
 	"mainTask1":{
 	
-	"solution": "doWhileNotFinished(){,rotateCharacter(right);,for(3){,moveForward(1);,};,};"
+	"solution": "doWhileNotFinished(){,rotateCharacter(right);,for(3){,moveForward(1);,};,};",
+	"rules":{
+	"0": {
+		"blocks": "doWhile",
+		"count": 1,
+		"error": "Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj pokiaľ nie je hrdina v cieli tak, ako bolo zadané. Skúste to znova."
+		
+	},
+	"1": {
+		"blocks": "for",
+		"count": 1,
+		"error": "Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj x-krát tak, ako bolo zadané. Skúste to znova."
+		
+	}
+	}
 	
 	},
 	
 	"mainTask2":{
 	
-	"solution": "doWhileNotFinished(){,jumpForward(1);,rotateCharacter(left);,for(2){,moveForward(1);,};,};"
+	"solution": "doWhileNotFinished(){,jumpForward(1);,rotateCharacter(left);,jumpForward(1);,};",
+	"rules":{
+	"0": {
+		"blocks": "doWhile",
+		"count": 1,
+		"error": "Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj pokiaľ nie je hrdina v cieli tak, ako bolo zadané. Skúste to znova."
+		
+	}
+	}
 	
 	},
 	
 	"mainTask3":{
 	
-	"solution": "doWhileNotFinished(){,for(3){,jumpForward(1);,};,useForward();,rotateCharacter(left);,};"
+	"solution": "doWhileNotFinished(){,for(3){,jumpForward(1);,};,useForward();,rotateCharacter(left);,};",
+	"rules":{
+	"0": {
+		"blocks": "doWhile",
+		"count": 1,
+		"error": "Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj pokiaľ nie je hrdina v cieli tak, ako bolo zadané. Skúste to znova."
+		
+	},
+	"1": {
+		"blocks": "for",
+		"count": 1,
+		"error": "Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj x-krát tak, ako bolo zadané. Skúste to znova."
+		
+	}
+	}
 	
 	},	
 	
 	"mainTask4":{
 	
-	"solution": "rotateCharacter(right);,doWhileNotFinished(){,rotateCharacter(right);,jumpForward(1);,jumpForward(1);,};"
+	"solution": "rotateCharacter(right);,doWhileNotFinished(){,rotateCharacter(right);,for(2){,jumpForward(1);,};,};",
+	
+	"0": {
+		"blocks": "doWhile",
+		"count": 1,
+		"error": "Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj pokiaľ nie je hrdina v cieli tak, ako bolo zadané. Skúste to znova."
+		
+	},
+	"1": {
+		"blocks": "for",
+		"count": 1,
+		"error": "Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj x-krát tak, ako bolo zadané. Skúste to znova."
+		
+	}
+	}
+	
 	
 	}	
 }

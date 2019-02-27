@@ -21,7 +21,7 @@
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ asset('vendor/simple-line-icons/css/simple-line-icons.css') }}">
-    <link rel="manifest" href="{{ asset('manifest.json') }}">
+    
 
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
@@ -29,7 +29,7 @@
 
    
     <!-- Custom styles for this template
-    RENAME AND MINIFY
+    MINIFY
      -->
     <link href="{{ asset('css/new-age.css') }}" rel="stylesheet">
 
@@ -320,6 +320,7 @@ eventer(messageEvent,function(e)
   this.level    = tasks.level.level;
   this.progress = savedGame.progress;
   this.rating   = 0;
+  this.ruleError = 0;
 
 
   this.level_start = new Date();
@@ -873,7 +874,7 @@ eventer(messageEvent,function(e)
      else
      { 
      // new function needed for rules
-     mainTaskFailed(object);
+     mainTaskFailedRule(object);
 
      }
 
@@ -888,6 +889,24 @@ eventer(messageEvent,function(e)
   
      title: tasks[task].failure_modal.title,
      text:  tasks[task].failure_modal.text,
+     image: getModalImageLink(tasks[task].failure_modal.image, "common")
+
+     };
+
+     showDynamicModal("mainTaskFailed", modalStructure);
+
+     createLogOfGameplay("mainTaskFailed", object);
+
+  }
+
+    function mainTaskFailedRule(object){
+
+     var task = "mainTask" + object.currentMainTask;
+     
+     var modalStructure = {
+  
+     title: tasks[task].failure_modal.title,
+     text:  ratings[task].rules[this.ruleError].error,
      image: getModalImageLink(tasks[task].failure_modal.image, "common")
 
      };
@@ -914,36 +933,87 @@ eventer(messageEvent,function(e)
       var solution = ratings[task].solution;
       solution = solution.split(",");
 
-      //check if player's solution is same as defined solution
-      if(playerSolution.length==solution.length)
+      //if there are any rules check if the solution passes 
+      if(ratings[task].hasOwnProperty("rules"))
       {
 
-      for(var i=0; i<solution.length; i++)
-      {
-        if(playerSolution[i]!==solution[i])
-          {
-            mistakeCount++;   
-          }
+
+            var ruleType;
+            var rulesCount = Object.keys(ratings[task].rules).length;
+            
+            var ruleCount = 0;
+            var actualCount = 0;
+
+            
+
+            for (var j=0; j<rulesCount;j++)
+            {              
+               if(j>0 && !isCorrect)
+               {
+               break;
+               }
+
+               this.ruleError = j;
+
+               actualCount = 0;
+
+               ruleType = ratings[task].rules[j].blocks.split(",");                       
+               
+               ruleCount = ratings[task].rules[j].count;
+
+               isCorrect = false;
+
+               for(var k in ruleType)
+               {
+               
+               if(actualCount<ruleCount)
+               {
+                  for(var l in playerSolution)
+                  {
+                      if(playerSolution[l].startsWith(ruleType[k]))
+                      {
+                  
+                      actualCount++;
+                
+                      if(actualCount==ruleCount)
+                      {
+                      isCorrect = true;    
+                      break;
+                      }
+                      }
+                  }
+               }
+
+               }
+
+
+          }       
+          
       }
-      
 
-      if(mistakeCount < 4)
-        this.rating = 5 - mistakeCount;
-      else
-        this.rating = 1;
+
+      if(playerSolution.length==solution.length) 
+      {      
+
+              for(var i=0; i<solution.length; i++)
+              {
+              if(playerSolution[i]!==solution[i])
+                {
+                  mistakeCount++;   
+                }
+              }
+            
+
+              if(mistakeCount < 4)
+              this.rating = 5 - mistakeCount;
+              else
+              this.rating = 1;       
 
 
       }
       else //player's solution has different length than defined solution
       {
-          if(ratings[task].hasOwnProperty("rules"))
-          {
-            //check if rules were followed... 
-            //if not isCorrect is false 
-
-          }
-          else
-          {
+       
               if(playerSolution.length > solution.length)
               {
               
@@ -961,20 +1031,26 @@ eventer(messageEvent,function(e)
                 this.rating = 5;
               }
 
-          }
-
       }
+
+      
 
       console.log(playerSolution);
       console.log(solution);
       console.log("mistakeCount" + mistakeCount);
+      console.log("ruleError" + this.ruleError);
 
-      //if(isCorrect) ? return true : return false; 
+ 
       
-      if(isCorrect)    
+      if(isCorrect) 
+      {   
         return true; 
-      else 
-        return false; 
+      }
+      else
+      { 
+        this.rating = 0;
+        return false;
+      } 
 
       
 

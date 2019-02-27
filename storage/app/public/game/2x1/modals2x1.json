@@ -5,13 +5,13 @@
     
   "welcome_modal": {
     "title": "Vitajte v Blockly hre!",
-    "text": "V piatej úrovni hrdina získava novú schopnosť - otvorenie truhlice. Túto schopnosť bude potrebovať, aby mohol otvoriť dvere kľúčom, ktorý zoberie z truhlice. Okrem toho si precvičíte všetky doteraz získané schopnosti.",
+    "text": "Začína sa druhá kategória hry a herný systém ovládania sa mení. Odteraz nebudete vyberať blok so správnym smerom alebo nastavovať smer napr. pri skákaní. Smer hrdinu už bude nastavený, zobrazený žltou šipkou na bloku. Na jeho zmenu musíte hrdinu otáčať pomocou dvoch blokov na to určených, predtým, ako hrdina vykonáva ostatné príkazy.",
     "image": "welcome_modal"
   },
   
    "finish_modal": {
     "title": "Všetky úlohy boli splnené!",
-    "text": "Úspešne ste sa naučili schopnosť otvárať truhlicu s hrdinom, ale aj pohyb, skákanie, útok mečom a použitie páky. Toto bola záverečná úroveň.",
+    "text": "Úspešne ste sa naučili základy ovládania hrdinu podľa nových pravidiel.",
     "image": "success"  
   }
   },
@@ -21,7 +21,7 @@
     
     "introduction_modal": {
     "title": "Zadanie prvej úlohy",
-    "text": "Cestu k prvému kamennému tlačidlu blokuje voda, krabica, pasca a zatvorené padacie dvere. Prekonajte prekážky a otvorte dvere.",
+    "text": "V prvej úlohe vám stačia bloky pohybu o jeden krok a otáčania. Na začiatku úrovne je hrdina nasmerovaný doprava, otočenie doľava ho nasmeruje hore, otočenie doprava ho nasmeruje dole. Správne ho otáčajte a preskákajte s ním až ku kamennému tlačidlu.",
     "image": "maintask0_introduction_modal"
   },
     "help_modal": 
@@ -32,7 +32,7 @@
   },
   "success_modal": {
     "title": "Výborne! Splnili ste prvú úlohu!",
-    "text": "Váš prvý algoritmus v tejto úrovni umožnil hrdinovi dostať sa do miestnosti s truhlicami.",
+    "text": "Váš prvý algoritmus využíva nový systém ovládania a tým umožnil hrdinovi preskočiť na prvé kamenné tlačidlo.",
     "image": "success"
   },   
     "failure_modal": {
@@ -47,7 +47,7 @@
   
     "introduction_modal": {
     "title": "Zadanie druhej úlohy",
-    "text": "Aby sa hrdina dostal ďalej, musí z truhice získať kľúč na otvorenie zamknutých dverí. Použite blok otvorenia truhlice a potom priveďte hrdinu na kamenné tlačidlo pred dverami.",
+    "text": "Teraz už je cieľ o niečo ďalej a v ceste už stojí viacero prekážok. Zničte sud a vyhnite sa pasciam, ale hlavne dávajte pozor, aby sa hrdina vždy otočil, keď je to potrebné.",
     "image": "maintask1_introduction_modal"
   },
     "help_modal": 
@@ -58,7 +58,7 @@
   },
   "success_modal": {
     "title": "Výborne! Splnili ste druhú úlohu!",
-    "text": "Úspešne ste našli kľúč a otvorili dvere. Hrdina môže pokračovať ďalej v ceste.",
+    "text": "Úspešne ste sa vyhli všetkým prekážkam. Hrdina môže pokračovať ďalej v ceste.",
     "image": "success"
   },   
     "failure_modal": {
@@ -75,7 +75,7 @@
   
     "introduction_modal": {
     "title": "Zadanie tretej úlohy",
-    "text": "V tejto úlohe máme kamenné tlačidlo až za zatvorenými dverami, pred ktorými je aktivovaná pasca. Použite páky, aby ste sa dostali cez prekážky.",
+    "text": "V tejto úlohe je treba použiť páku, aby sa zneškodnila aktivovaná pasca, ktorej sa nedá vyhnúť.",
     "image": "maintask2_introduction_modal"
   },
     "help_modal": 
@@ -86,7 +86,7 @@
   },
   "success_modal": {
     "title": "Výborne! Splnili ste tretiu úlohu!",
-    "text": "Vo vašom treťom algoritme ste použili obe páky a tak hrdina úspešne prekonal nebezpečnú prekážku.",
+    "text": "Vo vašom treťom algoritme ste použili páku a hrdina tak mohol prekonať nebezpečnú prekážku.",
     "image": "success"
   },   
     "failure_modal": {
@@ -101,7 +101,7 @@
   
     "introduction_modal": {
     "title": "Zadanie štvrtej úlohy",
-    "text": "Ku kamennému tlačidlu pre splnenie tejto úlohy vedie jedna cesta, avšak blokuje ho pasca, ktorej sa nedá vyhnúť. Vypnite ju pomocou páky.",
+    "text": "Ku kamennému tlačidlu pre splnenie tejto úlohy vedie komplikovanejšia cesta s vázami stojacimi v ceste, ktoré treba zničiť.",
     "image": "maintask3_introduction_modal"
   },
     "help_modal": 
@@ -112,7 +112,7 @@
   },
   "success_modal": {
     "title": "Výborne! Splnili ste štvrtú úlohu!",
-    "text": "Dobrá práca, váš hrdina už má cieľ na dosah.",
+    "text": "Dobrá práca, váš hrdina má cieľ na dosah.",
     "image": "success"
   },   
     "failure_modal": {
@@ -120,7 +120,7 @@
     "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
     "image": "failure"
 }
-  }
+}
   
 
 
