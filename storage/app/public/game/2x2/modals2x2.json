@@ -4,7 +4,7 @@
     "level":2,
     
   "welcome_modal": {
-    "title": "Vitajte v Blockly hre!",
+    "title": "Kategória 2 Úroveň 2",
     "text": "V druhej úrovni druhej kategórie hrdina získavate nový blok - opakuj x-krát. Ide o cyklus typu for, ktorý vykoná všetky bloky, ktoré k nemu pripojíte, toľko krát, koľko nastavíte. Toto sa hodí, pokiaľ k splneniu úlohy stačí vykonať postupnosť nejakých blokov viac krát za sebou.",
     "image": "welcome_modal"
   },

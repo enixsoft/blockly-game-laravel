@@ -26,7 +26,7 @@
 	
 	"solution": "moveUp(1);,moveLeft(1);,attack(up);,moveUp(1);,use(up);,moveDown(1);,jump(right);,moveUp(3);,moveRight(1);,jump(right);"
 	
-	},
+	}
 	
 
 }

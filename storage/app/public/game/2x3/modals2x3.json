@@ -4,8 +4,8 @@
     "level":3,
     
   "welcome_modal": {
-    "title": "Vitajte v Blockly hre!",
-    "text": "V tretej úrovni hrdina získavate nový blok - opakuj pokiaľ nie je hrdina v cieli. Tento blok, ktorý je cyklom typu doWhile funguje podobne ako blok opakuj x-krát, až na to, že nemusíte nastavovať počet opakovaní. Bude sa teda opakovať až kým úloha nebude splnená alebo nedôjde k chybe pri plnení nejakého bloku.",
+    "title": "Kategória 2 Úroveň 3",
+    "text": "V tretej úrovni získavate nový blok - opakuj pokiaľ nie je hrdina v cieli. Tento blok, ktorý je cyklom typu doWhile funguje podobne ako blok opakuj x-krát, až na to, že nemusíte nastavovať počet opakovaní. Všetky bloky v ňom sa teda budú postupne opakovať, až kým úloha nebude splnená alebo nedôjde k chybe pri plnení nejakého bloku.",
     "image": "welcome_modal"
   },
   

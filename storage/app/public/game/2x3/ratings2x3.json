@@ -11,7 +11,7 @@
 	"0": {
 		"blocks": "doWhile",
 		"count": 1,
-		"error": "Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj pokiaľ nie je hrdina v cieli tak, ako bolo zadané. Skúste to znova."
+		"error": "Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj pokiaľ nie je hrdina v cieli. Skúste to znova."
 		
 	}
 	}
@@ -25,13 +25,13 @@
 	"0": {
 		"blocks": "doWhile",
 		"count": 1,
-		"error": "Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj pokiaľ nie je hrdina v cieli tak, ako bolo zadané. Skúste to znova."
+		"error": "Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj pokiaľ nie je hrdina v cieli. Skúste to znova."
 		
 	},
 	"1": {
 		"blocks": "for",
 		"count": 1,
-		"error": "Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj x-krát tak, ako bolo zadané. Skúste to znova."
+		"error": "Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj x-krát. Skúste to znova."
 		
 	}
 	}
@@ -45,7 +45,7 @@
 	"0": {
 		"blocks": "doWhile",
 		"count": 1,
-		"error": "Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj pokiaľ nie je hrdina v cieli tak, ako bolo zadané. Skúste to znova."
+		"error": "Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj pokiaľ nie je hrdina v cieli. Skúste to znova."
 		
 	}
 	}
@@ -59,13 +59,13 @@
 	"0": {
 		"blocks": "doWhile",
 		"count": 1,
-		"error": "Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj pokiaľ nie je hrdina v cieli tak, ako bolo zadané. Skúste to znova."
+		"error": "Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj pokiaľ nie je hrdina v cieli. Skúste to znova."
 		
 	},
 	"1": {
 		"blocks": "for",
 		"count": 1,
-		"error": "Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj x-krát tak, ako bolo zadané. Skúste to znova."
+		"error": "Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj x-krát. Skúste to znova."
 		
 	}
 	}
@@ -75,21 +75,23 @@
 	"mainTask4":{
 	
 	"solution": "rotateCharacter(right);,doWhileNotFinished(){,rotateCharacter(right);,for(2){,jumpForward(1);,};,};",
-	
+	"rules":{
 	"0": {
 		"blocks": "doWhile",
 		"count": 1,
-		"error": "Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj pokiaľ nie je hrdina v cieli tak, ako bolo zadané. Skúste to znova."
+		"error": "Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj pokiaľ nie je hrdina v cieli. Skúste to znova."
 		
 	},
 	"1": {
 		"blocks": "for",
 		"count": 1,
-		"error": "Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj x-krát tak, ako bolo zadané. Skúste to znova."
+		"error": "Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj x-krát. Skúste to znova."
 		
 	}
 	}
 	
+	}
 	
-	}	
+	
+	
 }

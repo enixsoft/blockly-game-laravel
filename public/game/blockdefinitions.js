@@ -286,6 +286,18 @@ Blockly.Blocks['player'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("Hrdina  ")
+        .appendField(new Blockly.FieldImage("http://localhost/blockly-web-project/game/logo-head-small.png", 70, 70, "*"));   
+    this.setNextStatement(true, "Action");
+    this.setColour(300);
+ this.setTooltip("This block refers to Player.");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['playerDirection'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Hrdina  ")
         .appendField(new Blockly.FieldImage("http://localhost/blockly-web-project/game/logo-head-small.png", 70, 70, "*"))		
         .appendField(new Blockly.FieldImage("http://localhost/blockly-web-project/game/nodirection.png", 70, 70, "*"),"facingDirection_image");   
     this.setNextStatement(true, "Action");
@@ -294,6 +306,7 @@ Blockly.Blocks['player'] = {
  this.setHelpUrl("");
   }
 };
+
 
 Blockly.Blocks['run'] = {
   init: function() {
@@ -466,6 +479,12 @@ Blockly.JavaScript['jump'] = function(block) {
 };
 
 Blockly.JavaScript['player'] = function(block) {
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'Player:\n';
+  return code;
+};
+
+Blockly.JavaScript['playerDirection'] = function(block) {
   // TODO: Assemble JavaScript into code variable.
   var code = 'Player:\n';
   return code;

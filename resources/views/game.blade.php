@@ -82,10 +82,10 @@
                </div>
                <div class= "col-lg-12 game-buttons mx-auto text-center">
                   <div class= "btn-group" role="group">
-                     <button type="button" id="send_code_button" class="btn btn-success mr-3"><i class="fas fa-play"></i> Spustiť bloky</button>
-                     <button type="button" id="show_task_button" class="btn btn-success mr-3"><i class="fas fa-tasks"></i> Zadanie úlohy</button>
-                     <button type="button" id="delete_blocks_button" class="btn btn-success mr-3"><i class="fas fa-trash"></i> Vymazať všetky bloky</button>
-                     <button type="button" id="report_bug_button" class="btn btn-danger mr-3"><i class="fas fa-bug"></i> Nahlásiť chybu</button>     
+                     <button type="button" id="send_code_button" class="btn btn-success mr-3" onclick="omfg()" disabled><i class="fas fa-play"></i> Spustiť bloky</button>
+                     <button type="button" id="show_task_button" class="btn btn-success mr-3" onclick="showTaskButton()" disabled><i class="fas fa-tasks"></i> Zadanie úlohy</button>
+                     <button type="button" id="delete_blocks_button" class="btn btn-success mr-3" onclick="deleteBlocksButton()" disabled><i class="fas fa-trash"></i> Vymazať všetky bloky</button>
+                     <button type="button" id="report_bug_button" class="btn btn-success mr-3" onclick="reportBugButton()" disabled><i class="fas fa-bug"></i> Nahlásiť chybu</button>     
                   </div>
                </div>
             </div>
@@ -109,14 +109,17 @@
 
 <xml id="startBlocks" style="display: none">
        
-         <!--<block type="run" movable="false" deletable="false" inline="false" x="50" y="1000"></block>-->
+       @if($category==1)
        <block type="player" movable="false" deletable="false" inline="false" x="50" y="70"></block>
-       <!--<block type="run" movable="false" deletable="false" inline="false" x="50" y="1000"></block>-->
+       @else
+       <block type="playerDirection" movable="false" deletable="false" inline="false" x="50" y="70"></block>
+       @endif
+       <!--
        <block type="cameraplus" movable="false" deletable="false" inline="false" x="650" y="900"></block> 
        <block type="cameraminus" movable="false" deletable="false" inline="false" x="450" y="900"></block>       
        <block type="save" movable="false" deletable="false" inline="false" x="250" y="900"></block>
        <block type="reload" movable="false" deletable="false" inline="false" x="50" y="900"></block>
-       <!--
+ 
        <block type="load" movable="false" deletable="false" inline="false" x="450" y="900"></block>       
        -->      
        
@@ -140,17 +143,6 @@ if (/Mobi|Android/i.test(navigator.userAgent))
 else
   this.mobile = false;
 
-
-var button = document.getElementById('send_code_button'); 
-button.disabled = true; 
-button = document.getElementById('show_task_button'); 
-button.disabled = true;
-button = document.getElementById('delete_blocks_button'); 
-button.disabled = true;
-button = document.getElementById('report_bug_button'); 
-button.disabled = true;
-
-
 var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
 var eventer = window[eventMethod];
 var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
@@ -164,16 +156,15 @@ eventer(messageEvent,function(e)
   {
      case "unlock":
     {
-      //run[0].setColour(95);
-      var button = document.getElementById('send_code_button'); 
-      button.disabled = false;   
-      button = document.getElementById('show_task_button'); 
-      button.disabled = false;
-      button = document.getElementById('delete_blocks_button'); 
-      button.disabled = false; 
-      button = document.getElementById('report_bug_button'); 
-      button.disabled = false;  
-        
+      
+      $('#send_code_button').attr("onclick", "runCode()").end();
+      $('#send_code_button').attr("class", "btn btn-success mr-3").end();  
+      $('#send_code_button').html('<i class="fas fa-play"></i> Spustiť bloky').end(); 
+      $('#send_code_button').attr("disabled", false).end(); 
+      
+      $('#show_task_button').attr("disabled", false).end(); 
+      $('#delete_blocks_button').attr("disabled", false).end(); 
+      $('#report_bug_button').attr("disabled", false).end(); 
 
       workspacePlayground.highlightBlock(null);
       this.locked = false;
@@ -290,6 +281,7 @@ eventer(messageEvent,function(e)
     {
       console.log("change facing direction");  
 
+      if(this.category==2)
       changeFacingDirectionImage(e.data.content);
 
     }
@@ -316,8 +308,8 @@ eventer(messageEvent,function(e)
   this.locked = true;
   this.available_modal = 1;
 
-  this.category = tasks.level.category;
-  this.level    = tasks.level.level;
+  this.category = {{ $category }};
+  this.level    = {{ $level }};
   this.progress = savedGame.progress;
   this.rating   = 0;
   this.ruleError = 0;
@@ -358,59 +350,13 @@ eventer(messageEvent,function(e)
 
   this.savedGameParsed = JSON.parse(savedGame.json);
   this.facingDirection = "";
-  changeFacingDirectionImage(savedGameParsed.character.facingDirection);
-  
+  if(this.category==2)
+  changeFacingDirectionImage(this.savedGameParsed.character.facingDirection);
 
-  
-  var cameraplus = getBlocksByType("cameraplus");
-  var cameraminus = getBlocksByType("cameraminus");
-  //var load = getBlocksByType("load");
-  var save = getBlocksByType("save");
-  var reload = getBlocksByType("reload"); 
 
   
-   $(document).ready(function(){
-    $("#send_code_button").click( function(){
-         
-         if(!this.locked)
-          runCode();
-  });
-  });  
-
-
-  $(document).ready(function(){
-    $("#show_task_button").click( function(){
-         
-         if(!this.locked)
-        {       
-        showTaskButton();
-
-        }
-  });
-  });  
-  
-  $(document).ready(function(){
-    $("#delete_blocks_button").click( function(){
-         
-         if(!this.locked)
-        {       
-        deleteBlocksButton();
-        }
-  });
-  });  
-
-    $(document).ready(function(){
-    $("#report_bug_button").click( function(){
-         
-         if(!this.locked)
-        {       
-        reportBugButton();
-        }
-  });
-  });  
-
-  
- function showTaskButton() {
+ function showTaskButton() 
+ {
   
           var modalStructure = {
   
@@ -424,25 +370,30 @@ eventer(messageEvent,function(e)
 
   }
 
-   function deleteBlocksButton() {
+   function deleteBlocksButton() 
+   {
   
        workspacePlayground.clear();
        Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
                               workspacePlayground); 
 
-       //direction arrows fix needed
+        if(this.category==2)
+        changeFacingDirectionImage(this.facingDirection);
+
 
   }
 
-  function reportBugButton() {     
+  function reportBugButton() 
+  {     
 
     console.log(this.facingDirection);
 
   }
 
-  function changeFacingDirectionImage(direction) {
+  function changeFacingDirectionImage(direction) 
+  {
 
-    var player = getBlocksByType("player"); 
+    var player = getBlocksByType("playerDirection"); 
 
     this.facingDirection = direction;
 
@@ -451,25 +402,25 @@ eventer(messageEvent,function(e)
         case "right":
         {
           
-          player[0].setFieldValue("http://localhost/blockly-web-project/game/right.png", "facingDirection_image");
+          player[0].setFieldValue("{{ asset('game') }}/right.png", "facingDirection_image");
           break;
         }
         
         case "left":
         {
-          player[0].setFieldValue("http://localhost/blockly-web-project/game/left.png", "facingDirection_image");
+          player[0].setFieldValue("{{ asset('game') }}/game/left.png", "facingDirection_image");
           break;
         }
 
         case "up":
         {
-          player[0].setFieldValue("http://localhost/blockly-web-project/game/up.png", "facingDirection_image");
+          player[0].setFieldValue("{{ asset('game') }}/game/up.png", "facingDirection_image");
           break;
         }
 
         case "down":
         {
-          player[0].setFieldValue("http://localhost/blockly-web-project/game/down.png", "facingDirection_image");
+          player[0].setFieldValue("{{ asset('game') }}/game/down.png", "facingDirection_image");
           break;
         }
 
@@ -481,15 +432,41 @@ eventer(messageEvent,function(e)
 
 
 
-  function blockClickController(event) {  
+  function blockClickController(event) 
+  {  
 
+    if(this.category==2)
+    var player = getBlocksByType("playerDirection"); 
+    else
+    var player = getBlocksByType("player"); 
+
+    /*           DEVELOPER BLOCKS
+    var cameraplus = getBlocksByType("cameraplus");
+    var cameraminus = getBlocksByType("cameraminus");
+    //var load = getBlocksByType("load");
+    var save = getBlocksByType("save");
+    var reload = getBlocksByType("reload"); 
+    */          
 
     if(event.element=="click")
     {     
   
       blockToCheck = Blockly.selected;
 
-      if(blockToCheck.id == save[0].id)
+ 
+     
+      if(blockToCheck.id == player[0].id)
+      {
+        
+        if(!this.locked)
+          runCode();
+
+
+        blockToCheck.unselect();
+      }
+      
+      /*      DEVELOPER BLOCKS
+      else if(blockToCheck.id == save[0].id)
       {
         saveGame();
         blockToCheck.unselect();
@@ -498,16 +475,7 @@ eventer(messageEvent,function(e)
       {
         reloadIframe();
         blockToCheck.unselect();
-      }
-     
-      /*
-      if(blockToCheck.id == run[0].id)
-      {
-        
-        if(!this.locked==false)
-          runCode();
-        blockToCheck.unselect();
-      }*/
+      }  
         else if(blockToCheck.id == cameraplus[0].id)
       {
          cameraPlus();
@@ -521,36 +489,20 @@ eventer(messageEvent,function(e)
       
         blockToCheck.unselect();
       }
-      /*else if(blockToCheck.id == reload[0].id)
-      {
-        reloadIframe();
-        blockToCheck.unselect();
-      }
-       else if(blockToCheck.id == save[0].id)
-      {
-        saveGame();
-        blockToCheck.unselect();
-      }
        else if(blockToCheck.id == load[0].id)
       {
          loadGame();
          blockToCheck.unselect();
       }
-      
       */
-    }
-
-
-   
-
-
-    
+      
+    }    
   }
 
-  workspacePlayground.addChangeListener(blockClickController);
-  
+  workspacePlayground.addChangeListener(blockClickController);  
 
-  var onresize = function(e) {
+  var onresize = function(e) 
+  {
     // Compute the absolute coordinates and dimensions of blocklyArea.
     var element = blocklyArea;
     var x = 0;
@@ -578,7 +530,8 @@ eventer(messageEvent,function(e)
  
   onresize();
      
-  function saveObjectToJson(object) {
+  function saveObjectToJson(object) 
+  {
       
       var saveToDatabaseEnabled = true;
       
@@ -591,9 +544,10 @@ eventer(messageEvent,function(e)
         saveJsonToDatabase();
       }
 
-    }
+  }
 
-  function saveJsonToDatabase() {     
+  function saveJsonToDatabase() 
+  {     
     
      if(isUserLoggedIn())
      {
@@ -619,7 +573,8 @@ eventer(messageEvent,function(e)
                    
   }
 
-  function updateIngameProgress(task) {
+  function updateIngameProgress(task) 
+  {
 
     if(isUserLoggedIn())
     {
@@ -649,11 +604,13 @@ eventer(messageEvent,function(e)
   }
   
 
-  function highlightBlock(id) {
+  function highlightBlock(id)
+  {
       workspacePlayground.highlightBlock(id);      
-    }
+  }
 
-  function disableContextMenus(){
+  function disableContextMenus()
+  {
 
      Blockly.showContextMenu_ = function (e) {
         };
@@ -661,18 +618,18 @@ eventer(messageEvent,function(e)
         };
   }
 
-  function runCode(){
+  function runCode()
+  {
 
-       
-      var button = document.getElementById('send_code_button'); 
-      button.disabled = true;   
-      button = document.getElementById('show_task_button'); 
-      button.disabled = true;
-      button = document.getElementById('delete_blocks_button'); 
-      button.disabled = true;   
+      
+      $('#send_code_button').attr("onclick", "loadGame()").end(); 
+      $('#send_code_button').attr("class", "btn btn-danger mr-3").end(); 
+      $('#send_code_button').html('<i class="fas fa-times"></i> Zastaviť vykonávanie').end(); 
+ 
+      $('#show_task_button').attr("disabled", true).end(); 
+      $('#delete_blocks_button').attr("disabled", true).end(); 
+      $('#report_bug_button').attr("disabled", true).end(); 
 
-
-        
       this.locked = true;
      
 
@@ -716,7 +673,8 @@ eventer(messageEvent,function(e)
         sendMessage(this.code);
   }
 
-    function cameraPlus(){
+    function cameraPlus()
+    {
 
         var code = "camera+\n";
         
@@ -724,7 +682,8 @@ eventer(messageEvent,function(e)
 
 
   }
-    function cameraMinus(){
+    function cameraMinus()
+    {
 
         var code = "camera-\n";
         
@@ -732,7 +691,8 @@ eventer(messageEvent,function(e)
 
   }
 
-    function saveGame(){
+    function saveGame()
+    {
 
         
         var code = "save\n";
@@ -742,7 +702,8 @@ eventer(messageEvent,function(e)
 
   }
 
-    function loadGame(){
+    function loadGame()
+    {
 
         var code = "load\n";
 
@@ -752,7 +713,8 @@ eventer(messageEvent,function(e)
 
   }
 
-   function startGame(){
+   function startGame()
+   {
 
         var code = "start\n";
         code +=  this.saveObjectToString;        
@@ -762,7 +724,8 @@ eventer(messageEvent,function(e)
   }
 
 
-  function continueGame(){
+  function continueGame()
+  {
 
     //workspacePlayground.clear();
 
@@ -770,14 +733,16 @@ eventer(messageEvent,function(e)
 
   }
 
-  function reloadIframe(){
+  function reloadIframe()
+  {
 
       document.getElementById("app-frame").src = document.getElementById("app-frame").src;
 
   }
 
   
-  function getBlocksByType(type){
+  function getBlocksByType(type)
+  {
 
   //one type block only
   var blocks = [];
@@ -791,7 +756,8 @@ eventer(messageEvent,function(e)
 
   }
 
-  function mainTaskIntroduced(task){
+  function mainTaskIntroduced(task)
+  {
      
      this.task_start = Date.now();
 
@@ -811,12 +777,14 @@ eventer(messageEvent,function(e)
 
   }
 
-  function mainTaskHelp(task){
+  function mainTaskHelp(task)
+  {
 
   
   }
 
-  function allMainTasksFinished(){    
+  function allMainTasksFinished()
+  {    
      
      var modalStructure = {
   
@@ -829,7 +797,8 @@ eventer(messageEvent,function(e)
      showDynamicModal("allMainTasksFinished", modalStructure);
   }
 
-  function levelIntroduced(task){        
+  function levelIntroduced(task)
+  {        
        
     var modalStructure = {
   
@@ -843,7 +812,8 @@ eventer(messageEvent,function(e)
     showDynamicModal("levelIntroduced", modalStructure);
   }
 
-  function mainTaskCompleted(object){     
+  function mainTaskCompleted(object)
+  {     
     
      console.log(object);
 
@@ -881,7 +851,8 @@ eventer(messageEvent,function(e)
 
   }
 
-  function mainTaskFailed(object){
+  function mainTaskFailed(object)
+  {
 
      var task = "mainTask" + object.currentMainTask;
      
@@ -899,7 +870,8 @@ eventer(messageEvent,function(e)
 
   }
 
-    function mainTaskFailedRule(object){
+    function mainTaskFailedRule(object)
+    {
 
      var task = "mainTask" + object.currentMainTask;
      
@@ -1058,7 +1030,8 @@ eventer(messageEvent,function(e)
 
 
 
-    function commandFailed(object){
+    function commandFailed(object)
+    {
     
      console.log(object);    
      
@@ -1155,7 +1128,9 @@ eventer(messageEvent,function(e)
 
     }
 
-    /*("commandFailed", 
+    /* OBJECT STRUCTURE
+
+    ("commandFailed", 
       {
       currentMainTask: currentMainTask[3],
       failureType: failuretype,
@@ -1173,6 +1148,7 @@ eventer(messageEvent,function(e)
         currentMainTask: taskNumber,                                                        
         commandArray: this.entity.script.commandInterpreter.commandArray                                    
       });
+
     */
 
 
@@ -1210,7 +1186,6 @@ eventer(messageEvent,function(e)
 
     return result;
 
-    // +some text about rating?
   }
 
     function convertCodeForModal()
@@ -1224,7 +1199,6 @@ eventer(messageEvent,function(e)
 
     return result;
 
-    // +some text about rating?
   }
 
 
@@ -1248,7 +1222,8 @@ eventer(messageEvent,function(e)
 
 
 
-  function showDynamicModal(type, modalStructure){
+  function showDynamicModal(type, modalStructure)
+  {
 
       var modal = '';
       var html = '';
@@ -1419,7 +1394,8 @@ eventer(messageEvent,function(e)
   }
 
 
-  function sendMessage(messageForGame){
+  function sendMessage(messageForGame)
+  {
     
 
         var iframe = document.getElementById("app-frame");
@@ -1433,7 +1409,8 @@ eventer(messageEvent,function(e)
 
   }
 
-  function isUserLoggedIn(){
+  function isUserLoggedIn()
+  {
     
   var loggedIn = {{ auth()->check() ? true : false }};
   if (loggedIn)  

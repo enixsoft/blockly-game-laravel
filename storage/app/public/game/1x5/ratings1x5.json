@@ -19,7 +19,7 @@
 	"mainTask2":{
 	
 	"solution": "moveUp(3);,jump(right);,jump(right);,jump(down);,use(right);,moveUp(1);,use(right);,moveUp(1);,moveLeft(1);,moveUp(3);"
-					moveUp(3);,jump(right);,jump(right);,jump(down);,use(right);,moveUp(1);,use(right);,moveUp(1);,moveLeft(1);,moveUp(3);
+					
 	},
 	
 	"mainTask3":{

@@ -4,14 +4,14 @@
     "level":5,
     
   "welcome_modal": {
-    "title": "Vitajte v Blockly hre!",
-    "text": "V piatej úrovni hrdina získava novú schopnosť - otvorenie truhlice. Túto schopnosť bude potrebovať, aby mohol otvoriť dvere kľúčom, ktorý zoberie z truhlice. Okrem toho si precvičíte všetky doteraz získané schopnosti.",
+    "title": "Kategória 2 Úroveň 5",
+    "text": "V piatej úrovni už nebude pridaný ďaľší blok - avšak si zopakujeme, čo bolo hlavnou témou druhej kategórie a teda práca s cyklami a podmienkami.",
     "image": "welcome_modal"
   },
   
    "finish_modal": {
-    "title": "Všetky úlohy boli splnené!",
-    "text": "Úspešne ste sa naučili schopnosť otvárať truhlicu s hrdinom, ale aj pohyb, skákanie, útok mečom a použitie páky. Toto bola záverečná úroveň.",
+    "title": "Všetky úrovne hry boli odohrané!",
+    "text": "Gratulujeme! Úspešne ste sa naučili základy tvorby algoritmov pomocou Google Blockly.",
     "image": "success"  
   }
   },
@@ -21,7 +21,7 @@
     
     "introduction_modal": {
     "title": "Zadanie prvej úlohy",
-    "text": "Cestu k prvému kamennému tlačidlu blokuje voda, krabica, pasca a zatvorené padacie dvere. Prekonajte prekážky a otvorte dvere.",
+    "text": "Ku kamennému tlačidlu sa hrdina musí dostať cez vodu a zničiť sud. Použite len blok opakuj pokiaľ nie je hrdina v cieli a vyriešte úlohu bez použitia podmienok.",
     "image": "maintask0_introduction_modal"
   },
     "help_modal": 
@@ -32,7 +32,7 @@
   },
   "success_modal": {
     "title": "Výborne! Splnili ste prvú úlohu!",
-    "text": "Váš prvý algoritmus v tejto úrovni umožnil hrdinovi dostať sa do miestnosti s truhlicami.",
+    "text": "Zdá sa, že používať cyklus doWhile vám naozaj ide dobre.",
     "image": "success"
   },   
     "failure_modal": {
@@ -47,7 +47,7 @@
   
     "introduction_modal": {
     "title": "Zadanie druhej úlohy",
-    "text": "Aby sa hrdina dostal ďalej, musí z truhice získať kľúč na otvorenie zamknutých dverí. Použite blok otvorenia truhlice a potom priveďte hrdinu na kamenné tlačidlo pred dverami.",
+    "text": "Aby sa hrdina dostal ďalej, musí otvoriť všetky truhlice aby našiel kľúč od dverí a zároveň použiť všetky páky, aby zneškodnil pasce v ceste. Použite blok opakuj pokiaľ nie je hrdina v cieli, v ktorom bude dvakrát blok ak v smere nasleduje a za ním blok opakuj x-krát, ktorý bude obsahovať podmienku pre truhlicu a podmienku pre páku.",
     "image": "maintask1_introduction_modal"
   },
     "help_modal": 
@@ -58,7 +58,7 @@
   },
   "success_modal": {
     "title": "Výborne! Splnili ste druhú úlohu!",
-    "text": "Úspešne ste našli kľúč a otvorili dvere. Hrdina môže pokračovať ďalej v ceste.",
+    "text": "Váš algoritmus umonžil hrdinovi prehľadať všetky truhlice, použiť páky na deaktivovanie pasce a dostať sa cez dvere. Hrdina môže pokračovať ďalej v ceste.",
     "image": "success"
   },   
     "failure_modal": {
@@ -75,7 +75,7 @@
   
     "introduction_modal": {
     "title": "Zadanie tretej úlohy",
-    "text": "V tejto úlohe máme kamenné tlačidlo až za zatvorenými dverami, pred ktorými je aktivovaná pasca. Použite páky, aby ste sa dostali cez prekážky.",
+    "text": "V tejto úlohe máme kamenné tlačidlo trochu ďalej a na ceste sú pasce, ktoré treba preskočiť. Na začiatku otočte hrdinu raz doľava a potom použite blok opakuj pokiaľ nie je hrdina v cieli, dvakrát blok ak v smere nasleduje a raz blok ak v smere na dlaždici je.",
     "image": "maintask2_introduction_modal"
   },
     "help_modal": 
@@ -86,7 +86,7 @@
   },
   "success_modal": {
     "title": "Výborne! Splnili ste tretiu úlohu!",
-    "text": "Vo vašom treťom algoritme ste použili obe páky a tak hrdina úspešne prekonal nebezpečnú prekážku.",
+    "text": "Vo vašom treťom algoritme ste použili obe podmienky a tak hrdina úspešne dorazil na kamenné tlačidlo.",
     "image": "success"
   },   
     "failure_modal": {
@@ -101,7 +101,7 @@
   
     "introduction_modal": {
     "title": "Zadanie štvrtej úlohy",
-    "text": "Ku kamennému tlačidlu pre splnenie tejto úlohy vedie jedna cesta, avšak blokuje ho pasca, ktorej sa nedá vyhnúť. Vypnite ju pomocou páky.",
+    "text": "A na záver, hrdina potrebuje zničiť vázy a použiť páku na otvorenie padacích dverí, aby mohol prísť na posledné kamenné tlačidlo v tejto hre. Použite blok opakuj pokiaľ nie je hrdina v cieli, jeden krát blok ak v smere nasleduje a dvakrát blok ak v smere na dlaždici je.",
     "image": "maintask3_introduction_modal"
   },
     "help_modal": 
@@ -112,7 +112,7 @@
   },
   "success_modal": {
     "title": "Výborne! Splnili ste štvrtú úlohu!",
-    "text": "Dobrá práca, váš hrdina už má cieľ na dosah.",
+    "text": "Posledná úloha v hre bola práve splnená.",
     "image": "success"
   },   
     "failure_modal": {

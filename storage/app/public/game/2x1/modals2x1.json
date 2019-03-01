@@ -4,7 +4,7 @@
     "level":1,
     
   "welcome_modal": {
-    "title": "Vitajte v Blockly hre!",
+    "title": "Kategória 2 Úroveň 1",
     "text": "Začína sa druhá kategória hry a herný systém ovládania sa mení. Odteraz nebudete vyberať blok so správnym smerom alebo nastavovať smer napr. pri skákaní. Smer hrdinu už bude nastavený, zobrazený žltou šipkou na bloku. Na jeho zmenu musíte hrdinu otáčať pomocou dvoch blokov na to určených, predtým, ako hrdina vykonáva ostatné príkazy.",
     "image": "welcome_modal"
   },
