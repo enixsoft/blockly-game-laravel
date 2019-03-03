@@ -82,7 +82,7 @@
                </div>
                <div class= "col-lg-12 game-buttons mx-auto text-center">
                   <div class= "btn-group" role="group">
-                     <button type="button" id="send_code_button" class="btn btn-success mr-3" onclick="omfg()" disabled><i class="fas fa-play"></i> Spustiť bloky</button>
+                     <button type="button" id="send_code_button" class="btn btn-success mr-3" onclick="runCode()" disabled><i class="fas fa-play"></i> Spustiť bloky</button>
                      <button type="button" id="show_task_button" class="btn btn-success mr-3" onclick="showTaskButton()" disabled><i class="fas fa-tasks"></i> Zadanie úlohy</button>
                      <button type="button" id="delete_blocks_button" class="btn btn-success mr-3" onclick="deleteBlocksButton()" disabled><i class="fas fa-trash"></i> Vymazať všetky bloky</button>
                      <button type="button" id="report_bug_button" class="btn btn-success mr-3" onclick="reportBugButton()" disabled><i class="fas fa-bug"></i> Nahlásiť chybu</button>     

@@ -59,6 +59,10 @@ class GameController extends Controller
         {
         return redirect()->route('/');
         }
+        else if ($category<$categoryMax && $level==$levelMax) 
+        {
+          return redirect()->route('game', ['category' => $category + 1, 'level' => $levelMin]);
+        }
         else
         {
         
@@ -106,6 +110,7 @@ class GameController extends Controller
                  
                   if($level>1)
                   {
+                  
                   $inGameProgressOfPreviousLevel = Progress::where('username', '=', $auth->username)->where('category', '=', $category)->where('level', '=', $level-1)->latest()->first();
                   if($inGameProgressOfPreviousLevel['progress']!=100)
                   {
@@ -126,11 +131,15 @@ class GameController extends Controller
                    ));  
                 
                   }
+
                   }
-                  else
+                  
+                  else 
                   {
 
-                  //no ingame progress in this category and level exists yet for this user, create 0 progress
+                  if($category==1)
+                  {
+                  //no ingame progress in category 1 exists yet for this user, set level1 with 0 progress
                   
                  Progress::create(['username' => $auth->username, 'category' => $category,
                     'level' => $level,  
@@ -145,7 +154,39 @@ class GameController extends Controller
                    'level' => $level,
                    'progress' => 0,
                    'json' => $jsonStartGame            
-                   ));  
+                   ));
+
+                  }
+                  else
+                  {
+
+                     $inGameProgressOfPreviousLevelOfPreviousCategory = Progress::where('username', '=', $auth->username)->where('category', '=', $category-1)->where('level', '=', $categoryHasLevelsArray[$category-1]-1)->latest()->first();
+                     
+                     if($inGameProgressOfPreviousLevelOfPreviousCategory == null || $inGameProgressOfPreviousLevelOfPreviousCategory['progress']!=100)                      
+                     {
+                         return redirect()->route('play');
+                     }
+                     else
+                     {
+
+
+                        Progress::create(['username' => $auth->username, 'category' => $category,
+                        'level' => $level,  
+                        'progress' => 0   
+                        ]);
+                        
+
+                       $savedGame = SavedGame::create(array('username' => $auth->username,
+                       'category' => $category,
+                       'level' => $level,
+                       'progress' => 0,
+                       'json' => $jsonStartGame            
+                       ));
+
+                     }
+
+                  }
+
                   
                   
                   }
@@ -155,9 +196,9 @@ class GameController extends Controller
 
             }
             else
-            {   //user is not logged in, as saved game will be used startgame json
+            {   
 
-                //$savedGame = new SavedGame(['username' => '', 'category' => $category, 'level' => $level, 'progress' => 0, 'json' =>  $jsonStartGame]);
+                //user is not logged in
 
                 return redirect()->route('/');
             }
@@ -297,21 +338,21 @@ class GameController extends Controller
                 $inGameProgress = Progress::where('username', '=', $auth->username)->latest()->first();
 
                 if($inGameProgress==null)
-                {
-                  //return $this->runGame(1,1);
+                {                 
 
                   return redirect()->route('game', ['category' => 1, 'level' => 1]);
 
                 }
-                else if($inGameProgress['progress']==100 && $inGameProgress['level']<5)
+                else if($inGameProgress['progress']==100)
                 {
                   
-                    return redirect()->route('game', ['category' => 1, 'level' => $inGameProgress['level'] + 1]);
+                    return redirect()->route('game', ['category' => $inGameProgress['category'], 'level' => $inGameProgress['level'] + 1]);
                 }
+
                 else  
                 {
                
-                    return redirect()->route('game', ['category' => 1, 'level' => $inGameProgress['level']]);
+                    return redirect()->route('game', ['category' => $inGameProgress['category'], 'level' => $inGameProgress['level']]);
                 }
                 
             }
@@ -331,7 +372,7 @@ class GameController extends Controller
 
                 $inGameProgress = Progress::where('username', '=', $auth->username)->where('category', '=', $category)->where('level', '=', $level)->latest()->first();
 
-                if($inGameProgress!= null && $inGameProgress['progress']==100)
+                if($inGameProgress != null && $inGameProgress['progress']==100)
                 {
                 
                 $jsonStartGamePath = "public/game/". $category . "x" . $level . "/start" . $category . "x" . $level . ".json";

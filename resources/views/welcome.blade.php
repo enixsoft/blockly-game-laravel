@@ -72,26 +72,71 @@
     </nav>
 
     <header class="masthead">
-      <div class="container h-100">
-        <div class="row h-100">
-          <div class="col-lg-5 my-auto">
-            <div class="header-content mx-auto">
-              <h1 class="mb-5">Blockly hra vás uvedie do sveta programovania. <br> Na zariadení podľa vášho výberu.</h1>
-              <a href="#game" class="btn btn-outline btn-xl js-scroll-trigger">Začnite hrať!</a>
-            </div>
-          </div>
-          <div class="col-lg-7 my-auto">         
-             <img src="{{ asset('img/devices-mockup.png') }}" class="img-fluid" alt="">
-          </div>
-        </div>
+    <div class="container h-100">
+    <div class="row h-100 w-100"> 
+
+
+      <div id="carousel" class="carousel slide h-100 w-100" data-ride="carousel" data-interval="6000">
+
+
+      <ul class="carousel-indicators">
+        <li data-target="#carousel" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel" data-slide-to="1"></li>
+        <li data-target="#carousel" data-slide-to="2"></li>
+      </ul>
+
+
+
+
+      <div class="carousel-inner" style="margin-top: 20%; text-align: center;">
+
+
+      <div class="carousel-item active">     
+                  <div class="container">
+                  <h1 class="mb-5">Blockly hra vás uvedie do sveta programovania. <br> Na zariadení podľa vášho výberu.</h1>
+                  <a href="#game" class="btn btn-outline btn-xl js-scroll-trigger">Začnite hrať!</a>        
+                  <img src="{{ asset('img/devices-mockup.png') }}" class="img-fluid">
+                  </div>
+
       </div>
+      <div class="carousel-item">     
+                  <div class="container">
+                  <h1 class="mb-5">Blockly hra vás uvedie dooooooooo sveta programovania. <br> Na zariadení podľa vášho výberu.</h1>
+                  <a href="#game" class="btn btn-outline btn-xl js-scroll-trigger">Začnite hrať!</a>        
+                  <img src="{{ asset('img/devices-mockup.png') }}" class="img-fluid">
+                  </div>
+      </div>
+      <div class="carousel-item">     
+                  <div class="container">
+                  <h1 class="mb-5">Blockly hra vás uvedie dddddddddo sveta programovania. <br> Na zariadení podľa vášho výberu.</h1>
+                  <a href="#game" class="btn btn-outline btn-xl js-scroll-trigger">Začnite hrať!</a>        
+                  <img src="{{ asset('img/devices-mockup.png') }}" class="img-fluid">
+                   </div>
+      </div>
+       
+      </div>
+
+
+      <a class="carousel-control-prev" href="#carousel" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </a>
+
+      <a class="carousel-control-next" href="#carousel" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </a>
+
+    </div>
+
+    </div>
+    </div>
+
     </header>
 
     <section class="features" id="features">
       <div class="container">
         <div class="section-heading text-center">
-          <h2>Unlimited Features, Unlimited Fun</h2>
-          <p class="text-muted">Check out what you can do with this app theme!</p>
+          <h2>Hra ovládaná programovaním</h2>
+          <p class="text-muted">Google Blockly prináša vizuálny editor blokov, ktoré sa premieňajú na kód. Po odoslaní do hry z neho vznikajú príkazy vykonávané hrdinom.</p>
           <hr>
         </div>
         <div class="row">
@@ -101,45 +146,45 @@
                 <div class="col-lg-4">
                   <div class="feature-item">
                     <i class="icon-screen-smartphone text-primary"></i>
-                    <h3>Device Mockups</h3>
-                    <p class="text-muted">Ready to use HTML/CSS device mockups, no Photoshop required!</p>
+                    <h3>Responzívny návrh</h3>
+                    <p class="text-muted">Hra beží aj na mobilných zariadeniach.</p>
                   </div>
                 </div>
                 <div class="col-lg-4">
                   <div class="feature-item">
-                    <i class="icon-camera text-primary"></i>
-                    <h3>Flexible Use</h3>
-                    <p class="text-muted">Put an image, video, animation, or anything else in the screen!</p>
+                    <i class="icon-cloud-upload text-primary"></i>
+                    <h3>Účet hráča</h3>
+                    <p class="text-muted">Postup hráča v úrovniach sa automaticky ukladá do databázy.</p>
                   </div>
                 </div>
                 <div class="col-lg-4">
                   <div class="feature-item">
-                    <i class="icon-lock-open text-primary"></i>
-                    <h3>Open Source</h3>
-                    <p class="text-muted">Since this theme is MIT licensed, you can use it commercially!</p>
+                    <i class="icon-clock text-primary"></i>
+                    <h3>Meranie času</h3>
+                    <p class="text-muted">Dĺžka trvania riešenia úloh je zaznamenávaná.</p>
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-lg-4">
                   <div class="feature-item">
-                    <i class="icon-present text-primary"></i>
-                    <h3>Free to Use</h3>
-                    <p class="text-muted">As always, this theme is free to download and use for any purpose!</p>
+                    <i class="icon-star text-primary"></i>
+                    <h3>Hodnotenie</h3>
+                    <p class="text-muted">Riešenia úrovní sú hodnotené a je nutné dodržiavať zadanie.</p>
                   </div>
                 </div>
                 <div class="col-lg-4">
                   <div class="feature-item">
-                    <i class="icon-lock-open text-primary"></i>
-                    <h3>Open Source</h3>
-                    <p class="text-muted">Since this theme is MIT licensed, you can use it commercially!</p>
+                    <i class="icon-grid text-primary"></i>
+                    <h3>PlayCanvas</h3>
+                    <p class="text-muted">Herná časť je postavená na webovom hernom engine PlayCanvas.</p>
                   </div>
                 </div>
                 <div class="col-lg-4">
                   <div class="feature-item">
-                    <i class="icon-lock-open text-primary"></i>
-                    <h3>Open Source</h3>
-                    <p class="text-muted">Since this theme is MIT licensed, you can use it commercially!</p>
+                    <i class="icon-globe text-primary"></i>
+                    <h3>Webová téma</h3>
+                    <p class="text-muted">Pre webovú stránku bola použitá téma New Age založená na Bootstrap 4.</p>
                   </div>
                 </div>
               </div>
@@ -201,7 +246,8 @@
         @endguest
         @auth
         <div class="col-md-12 mx-auto">
-          <h2 class="section-heading">Prehľad úrovní</h2>
+          <h2 class="section-heading">Kategória 1</h2>          
+          <p>V prvej kategórii sa naučíme ovládať hrdinu, zadávať mu príkazy ako pohyb, útok, použitie páky alebo otvorenie truhlice. </p>
            <div class="table-responsive">
            <table class="table table-hover">
                <thead>
@@ -213,7 +259,7 @@
                   </tr>
                </thead>
                <tbody>
-                  @for ($i = 1; $i <= 10; $i++)     
+                  @for ($i = 1; $i <= 5; $i++)     
                   <tr>
                      <th scope="row">{{ $i }}</th>
                      <td>
@@ -234,20 +280,68 @@
                      @endfor
                </tbody>
             </table>
-          </div>
+            </div>
+            <br>
+          <h2 class="section-heading">Kategória 2</h2>          
+          <p>V druhej kategórii sa naučíme ovládať hrdinu podľa nového herného systému a využívať pri tvorbe algoritmov cykly a podmienky.</p>
+           <div class="table-responsive">
+           <table class="table table-hover">
+               <thead>
+                  <tr>
+                     <th scope="col">Úroveň</th>
+                     <th scope="col">Postup</th>
+                     <th scope="col">Spustiť</th>
+                     <th scope="col">Pokračovať</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  @for ($i = 1; $i <= 5; $i++)     
+                  <tr>
+                     <th scope="row">{{ $i }}</th>
+                     <td>
+                        <div class="progress" style="height: 2rem;">
+                           <div class="progress-bar bg-success" role="progressbar" 
+                              aria-valuenow="{{ isset($inGameProgress[$i-1] ) ? $inGameProgress[$i-1]['progress'] : 0 }}" aria-valuemin="0" 
+                              aria-valuemax="100" style="width: {{ isset($inGameProgress[$i+4]) ? $inGameProgress[$i+4]['progress'] : 0 }}%;">
+                              <span style="text-align: center; font-weight: bold;">{{ isset($inGameProgress[$i+4] ) ? $inGameProgress[$i+4]['progress'] : 0 }}% </span>
+                           </div>
+                        </div>
+                     </td>
+                     <td><a href="{{ url('/')}}/start/1/{{$i}}"    class="btn btn-secondary btn-sm {{ isset($inGameProgress[$i-1]) && $inGameProgress[$i-1]['progress']==100 ? '' : 'disabled' }}">
+                        SPUSTIŤ OD ZAČIATKU</a>
+                     </td>
+                     <td><a href="{{ url('/')}}/continue/1/{{$i}}" class="btn btn-secondary btn-sm {{ isset($inGameProgress[$i-1]) && $inGameProgress[$i-1]['progress']==100 ? '' : 'disabled' }}">
+                        POKRAČOVAŤ V ULOŽENEJ HRE</a>
+                     </td>
+                     @endfor
+               </tbody>
+            </table>
+            </div>
+
+
             <br>
 
             <div class="col-md-6 mx-auto">
-               <a href="{{ url('/')}}/play" class="btn btn-lg btn-success">
-               {{ isset($inGameProgress[0]) && $inGameProgress[0]['progress'] > 0 ? 'Pokračovať v hre' : 'Začať novú hru' }}
-               </a>             
+               <button href="{{url('/')}}/play" class="btn btn-lg btn-success" {{ $inGameProgress[9]['progress'] == 100 ? 'disabled' : '' }} >
+                <i class="fas fa-play"></i>
+
+                @if(!isset($inGameProgress[0]))
+                Začať novú hru
+                @else
+                Pokračovať v hre
+                @endif
+      
+                      
+               </button>             
             </div>
+
 
           @if(Auth::user()->role == "admin")   
          
          <br>
+         <br>
          <div class="form-group">
-         <h2 class="section-heading">Registrácia</h2>
+         <h2 class="section-heading">Registrácia (admin)</h2>
             <form class="form-horizontal" method="POST" id="registrationForm" action="{{ route('registerforbetatest') }}">
             {{ csrf_field() }}
               
