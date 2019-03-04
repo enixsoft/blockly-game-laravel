@@ -73,7 +73,7 @@
       <div class="row h-100 w-100 no-padding">
          <div class="col-lg-6 no-padding">   
             <iframe id="app-frame" class="game-playcanvas"           
-               src="{{url('')}}/public/game/playcanvas/{{$category}}x{{$level}}.html"></iframe>
+               src="{{url('')}}/game/playcanvas/{{$category}}x{{$level}}.html"></iframe>
                <!--src="https://playcanv.as/e/p/62c28f63/"></iframe>-->
          </div>
          <div class="col-lg-6 no-padding">

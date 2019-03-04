@@ -321,7 +321,7 @@
             <br>
 
             <div class="col-md-6 mx-auto">
-               <button href="{{url('/')}}/play" class="btn btn-lg btn-success" {{ $inGameProgress[9]['progress'] == 100 ? 'disabled' : '' }} >
+               <button onclick="window.location='{{url('/')}}/play';" class="btn btn-lg btn-success" {{ isset($inGameProgress[9]) && $inGameProgress[9]['progress'] == 100 ? 'disabled' : '' }} >
                 <i class="fas fa-play"></i>
 
                 @if(!isset($inGameProgress[0]))
