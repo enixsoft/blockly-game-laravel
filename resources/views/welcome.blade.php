@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="sk">
-
   <head>
 
     <meta charset="utf-8">
@@ -27,7 +26,7 @@
 
    
     <!-- Custom styles for this template
-    RENAME AND MINIFY
+    MINIFY
      -->
     <link href="{{ asset('css/new-age.css') }}" rel="stylesheet">
 
@@ -76,7 +75,7 @@
     <div class="row h-100 w-100"> 
 
 
-      <div id="carousel" class="carousel slide h-100 w-100" data-ride="carousel" data-interval="6000">
+      <div id="carousel" class="carousel slide h-100 w-100" data-ride="carousel" data-interval="8000" data-pause="hover">
 
 
       <ul class="carousel-indicators">
@@ -93,25 +92,25 @@
 
       <div class="carousel-item active">     
                   <div class="container">
-                  <h1 class="mb-5">Blockly hra vás uvedie do sveta programovania. <br> Na zariadení podľa vášho výberu.</h1>
+                  <h1 class="mb-5">Blockly hra. <br> Váš úvod do sveta programovania. </h1>
                   <a href="#game" class="btn btn-outline btn-xl js-scroll-trigger">Začnite hrať!</a>        
-                  <img src="{{ asset('img/devices-mockup.png') }}" class="img-fluid">
+                  <img src="{{ asset('img/carousel-1.png') }}" class="img-fluid">
                   </div>
 
       </div>
       <div class="carousel-item">     
                   <div class="container">
-                  <h1 class="mb-5">Blockly hra vás uvedie dooooooooo sveta programovania. <br> Na zariadení podľa vášho výberu.</h1>
+                  <h1 class="mb-5">10 úrovní. <br> Viac ako 40 úloh na riešenie. </h1>
                   <a href="#game" class="btn btn-outline btn-xl js-scroll-trigger">Začnite hrať!</a>        
-                  <img src="{{ asset('img/devices-mockup.png') }}" class="img-fluid">
+                  <img src="{{ asset('img/carousel-2.png') }}" class="img-fluid">
                   </div>
       </div>
       <div class="carousel-item">     
                   <div class="container">
-                  <h1 class="mb-5">Blockly hra vás uvedie dddddddddo sveta programovania. <br> Na zariadení podľa vášho výberu.</h1>
+                  <h1 class="mb-5">Tvorte algoritmy. <br> Kombinujte príkazy s cyklami a podmienkami.</h1>
                   <a href="#game" class="btn btn-outline btn-xl js-scroll-trigger">Začnite hrať!</a>        
-                  <img src="{{ asset('img/devices-mockup.png') }}" class="img-fluid">
-                   </div>
+                  <img src="{{ asset('img/carousel-3.png') }}" class="img-fluid">
+                  </div>
       </div>
        
       </div>
@@ -340,6 +339,7 @@
          
          <br>
          <br>
+
          <div class="form-group">
          <h2 class="section-heading">Registrácia (admin)</h2>
             <form class="form-horizontal" method="POST" id="registrationForm" action="{{ route('registerforbetatest') }}">

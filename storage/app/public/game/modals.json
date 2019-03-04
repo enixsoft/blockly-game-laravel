@@ -9,7 +9,7 @@
   }    
   },
   
-    "zerosteps": {
+  "zerosteps": {
 
     "modal": {
     "title": "Chyba!",
@@ -28,13 +28,24 @@
   }    
   },
   
-    "functionerror": {
+  "functionerror": {
 
     "modal": {
     "title": "Chyba!",
     "text": "Medzi blokmi sa nachádza prázdna podmienka alebo prázdny cyklus. Vložte do nich nejaký príkaz alebo ich odstráňte.",
     "image": "functionerror"
   }    
+  },
+  
+  "maintaskfailed": {
+
+    "modal": {
+    "title": "Hlavná úloha nebola splnená",
+    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
+    "image": "failure"
+  }    
   }
+  
+  
 
 }

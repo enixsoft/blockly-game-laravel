@@ -15,7 +15,6 @@
   <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
-@include('header')
 <body>
  <div class="banner">
     <div class="bg-color">

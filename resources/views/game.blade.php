@@ -290,7 +290,7 @@ eventer(messageEvent,function(e)
 
   }
 
-},false);
+  },false);
 
   var failedBlock = [];  
 
@@ -383,11 +383,64 @@ eventer(messageEvent,function(e)
 
   }
 
+  $('#reportBugModal').find('#reportBugTextArea').on("input", function()
+  {
+    
+    var maxlength = $(this).attr("maxlength");
+    var currentLength = $(this).val().length;
+
+    var text = '';
+
+
+    if( currentLength >= maxlength )
+    {        
+      text = "Dosiahli ste maximum povolených znakov.";
+      $('#reportBugModal').find('#modal-text').html(text).end();
+
+    }
+    else
+    {       
+       text = "Ešte môžete napísať " + ( + maxlength - currentLength) + " znakov.";
+       $('#reportBugModal').find('#modal-text').html(text).end();
+    }
+
+  });
+
   function reportBugButton() 
   {     
+     var modal = $('#reportBugModal').modal();
+     modal.show();
 
-    console.log(this.facingDirection);
+  }
+  
+  function reportBug() 
+  { 
+    if(isUserLoggedIn())
+     {
+      
+    var user = {!! auth()->check() ? auth()->user() : 'guest' !!};
 
+    var report = $('#reportBugModal').find('#reportBugTextArea').val();
+
+
+    $.ajax({
+     headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    method: 'POST', 
+    url: '{{url('')}}/game/reportbug', 
+    data: {'username' : user.username, 'category': this.category, 'level': this.level, 'report': report }, 
+    success: function(response){ 
+        console.log("reportbug object sent succesfully");  
+    },
+    error: function(textStatus, errorThrown) {        
+        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+         console.log(textStatus);
+    }
+    });
+
+    }
+  
   }
 
   function changeFacingDirectionImage(direction) 
@@ -408,19 +461,19 @@ eventer(messageEvent,function(e)
         
         case "left":
         {
-          player[0].setFieldValue("{{ asset('game') }}/game/left.png", "facingDirection_image");
+          player[0].setFieldValue("{{ asset('game') }}/left.png", "facingDirection_image");
           break;
         }
 
         case "up":
         {
-          player[0].setFieldValue("{{ asset('game') }}/game/up.png", "facingDirection_image");
+          player[0].setFieldValue("{{ asset('game') }}/up.png", "facingDirection_image");
           break;
         }
 
         case "down":
         {
-          player[0].setFieldValue("{{ asset('game') }}/game/down.png", "facingDirection_image");
+          player[0].setFieldValue("{{ asset('game') }}/down.png", "facingDirection_image");
           break;
         }
 
@@ -858,9 +911,9 @@ eventer(messageEvent,function(e)
      
      var modalStructure = {
   
-     title: tasks[task].failure_modal.title,
-     text:  tasks[task].failure_modal.text,
-     image: getModalImageLink(tasks[task].failure_modal.image, "common")
+     title: modals["maintaskfailed"].modal.title,   
+     text:  modals["maintaskfailed"].modal.text,
+     image: getModalImageLink(modals["maintaskfailed"].modal.image, "common")
 
      };
 
@@ -877,9 +930,9 @@ eventer(messageEvent,function(e)
      
      var modalStructure = {
   
-     title: tasks[task].failure_modal.title,
+     title: modals["maintaskfailed"].modal.title,   
      text:  ratings[task].rules[this.ruleError].error,
-     image: getModalImageLink(tasks[task].failure_modal.image, "common")
+     image: getModalImageLink(modals["maintaskfailed"].modal.image, "common")
 
      };
 

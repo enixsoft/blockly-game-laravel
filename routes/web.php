@@ -16,6 +16,7 @@ Route::get('/game/{category}/{level}', 'GameController@runGame')->name('game');
 Route::post('/game/savegame', 'GameController@saveGame');
 Route::post('/game/updateingameprogress', 'GameController@updateIngameProgress');
 Route::post('/game/createlogofgameplay', 'GameController@createLogOfGameplay');
+Route::post('/game/reportbug', 'GameController@reportBug');
 
 // BETA ================================================================================================
 Route::get('/game/getProgress', 'GameController@betaGetProgress');

@@ -7,6 +7,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 use App\User;
 
@@ -14,6 +15,7 @@ use App\User;
 use App\Models\SavedGame;
 use App\Models\Progress;
 use App\Models\Gameplay;
+use App\Models\Bug;
 
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
@@ -453,11 +455,24 @@ class GameController extends Controller
         return redirect()->route('/');
 
         }
-
         else
         {
         return redirect()->route('/');
         }
+    }
+
+
+        public function reportBug(Request $request)
+    {
+
+      $data = $request->all();     
+
+      Bug::create([
+            'username' => $data['username'], 
+            'category' => $data['category'],
+            'level' => $data['level'],  
+            'report' => Str::substr($data['report'], 0, 1000) 
+            ]);
     }
 
     
