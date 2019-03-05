@@ -72,10 +72,10 @@
 
     <header class="masthead">
     <div class="container h-100">
-    <div class="row h-100 w-100"> 
+    <div class="row h-100"> 
 
 
-      <div id="carousel" class="carousel slide h-100 w-100" data-ride="carousel" data-interval="8000" data-pause="hover">
+      <div id="carousel"  class="carousel slide w-100" data-ride="carousel" data-interval="8000" data-pause="hover">
 
 
       <ul class="carousel-indicators">
@@ -87,32 +87,56 @@
 
 
 
-      <div class="carousel-inner" style="margin-top: 20%; text-align: center;">
+      <div class="carousel-inner h-100" style="
+    text-align: center;
+  ">
 
 
-      <div class="carousel-item active">     
-                  <div class="container">
-                  <h1 class="mb-5">Blockly hra. <br> Váš úvod do sveta programovania. </h1>
-                  <a href="#game" class="btn btn-outline btn-xl js-scroll-trigger">Začnite hrať!</a>        
-                  <img src="{{ asset('img/carousel-1.png') }}" class="img-fluid">
-                  </div>
+      <div class="carousel-item active h-100" >     
+             
+                <div class="d-flex flex-column h-100 align-items-center justify-content-center">
+                <h1> Blockly hra. <br> Váš úvod do sveta programovania. </h1>      
+          
+                <a href="#game" class="btn btn-outline btn-xl js-scroll-trigger">Začnite hrať!</a>   
+               
+
+                
+               <img class="img-fluid" src="{{ asset('img/carousel-1.png') }}">
+               </div>
+
+           
 
       </div>
-      <div class="carousel-item">     
-                  <div class="container">
-                  <h1 class="mb-5">10 úrovní. <br> Viac ako 40 úloh na riešenie. </h1>
-                  <a href="#game" class="btn btn-outline btn-xl js-scroll-trigger">Začnite hrať!</a>        
-                  <img src="{{ asset('img/carousel-2.png') }}" class="img-fluid">
-                  </div>
+      <div class="carousel-item h-100">     
+                           
+              <div class="d-flex flex-column h-100 align-items-center justify-content-center">
+                <h1> 10 úrovní. <br> Viac ako 40 úloh na riešenie. </h1>         
+            
+                <a href="#game" class="btn btn-outline btn-xl js-scroll-trigger">Začnite hrať!</a>   
+             
+              
+                <img class="img-fluid" src="{{ asset('img/carousel-2.png') }}">
+                      </div>
+
+                
       </div>
-      <div class="carousel-item">     
-                  <div class="container">
-                  <h1 class="mb-5">Tvorte algoritmy. <br> Kombinujte príkazy s cyklami a podmienkami.</h1>
-                  <a href="#game" class="btn btn-outline btn-xl js-scroll-trigger">Začnite hrať!</a>        
-                  <img src="{{ asset('img/carousel-3.png') }}" class="img-fluid">
-                  </div>
-      </div>
-       
+      <div class="carousel-item h-100">     
+                    
+                           
+                      <div class="d-flex flex-column h-100 align-items-center justify-content-center">
+                  
+                 <h1> Tvorte algoritmy. <br> S príkazmi v cykloch a podmienkach.</h1>
+                 
+              
+                <a href="#game" class="btn btn-outline btn-xl js-scroll-trigger">Začnite hrať!</a>   
+                      
+              
+                <img class="img-fluid" src="{{ asset('img/carousel-3.png') }}">
+                    
+
+                 
+                </div>
+
       </div>
 
 
