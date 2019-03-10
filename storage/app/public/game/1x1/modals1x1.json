@@ -24,22 +24,11 @@
     "text": "Váš hrdina potrebuje prejsť chodbou a dostať sa až na kamenné tlačidlo pred železnými dverami. Spojte vyžadované bloky a nastavte im potrebný počet krokov, aby sa mu to podarilo.",
     "image": "maintask0_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask0_help_modal_title",
-    "text": "maintask0_help_modal_text",
-    "image": "maintask0_help_modal"
-  },
-  
+      
   "success_modal": {
     "title": "Výborne! Splnili ste prvú úlohu!",
     "text": "Váš prvý algoritmus umožnil hrdinovi úspešne doraziť ku železným dverám. Jeho cesta môže pokračovať ďalej.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená!",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   },
   
@@ -51,21 +40,11 @@
     "text": "Pred hrdinom sa otvorili padacie dvere a nasleduje krátka chodba, ktorá vedie k ďalšiemu kamennému tlačidlu za otvorenými dverami. Pošlite tam vášho hrdinu pomocou blokov.",
     "image": "maintask1_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask1_help_modal_title",
-    "text": "maintask1_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste druhú úlohu!",
     "text": "Váš druhý algoritmus umožnil hrdinovi úspešne doraziť do skladu. Polovica cesty v tejto úrovni je už za ním.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená!",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   },
 
@@ -79,21 +58,11 @@
     "text": "Hrdina sa nachádza v sklade plnom vecí, medzi ktorými sa musí pohybovať. Skúste nájsť správnu cestu k najbližšiemu kamennému tlačidlu.",
     "image": "maintask2_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask2_help_modal_title",
-    "text": "maintask2_help_modal_text",
-    "image": "failure"
-  },
+    
   "success_modal": {
     "title": "Výborne! Splnili ste tretiu úlohu!",
     "text": "Váš tretí algoritmus umožnil hrdinovi úspešne prejsť polovicu skladu. Koniec úrovne je už na dohľad.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená!",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   },
   
@@ -105,21 +74,11 @@
     "text": "Dokončite úroveň 1 a prejdite s hrdinom k poslednému kamennému tlačidlu, za ktorým už sú schody do ďalšej úrovne.",
     "image": "maintask3_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask3_help_modal_title",
-    "text": "maintask3_help_modal_text",
-    "image": "failure"
-  },  
+  
   "success_modal": {
     "title": "Výborne! Splnili ste štvrtú úlohu!",
     "text": "Hrdina prešiel chodbami a skladom až ku schodom do ďalšej úrovne.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená!",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   }
 

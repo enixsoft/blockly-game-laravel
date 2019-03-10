@@ -409,11 +409,40 @@ class GameController extends Controller
     {      
           if(Auth::check())
             {
+                
+                $categoryHasLevelsArray = array(6, 6); 
+
+                $categoryMin = 1;
+                $categoryMax = sizeof($categoryHasLevelsArray);
+        
+                if($category <= $categoryMax && $category >= $categoryMin)
+                {
+                $levelMax=$categoryHasLevelsArray[$category-1];  
+                }
+                else
+                {
+                 $levelMax=0;  
+                }
+               
+                $levelMin=1;
+          
+
+                if($category>$categoryMax || $category<$categoryMin || $level < $levelMin || $level > $levelMax || !is_numeric($category) || !is_numeric($level))
+                {
+                return redirect()->route('/');
+                }
+                else
+                {
+
                 $auth = Auth::user();
 
                 $inGameProgress = Progress::where('username', '=', $auth->username)->where('category', '=', $category)->latest()->first();
 
-                if($inGameProgress != null && $inGameProgress['level']>=$level)
+                if($inGameProgress == null)
+                {
+                  return redirect()->route('/');
+                }
+                else if($inGameProgress['level']>=$level)
                 {
                 
                 $jsonStartGamePath = "public/game/". $category . "x" . $level . "/start" . $category . "x" . $level . ".json";
@@ -429,10 +458,20 @@ class GameController extends Controller
 
 
 
-                return redirect()->route('game', ['category' => $category, 'level' => $level]);
+                 return redirect()->route('game', ['category' => $category, 'level' => $level]);
+                
+                }                
+                else if ($inGameProgress['level'] < $level)                  
+                {
+
+                 return redirect()->route('game', ['category' => $category, 'level' => $level]);
+
                 }
-                else 
-                return redirect()->route('/');
+
+                }
+
+
+                
             }
            else
            {
@@ -446,20 +485,42 @@ class GameController extends Controller
     {      
           if(Auth::check())
             {
+                $categoryHasLevelsArray = array(6, 6); 
+
+                $categoryMin = 1;
+                $categoryMax = sizeof($categoryHasLevelsArray);
+        
+                if($category <= $categoryMax && $category >= $categoryMin)
+                {
+                 $levelMax=$categoryHasLevelsArray[$category-1];  
+                }
+                else
+                {
+                 $levelMax=0;  
+                }
+               
+                $levelMin=1;
+          
+
+                if($category>$categoryMax || $category<$categoryMin || $level < $levelMin || $level > $levelMax || !is_numeric($category) || !is_numeric($level))
+                {
+                return redirect()->route('/');
+                }
+                else
+                { 
 
                 $auth = Auth::user();
 
                 $inGameProgress = Progress::where('username', '=', $auth->username)->where('category', '=', $category)->latest()->first();
                 
 
-                if($inGameProgress!= null && $inGameProgress['level']>=$level)
-                {
-
-                return redirect()->route('game', ['category' => $category, 'level' => $level]);
+                if($inGameProgress!= null && $inGameProgress['level']>=$level)                
+                  return redirect()->route('game', ['category' => $category, 'level' => $level]);
+                
+                else           
+                  return redirect()->route('/');
 
                 }
-                else           
-                return redirect()->route('/');
            
 
             }

@@ -24,21 +24,11 @@
     "text": "Cestu k prvému kamennému tlačidlu blokuje voda, krabica, pasca a zatvorené padacie dvere. Prekonajte prekážky a otvorte dvere.",
     "image": "maintask0_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask0_help_modal_title",
-    "text": "maintask0_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste prvú úlohu!",
     "text": "Váš prvý algoritmus v tejto úrovni umožnil hrdinovi dostať sa do miestnosti s truhlicami.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   },
   
@@ -50,21 +40,11 @@
     "text": "Aby sa hrdina dostal ďalej, musí z truhice získať kľúč na otvorenie zamknutých dverí. Použite blok otvorenia truhlice a potom priveďte hrdinu na kamenné tlačidlo pred dverami.",
     "image": "maintask1_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask1_help_modal_title",
-    "text": "maintask1_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste druhú úlohu!",
     "text": "Úspešne ste našli kľúč a otvorili dvere. Hrdina môže pokračovať ďalej v ceste.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   },
 
@@ -78,21 +58,11 @@
     "text": "V tejto úlohe máme kamenné tlačidlo až za zatvorenými dverami, pred ktorými je aktivovaná pasca. Použite páky, aby ste sa dostali cez prekážky.",
     "image": "maintask2_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask2_help_modal_title",
-    "text": "maintask2_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste tretiu úlohu!",
     "text": "Vo vašom treťom algoritme ste použili obe páky a tak hrdina úspešne prekonal nebezpečnú prekážku.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   },
   
@@ -104,22 +74,12 @@
     "text": "Ku kamennému tlačidlu pre splnenie tejto úlohy vedie jedna cesta, avšak blokuje ho pasca, ktorej sa nedá vyhnúť. Vypnite ju pomocou páky.",
     "image": "maintask3_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask3_help_modal_title",
-    "text": "maintask3_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste štvrtú úlohu!",
     "text": "Dobrá práca, váš hrdina už má cieľ na dosah.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
-}
+  }
   },
   
       "mainTask4": {
@@ -130,21 +90,11 @@
     "text": "V poslednej úlohe piatej úrovne použite páku na vypnutie pasce a preskočte zatopenú časť.",
     "image": "maintask4_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask4_help_modal_title",
-    "text": "maintask4_help_modal_text",
-    "image": "failure"
-  },
+    
   "success_modal": {
     "title": "Výborne! Splnili ste štvrtú úlohu!",
     "text": "Je zrejmé, že používanie páky pre odstránenie prekážok už zvládate dokonale.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   }
 

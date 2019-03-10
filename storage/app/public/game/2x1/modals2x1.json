@@ -24,21 +24,11 @@
     "text": "V prvej úlohe vám stačia bloky pohybu o jeden krok a otáčania. Na začiatku úrovne je hrdina nasmerovaný doprava, otočenie doľava ho nasmeruje hore, otočenie doprava ho nasmeruje dole. Správne ho otáčajte a preskákajte s ním až ku kamennému tlačidlu.",
     "image": "maintask0_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask0_help_modal_title",
-    "text": "maintask0_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste prvú úlohu!",
     "text": "Váš prvý algoritmus využíva nový systém ovládania a tým umožnil hrdinovi preskočiť na prvé kamenné tlačidlo.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   },
   
@@ -50,21 +40,11 @@
     "text": "Teraz už je cieľ o niečo ďalej a v ceste už stojí viacero prekážok. Zničte sud a vyhnite sa pasciam, ale hlavne dávajte pozor, aby sa hrdina vždy otočil, keď je to potrebné.",
     "image": "maintask1_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask1_help_modal_title",
-    "text": "maintask1_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste druhú úlohu!",
     "text": "Úspešne ste sa vyhli všetkým prekážkam. Hrdina môže pokračovať ďalej v ceste.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   },
 
@@ -78,21 +58,11 @@
     "text": "V tejto úlohe je treba použiť páku, aby sa zneškodnila aktivovaná pasca, ktorej sa nedá vyhnúť.",
     "image": "maintask2_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask2_help_modal_title",
-    "text": "maintask2_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste tretiu úlohu!",
     "text": "Vo vašom treťom algoritme ste použili páku a hrdina tak mohol prekonať nebezpečnú prekážku.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   },
   
@@ -104,23 +74,13 @@
     "text": "Ku kamennému tlačidlu pre splnenie tejto úlohy vedie komplikovanejšia cesta s vázami stojacimi v ceste, ktoré treba zničiť.",
     "image": "maintask3_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask3_help_modal_title",
-    "text": "maintask3_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste štvrtú úlohu!",
     "text": "Dobrá práca, váš hrdina má cieľ na dosah.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
-}
-}
+  }
+  }
   
 
 

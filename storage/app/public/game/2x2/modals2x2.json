@@ -24,21 +24,11 @@
     "text": "V prvej úlohe vám stačia bloky pohybu o jeden krok a otáčania. Umiestnite ich do bloku opakuj x-krát a nastavte správne počet opakovaní. Na začiatku je hrdina nasmerovaný doprava.",
     "image": "maintask0_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask0_help_modal_title",
-    "text": "maintask0_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste prvú úlohu!",
     "text": "Vo vašom prvom algoritme ste správne použili a nastavili cyklus for a tým umožnili hrdinovi prejsť na prvé kamenné tlačidlo.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   },
   
@@ -50,21 +40,11 @@
     "text": "Teraz hrdina čaká skákanie cez vodu. To sa dá skvele optimalizovať pomocou bloku opakuj x-krát a na splnenie tejto úlohy je treba použiť dva také bloky. Začnite nasmerovaním hrdinu smerom hore, a potom použite bloky opakovania tak, že druhý bude vnútri prvého.",
     "image": "maintask1_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask1_help_modal_title",
-    "text": "maintask1_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste druhú úlohu!",
     "text": "Zvládli ste použiť vnorený cyklus for a hrdina môže pokračovať ďalej v ceste.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   },
 
@@ -78,21 +58,11 @@
     "text": "V tejto úlohe máme kamenné tlačidlo až za zatvorenými dverami, ktoré sú zamknuté kľúčom, ktorý musíme nájsť v truhlici. Hrdina teda potrebuje otvoriť všetky truhlice. Použite blok opakuj x-krát, blok pohybu a otáčania doprava.",
     "image": "maintask2_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask2_help_modal_title",
-    "text": "maintask2_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste tretiu úlohu!",
     "text": "Vo vašom treťom algoritme ste otvorili 6 truhlíc,  hrdina našiel kľúč a dostal sa cez zatvorené dvere.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   },
   
@@ -104,22 +74,12 @@
     "text": "Cesta ku kamennému tlačidlu pre splnenie tejto úlohy je blokovaná vázami, ktoré treba zničiť. Opäť dva razy použite blok opakuj x-krát.",
     "image": "maintask3_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask3_help_modal_title",
-    "text": "maintask3_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste štvrtú úlohu!",
     "text": "Zdá sa, že optimalizovať algoritmy pomocou cyklu typu for vám nerobí žiaden problém. Ešte jedna úloha a ste v cieli.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
-}
+  }
   },
   
       "mainTask4": {
@@ -130,22 +90,12 @@
     "text": "A na dokončenie úrovne stačí už len použiť dve páky, aby ste zneškodnili pasce blokujúce prístup do cieľa. Dva razy použite blok opakuj x-krát.",
     "image": "maintask3_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask4_help_modal_title",
-    "text": "maintask4_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste štvrtú úlohu!",
     "text": "Dobrá práca, váš hrdina už má cieľ na dosah.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
-}
+  }
   }
 
 

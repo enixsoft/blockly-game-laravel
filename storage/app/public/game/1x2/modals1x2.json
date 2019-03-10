@@ -24,21 +24,11 @@
     "text": "Váš hrdina potrebuje preskočiť miesta zatopené vodou, aby sa dostal na najbližšie kamenné tlačidlo v pravej časti. Spojte bloky pohybu a skoku tak, aby sa mu to podarilo.",
     "image": "maintask0_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask0_help_modal_title",
-    "text": "maintask0_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste prvú úlohu!",
     "text": "Váš prvý algoritmus v tejto úrovni umožnil hrdinovi preskočiť zatopené časti.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   },
   
@@ -50,21 +40,11 @@
     "text": "Cesta na tomto brehu ďalej nepokračuje a tak sa hrdina opäť musí vydať cez vodu, tentokrát na ostrov v ľavej časti. Spojte bloky pohybu a skoku tak, aby hrdina prišiel na kamenné tlačidlo pri stene s ohňom.",
     "image": "maintask1_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask1_help_modal_title",
-    "text": "maintask1_help_modal_text",
-    "image": "failure"
-  },
+    
   "success_modal": {
     "title": "Výborne! Splnili ste druhú úlohu!",
     "text": "Hrdina dorazil do cieľa vďaka správnemu algoritmu.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   },
 
@@ -78,21 +58,11 @@
     "text": "V tejto úlohe hrdinovi stačí ísť a skákať jedným smerom, aby sa dostal na pravú stranu ku vzdialenému kamennému tlačidlu.",
     "image": "maintask2_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask2_help_modal_title",
-    "text": "maintask2_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste tretiu úlohu!",
     "text": "Hrdina úspešne prekonal zatopenú časť úrovne a blíži sa do cieľa.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   },
   
@@ -104,21 +74,11 @@
     "text": "Hrdina už nemusí skákať cez vodu, no teraz má pred sebou nebezpečnú prekážku - aktivované pasce. Vyhnite sa im a dostaňte sa na kamenné tlačidlo pri schodisku do ďalšej úrovne.",
     "image": "maintask3_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask3_help_modal_title",
-    "text": "maintask3_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste štvrtú úlohu!",
     "text": "Zdá sa, že vám používanie skoku nerobí najmenší problém. Zvládli ste cestu cez vodu a pasce.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   }
 

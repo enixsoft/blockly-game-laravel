@@ -24,21 +24,11 @@
     "text": "Ku kamennému tlačidlu sa hrdina musí dostať cez vodu a zničiť sud. Použite len blok opakuj pokiaľ nie je hrdina v cieli a vyriešte úlohu bez použitia podmienok.",
     "image": "maintask0_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask0_help_modal_title",
-    "text": "maintask0_help_modal_text",
-    "image": "failure"
-  },
+    
   "success_modal": {
     "title": "Výborne! Splnili ste prvú úlohu!",
     "text": "Zdá sa, že používať cyklus doWhile vám naozaj ide dobre.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   },
   
@@ -50,21 +40,11 @@
     "text": "Aby sa hrdina dostal ďalej, musí otvoriť všetky truhlice aby našiel kľúč od dverí a zároveň použiť všetky páky, aby zneškodnil pasce v ceste. Použite blok opakuj pokiaľ nie je hrdina v cieli, v ktorom bude dvakrát blok ak v smere nasleduje a za ním blok opakuj x-krát, ktorý bude obsahovať podmienku pre truhlicu a podmienku pre páku.",
     "image": "maintask1_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask1_help_modal_title",
-    "text": "maintask1_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste druhú úlohu!",
     "text": "Váš algoritmus umonžil hrdinovi prehľadať všetky truhlice, použiť páky na deaktivovanie pasce a dostať sa cez dvere. Hrdina môže pokračovať ďalej v ceste.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   },
 
@@ -78,21 +58,11 @@
     "text": "V tejto úlohe máme kamenné tlačidlo trochu ďalej a na ceste sú pasce, ktoré treba preskočiť. Na začiatku otočte hrdinu raz doľava a potom použite blok opakuj pokiaľ nie je hrdina v cieli, dvakrát blok ak v smere nasleduje a raz blok ak v smere na dlaždici je.",
     "image": "maintask2_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask2_help_modal_title",
-    "text": "maintask2_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste tretiu úlohu!",
     "text": "Vo vašom treťom algoritme ste použili obe podmienky a tak hrdina úspešne dorazil na kamenné tlačidlo.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   },
   
@@ -104,22 +74,12 @@
     "text": "A na záver, hrdina potrebuje zničiť vázy a použiť páku na otvorenie padacích dverí, aby mohol prísť na posledné kamenné tlačidlo v tejto hre. Použite blok opakuj pokiaľ nie je hrdina v cieli, jeden krát blok ak v smere nasleduje a dvakrát blok ak v smere na dlaždici je.",
     "image": "maintask3_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask3_help_modal_title",
-    "text": "maintask3_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste štvrtú úlohu!",
     "text": "Posledná úloha v hre bola práve splnená.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
-}
+  }
   }  
 
 

@@ -24,21 +24,11 @@
     "text": "Cestu k prvému kamennému tlačidlu je priama a bez žiadnych prekážok. Použite nový blok.",
     "image": "maintask0_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask0_help_modal_title",
-    "text": "maintask0_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste prvú úlohu!",
     "text": "Cyklus typu doWhile je jednoduchý a beží vynikajúco. Uvidíme, ako to pôjde na zložitejších úlohách.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   },
   
@@ -50,22 +40,12 @@
     "text": "Aby sa hrdina dostal ďalej, musíte okrem nového bloku použiť aj blok opakuj x-krát, ktorý vložíte dovnútra.",
     "image": "maintask1_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask1_help_modal_title",
-    "text": "maintask1_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste druhú úlohu!",
     "text": "Úspešne ste skombinovali dva cykly. Hrdina môže pokračovať ďalej v ceste.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
-  }
+  }  
   },
 
 
@@ -78,21 +58,11 @@
     "text": "V tejto úlohe sa ku kamennému tlačidlo hrdina dostane skokmi. Blok opakuj x-krát tu netreba použiť.",
     "image": "maintask2_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask2_help_modal_title",
-    "text": "maintask2_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste tretiu úlohu!",
     "text": "Zdá sa, že vám používanie cyklu typu doWhile nerobí žiaden problém.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   },
   
@@ -104,22 +74,12 @@
     "text": "Dostať sa ku ďalšiemu kamennému tlačidlu je tentokrát ťažšie, na jednom z blokov sa nachádza pasca. Vypnite ju pomocou páky. Opäť použite aj blok opakuj x-krát, ktorý vložíte dovnútra.",
     "image": "maintask3_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask3_help_modal_title",
-    "text": "maintask3_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste štvrtú úlohu!",
     "text": "Dobrá práca, váš hrdina už má cieľ na dosah.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
-}
+  }
   },
   
     "mainTask4": {
@@ -130,21 +90,11 @@
     "text": "V poslednej úlohe tretej úrovne použite opäť oba cykly - pričom cyklus for sa bude nachádzať vnútri cyklu doWhile. Pred použítím cyklu doWhile hrdinu otočte raz doprava.",
     "image": "maintask4_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask4_help_modal_title",
-    "text": "maintask4_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste piatu úlohu!",
     "text": "Je zrejmé, že používanie oboch cyklov už zvládate dokonale.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   }
 

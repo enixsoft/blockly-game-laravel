@@ -80,11 +80,9 @@
                   <div class= "btn-group" role="group">
                      <button type="button" id="send_code_button" class="btn btn-success mr-3" onclick="runCode()" disabled><i class="fas fa-play"></i> Spustiť bloky</button>
                      <button type="button" id="show_task_button" class="btn btn-success mr-3" onclick="showTaskButton()" disabled><i class="fas fa-tasks"></i> Zadanie úlohy</button>
-                     <button type="button" id="delete_blocks_button" class="btn btn-success mr-3" onclick="debugFunction1()" disabled><i class="fas fa-trash"></i> Vymazať všetky bloky</button>
-                                                                                                        <!-- deleteBlocksButton()   -->
-                     <button type="button" id="report_bug_button" class="btn btn-success mr-3" onclick="debugFunction2()" disabled><i class="fas fa-bug"></i> Nahlásiť chybu</button>
-                                                                                                       <!-- reportBugButton()   -->
-                  </div>
+                     <button type="button" id="delete_blocks_button" class="btn btn-success mr-3" onclick="deleteBlocksButton()" disabled><i class="fas fa-trash"></i> Vymazať všetky bloky</button>       
+                     <button type="button" id="report_bug_button" class="btn btn-success mr-3" onclick="reportBugButton()" disabled><i class="fas fa-bug"></i> Nahlásiť chybu</button>                 
+                   </div>
                </div>
             </div>
          </div>
@@ -1579,8 +1577,7 @@ Blockly.mainWorkspace.render();
     html = modalStructure.title;
     modal.find('#modal-heading').html(html).end();
 
-    html = modalStructure.text;
-    //html += '<br><br> <h4>Čas:</h4> <br><br> <h4>Kód:</h4> <br><br> <h4>Hodnotenie:</h4>';
+    html = modalStructure.text;  
     modal.find('#modal-text').html(html).end();  
 
 
@@ -1589,7 +1586,7 @@ Blockly.mainWorkspace.render();
 
     
     html = 'window.location.href=\''; 
-    html += '{{ url('/')}}' + '/game/' + this.category + '/' + (this.level+1) + '\';';    
+    html += '{{ url('/')}}' + '/start/' + this.category + '/' + (this.level+1) + '\';';    
     modal.find('#modal-button').attr("onclick", html).end(); 
     html = 'Ďalšia úroveň';
     modal.find('#modal-button').html(html).end();    

@@ -24,21 +24,11 @@
     "text": "Cestu k prvému kamennému tlačidlu blokuje niekoľko krabíc. Použite blok útoku spolu s blokom pohybu, aby ste sa cez ne dostali.",
     "image": "maintask0_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask0_help_modal_title",
-    "text": "maintask0_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste prvú úlohu!",
     "text": "Váš prvý algoritmus v tejto úrovni umožnil hrdinovi rozsekať krabice stojace v ceste.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   },
   
@@ -50,21 +40,11 @@
     "text": "V tejto úlohe proti hrdinovi stoja sudy namiesto kabíc, avšak proti jeho meču nemajú šancu. Je potrebné už aj použiť skákanie a vyhnúť sa pasci pred kamenným tlačidlom.",
     "image": "maintask1_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask1_help_modal_title",
-    "text": "maintask1_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste druhú úlohu!",
     "text": "Váš druhý algoritmus umožnil hrdinovi rozsekať sudy stojace v ceste a úspešne dosiahnuť cieľ.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   },
 
@@ -78,21 +58,11 @@
     "text": "A do tretice hrdinu čakajú staré prázdne vázy, zničiť však pôjdu rovnako. Tak poďme na to.",
     "image": "maintask2_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask2_help_modal_title",
-    "text": "maintask2_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste tretiu úlohu!",
     "text": "Vyzerá to tak, že vášho hrdinu nemôže nič zastaviť. Len tak ďalej.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   },
   
@@ -104,21 +74,11 @@
     "text": "V nasledujúcej štvrtej úlohe hrdinov postup bude skôr o skákaní ako o sekaní mečom. Dokážete nájsť správne bloky, ktoré privedú hrdinu ku kamennému tlačidlu?",
     "image": "maintask3_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask3_help_modal_title",
-    "text": "maintask3_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste štvrtú úlohu!",
     "text": "Skvelá práca, koniec úrovne už má hrdina na dosah.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   },
   
@@ -130,21 +90,11 @@
     "text": "Ostáva už len jedno kamenné tlačidlo, na ktoré sa hrdina musí dostať. V ceste mu stojí už len posledná váza a mnoho nebezpečne rozmiestnených pascí, na ktoré si dajte pozor.",
     "image": "maintask4_introduction_modal"
   },
-    "help_modal": 
-    {
-    "title": "maintask4_help_modal_title",
-    "text": "maintask4_help_modal_text",
-    "image": "failure"
-  },
+
   "success_modal": {
     "title": "Výborne! Splnili ste piatu úlohu!",
     "text": "Dokázali ste, že sekanie mečom vám ide tak dobre, ako skákanie.",
     "image": "success"
-  },   
-    "failure_modal": {
-    "title": "Hlavná úloha nebola splnená",
-    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
-    "image": "failure"
   }
   }
 
