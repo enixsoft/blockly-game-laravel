@@ -26,11 +26,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
-
    
-    <!-- Custom styles for this template
-    MINIFY
-     -->
     <link href="{{ asset('css/new-age.css') }}" rel="stylesheet">
 
   </head>
@@ -44,7 +40,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
       <div class="container">
-        <a class="navbar-brand" href="{{ route('/') }}">BLOCKLY HRA</a>
+        <a class="navbar-brand" id="navbar-brand" href="{{ route('/') }}">BLOCKLY HRA</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           
           <i class="fas fa-bars"></i>
@@ -72,20 +68,22 @@
    <div class="game-container">
       <div class="row h-100 w-100 no-padding">
          <div class="col-lg-6 no-padding">   
-            <iframe id="app-frame" class="game-playcanvas"           
-               src="{{url('')}}/game/playcanvas/{{$category}}x{{$level}}.html"></iframe>
-               <!--src="https://playcanv.as/e/p/62c28f63/"></iframe>-->
+            <iframe id="app-frame" class="game-playcanvas"        
+             src="{{url('')}}/game/playcanvas/{{$category}}x{{$level}}.html"></iframe>
+                <!-- src="https://playcanv.as/e/p/62c28f63/"></iframe>-->
          </div>
          <div class="col-lg-6 no-padding">
             <div class="row h-100 w-100 no-padding">
-               <div class="col-lg-12 game-blockly" id="blocklyArea">            
+               <div class="col-lg-12 col-sm-10 game-blockly" id="blocklyArea">            
                </div>
-               <div class= "col-lg-12 game-buttons mx-auto text-center">
+               <div class= "col-lg-12 col-sm-2 game-buttons mx-auto text-center" id="gameButtons">
                   <div class= "btn-group" role="group">
                      <button type="button" id="send_code_button" class="btn btn-success mr-3" onclick="runCode()" disabled><i class="fas fa-play"></i> Spustiť bloky</button>
                      <button type="button" id="show_task_button" class="btn btn-success mr-3" onclick="showTaskButton()" disabled><i class="fas fa-tasks"></i> Zadanie úlohy</button>
-                     <button type="button" id="delete_blocks_button" class="btn btn-success mr-3" onclick="deleteBlocksButton()" disabled><i class="fas fa-trash"></i> Vymazať všetky bloky</button>
-                     <button type="button" id="report_bug_button" class="btn btn-success mr-3" onclick="reportBugButton()" disabled><i class="fas fa-bug"></i> Nahlásiť chybu</button>     
+                     <button type="button" id="delete_blocks_button" class="btn btn-success mr-3" onclick="debugFunction1()" disabled><i class="fas fa-trash"></i> Vymazať všetky bloky</button>
+                                                                                                        <!-- deleteBlocksButton()   -->
+                     <button type="button" id="report_bug_button" class="btn btn-success mr-3" onclick="debugFunction2()" disabled><i class="fas fa-bug"></i> Nahlásiť chybu</button>
+                                                                                                       <!-- reportBugButton()   -->
                   </div>
                </div>
             </div>
@@ -110,9 +108,9 @@
 <xml id="startBlocks" style="display: none">
        
        @if($category==1)
-       <block type="player" movable="false" deletable="false" inline="false" x="50" y="70"></block>
+       <block type="player" movable="false" deletable="false" inline="false" x="0" y="0"></block>
        @else
-       <block type="playerDirection" movable="false" deletable="false" inline="false" x="50" y="70"></block>
+       <block type="playerDirection" movable="false" deletable="false" inline="false" x="0" y="0"></block>
        @endif
        <!--
        <block type="cameraplus" movable="false" deletable="false" inline="false" x="650" y="900"></block> 
@@ -138,8 +136,8 @@
 
 <script>
 
-if (/Mobi|Android/i.test(navigator.userAgent)) 
-    this.mobile = true;
+if (/Mobi|Android/i.test(navigator.userAgent))
+  this.mobile = true;    
 else
   this.mobile = false;
 
@@ -174,6 +172,58 @@ eventer(messageEvent,function(e)
     case "start":
     {
      
+    if(this.mobile)
+    {
+  
+  cameraPlus();
+  cameraPlus();
+  cameraPlus();
+  cameraPlus();
+
+
+    $('#navbar-brand').attr('href', '#');
+    $('#navbar-brand').html('BLOCKLY HRA <i class="fas fa-expand-arrows-alt"></i>');
+    
+    
+  var goFS = document.getElementById("navbar-brand");
+
+
+
+ goFS.addEventListener("click", function fullscreen() {
+    var isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
+        (document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
+        (document.mozFullScreenElement && document.mozFullScreenElement !== null) ||
+        (document.msFullscreenElement && document.msFullscreenElement !== null);
+
+    var docElm = document.documentElement;
+    if (!isInFullScreen) {
+        if (docElm.requestFullscreen) {
+            docElm.requestFullscreen();
+        } else if (docElm.mozRequestFullScreen) {
+            docElm.mozRequestFullScreen();
+        } else if (docElm.webkitRequestFullScreen) {
+            docElm.webkitRequestFullScreen();
+        } else if (docElm.msRequestFullscreen) {
+            docElm.msRequestFullscreen();
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    }
+    }, false);
+
+
+
+    }  
+    
+
      startGame();
      break;     
     }
@@ -195,6 +245,8 @@ eventer(messageEvent,function(e)
     mainTaskIntroduced(e.data.content);
     }
     
+
+
      break;     
     }
     
@@ -218,15 +270,13 @@ eventer(messageEvent,function(e)
       console.log("mainTaskCompleted");
       console.log(e.data.content);
 
-      workspacePlayground.highlightBlock(null);      
+      workspacePlayground.highlightBlock(null);
+      $('#send_code_button').attr("disabled", true).end();       
       
       this.task_end = Date.now();
-
-      //mainTaskCompleted(e.data.content.currentMainTask);
+      
       mainTaskCompleted(e.data.content);
 
-      //this.task_end = Date.now();
-      //createLogOfGameplay("mainTaskCompleted", e.data.content);
       break;     
     }
 
@@ -236,8 +286,7 @@ eventer(messageEvent,function(e)
       console.log(e.data.content);
 
       commandFailed(e.data.content);
-
-      //createLogOfGameplay("commandFailed", e.data.content);
+     
       break;     
     }
 
@@ -247,12 +296,26 @@ eventer(messageEvent,function(e)
       console.log(e.data.content);
 
       workspacePlayground.highlightBlock(null);
+      $('#send_code_button').attr("disabled", true).end();
 
       mainTaskFailed(e.data.content);
-
-      //createLogOfGameplay("mainTaskFailed", e.data.content);
+     
       break;     
     }
+
+    case "stoppedExecution": 
+    {
+      console.log("stoppedExecution");
+      console.log(e.data.content);
+
+      workspacePlayground.highlightBlock(null);
+      $('#send_code_button').attr("disabled", true).end();
+
+      stoppedExecution(e.data.content);
+
+      break;     
+    }
+
 
     case "nextMainTask":
     {
@@ -260,10 +323,12 @@ eventer(messageEvent,function(e)
       console.log(e.data.content);
       workspacePlayground.highlightBlock(null);      
       mainTaskIntroduced(e.data.content);
-      break;     
+      break;
+
     }
     case "allMainTasksFinished":
     {
+
       console.log("allMainTasksFinished");
 
       allMainTasksFinished();
@@ -279,7 +344,9 @@ eventer(messageEvent,function(e)
 
     case "changeFacingDirection":
     {
-      console.log("change facing direction");  
+      console.log("change facing direction ");  
+      console.log(e.data.content); 
+
 
       if(this.category==2)
       changeFacingDirectionImage(e.data.content);
@@ -319,10 +386,13 @@ eventer(messageEvent,function(e)
   this.task_start = new Date();
   this.task_end = new Date();
   this.code = "";
-
   this.main_task = 0;
   
   this.saveObjectToString = savedGame.json;
+
+
+  this.savedGameParsed = JSON.parse(savedGame.json);
+  this.facingDirection = "";
   
 
   var blocklyArea = document.getElementById('blocklyArea');
@@ -333,25 +403,51 @@ eventer(messageEvent,function(e)
   var workspacePlayground = Blockly.inject(blocklyDiv,
    {toolbox: toolbox, scrollbars:  true, toolboxPosition: 'end', horizontalLayout:true, trashcan: true, zoom: {wheel: true}});
   workspacePlayground.scale = 0.6;
+
   }
   else
   {
   var workspacePlayground = Blockly.inject(blocklyDiv,
-    {toolbox: toolbox, trashcan: true, }); 
-  }
+    {toolbox: toolbox, trashcan: true, scrollbars: true}); 
+  } 
 
-  
-  
 
 
   Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
                               workspacePlayground); 
   disableContextMenus();
 
-  this.savedGameParsed = JSON.parse(savedGame.json);
-  this.facingDirection = "";
-  if(this.category==2)
+  scrollWorkspace();
+
+
+
+
+  if(this.category==2)  
   changeFacingDirectionImage(this.savedGameParsed.character.facingDirection);
+
+
+
+
+
+
+function scrollWorkspace()
+{
+
+var metrics = Blockly.mainWorkspace.getMetrics();
+var toolboxWidth = Blockly.mainWorkspace.flyout_.width_;
+var toolboxHeight = Blockly.mainWorkspace.flyout_.height_;
+
+
+var newScrollX = ((metrics.contentWidth - metrics.viewWidth) / 2) + (toolboxWidth * 0.8);
+var newScrollY = ((metrics.contentHeight - metrics.viewHeight) / 2) + (toolboxHeight * 0.1);
+
+Blockly.mainWorkspace.scrollbar.set(newScrollX, newScrollY);
+
+Blockly.mainWorkspace.scrollX = newScrollX;
+Blockly.mainWorkspace.scrollY = newScrollY;
+Blockly.mainWorkspace.render();
+
+}
 
 
   
@@ -366,6 +462,7 @@ eventer(messageEvent,function(e)
 
           };
 
+          
           showDynamicModal("mainTaskShowed", modalStructure);
 
   }
@@ -373,9 +470,9 @@ eventer(messageEvent,function(e)
    function deleteBlocksButton() 
    {
   
-       workspacePlayground.clear();
-       Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
-                              workspacePlayground); 
+         workspacePlayground.clear();
+         Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
+                                workspacePlayground); 
 
         if(this.category==2)
         changeFacingDirectionImage(this.facingDirection);
@@ -496,7 +593,7 @@ eventer(messageEvent,function(e)
     /*           DEVELOPER BLOCKS
     var cameraplus = getBlocksByType("cameraplus");
     var cameraminus = getBlocksByType("cameraminus");
-    //var load = getBlocksByType("load");
+    var load = getBlocksByType("load");
     var save = getBlocksByType("save");
     var reload = getBlocksByType("reload"); 
     */          
@@ -675,7 +772,7 @@ eventer(messageEvent,function(e)
   {
 
       
-      $('#send_code_button').attr("onclick", "loadGame()").end(); 
+      $('#send_code_button').attr("onclick", "stopExecution()").end(); 
       $('#send_code_button').attr("class", "btn btn-danger mr-3").end(); 
       $('#send_code_button').html('<i class="fas fa-times"></i> Zastaviť vykonávanie').end(); 
  
@@ -724,6 +821,16 @@ eventer(messageEvent,function(e)
         
         console.log(this.code);
         sendMessage(this.code);
+  }
+
+    function stopExecution()
+    {
+
+        var code = "stopExecution\n";
+        
+        sendMessage(code);
+
+
   }
 
     function cameraPlus()
@@ -826,14 +933,12 @@ eventer(messageEvent,function(e)
 
      };
      
-     showDynamicModal("mainTaskIntroduced", modalStructure);
+    setTimeout(function(){
 
-  }
+    showDynamicModal("mainTaskIntroduced", modalStructure);
 
-  function mainTaskHelp(task)
-  {
+    },500);     
 
-  
   }
 
   function allMainTasksFinished()
@@ -846,8 +951,14 @@ eventer(messageEvent,function(e)
      image:  getModalImageLink(tasks.level.finish_modal.image, "common")   
 
      };
-     
-     showDynamicModal("allMainTasksFinished", modalStructure);
+
+    setTimeout(function(){
+
+    showDynamicModal("allMainTasksFinished", modalStructure);
+
+    },500);   
+
+
   }
 
   function levelIntroduced(task)
@@ -862,7 +973,12 @@ eventer(messageEvent,function(e)
 
      };
 
+    setTimeout(function(){
+
     showDynamicModal("levelIntroduced", modalStructure);
+
+    },500);
+
   }
 
   function mainTaskCompleted(object)
@@ -886,7 +1002,11 @@ eventer(messageEvent,function(e)
 
      };
 
+     setTimeout(function(){
+
      showDynamicModal("mainTaskCompleted", modalStructure);
+
+     },500);     
 
      updateIngameProgress(task);
 
@@ -917,7 +1037,13 @@ eventer(messageEvent,function(e)
 
      };
 
+     setTimeout(function(){
+
      showDynamicModal("mainTaskFailed", modalStructure);
+
+     },500);  
+
+
 
      createLogOfGameplay("mainTaskFailed", object);
 
@@ -936,9 +1062,37 @@ eventer(messageEvent,function(e)
 
      };
 
+     setTimeout(function(){
+
      showDynamicModal("mainTaskFailed", modalStructure);
 
-     createLogOfGameplay("mainTaskFailed", object);
+     },500);  
+
+
+
+     createLogOfGameplay("mainTaskFailedRule", object);
+
+  }
+
+
+    function stoppedExecution(object)
+  {
+          
+     var modalStructure = {
+  
+     title: modals["stoppedexecution"].modal.title,   
+     text:  modals["stoppedexecution"].modal.text,
+     image: getModalImageLink(modals["stoppedexecution"].modal.image, "common")
+
+     };
+
+     setTimeout(function(){
+
+     showDynamicModal("mainTaskFailed", modalStructure);
+
+     },500); 
+
+     createLogOfGameplay("stoppedExecution", object);
 
   }
 
@@ -1079,7 +1233,7 @@ eventer(messageEvent,function(e)
 
       
 
-  }
+    }
 
 
 
@@ -1116,9 +1270,13 @@ eventer(messageEvent,function(e)
 
      };
 
-      showDynamicModal("mainTaskFailed", modalStructure);
+     setTimeout(function(){
 
-      createLogOfGameplay("commandFailed", object);
+     showDynamicModal("mainTaskFailed", modalStructure);
+
+     },500); 
+
+     createLogOfGameplay("commandFailed", object);
 
   }
 
@@ -1289,7 +1447,7 @@ eventer(messageEvent,function(e)
       else
       {
         this.available_modal=1;
-        modal = $('#centeredModal2').modal(); 
+        modal = $('#centeredModal2').modal();
       }    
 
 
@@ -1439,9 +1597,12 @@ eventer(messageEvent,function(e)
     break;
     }
 
-    }     
+    }  
 
-    modal.modal('show');
+
+    modal.modal('show'); 
+
+
 
 
   }
@@ -1449,8 +1610,6 @@ eventer(messageEvent,function(e)
 
   function sendMessage(messageForGame)
   {
-    
-
         var iframe = document.getElementById("app-frame");
         
         iframe.contentWindow.postMessage

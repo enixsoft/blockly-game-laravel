@@ -12,21 +12,20 @@
 */
 
 
-Route::get('/game/{category}/{level}', 'GameController@runGame')->name('game');
+
+//POST
+Route::post('registeruserbyadmin', 'GameController@registerUserByAdmin')->name('registeruserbyadmin');
 Route::post('/game/savegame', 'GameController@saveGame');
 Route::post('/game/updateingameprogress', 'GameController@updateIngameProgress');
 Route::post('/game/createlogofgameplay', 'GameController@createLogOfGameplay');
 Route::post('/game/reportbug', 'GameController@reportBug');
 
-// BETA ================================================================================================
-Route::get('/game/getProgress', 'GameController@betaGetProgress');
-Route::get('/', 'GameController@betaWelcome')->name('/');
-Route::get('/play', 'GameController@betaStartNewGameOrContinue')->name('play');
-Route::get('/start/{category}/{level}', 'GameController@betaStartLevelAsNew')->name('start');
-Route::get('/continue/{category}/{level}', 'GameController@betaContinueLevel')->name('continue');
-
-Route::post('registerforbetatest', 'GameController@betaRegisterUser')->name('registerforbetatest');
-
+//GET
+Route::get('/game/{category}/{level}', 'GameController@runGame')->name('game');
+Route::get('/', 'GameController@welcome')->name('/');
+Route::get('/play', 'GameController@startNewGameOrContinue')->name('play');
+Route::get('/start/{category}/{level}', 'GameController@startLevelAsNew')->name('start');
+Route::get('/continue/{category}/{level}', 'GameController@continueLevel')->name('continue');
 
 
 

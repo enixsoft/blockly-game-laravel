@@ -178,6 +178,7 @@ header.masthead {
 
 
 
+@media (min-width: 992px) {
 
 .vertical-alignment-helper {
     display:table;
@@ -193,6 +194,8 @@ header.masthead {
     pointer-events:none;
     padding-left: 25%;
     padding-right: 25%;
+
+}
 
 }
 
@@ -217,7 +220,7 @@ overflow:hidden;
 }
 
 .game-blockly {  
- height: 40vh;
+ height: 50vh;
  margin-bottom: 0;
  overflow:hidden;
 

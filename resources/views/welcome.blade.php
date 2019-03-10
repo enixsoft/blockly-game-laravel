@@ -168,9 +168,9 @@
               <div class="row">
                 <div class="col-lg-4">
                   <div class="feature-item">
-                    <i class="icon-screen-smartphone text-primary"></i>
+                    <i class="icon-screen-desktop text-primary"></i>
                     <h3>Responzívny návrh</h3>
-                    <p class="text-muted">Hra beží aj na mobilných zariadeniach.</p>
+                    <p class="text-muted">Hra sa prispôsobí vášmu rozlíšeniu.</p>
                   </div>
                 </div>
                 <div class="col-lg-4">
@@ -232,7 +232,7 @@
             <div class="form-group {{ $errors->has('username') ? ' has-error' : '' }} col-md-6 mx-auto">
               <input class="form-control" placeholder="Prihlasovacie meno" id="username" type="username" name="username" value="{{ old('username') }}" required>             
                @if ($errors->has('username'))
-               <span class="help-block">
+               <span class="help-block" style="color:red;">
                <strong>{{ $errors->first('username') }}</strong>
                </span>
                @endif
@@ -241,7 +241,7 @@
             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} col-md-6 mx-auto">
                <input class="form-control" id="password" placeholder="Heslo" type="password" name="password" required>
                @if ($errors->has('password'))
-               <span class="help-block">
+               <span class="help-block" style="color:red;">
                <strong>{{ $errors->first('password') }}</strong>
                </span>
                @endif                            
@@ -282,22 +282,23 @@
                   </tr>
                </thead>
                <tbody>
+                  
                   @for ($i = 1; $i <= 5; $i++)     
                   <tr>
                      <th scope="row">{{ $i }}</th>
                      <td>
                         <div class="progress" style="height: 2rem;">
                            <div class="progress-bar bg-success" role="progressbar" 
-                              aria-valuenow="{{ isset($inGameProgress[$i-1] ) ? $inGameProgress[$i-1]['progress'] : 0 }}" aria-valuemin="0" 
-                              aria-valuemax="100" style="width: {{ isset($inGameProgress[$i-1] ) ? $inGameProgress[$i-1]['progress'] : 0 }}%;">
-                              <span style="text-align: center; font-weight: bold;">{{ isset($inGameProgress[$i-1] ) ? $inGameProgress[$i-1]['progress'] : 0 }}% </span>
+                              aria-valuenow="{{ isset($inGameProgress[$i-1]) ? $inGameProgress[$i-1] : 0 }}" aria-valuemin="0" 
+                              aria-valuemax="100" style="width: {{ isset($inGameProgress[$i-1] ) ? $inGameProgress[$i-1] : 0 }}%;">
+                              <span style="text-align: center; font-weight: bold;">{{ isset($inGameProgress[$i-1] ) ? $inGameProgress[$i-1] : 0 }}% </span>
                            </div>
                         </div>
                      </td>
-                     <td><a href="{{ url('/')}}/start/1/{{$i}}"    class="btn btn-secondary btn-sm {{ isset($inGameProgress[$i-1]) && $inGameProgress[$i-1]['progress']==100 ? '' : 'disabled' }}">
+                     <td><a href="{{ url('/')}}/start/1/{{$i}}"    class="btn btn-secondary btn-sm {{ isset($inGameProgress[$i-1]) && $inGameProgress[$i-1] == 100 ? '' : 'disabled' }}">
                         SPUSTIŤ OD ZAČIATKU</a>
                      </td>
-                     <td><a href="{{ url('/')}}/continue/1/{{$i}}" class="btn btn-secondary btn-sm {{ isset($inGameProgress[$i-1]) && $inGameProgress[$i-1]['progress']==100 ? '' : 'disabled' }}">
+                     <td><a href="{{ url('/')}}/continue/1/{{$i}}" class="btn btn-secondary btn-sm {{ isset($inGameProgress[$i-1]) && $inGameProgress[$i-1] == 100 ? '' : 'disabled' }}">
                         POKRAČOVAŤ V ULOŽENEJ HRE</a>
                      </td>
                      @endfor
@@ -324,16 +325,16 @@
                      <td>
                         <div class="progress" style="height: 2rem;">
                            <div class="progress-bar bg-success" role="progressbar" 
-                              aria-valuenow="{{ isset($inGameProgress[$i-1] ) ? $inGameProgress[$i-1]['progress'] : 0 }}" aria-valuemin="0" 
-                              aria-valuemax="100" style="width: {{ isset($inGameProgress[$i+4]) ? $inGameProgress[$i+4]['progress'] : 0 }}%;">
-                              <span style="text-align: center; font-weight: bold;">{{ isset($inGameProgress[$i+4] ) ? $inGameProgress[$i+4]['progress'] : 0 }}% </span>
+                              aria-valuenow="{{ isset($inGameProgress[$i+4] ) ? $inGameProgress[$i+4] : 0 }}" aria-valuemin="0" 
+                              aria-valuemax="100" style="width: {{ isset($inGameProgress[$i+4]) ? $inGameProgress[$i+4] : 0 }}%;">
+                              <span style="text-align: center; font-weight: bold;">{{ isset($inGameProgress[$i+4] ) ? $inGameProgress[$i+4] : 0 }}% </span>
                            </div>
                         </div>
                      </td>
-                     <td><a href="{{ url('/')}}/start/1/{{$i}}"    class="btn btn-secondary btn-sm {{ isset($inGameProgress[$i-1]) && $inGameProgress[$i-1]['progress']==100 ? '' : 'disabled' }}">
+                     <td><a href="{{ url('/')}}/start/2/{{$i}}"    class="btn btn-secondary btn-sm {{ isset($inGameProgress[$i+4]) && $inGameProgress[$i+4] == 100 ? '' : 'disabled' }}">
                         SPUSTIŤ OD ZAČIATKU</a>
                      </td>
-                     <td><a href="{{ url('/')}}/continue/1/{{$i}}" class="btn btn-secondary btn-sm {{ isset($inGameProgress[$i-1]) && $inGameProgress[$i-1]['progress']==100 ? '' : 'disabled' }}">
+                     <td><a href="{{ url('/')}}/continue/2/{{$i}}" class="btn btn-secondary btn-sm {{ isset($inGameProgress[$i+4]) && $inGameProgress[$i+4] == 100 ? '' : 'disabled' }}">
                         POKRAČOVAŤ V ULOŽENEJ HRE</a>
                      </td>
                      @endfor
@@ -345,7 +346,7 @@
             <br>
 
             <div class="col-md-6 mx-auto">
-               <button onclick="window.location='{{url('/')}}/play';" class="btn btn-lg btn-success" {{ isset($inGameProgress[9]) && $inGameProgress[9]['progress'] == 100 ? 'disabled' : '' }} >
+               <button onclick="window.location='{{url('/')}}/play';" class="btn btn-lg btn-success" {{ isset($inGameProgress[9]) && $inGameProgress[9] == 100 ? 'disabled' : '' }} >
                 <i class="fas fa-play"></i>
 
                 @if(!isset($inGameProgress[0]))
@@ -366,7 +367,7 @@
 
          <div class="form-group">
          <h2 class="section-heading">Registrácia (admin)</h2>
-            <form class="form-horizontal" method="POST" id="registrationForm" action="{{ route('registerforbetatest') }}">
+            <form class="form-horizontal" method="POST" id="registrationForm" action="{{ route('registeruserbyadmin') }}">
             {{ csrf_field() }}
               
             <div class="form-group col-md-6 mx-auto">
@@ -397,7 +398,8 @@
 
     <footer>
       <div class="container">
-        <p>&copy; Martin Vančo 2019</p>
+        <p>&copy; Martin Vančo 2019
+        </p>
       </div>
     </footer>
 
@@ -410,6 +412,16 @@
 
     <!-- Custom scripts for this template -->
     <script src="{{ asset('js/new-age.min.js') }}"></script>
+
+    @if ($errors->all())  
+    <script type="text/javascript">
+    $(document).ready(function () {
+    $('html, body').animate({
+        scrollTop: $('#game').offset().top
+    }, 'slow');    
+    });
+    </script>        
+    @endif 
 
   </body>
 
