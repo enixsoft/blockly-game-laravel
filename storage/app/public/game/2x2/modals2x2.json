@@ -37,7 +37,7 @@
   
     "introduction_modal": {
     "title": "Zadanie druhej úlohy",
-    "text": "Teraz hrdina čaká skákanie cez vodu. To sa dá skvele optimalizovať pomocou bloku opakuj x-krát a na splnenie tejto úlohy je treba použiť dva také bloky. Začnite nasmerovaním hrdinu smerom hore, a potom použite bloky opakovania tak, že druhý bude vnútri prvého.",
+    "text": "Teraz hrdinu čaká skákanie cez vodu. To sa dá skvele optimalizovať pomocou bloku opakuj x-krát a na splnenie tejto úlohy je treba použiť dva také bloky. Začnite nasmerovaním hrdinu smerom hore, a potom použite bloky opakovania tak, že druhý bude vnútri prvého.",
     "image": "maintask1_introduction_modal"
   },
 
@@ -87,7 +87,7 @@
   
     "introduction_modal": {
     "title": "Zadanie štvrtej úlohy",
-    "text": "A na dokončenie úrovne stačí už len použiť dve páky, aby ste zneškodnili pasce blokujúce prístup do cieľa. Dva razy použite blok opakuj x-krát.",
+    "text": "A na dokončenie úrovne stačí už len použiť dve páky, aby ste zneškodnili pasce blokujúce prístup do cieľa. Na začiatku nasmerujte hrdinu dole a dva razy použite blok opakuj x-krát.",
     "image": "maintask3_introduction_modal"
   },
 

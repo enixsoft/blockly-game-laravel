@@ -279,9 +279,12 @@ eventer(messageEvent,function(e)
     }
 
     case "commandFailed": 
-    {
+    {      
       console.log("commandFailed");
       console.log(e.data.content);
+
+      workspacePlayground.highlightBlock(null);
+      $('#send_code_button').attr("disabled", true).end();       
 
       commandFailed(e.data.content);
      
@@ -1103,7 +1106,7 @@ Blockly.mainWorkspace.render();
       var mistakeCount = 0;
       var playerSolution = String(object.commandArray);      
       playerSolution = playerSolution.split(",");
-      this.code = playerSolution;
+      this.code = playerSolution.slice();
 
       console.log(ratings);
 
@@ -1169,22 +1172,46 @@ Blockly.mainWorkspace.render();
       }
 
 
-      if(playerSolution.length==solution.length) 
+      if(playerSolution.length==solution.length) //player's solution has same length as defined solution, but the order of blocks could be different
       {      
+              var index = -1;
 
-              for(var i=0; i<solution.length; i++)
+              for(var h=0; h<solution.length; h++)
               {
-              if(playerSolution[i]!==solution[i])
-                {
-                  mistakeCount++;   
-                }
-              }
-            
 
-              if(mistakeCount < 4)
-              this.rating = 5 - mistakeCount;
+              index = -1;
+              
+              for(var i=0; i<playerSolution.length; i++)
+              {
+
+                  if(playerSolution[i]==solution[h])
+                  {             
+                    index = i;
+                    break;
+                  }            
+
+              }
+
+              if(index != -1)
+                playerSolution.splice(index, 1);
               else
-              this.rating = 1;       
+                mistakeCount++;
+
+
+              console.log("H = " + h);
+              console.log("playerSolution ");
+              console.log(playerSolution);
+              console.log("solution ");
+              console.log(solution);
+              console.log("mistakeCount ");
+              console.log(mistakeCount);
+
+              }                 
+           
+              if(mistakeCount < 4)
+                this.rating = 5 - mistakeCount;
+              else
+                this.rating = 1;       
 
 
       }
@@ -1212,8 +1239,6 @@ Blockly.mainWorkspace.render();
 
       
 
-      console.log(playerSolution);
-      console.log(solution);
       console.log("mistakeCount" + mistakeCount);
       console.log("ruleError" + this.ruleError);
 

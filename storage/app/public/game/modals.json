@@ -4,7 +4,7 @@
     
     "modal": {
     "title": "Chyba!",
-    "text": "Hrdina pri vykonávaní počtu krokov narazil do steny alebo prekážky.",
+    "text": "Hrdina pri vykonávaní počtu krokov alebo skákaní narazil do steny alebo prekážky.",
     "image": "dizzy"
   }    
   },

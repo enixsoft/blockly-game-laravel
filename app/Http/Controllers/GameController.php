@@ -55,7 +55,7 @@ class GameController extends Controller
 
         if($category>$categoryMax || $category<$categoryMin || $level < $levelMin || $level > $levelMax || !is_numeric($category) || !is_numeric($level))
         {
-        abort(404);
+        return redirect()->route('/');
         }
         else if($category==$categoryMax && $level==$levelMax)
         {
