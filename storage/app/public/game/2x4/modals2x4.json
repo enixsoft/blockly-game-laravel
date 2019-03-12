@@ -71,7 +71,7 @@
   
     "introduction_modal": {
     "title": "Zadanie štvrtej úlohy",
-    "text": "Ku kamennému tlačidlu pre dokončenie tejto úrovne vedie celkom krátka cesta, avšak sú na nej pasce a vodná plocha, ktoré treba preskočiť. Použite blok opakuj pokiaľ nie je hrdina v cieli, blok ak v smere nasleduje a blok ak v smere na dlaždici je.",
+    "text": "Ku kamennému tlačidlu pre dokončenie tejto úrovne vedie celkom krátka cesta, avšak sú na nej pasce a vodná plocha, ktoré treba preskočiť. Najprv nasmerujte hrdinu smerom doprava a potom použite blok opakuj pokiaľ nie je hrdina v cieli, blok ak v smere nasleduje a blok ak v smere na dlaždici je.",
     "image": "maintask3_introduction_modal"
   },
 

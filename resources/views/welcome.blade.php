@@ -156,8 +156,9 @@
     </header>
 
     <section class="features" id="features">
-      <div class="container">
-        <div class="section-heading text-center">
+      <div class="container"> 
+        @guest
+       <div class="section-heading text-center">
           <h2>Hra ovládaná programovaním</h2>
           <p class="text-muted">Google Blockly prináša vizuálny editor blokov, ktoré sa premieňajú na kód. Po odoslaní do hry z neho vznikajú príkazy vykonávané hrdinom.</p>
           <hr>
@@ -215,6 +216,59 @@
             </div>
           </div>
         </div>
+        @endguest
+        @auth
+        <div class="section-heading text-center">
+          <h2>Vitajte v Blockly hre!</h2>
+          <p class="text-muted">Pomocou spájania programovacích blokov v nej budete ovládať hrdinu bojovníka. Ten prišiel na výpravu do starého hradu a aby ho prešiel celý, musí prekonať množstvo prekážok a splniť mnoho úloh. Prezrite si hrdinu a popis jeho schopností, ktoré postupne získa a budete používať.</p>
+          <hr>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 my-auto">
+            <div class="container-fluid">
+              <div class="row text-center">
+                <div class="col-lg-6">
+                <img class="img-fluid" src="{{asset('img/character.png')}}">
+                </div>
+                <div class="col-lg-6">
+                  <div class="row">        
+
+                  <div class="col-lg-6">
+                    <h3>Preskočí prekážky</h3>
+                    <img src="{{asset('img/thumbnail1.png')}}" class="img-thumbnail">
+                    <p class="text-muted">Keď je v ceste voda alebo nastražená pasca, hrdina ich často dokáže preskočiť a pokračovať ďalej.</p>
+               
+                  </div>
+                  <div class="col-lg-6">
+                    <h3>Zničí veci</h3>
+                     <img src="{{asset('img/thumbnail2.png')}}" class="img-thumbnail">
+                    <p class="text-muted">V ruinách hradu sa nachádza veľa starých vecí ako sú krabice, sudy a vázy, ktoré hrdinov meč dokáže zničiť a uvoľniť cestu.</p>
+                  </div>
+                  </div>
+
+                  <div class="row">
+
+                  <div class="col-lg-6">
+                    <h3>Otvára truhlice</h3>
+                     <img src="{{asset('img/thumbnail3.png')}}" class="img-thumbnail">
+                    <p class="text-muted">Niekedy hrdina potrebuje prehľadať truhlice, aby našiel kľúč od zamknutých dverí.</p>
+                  </div>
+                  <div class="col-lg-6">
+                    <h3>Používa páky</h3>
+                     <img src="{{asset('img/thumbnail4.png')}}" class="img-thumbnail">
+                    <p class="text-muted">Keď treba otvoriť padacie dvere alebo zneškodniť pasce, hrdina použije páku.</p>
+                  </div>
+
+                  </div>
+
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        @endauth
       </div>
     </section>
 
@@ -270,7 +324,7 @@
         @auth
         <div class="col-md-12 mx-auto">
           <h2 class="section-heading">Kategória 1</h2>          
-          <p>V prvej kategórii sa naučíme ovládať hrdinu, zadávať mu príkazy ako pohyb, útok, použitie páky alebo otvorenie truhlice. </p>
+          <p>V prvej kategórii sa naučíme ovládať hrdinu, zadávať mu príkazy pohyb, skok, útok mečom, použitie páky a otvorenie truhlice. </p>
            <div class="table-responsive">
            <table class="table table-hover">
                <thead>
@@ -421,7 +475,20 @@
     }, 'slow');    
     });
     </script>        
-    @endif 
+    @endif
+
+    @auth
+    @if (auth()->check())  
+    <script type="text/javascript">
+    $(document).ready(function () {
+    $('html, body').animate({
+        scrollTop: $('#features').offset().top
+    }, 'slow');    
+    });
+    </script>   
+    @endif
+    @endauth
+
 
   </body>
 

@@ -4,7 +4,7 @@
     "level":1,
     
    "welcome_modal": {
-    "title": "Vitajte v Blockly hre!",
+    "title": "Kategória 1 Úroveň 1",
     "text": "V prvej úrovni si predstavíme základ ovládania, ktorým je pohyb. Hrdina sa dokáže pohybovať v štyroch smeroch. Vyberte blok s potrebným smerom pohybu, pripojte ho k bloku hráča a  nastavte počet krokov. Potom kliknite na tlačidlo Spustiť bloky. Vaša herná postava sa potom pokúsi výkonať príkazy. Pri všetkých úlohách sa vám meria čas, takže sa ich snažte riešiť čo najrýchlejšie.",
     "image": "welcome_modal"
   },

@@ -27,7 +27,7 @@
     <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
    
-    <link href="{{ asset('css/new-age.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/new-age.min.css') }}" rel="stylesheet">
 
   </head>
 
@@ -471,14 +471,19 @@ Blockly.mainWorkspace.render();
    function deleteBlocksButton() 
    {
   
-         workspacePlayground.clear();
-         Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
-                                workspacePlayground); 
+         
+         var allBlocks = workspacePlayground.getAllBlocks();
 
-        if(this.category==2)
-        changeFacingDirectionImage(this.facingDirection);
+         for (let i = 0; i<allBlocks.length; i++)
+         {       
 
+          if(allBlocks[i].type != "player" && allBlocks[i].type != "playerDirection")
+          {
+            
+            allBlocks[i].dispose();
+          }
 
+         }
   }
 
   $('#reportBugModal').find('#reportBugTextArea').on("input", function()
