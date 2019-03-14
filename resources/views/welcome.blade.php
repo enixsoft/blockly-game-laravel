@@ -28,7 +28,7 @@
     <!-- Custom styles for this template
     MINIFY
      -->
-    <link href="{{ asset('css/new-age.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/new-age.min.css') }}" rel="stylesheet">
 
   </head>
 
@@ -452,7 +452,9 @@
 
     <footer>
       <div class="container">
-        <p>&copy; Martin Vančo 2019
+        <a href="https://developers.google.com/blockly"><img class="img-fluid" src="{{ asset('img/logo_built_on_dark.png') }}"></a>
+        <br>
+        <p class="mt-3">&copy; 2019 vytvoril Bc. Martin Vančo
         </p>
       </div>
     </footer>
