@@ -13,9 +13,10 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $number = 10;    	
+        $startNum = 16;
+        $endNum = 25;    	
 
-        for($i=1;$i<=$number;$i++)        
+        for($i=$startNum;$i<=$endNum;$i++)        
         {
         User::create(array('username' => "hrac" . $i,
             'password' => bcrypt($i.'heslo'.$i),

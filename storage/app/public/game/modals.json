@@ -4,7 +4,7 @@
     
     "modal": {
     "title": "Chyba!",
-    "text": "Hrdina pri vykonávaní počtu krokov alebo skákaní narazil do steny alebo prekážky.",
+    "text": "Hrdina nemohol vykonať počet krokov alebo skok, pretože v jeho ceste bola stena, prekážka alebo voda.",
     "image": "dizzy"
   }    
   },
