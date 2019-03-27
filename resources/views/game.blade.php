@@ -68,7 +68,7 @@
    <div class="game-container">
       <div class="row h-100 w-100 no-padding">
          <div class="col-lg-6 no-padding">   
-            <iframe id="app-frame" class="game-playcanvas" style="pointer-events: none;"       
+            <iframe id="app-frame" class="game-playcanvas"       
              src="{{url('')}}/game/playcanvas/{{$category}}x{{$level}}.html"></iframe>
                 <!-- src="https://playcanv.as/e/p/62c28f63/"></iframe>-->
          </div>

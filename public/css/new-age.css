@@ -216,6 +216,7 @@ width:100%;
 height:100%; 
 border:none; 
 overflow:hidden;
+pointer-events: none;
 
 }
 
@@ -396,6 +397,7 @@ section.cta .overlay {
 
 section.contact {
   text-align: center;
+  background-color: rgba(219, 219, 219, 0.5);
 }
 
 section.contact h2 {
