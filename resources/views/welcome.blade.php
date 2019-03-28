@@ -378,7 +378,7 @@
          <div class="container">
             <a href="https://developers.google.com/blockly"><img class="img-fluid" src="{{ asset('img/logo_built_on_dark.png') }}"></a>
             <br>
-            <p class="mt-3">&copy; 2019 vytvoril Bc. Martin Vančo<br>Naposledy aktualizované: 27.3.2019
+            <p class="mt-3">&copy; 2019 vytvoril Bc. Martin Vančo<br>Naposledy aktualizované: 28.3.2019
             </p>
          </div>
       </footer>

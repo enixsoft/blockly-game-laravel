@@ -13,8 +13,8 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $startNum = 16;
-        $endNum = 25;    	
+        $startNum = 51;
+        $endNum = 60;    	
 
         for($i=$startNum;$i<=$endNum;$i++)        
         {

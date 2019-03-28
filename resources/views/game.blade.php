@@ -1322,7 +1322,12 @@ Blockly.mainWorkspace.render();
    var task_end = null;
    var task_elapsed_time = null;
    var rating = null;
-   var code = String(object.commandArray);
+   var code = "";
+
+   if(object.commandArray.length!=0)   
+   code = String(object.commandArray);
+   else
+   code = "<empty>";
 
    var result = type;
 
@@ -1347,6 +1352,7 @@ Blockly.mainWorkspace.render();
     }
 
    }
+
 
    $.ajax({
      headers: {
