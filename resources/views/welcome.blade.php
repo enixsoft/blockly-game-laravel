@@ -274,16 +274,19 @@
                                     </div>
                                  </div>
                               </td>
-                              <td><a href="{{ url('/')}}/start/1/{{$i}}"    class="btn btn-secondary btn-sm {{ isset($inGameProgress[$i-1]) && $inGameProgress[$i-1] == 100 ? '' : 'disabled' }}">
+                              <td><a href="{{ url('/')}}/start/1/{{$i}}"    class="btn btn-secondary btn-sm {{ isset($inGameProgress[4]) && $inGameProgress[4] == 100 ? '' : 'disabled' }}">
                                  SPUSTIŤ OD ZAČIATKU</a>
                               </td>
-                              <td><a href="{{ url('/')}}/continue/1/{{$i}}" class="btn btn-secondary btn-sm {{ isset($inGameProgress[$i-1]) && $inGameProgress[$i-1] == 100 ? '' : 'disabled' }}">
+                              <td><a href="{{ url('/')}}/continue/1/{{$i}}" class="btn btn-secondary btn-sm {{ isset($inGameProgress[4]) && $inGameProgress[4] == 100 ? '' : 'disabled' }}">
                                  POKRAČOVAŤ V ULOŽENEJ HRE</a>
                               </td>
                               @endfor
                         </tbody>
                      </table>
                   </div>
+                  <p><i class="fas fa-exclamation-circle"></i> Tlačidlá Spustiť od začiatku a Pokračovať v uloženej hre sa odomknú po dokončení všetkých úrovní kategórie.<br>
+                    Na spustenie hry používajte zelené tlačidlo @if(!isset($inGameProgress[0])) Začať novú hru. @else Pokračovať v hre. @endif
+                  </p>
                   <br>
                   <h2 class="section-heading">Kategória 2</h2>
                   <p>V druhej kategórii sa naučíme ovládať hrdinu podľa nového herného systému a využívať pri tvorbe algoritmov cykly a podmienky.</p>
@@ -310,10 +313,10 @@
                                     </div>
                                  </div>
                               </td>
-                              <td><a href="{{ url('/')}}/start/2/{{$i}}"    class="btn btn-secondary btn-sm {{ isset($inGameProgress[$i+4]) && $inGameProgress[$i+4] == 100 ? '' : 'disabled' }}">
+                              <td><a href="{{ url('/')}}/start/2/{{$i}}"    class="btn btn-secondary btn-sm {{ isset($inGameProgress[9]) && $inGameProgress[9] == 100 ? '' : 'disabled' }}">
                                  SPUSTIŤ OD ZAČIATKU</a>
                               </td>
-                              <td><a href="{{ url('/')}}/continue/2/{{$i}}" class="btn btn-secondary btn-sm {{ isset($inGameProgress[$i+4]) && $inGameProgress[$i+4] == 100 ? '' : 'disabled' }}">
+                              <td><a href="{{ url('/')}}/continue/2/{{$i}}" class="btn btn-secondary btn-sm {{ isset($inGameProgress[9]) && $inGameProgress[9] == 100 ? '' : 'disabled' }}">
                                  POKRAČOVAŤ V ULOŽENEJ HRE</a>
                               </td>
                               @endfor
@@ -378,7 +381,7 @@
          <div class="container">
             <a href="https://developers.google.com/blockly"><img class="img-fluid" src="{{ asset('img/logo_built_on_dark.png') }}"></a>
             <br>
-            <p class="mt-3">&copy; 2019 vytvoril Bc. Martin Vančo<br>Naposledy aktualizované: 28.3.2019
+            <p class="mt-3">&copy; 2019 vytvoril Bc. Martin Vančo<br>Naposledy aktualizované: 30.3.2019
             </p>
          </div>
       </footer>

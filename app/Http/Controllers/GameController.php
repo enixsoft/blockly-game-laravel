@@ -191,6 +191,16 @@ class GameController extends Controller
 
                       $savedGame = SavedGame::where('username', '=', $auth->username)->where('category', '=', $category)->where('level', '=', $level)->where('progress', '=', $inGameProgress['progress'])->latest()->first();
 
+
+                      //if player due to error does not have the savedgame with progress he has, he gets the latest savedgame
+
+                      if($savedGame==null)
+                      {
+                          $savedGame = SavedGame::where('username', '=', $auth->username)->where('category', '=', $category)->where('level', '=', $level)->latest()->first();
+                      }
+
+
+
                       }
                       
                       //player has completed the level, but requests it again
