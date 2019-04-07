@@ -255,7 +255,6 @@
                   <div class="form-group">
                      <form method="POST" id="registerForm" action="{{ route('register') }}">
                         {{ csrf_field() }}
-                        {{ $errors->register }}
                         <div class="form-group {{ $errors->register->has('username') ? ' has-error' : '' }} col-md-6 mx-auto">
                            <label for="username" class="col-md-12">Prihlasovacie meno:</label>
                            <input class="form-control" id="register-username" type="username" name="username" value="{{ old('username') }}" required> @if ($errors->register->has('username'))
@@ -281,8 +280,13 @@
                            <label for="register-password-confirm" class="col-md-12">Zopakujte heslo: </label>
                            <input id="register-password-confirm" type="password" autocomplete="new-password" class="form-control" name="password_confirmation" required>
                         </div>
-                        <div class="form-group col-md-6 mx-auto g-recaptcha" data-sitekey="{{env('GOOGLE_RECAPTCHA_KEY')}}">
+                        <div class="form-group g-recaptcha" data-sitekey="{{env('GOOGLE_RECAPTCHA_KEY')}}" style="margin: 0 auto;display: table">             
                         </div>
+                        @if ($errors->has('g-recaptcha-response'))
+                           <div class="help-block mx-auto" style="color:red;">
+                           <strong>{{ Lang::get('validation.recaptcha') }}</strong>
+                           </div>
+                        @endif               
                         <br>
                         <div class="col-md-6 mx-auto">
                            <button class="btn btn-lg btn-success" type="submit">
@@ -449,14 +453,24 @@
          
          });
       </script>  
-      @endif      
+      @endif
       @if ($errors->any())      
-      <script type="text/javascript">
+      <script type="text/javascript">     
          $(document).ready(function () {
          
          $('html, body').animate({
              scrollTop: $('#game').offset().top
          }, 'slow'); 
+         
+         });
+      </script>
+      @endif
+      @if ($errors->has('g-recaptcha-response'))
+      <script type="text/javascript">
+         $(document).ready(function () {
+         
+         $('#loginDiv').collapse("hide");
+         $('#registerDiv').collapse("show");
          
          });
       </script>
