@@ -16,9 +16,7 @@
       <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
-      <!-- Custom styles for this template
-         MINIFY
-          -->
+      <!-- Custom styles for this template -->
       <link href="{{ asset('css/new-age.min.css') }}" rel="stylesheet">
    </head>
    <body id="page-top">
@@ -206,34 +204,31 @@
          <div class="container">
             <div class="row">
                @guest
-               <div class="col-md-12 mx-auto">
+               <div class="collapse show multi-collapse col-md-12 mx-auto" id="loginDiv">
                   <h2 class="section-heading">Prihlásenie</h2>
                   <p>Pre spustenie hry je potrebné byť prihlásený.</p>
                   <div class="form-group">
                      <form method="POST" id="loginForm" action="{{ route('login') }}">
-                        {{ csrf_field() }}  
-                        <div class="form-group {{ $errors->has('username') ? ' has-error' : '' }} col-md-6 mx-auto">
-                           <input class="form-control" placeholder="Prihlasovacie meno" id="username" type="username" name="username" value="{{ old('username') }}" required>             
-                           @if ($errors->has('username'))
-                           <span class="help-block" style="color:red;">
+                        {{ csrf_field() }}
+                        <div class="form-group row {{ $errors->has('username') ? ' has-error' : '' }} col-md-6 mx-auto">
+                           <label for="username" class="col-md-12">Prihlasovacie meno:</label>
+                           <input class="form-control" id="username" type="username" name="username" value="{{ old('username') }}" required> @if ($errors->has('username'))
+                           <span class="help-block mx-auto" style="color:red;">
                            <strong>{{ $errors->first('username') }}</strong>
-                           </span>
-                           @endif
+                           </span> @endif
                         </div>
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} col-md-6 mx-auto">
-                           <input class="form-control" id="password" placeholder="Heslo" type="password" name="password" required>
-                           @if ($errors->has('password'))
-                           <span class="help-block" style="color:red;">
+                        <div class="form-group row {{ $errors->has('password') ? ' has-error' : '' }} col-md-6 mx-auto">
+                           <label for="password" class="col-md-12">Heslo:</label>
+                           <input class="form-control" id="password" type="password" name="password" required> @if ($errors->has('password'))
+                           <span class="help-block mx-auto" style="color:red;">
                            <strong>{{ $errors->first('password') }}</strong>
-                           </span>
-                           @endif                            
+                           </span> @endif
                         </div>
                         <div class="col-md-6 mx-auto">
                            <label class="fancy-checkbox">
-                           <input type="checkbox" id="remember" {{ old('remember') ? 'checked' : '' }} />
+                           <input type="checkbox" id="remember" {{ old( 'remember') ? 'checked' : '' }} />
                            <i class="fa fa-fw fa-square unchecked"></i>
-                           <i class="fa fa-fw fa-check-square checked"></i>
-                           Zapamätať
+                           <i class="fa fa-fw fa-check-square checked"></i> Zapamätať
                            </label>
                         </div>
                         <br>
@@ -241,7 +236,67 @@
                            <button class="btn btn-lg btn-success" type="submit">
                            Prihlásiť sa
                            </button>
-                           <br>
+                        </div>
+                        <br>
+                        <div class="col-md-6 mx-auto">
+                           <p>
+                              Nemáte ešte účet?
+                              <a class="btn btn-link" data-toggle="collapse" href="" data-target=".multi-collapse">
+                              Zaregistrujte sa.
+                              </a>
+                           </p>
+                        </div>
+                     </form>
+                  </div>
+               </div>
+               <div class="collapse multi-collapse col-md-12 mx-auto" id="registerDiv">
+                  <h2 class="section-heading">Registrácia</h2>
+                  <p>Vyplňte všetky polia. Po registrácii budete automaticky prihlásení.</p>
+                  <div class="form-group">
+                     <form method="POST" id="registerForm" action="{{ route('register') }}">
+                        {{ csrf_field() }}
+                        {{ $errors->register }}
+                        <div class="form-group {{ $errors->register->has('username') ? ' has-error' : '' }} col-md-6 mx-auto">
+                           <label for="username" class="col-md-12">Prihlasovacie meno:</label>
+                           <input class="form-control" id="register-username" type="username" name="username" value="{{ old('username') }}" required> @if ($errors->register->has('username'))
+                           <span class="help-block mx-auto" style="color:red;">
+                           <strong>{{ $errors->register->first('username') }}</strong>
+                           </span> @endif
+                        </div>
+                        <div class="form-group {{ $errors->register->has('email') ? ' has-error' : '' }} col-md-6 mx-auto">
+                           <label for="email" class="col-md-12">E-mail:</label>
+                           <input class="form-control" id="register-email" type="email" name="email" value="{{ old('email') }}" required> @if ($errors->register->has('email'))
+                           <span class="help-block mx-auto" style="color:red;">
+                           <strong>{{ $errors->register->first('email') }}</strong>
+                           </span> @endif
+                        </div>
+                        <div class="form-group {{ $errors->register->has('password') ? ' has-error' : '' }} col-md-6 mx-auto">
+                           <label for="password" class="col-md-12">Heslo: </label>
+                           <input id="register-password" autocomplete="new-password" type="password" class="form-control" name="password" required> @if ($errors->register->has('password'))
+                           <span class="help-block mx-auto" style="color:red;">
+                           <strong>{{ $errors->register->first('password') }}</strong>
+                           </span> @endif
+                        </div>
+                        <div class="form-group col-md-6 mx-auto">
+                           <label for="register-password-confirm" class="col-md-12">Zopakujte heslo: </label>
+                           <input id="register-password-confirm" type="password" autocomplete="new-password" class="form-control" name="password_confirmation" required>
+                        </div>
+                        <div class="form-group col-md-6 mx-auto g-recaptcha" data-sitekey="{{env('GOOGLE_RECAPTCHA_KEY')}}">
+                        </div>
+                        <br>
+                        <div class="col-md-6 mx-auto">
+                           <button class="btn btn-lg btn-success" type="submit">
+                           Zaregistrovať sa
+                           </button>
+                        </div>
+                        <br>
+                        <div class="col-md-6 mx-auto">
+                           <p>
+                              Máte už účet?
+                              <a class="btn btn-link" data-toggle="collapse" href="" data-target=".multi-collapse">
+                              Prihláste sa.
+                              </a>
+                           </p>
                         </div>
                      </form>
                   </div>
@@ -285,7 +340,7 @@
                      </table>
                   </div>
                   <p><i class="fas fa-exclamation-circle"></i> Tlačidlá Spustiť od začiatku a Pokračovať v uloženej hre sa odomknú po dokončení všetkých úrovní kategórie.<br>
-                    Na spustenie hry používajte zelené tlačidlo @if(!isset($inGameProgress[0])) Začať novú hru. @else Pokračovať v hre. @endif
+                     Na spustenie hry používajte zelené tlačidlo @if(!isset($inGameProgress[0])) Začať novú hru. @else Pokračovať v hre. @endif
                   </p>
                   <br>
                   <h2 class="section-heading">Kategória 2</h2>
@@ -344,7 +399,7 @@
                         <div class="form-group col-md-6 mx-auto">
                            <input class="form-control" placeholder="Prihlasovacie meno" id="username" type="username" name="username" required>          
                         </div>
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} col-md-6 mx-auto">
+                        <div class="form-group col-md-6 mx-auto">
                            <input class="form-control" id="password" placeholder="Heslo" type="password" name="password" required>              
                         </div>
                         <br>
@@ -362,26 +417,11 @@
             </div>
          </div>
       </section>
-      <!--
-         <section class="contact" id="contact">
-           <div class="container">
-             <h2 class="section-heading">História zmien</h2>
-             <p> 
-               <ul class="list-group">
-               <li class="list-group-item">27.03.2019</li>  
-                 <li class="list-group-item">Opravená chyba, ktorá spôsobovala zamŕzanie Blockly časti.<br>Opravená chyba, ktorá spôsobovala zamŕzanie Blockly časti.
-                 </li>         
-               </ul>
-             </p>       
-         
-           </div>
-         </section>
-         -->
       <footer>
          <div class="container">
             <a href="https://developers.google.com/blockly"><img class="img-fluid" src="{{ asset('img/logo_built_on_dark.png') }}"></a>
             <br>
-            <p class="mt-3">&copy; 2019 vytvoril Bc. Martin Vančo<br>Naposledy aktualizované: 30.3.2019
+            <p class="mt-3">&copy; 2019 vytvoril Bc. Martin Vančo<br>Naposledy aktualizované: 7.4.2019
             </p>
          </div>
       </footer>
@@ -392,14 +432,34 @@
       <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
       <!-- Custom scripts for this template -->
       <script src="{{ asset('js/new-age.js') }}"></script>
-      @if ($errors->all())  
+      <!-- Script for Google Recaptcha V2 -->
+      <script src='https://www.google.com/recaptcha/api.js'></script>
+      <!-- Scripts for handling errors and login -->
+      @if ($errors->register->any())
       <script type="text/javascript">
          $(document).ready(function () {
+         
+         $('#loginDiv').collapse("hide");
+         $('#registerDiv').collapse("show");
+         
+         
          $('html, body').animate({
              scrollTop: $('#game').offset().top
-         }, 'slow');    
+         }, 'slow'); 
+         
          });
-      </script>        
+      </script>  
+      @endif      
+      @if ($errors->any())      
+      <script type="text/javascript">
+         $(document).ready(function () {
+         
+         $('html, body').animate({
+             scrollTop: $('#game').offset().top
+         }, 'slow'); 
+         
+         });
+      </script>
       @endif
       @auth
       @if (auth()->check())  
