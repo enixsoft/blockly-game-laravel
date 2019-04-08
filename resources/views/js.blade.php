@@ -1514,8 +1514,8 @@ Blockly.mainWorkspace.render();
         (
         { message: messageForGame }, 
     
-        //"https://playcanv.as/p/62c28f63/"
-        "{{url('')}}"
+        "https://playcanv.as/p/62c28f63/"
+        //"{{url('')}}"
         );
 
   }

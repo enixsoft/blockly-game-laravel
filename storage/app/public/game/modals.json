@@ -32,7 +32,7 @@
 
     "modal": {
     "title": "Chyba!",
-    "text": "Medzi blokmi sa nachádza prázdna podmienka alebo prázdny cyklus. Vložte do nich nejaký príkaz alebo ich odstráňte.",
+    "text": "Medzi blokmi sa nachádza chybne nastavená podmienka alebo chybný cyklus. Vložte do nich nejaký príkaz ak sú prázdne, prípadne znížte počet opakovaní alebo ich odstráňte.",
     "image": "functionerror"
   }    
   },
