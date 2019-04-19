@@ -6,6 +6,9 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -77,5 +80,26 @@ class RegisterController extends Controller
             'role' => 'user',
             'remember_token' => null 
         ]);
+    }
+
+
+    public function register(Request $request)
+    {
+        $validation = $this->validator($request->all());
+
+        if ($validation->fails()) 
+        {
+            return redirect()->back()->withErrors($validation, 'register')->withInput();
+        }
+        else
+        {
+
+        event(new Registered($user = $this->create($request->all())));
+
+        $this->guard()->login($user);
+
+        return $this->registered($request, $user)
+                        ?: redirect($this->redirectPath());
+        }
     }
 }

@@ -211,15 +211,15 @@
                      <form method="POST" id="loginForm" action="{{ route('login') }}">
                         {{ csrf_field() }}
                         <div class="form-group row {{ $errors->has('username') ? ' has-error' : '' }} col-md-6 mx-auto">
-                           <label for="username" class="col-md-12">Prihlasovacie meno:</label>
-                           <input class="form-control" id="username" type="username" name="username" value="{{ old('username') }}" required> @if ($errors->has('username'))
+                           <label for="login-username" class="col-md-12">Prihlasovacie meno:</label>
+                           <input class="form-control" id="login-username" type="username" name="login-username" value="{{ old('login-username') }}" required> @if ($errors->has('username'))
                            <span class="help-block mx-auto" style="color:red;">
                            <strong>{{ $errors->first('username') }}</strong>
                            </span> @endif
                         </div>
                         <div class="form-group row {{ $errors->has('password') ? ' has-error' : '' }} col-md-6 mx-auto">
-                           <label for="password" class="col-md-12">Heslo:</label>
-                           <input class="form-control" id="password" type="password" name="password" required> @if ($errors->has('password'))
+                           <label for="login-password" class="col-md-12">Heslo:</label>
+                           <input class="form-control" id="login-password" type="password" name="login-password" autocomplete="current-password" required> @if ($errors->has('password'))
                            <span class="help-block mx-auto" style="color:red;">
                            <strong>{{ $errors->first('password') }}</strong>
                            </span> @endif
@@ -257,36 +257,37 @@
                         {{ csrf_field() }}
                         <div class="form-group {{ $errors->register->has('username') ? ' has-error' : '' }} col-md-6 mx-auto">
                            <label for="username" class="col-md-12">Prihlasovacie meno:</label>
-                           <input class="form-control" id="register-username" type="username" name="username" value="{{ old('username') }}" required> @if ($errors->register->has('username'))
+                           <input class="form-control" id="username" type="username" name="username" value="{{ old('username') }}" required> @if ($errors->register->has('username'))
                            <span class="help-block mx-auto" style="color:red;">
                            <strong>{{ $errors->register->first('username') }}</strong>
                            </span> @endif
                         </div>
                         <div class="form-group {{ $errors->register->has('email') ? ' has-error' : '' }} col-md-6 mx-auto">
                            <label for="email" class="col-md-12">E-mail:</label>
-                           <input class="form-control" id="register-email" type="email" name="email" value="{{ old('email') }}" required> @if ($errors->register->has('email'))
+                           <input class="form-control" id="email" type="email" name="email" value="{{ old('email') }}" required> @if ($errors->register->has('email'))
                            <span class="help-block mx-auto" style="color:red;">
                            <strong>{{ $errors->register->first('email') }}</strong>
                            </span> @endif
                         </div>
                         <div class="form-group {{ $errors->register->has('password') ? ' has-error' : '' }} col-md-6 mx-auto">
                            <label for="password" class="col-md-12">Heslo: </label>
-                           <input id="register-password" autocomplete="new-password" type="password" class="form-control" name="password" required> @if ($errors->register->has('password'))
+                           <input id="password" autocomplete="new-password" type="password" class="form-control" name="password" required> @if ($errors->register->has('password'))
                            <span class="help-block mx-auto" style="color:red;">
                            <strong>{{ $errors->register->first('password') }}</strong>
                            </span> @endif
                         </div>
                         <div class="form-group col-md-6 mx-auto">
-                           <label for="register-password-confirm" class="col-md-12">Zopakujte heslo: </label>
-                           <input id="register-password-confirm" type="password" autocomplete="new-password" class="form-control" name="password_confirmation" required>
+                           <label for="password_confirmation" class="col-md-12">Zopakujte heslo: </label>
+                           <input id="password_confirmation" type="password" autocomplete="new-password" class="form-control" name="password_confirmation" required>
                         </div>
-                        <div class="form-group g-recaptcha" data-sitekey="{{env('GOOGLE_RECAPTCHA_KEY')}}" style="margin: 0 auto;display: table">             
-                        </div>
+                       <div class="form-group g-recaptcha" data-sitekey="{{env('GOOGLE_RECAPTCHA_KEY')}}" style="margin: 0 auto;display: table">     
+                       </div>
                         @if ($errors->has('g-recaptcha-response'))
                            <div class="help-block mx-auto" style="color:red;">
                            <strong>{{ Lang::get('validation.recaptcha') }}</strong>
                            </div>
-                        @endif               
+                        @endif
+                                  
                         <br>
                         <div class="col-md-6 mx-auto">
                            <button class="btn btn-lg btn-success" type="submit">
@@ -425,7 +426,7 @@
          <div class="container">
             <a href="https://developers.google.com/blockly"><img class="img-fluid" src="{{ asset('img/logo_built_on_dark.png') }}"></a>
             <br>
-            <p class="mt-3">&copy; 2019 vytvoril Bc. Martin Vančo<br>Naposledy aktualizované: 8.4.2019
+            <p class="mt-3">&copy; 2019 vytvoril Bc. Martin Vančo<br>Naposledy aktualizované: 19.4.2019
             </p>
          </div>
       </footer>

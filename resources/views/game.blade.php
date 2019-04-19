@@ -56,9 +56,9 @@
                </div>
                <div class="col-lg-6 no-padding">
                   <div class="row h-100 w-100 no-padding">
-                     <div class="col-lg-12 col-sm-10 game-blockly" id="blocklyArea">            
+                     <div class="col-lg-12 game-blockly" id="blocklyArea">            
                      </div>
-                     <div class= "col-lg-12 col-sm-2 game-buttons mx-auto text-center" id="gameButtons">
+                     <div class= "col-lg-12 game-buttons mx-auto text-center" id="gameButtons">
                         <div class= "btn-group" role="group">
                            <button type="button" id="send_code_button" class="btn btn-success mr-3" onclick="runCode()" disabled><i class="fas fa-play"></i> Spustiť bloky</button>
                            <button type="button" id="show_task_button" class="btn btn-success mr-3" onclick="showTaskButton()" disabled><i class="fas fa-tasks"></i> Zadanie úlohy</button>

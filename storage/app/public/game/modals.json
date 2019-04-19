@@ -46,6 +46,15 @@
   }    
   },
   
+  "ajaxerror": {
+
+    "modal": {
+    "title": "Komunikácia so serverom bola prerušená",
+    "text": "Hra nemôže ďalej pokračovať, lebo pri komunikácii so serverom došlo ku chybe. Je potrebné spustiť hru znova.",
+    "image": "failure"
+  }    
+  },
+  
     "stoppedexecution": {
 
     "modal": {

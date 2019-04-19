@@ -11,7 +11,7 @@ var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
 
 eventer(messageEvent,function(e) 
 {
-  console.log('web-side script received message from game!:  ', e.data);
+  console.log('Web-side script has received message from game:  ', e.data);
   
   switch(e.data.action)
   {
@@ -98,16 +98,9 @@ eventer(messageEvent,function(e)
     this.level_start = Date.now(); 
 
     if(this.progress==0)
-    {     
-    console.log("levelIntroduced");
-    levelIntroduced(e.data.content);    
-    }
-    else 
-    {   
-    console.log("mainTaskIntroduced");
-    mainTaskIntroduced(e.data.content);
-    }
-    
+      levelIntroduced(e.data.content); 
+    else
+      mainTaskIntroduced(e.data.content);   
 
 
      break;     
@@ -130,8 +123,6 @@ eventer(messageEvent,function(e)
 
     case "mainTaskCompleted":
     {
-      console.log("mainTaskCompleted");
-      console.log(e.data.content);
 
       workspacePlayground.highlightBlock(null);
       $('#send_code_button').attr("disabled", true).end();       
@@ -145,8 +136,6 @@ eventer(messageEvent,function(e)
 
     case "commandFailed": 
     {      
-      console.log("commandFailed");
-      console.log(e.data.content);
 
       workspacePlayground.highlightBlock(null);
       $('#send_code_button').attr("disabled", true).end();       
@@ -158,8 +147,6 @@ eventer(messageEvent,function(e)
 
     case "mainTaskFailed": 
     {
-      console.log("mainTaskFailed");
-      console.log(e.data.content);
 
       workspacePlayground.highlightBlock(null);
       $('#send_code_button').attr("disabled", true).end();
@@ -171,8 +158,6 @@ eventer(messageEvent,function(e)
 
     case "stoppedExecution": 
     {
-      console.log("stoppedExecution");
-      console.log(e.data.content);
 
       workspacePlayground.highlightBlock(null);
       $('#send_code_button').attr("disabled", true).end();
@@ -185,8 +170,7 @@ eventer(messageEvent,function(e)
 
     case "nextMainTask":
     {
-      console.log("nextMainTask");
-      console.log(e.data.content);
+
       workspacePlayground.highlightBlock(null);      
       mainTaskIntroduced(e.data.content);
       break;
@@ -195,28 +179,21 @@ eventer(messageEvent,function(e)
     case "allMainTasksFinished":
     {
 
-      console.log("allMainTasksFinished");
-
       allMainTasksFinished();
       break;     
     }
 
     case "save":
     {
-      console.log("save object arrived");    
       saveObjectToJson(e.data.content);
       break;     
     }
 
     case "changeFacingDirection":
     {
-      console.log("change facing direction ");  
-      console.log(e.data.content); 
-
-
+      
       if(this.category==2)
       changeFacingDirectionImage(e.data.content);
-
     }
 
 
@@ -240,6 +217,7 @@ eventer(messageEvent,function(e)
   
   this.locked = true;
   this.available_modal = 1;
+  this.ajaxError = false;
 
   this.category = {{ $category }};
   this.level    = {{ $level }};
@@ -333,7 +311,7 @@ Blockly.mainWorkspace.render();
 
   }
 
-   function deleteBlocksButton() 
+ function deleteBlocksButton() 
    {
   
          
@@ -403,7 +381,8 @@ Blockly.mainWorkspace.render();
     },
     error: function(textStatus, errorThrown) {        
         console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
-         console.log(textStatus);
+        console.log(textStatus);
+        setAjaxError();        
     }
     });
 
@@ -557,8 +536,7 @@ Blockly.mainWorkspace.render();
       var saveToDatabaseEnabled = true;
       
       var myJSON = JSON.stringify(object);
-      this.saveObjectToString = myJSON;
-      console.log(myJSON);  
+      this.saveObjectToString = myJSON;  
 
       if(saveToDatabaseEnabled)
       {
@@ -587,6 +565,8 @@ Blockly.mainWorkspace.render();
     },
     error: function(textStatus, errorThrown) {        
         console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+        console.log(textStatus);
+        setAjaxError(); 
     }
     });
 
@@ -615,8 +595,9 @@ Blockly.mainWorkspace.render();
    console.log("ingameprogress object sent succesfully");  
     },
     error: function(textStatus, errorThrown) {        
-   console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
-   console.log(textStatus);
+        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+        console.log(textStatus);
+        setAjaxError();  
     }
     });
 
@@ -855,8 +836,6 @@ Blockly.mainWorkspace.render();
   function mainTaskCompleted(object)
   {     
     
-     console.log(object);
-
      var task = "mainTask" + object.currentMainTask;    
 
      if(rateMainTaskCompletion(object))
@@ -871,23 +850,23 @@ Blockly.mainWorkspace.render();
      text:  tasks[task].success_modal.text,
      image:  getModalImageLink(tasks[task].success_modal.image, "common") 
 
-     };
-
-     setTimeout(function(){
-
-     showDynamicModal("mainTaskCompleted", modalStructure);
-
-     },500);     
+     };  
 
      updateIngameProgress(task);
 
      createLogOfGameplay("mainTaskCompleted", object);
+     
+     setTimeout(function(){
+
+     showDynamicModal("mainTaskCompleted", modalStructure);
+
+     },500);   
    
 
      }
      else
-     { 
-     // new function needed for rules
+     {
+
      mainTaskFailedRule(object);
 
      }
@@ -908,15 +887,13 @@ Blockly.mainWorkspace.render();
 
      };
 
+     createLogOfGameplay("mainTaskFailed", object);
+
      setTimeout(function(){
 
      showDynamicModal("mainTaskFailed", modalStructure);
 
      },500);  
-
-
-
-     createLogOfGameplay("mainTaskFailed", object);
 
   }
 
@@ -933,15 +910,14 @@ Blockly.mainWorkspace.render();
 
      };
 
+     createLogOfGameplay("mainTaskFailedRule", object);
+
      setTimeout(function(){
 
      showDynamicModal("mainTaskFailed", modalStructure);
 
-     },500);  
+     },500); 
 
-
-
-     createLogOfGameplay("mainTaskFailedRule", object);
 
   }
 
@@ -957,13 +933,14 @@ Blockly.mainWorkspace.render();
 
      };
 
+     createLogOfGameplay("stoppedExecution", object);
+
      setTimeout(function(){
 
      showDynamicModal("mainTaskFailed", modalStructure);
 
      },500); 
 
-     createLogOfGameplay("stoppedExecution", object);
 
   }
 
@@ -1163,13 +1140,13 @@ Blockly.mainWorkspace.render();
 
      };
 
+     createLogOfGameplay("commandFailed", object);
+
      setTimeout(function(){
 
      showDynamicModal("mainTaskFailed", modalStructure);
 
      },500); 
-
-     createLogOfGameplay("commandFailed", object);
 
   }
 
@@ -1231,8 +1208,9 @@ Blockly.mainWorkspace.render();
     console.log("gameplay object sent succesfully");  
     },
     error: function(textStatus, errorThrown) {        
-   console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
-   console.log(textStatus);
+        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+        console.log(textStatus);
+        setAjaxError();  
     }
     });
 
@@ -1347,7 +1325,16 @@ Blockly.mainWorkspace.render();
       {
         this.available_modal=1;
         modal = $('#centeredModal2').modal();
+      }
+
+      if(this.ajaxError)
+      {
+        type = "ajaxError";
+        modalStructure.title = modals["ajaxerror"].modal.title;  
+        modalStructure.text = modals["ajaxerror"].modal.text;  
+        modalStructure.image = getModalImageLink(modals["ajaxerror"].modal.image, "common");  
       }    
+
 
 
     switch(type)
@@ -1471,6 +1458,29 @@ Blockly.mainWorkspace.render();
     break;
     }
 
+    case "ajaxError":
+    {
+     
+    html = modalStructure.title;
+    modal.find('#modal-heading').html(html).end();
+
+    html = modalStructure.text;
+    modal.find('#modal-text').html(html).end();
+
+    html = modalStructure.image;
+    modal.find('#modal-image').attr("src", html).end(); 
+
+    html = 'window.location.href=\''; 
+    html += '{{ url('/')}}' + '\';'; 
+    modal.find('#modal-button').attr("onclick", html).end(); 
+    html = 'Ukončiť hru';
+    modal.find('#modal-button').html(html).end();     
+
+  
+
+    break;
+    }
+
 
     case "allMainTasksFinished":
     {
@@ -1505,6 +1515,10 @@ Blockly.mainWorkspace.render();
 
   }
 
+    function setAjaxError()
+  {
+    this.ajaxError = true;
+  }    
 
   function sendMessage(messageForGame)
   {
@@ -1521,8 +1535,7 @@ Blockly.mainWorkspace.render();
   }
 
   function isUserLoggedIn()
-  {
-    
+  {    
   var loggedIn = {{ auth()->check() ? true : false }};
   if (loggedIn)  
     return true;  

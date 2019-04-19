@@ -145,5 +145,12 @@ return [
     */
 
     'attributes' => [
+
+        'username' => 'Prihlasovacie meno',
+        'password' => 'Heslo',
+        'email' => 'E-mail'
+
     ],
+
+
 ];
