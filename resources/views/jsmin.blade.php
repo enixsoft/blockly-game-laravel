@@ -1,25 +1,23 @@
 <script>if(/Mobi|Android/i.test(navigator.userAgent))
 this.mobile=!0;else this.mobile=!1;var eventMethod=window.addEventListener?"addEventListener":"attachEvent";var eventer=window[eventMethod];var messageEvent=eventMethod=="attachEvent"?"onmessage":"message";eventer(messageEvent,function(e)
-{console.log('web-side script received message from game!:  ',e.data);switch(e.data.action)
+{console.log('Web-side script has received message from game:  ',e.data);switch(e.data.action)
 {case "unlock":{$('#send_code_button').attr("onclick","runCode()").end();$('#send_code_button').attr("class","btn btn-success mr-3").end();$('#send_code_button').html('<i class="fas fa-play"></i> Spustiť bloky').end();$('#send_code_button').attr("disabled",!1).end();$('#show_task_button').attr("disabled",!1).end();$('#delete_blocks_button').attr("disabled",!1).end();$('#report_bug_button').attr("disabled",!1).end();workspacePlayground.highlightBlock(null);this.locked=!1;break}
 case "start":{if(this.mobile)
 {cameraPlus();cameraPlus();cameraPlus();cameraPlus();$('#navbar-brand').attr('href','#');$('#navbar-brand').html('BLOCKLY HRA <i class="fas fa-expand-arrows-alt"></i>');var goFS=document.getElementById("navbar-brand");goFS.addEventListener("click",function fullscreen(){var isInFullScreen=(document.fullscreenElement&&document.fullscreenElement!==null)||(document.webkitFullscreenElement&&document.webkitFullscreenElement!==null)||(document.mozFullScreenElement&&document.mozFullScreenElement!==null)||(document.msFullscreenElement&&document.msFullscreenElement!==null);var docElm=document.documentElement;if(!isInFullScreen){if(docElm.requestFullscreen){docElm.requestFullscreen()}else if(docElm.mozRequestFullScreen){docElm.mozRequestFullScreen()}else if(docElm.webkitRequestFullScreen){docElm.webkitRequestFullScreen()}else if(docElm.msRequestFullscreen){docElm.msRequestFullscreen()}}else{if(document.exitFullscreen){document.exitFullscreen()}else if(document.webkitExitFullscreen){document.webkitExitFullscreen()}else if(document.mozCancelFullScreen){document.mozCancelFullScreen()}else if(document.msExitFullscreen){document.msExitFullscreen()}}},!1)}
 startGame();break}
 case "introduction":{this.level_start=Date.now();if(this.progress==0)
-{console.log("levelIntroduced");levelIntroduced(e.data.content)}
-else{console.log("mainTaskIntroduced");mainTaskIntroduced(e.data.content)}
-break}
+levelIntroduced(e.data.content);else mainTaskIntroduced(e.data.content);break}
 case "highlightProgress":{highlightBlock(e.data.content);break}
 case "highlightFailure":{block=workspacePlayground.getBlockById(e.data.content);block.setColour(0);failedBlock.push(block);break}
-case "mainTaskCompleted":{console.log("mainTaskCompleted");console.log(e.data.content);workspacePlayground.highlightBlock(null);$('#send_code_button').attr("disabled",!0).end();this.task_end=Date.now();mainTaskCompleted(e.data.content);break}
-case "commandFailed":{console.log("commandFailed");console.log(e.data.content);workspacePlayground.highlightBlock(null);$('#send_code_button').attr("disabled",!0).end();commandFailed(e.data.content);break}
-case "mainTaskFailed":{console.log("mainTaskFailed");console.log(e.data.content);workspacePlayground.highlightBlock(null);$('#send_code_button').attr("disabled",!0).end();mainTaskFailed(e.data.content);break}
-case "stoppedExecution":{console.log("stoppedExecution");console.log(e.data.content);workspacePlayground.highlightBlock(null);$('#send_code_button').attr("disabled",!0).end();stoppedExecution(e.data.content);break}
-case "nextMainTask":{console.log("nextMainTask");console.log(e.data.content);workspacePlayground.highlightBlock(null);mainTaskIntroduced(e.data.content);break}
-case "allMainTasksFinished":{console.log("allMainTasksFinished");allMainTasksFinished();break}
-case "save":{console.log("save object arrived");saveObjectToJson(e.data.content);break}
-case "changeFacingDirection":{console.log("change facing direction ");console.log(e.data.content);if(this.category==2)
-changeFacingDirectionImage(e.data.content)}}},!1);var failedBlock=[];var toolbox={!!json_encode($xmlToolbox)!!};var savedGame={!!$savedGame!!};var tasks={!!$jsonTasks!!};var modals={!!$jsonModals!!};var ratings={!!$jsonRatings!!};this.locked=!0;this.available_modal=1;this.category={{$category}};this.level={{$level}};this.progress=savedGame.progress;this.rating=0;this.ruleError=0;this.level_start=new Date();this.task_start=new Date();this.task_end=new Date();this.code="";this.main_task=0;this.saveObjectToString=savedGame.json;this.savedGameParsed=JSON.parse(savedGame.json);this.facingDirection="";var blocklyArea=document.getElementById('blocklyArea');var blocklyDiv=document.getElementById('blocklyDiv');if(this.mobile)
+case "mainTaskCompleted":{workspacePlayground.highlightBlock(null);$('#send_code_button').attr("disabled",!0).end();this.task_end=Date.now();mainTaskCompleted(e.data.content);break}
+case "commandFailed":{workspacePlayground.highlightBlock(null);$('#send_code_button').attr("disabled",!0).end();commandFailed(e.data.content);break}
+case "mainTaskFailed":{workspacePlayground.highlightBlock(null);$('#send_code_button').attr("disabled",!0).end();mainTaskFailed(e.data.content);break}
+case "stoppedExecution":{workspacePlayground.highlightBlock(null);$('#send_code_button').attr("disabled",!0).end();stoppedExecution(e.data.content);break}
+case "nextMainTask":{workspacePlayground.highlightBlock(null);mainTaskIntroduced(e.data.content);break}
+case "allMainTasksFinished":{allMainTasksFinished();break}
+case "save":{saveObjectToJson(e.data.content);break}
+case "changeFacingDirection":{if(this.category==2)
+changeFacingDirectionImage(e.data.content)}}},!1);var failedBlock=[];var toolbox={!!json_encode($xmlToolbox)!!};var savedGame={!!$savedGame!!};var tasks={!!$jsonTasks!!};var modals={!!$jsonModals!!};var ratings={!!$jsonRatings!!};this.locked=!0;this.available_modal=1;this.ajaxError=!1;this.category={{$category}};this.level={{$level}};this.progress=savedGame.progress;this.rating=0;this.ruleError=0;this.level_start=new Date();this.task_start=new Date();this.task_end=new Date();this.code="";this.main_task=0;this.saveObjectToString=savedGame.json;this.savedGameParsed=JSON.parse(savedGame.json);this.facingDirection="";var blocklyArea=document.getElementById('blocklyArea');var blocklyDiv=document.getElementById('blocklyDiv');if(this.mobile)
 {var workspacePlayground=Blockly.inject(blocklyDiv,{toolbox:toolbox,scrollbars:!0,toolboxPosition:'end',horizontalLayout:!0,trashcan:!0,zoom:{wheel:!0}});workspacePlayground.scale=0.6}
 else{var workspacePlayground=Blockly.inject(blocklyDiv,{toolbox:toolbox,trashcan:!0,scrollbars:!0})}
 Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),workspacePlayground);disableContextMenus();scrollWorkspace();if(this.category==2)
@@ -38,7 +36,7 @@ else{text="Ešte môžete napísať "+(+maxlength-currentLength)+" znakov.";$('#
 {var modal=$('#reportBugModal').modal();modal.show()}
 function reportBug()
 {if(isUserLoggedIn())
-{var user={!!auth()->check()?auth()->user():'guest'!!};var report=$('#reportBugModal').find('#reportBugTextArea').val();$.ajax({headers:{'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')},method:'POST',url:'{{url('')}}/game/reportbug',data:{'username':user.username,'category':this.category,'level':this.level,'report':report},success:function(response){console.log("reportbug object sent succesfully")},error:function(textStatus,errorThrown){console.log("AJAX error: "+textStatus+' : '+errorThrown);console.log(textStatus)}})}}
+{var user={!!auth()->check()?auth()->user():'guest'!!};var report=$('#reportBugModal').find('#reportBugTextArea').val();$.ajax({headers:{'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')},method:'POST',url:'{{url('')}}/game/reportbug',data:{'username':user.username,'category':this.category,'level':this.level,'report':report},success:function(response){console.log("AJAX: reportbug object sent succesfully")},error:function(textStatus,errorThrown){console.log("AJAX error: "+textStatus+' : '+errorThrown);console.log(textStatus);setAjaxError()}})}}
 function changeFacingDirectionImage(direction)
 {var player=getBlocksByType("playerDirection");this.facingDirection=direction;switch(direction)
 {case "right":{player[0].setFieldValue("{{ asset('game') }}/right.png","facingDirection_image");break}
@@ -53,14 +51,14 @@ var player=getBlocksByType("playerDirection");else var player=getBlocksByType("p
 runCode();blockToCheck.unselect()}}}
 workspacePlayground.addChangeListener(blockClickController);var onresize=function(e)
 {var element=blocklyArea;var x=0;var y=0;do{x+=element.offsetLeft;y+=element.offsetTop;element=element.offsetParent}while(element);blocklyDiv.style.left=x+'px';blocklyDiv.style.top=y+'px';blocklyDiv.style.width=blocklyArea.offsetWidth+'px';blocklyDiv.style.height=blocklyArea.offsetHeight+'px';Blockly.svgResize(workspacePlayground)};$(window).resize(function(){onresize()});onresize();function saveObjectToJson(object)
-{var saveToDatabaseEnabled=!0;var myJSON=JSON.stringify(object);this.saveObjectToString=myJSON;console.log(myJSON);if(saveToDatabaseEnabled)
+{var saveToDatabaseEnabled=!0;var myJSON=JSON.stringify(object);this.saveObjectToString=myJSON;if(saveToDatabaseEnabled)
 {saveJsonToDatabase()}}
 function saveJsonToDatabase()
 {if(isUserLoggedIn())
-{var user={!!auth()->check()?auth()->user():'guest'!!};$.ajax({headers:{'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')},method:'POST',url:'{{url('')}}/game/savegame',data:{'save':this.saveObjectToString,'user':user.username,'category':this.category,'level':this.level,'progress':this.progress},success:function(response){console.log("save object sent succesfully")},error:function(textStatus,errorThrown){console.log("AJAX error: "+textStatus+' : '+errorThrown)}})}}
+{var user={!!auth()->check()?auth()->user():'guest'!!};$.ajax({headers:{'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')},method:'POST',url:'{{url('')}}/game/savegame',data:{'save':this.saveObjectToString,'user':user.username,'category':this.category,'level':this.level,'progress':this.progress},success:function(response){console.log("AJAX: save object sent succesfully")},error:function(textStatus,errorThrown){console.log("AJAX error: "+textStatus+' : '+errorThrown);console.log(textStatus);setAjaxError()}})}}
 function updateIngameProgress(task)
 {if(isUserLoggedIn())
-{var progress=tasks[task].progress;var user={!!auth()->check()?auth()->user():'guest'!!};$.ajax({headers:{'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')},method:'POST',url:'{{url('')}}/game/updateingameprogress',data:{'progress':progress,'user':user.username,'category':this.category,'level':this.level},success:function(response){console.log("ingameprogress object sent succesfully")},error:function(textStatus,errorThrown){console.log("AJAX error: "+textStatus+' : '+errorThrown);console.log(textStatus)}})}}
+{var progress=tasks[task].progress;var user={!!auth()->check()?auth()->user():'guest'!!};$.ajax({headers:{'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')},method:'POST',url:'{{url('')}}/game/updateingameprogress',data:{'progress':progress,'user':user.username,'category':this.category,'level':this.level},success:function(response){console.log("AJAX: ingameprogress object sent succesfully")},error:function(textStatus,errorThrown){console.log("AJAX error: "+textStatus+' : '+errorThrown);console.log(textStatus);setAjaxError()}})}}
 function highlightBlock(id)
 {workspacePlayground.highlightBlock(id)}
 function disableContextMenus()
@@ -70,7 +68,7 @@ function runCode()
 {switch(failedBlock[0].type)
 {case "do_while_not_finished":failedBlock[0].setColour(230);break;case "for":failedBlock[0].setColour(230);break;case "if_next_tile_is":failedBlock[0].setColour(210);break;case "if_next_tile_has":failedBlock[0].setColour(210);break;default:failedBlock[0].setColour(160);break}
 failedBlock.splice(0)}
-Blockly.JavaScript.STATEMENT_PREFIX='%1\n';this.code=Blockly.JavaScript.workspaceToCode(workspacePlayground);console.log(this.code);sendMessage(this.code)}
+Blockly.JavaScript.STATEMENT_PREFIX='%1\n';this.code=Blockly.JavaScript.workspaceToCode(workspacePlayground);sendMessage(this.code)}
 function stopExecution()
 {var code="stopExecution\n";sendMessage(code)}
 function cameraPlus()
@@ -98,17 +96,17 @@ function allMainTasksFinished()
 function levelIntroduced(task)
 {var modalStructure={title:tasks.level.welcome_modal.title,text:tasks.level.welcome_modal.text,image:getModalImageLink(tasks.level.welcome_modal.image,"level"),task:task};setTimeout(function(){showDynamicModal("levelIntroduced",modalStructure)},500)}
 function mainTaskCompleted(object)
-{console.log(object);var task="mainTask"+object.currentMainTask;if(rateMainTaskCompletion(object))
-{this.progress=tasks[task].progress;var modalStructure={title:tasks[task].success_modal.title,text:tasks[task].success_modal.text,image:getModalImageLink(tasks[task].success_modal.image,"common")};setTimeout(function(){showDynamicModal("mainTaskCompleted",modalStructure)},500);updateIngameProgress(task);createLogOfGameplay("mainTaskCompleted",object)}
+{var task="mainTask"+object.currentMainTask;if(rateMainTaskCompletion(object))
+{this.progress=tasks[task].progress;var modalStructure={title:tasks[task].success_modal.title,text:tasks[task].success_modal.text,image:getModalImageLink(tasks[task].success_modal.image,"common")};updateIngameProgress(task);createLogOfGameplay("mainTaskCompleted",object);setTimeout(function(){showDynamicModal("mainTaskCompleted",modalStructure)},500)}
 else{mainTaskFailedRule(object)}}
 function mainTaskFailed(object)
-{var task="mainTask"+object.currentMainTask;var modalStructure={title:modals.maintaskfailed.modal.title,text:modals.maintaskfailed.modal.text,image:getModalImageLink(modals.maintaskfailed.modal.image,"common")};setTimeout(function(){showDynamicModal("mainTaskFailed",modalStructure)},500);createLogOfGameplay("mainTaskFailed",object)}
+{var task="mainTask"+object.currentMainTask;var modalStructure={title:modals.maintaskfailed.modal.title,text:modals.maintaskfailed.modal.text,image:getModalImageLink(modals.maintaskfailed.modal.image,"common")};createLogOfGameplay("mainTaskFailed",object);setTimeout(function(){showDynamicModal("mainTaskFailed",modalStructure)},500)}
 function mainTaskFailedRule(object)
-{var task="mainTask"+object.currentMainTask;var modalStructure={title:modals.maintaskfailed.modal.title,text:ratings[task].rules[this.ruleError].error,image:getModalImageLink(modals.maintaskfailed.modal.image,"common")};setTimeout(function(){showDynamicModal("mainTaskFailed",modalStructure)},500);createLogOfGameplay("mainTaskFailedRule",object)}
+{var task="mainTask"+object.currentMainTask;var modalStructure={title:modals.maintaskfailed.modal.title,text:ratings[task].rules[this.ruleError].error,image:getModalImageLink(modals.maintaskfailed.modal.image,"common")};createLogOfGameplay("mainTaskFailedRule",object);setTimeout(function(){showDynamicModal("mainTaskFailed",modalStructure)},500)}
 function stoppedExecution(object)
-{var modalStructure={title:modals.stoppedexecution.modal.title,text:modals.stoppedexecution.modal.text,image:getModalImageLink(modals.stoppedexecution.modal.image,"common")};setTimeout(function(){showDynamicModal("mainTaskFailed",modalStructure)},500);createLogOfGameplay("stoppedExecution",object)}
+{var modalStructure={title:modals.stoppedexecution.modal.title,text:modals.stoppedexecution.modal.text,image:getModalImageLink(modals.stoppedexecution.modal.image,"common")};createLogOfGameplay("stoppedExecution",object);setTimeout(function(){showDynamicModal("mainTaskFailed",modalStructure)},500)}
 function rateMainTaskCompletion(object)
-{var task="mainTask"+object.currentMainTask;var isCorrect=!0;var mistakeCount=0;var playerSolution=String(object.commandArray);playerSolution=playerSolution.split(",");this.code=playerSolution.slice();console.log(ratings);var solution=ratings[task].solution;solution=solution.split(",");if(ratings[task].hasOwnProperty("rules"))
+{var task="mainTask"+object.currentMainTask;var isCorrect=!0;var mistakeCount=0;var playerSolution=String(object.commandArray);playerSolution=playerSolution.split(",");this.code=playerSolution.slice();var solution=ratings[task].solution;solution=solution.split(",");if(ratings[task].hasOwnProperty("rules"))
 {var ruleType;var rulesCount=Object.keys(ratings[task].rules).length;var ruleCount=0;var actualCount=0;for(var j=0;j<rulesCount;j++)
 {if(j>0&&!isCorrect)
 {break}
@@ -124,31 +122,31 @@ if(playerSolution.length==solution.length)
 {if(playerSolution[i]==solution[h])
 {index=i;break}}
 if(index!=-1)
-playerSolution.splice(index,1);else mistakeCount++;console.log("H = "+h);console.log("playerSolution ");console.log(playerSolution);console.log("solution ");console.log(solution);console.log("mistakeCount ");console.log(mistakeCount)}
+playerSolution.splice(index,1);else mistakeCount++}
 if(mistakeCount<4)
 this.rating=5-mistakeCount;else this.rating=1}
 else{if(playerSolution.length>solution.length)
 {mistakeCount=+playerSolution.length-solution.length;if(mistakeCount<4)
 this.rating=5-mistakeCount;else this.rating=1}
 else{this.rating=5}}
-console.log("mistakeCount"+mistakeCount);console.log("ruleError"+this.ruleError);if(isCorrect)
+if(isCorrect)
 {return!0}
 else{this.rating=0;return!1}}
 function commandFailed(object)
-{console.log(object);var title="";var text="";var image="";if(object.commandNumber==1)
+{var title="";var text="";var image="";if(object.commandNumber==1)
 text="Váš prvý Blockly blok je chybný: <br>"
 else if(object.commandNumber==2)
 text="Váš prvý Blockly blok fungoval, ale v nasledujúcom nastala chyba: <br>"
 else text="Niekoľko vašich Blockly blokov fungovalo, ale potom nastala chyba: <br>"
 title=modals[object.failureType].modal.title;text+=modals[object.failureType].modal.text;image=getModalImageLink(modals[object.failureType].modal.image,"common");text+="<br> Chybný blok je zafarbený na červeno."
-var modalStructure={title:title,text:text,image:image};setTimeout(function(){showDynamicModal("mainTaskFailed",modalStructure)},500);createLogOfGameplay("commandFailed",object)}
+var modalStructure={title:title,text:text,image:image};createLogOfGameplay("commandFailed",object);setTimeout(function(){showDynamicModal("mainTaskFailed",modalStructure)},500)}
 function createLogOfGameplay(type,object)
 {if(isUserLoggedIn())
 {var user={!!auth()->check()?auth()->user():'guest'!!};var level_start=convertDateToTime(this.level_start);var task=String(object.currentMainTask);var task_start=convertDateToTime(this.task_start);var task_end=null;var task_elapsed_time=null;var rating=null;var code="";if(object.commandArray.length!=0)
 code=String(object.commandArray);else code="<empty>";var result=type;switch(type)
 {case "mainTaskCompleted":{task_elapsed_time=this.task_end-this.task_start;task_elapsed_time=task_elapsed_time/1000;task_end=convertDateToTime(this.task_end);rating=this.rating;break}
 case "commandFailed":{result=object.failureType;break}}
-$.ajax({headers:{'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')},method:'POST',url:'{{url('')}}/game/createlogofgameplay',data:{'username':user.username,'category':this.category,'level':this.level,'level_start':level_start,'task':task,'task_start':task_start,'task_end':task_end,'task_elapsed_time':task_elapsed_time,'rating':rating,'code':code,'result':result},success:function(response){console.log("gameplay object sent succesfully")},error:function(textStatus,errorThrown){console.log("AJAX error: "+textStatus+' : '+errorThrown);console.log(textStatus)}})}}
+$.ajax({headers:{'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')},method:'POST',url:'{{url('')}}/game/createlogofgameplay',data:{'username':user.username,'category':this.category,'level':this.level,'level_start':level_start,'task':task,'task_start':task_start,'task_end':task_end,'task_elapsed_time':task_elapsed_time,'rating':rating,'code':code,'result':result},success:function(response){console.log("AJAX: gameplay object sent succesfully")},error:function(textStatus,errorThrown){console.log("AJAX error: "+textStatus+' : '+errorThrown);console.log(textStatus);setAjaxError()}})}}
 function convertDateToTime(dateToConvert)
 {function addZero(i){if(i<10){i="0"+i}
 return i}
@@ -169,6 +167,8 @@ function showDynamicModal(type,modalStructure)
 {var modal='';var html='';if(this.available_modal==1)
 {this.available_modal=2;modal=$('#centeredModal1').modal()}
 else{this.available_modal=1;modal=$('#centeredModal2').modal()}
+if(this.ajaxError)
+{type="ajaxError";modalStructure.title=modals.ajaxerror.modal.title;modalStructure.text=modals.ajaxerror.modal.text;modalStructure.image=getModalImageLink(modals.ajaxerror.modal.image,"common")}
 switch(type)
 {case "levelIntroduced":{html=modalStructure.title;modal.find('#modal-heading').html(html).end();html=modalStructure.text;modal.find('#modal-text').html(html).end();html=modalStructure.image;modal.find('#modal-image').attr("src",html).end();html='mainTaskIntroduced('+modalStructure.task+')';modal.find('#modal-button').attr("onclick",html).end();html='Pokračovať';modal.find('#modal-button').html(html).end();break}
 case "mainTaskIntroduced":{html=modalStructure.title;modal.find('#modal-heading').html(html).end();html=modalStructure.text;modal.find('#modal-text').html(html).end();html=modalStructure.image;modal.find('#modal-image').attr("src",html).end();html='continueGame()';modal.find('#modal-button').attr("onclick",html).end();html='Pokračovať';modal.find('#modal-button').html(html).end();break}
@@ -176,8 +176,11 @@ case "mainTaskShowed":{html=modalStructure.title;modal.find('#modal-heading').ht
 case "mainTaskCompleted":{html=modalStructure.title;modal.find('#modal-heading').html(html).end();html=modalStructure.text;var task_elapsed_time=this.task_end-this.task_start;task_elapsed_time=convertDateToTime(task_elapsed_time);html+='<br><br> <h4><i class="fas fa-stopwatch"></i> Čas:</h4>'+task_elapsed_time;html+='<br><br> <h4><a data-toggle="collapse" href="#collapseCode"><i class="fas fa-code"></i> Kód:</a></h4>'
 html+='<div class="collapse" id="collapseCode">';html+='<div><code>';html+=convertCodeForModal();html+='</div></code>';html+='</div>';html+='<br><br> <h4><i class="fas fa-star-half-alt"></i> Hodnotenie:</h4>'+convertRatingToStars();modal.find('#modal-text').html(html).end();html=modalStructure.image;modal.find('#modal-image').attr("src",html).end();html='continueGame()';modal.find('#modal-button').attr("onclick",html).end();html='Pokračovať';modal.find('#modal-button').html(html).end();break}
 case "mainTaskFailed":{html=modalStructure.title;modal.find('#modal-heading').html(html).end();html=modalStructure.text;modal.find('#modal-text').html(html).end();html=modalStructure.image;modal.find('#modal-image').attr("src",html).end();html='loadGame()';modal.find('#modal-button').attr("onclick",html).end();html='Skúsiť znova';modal.find('#modal-button').html(html).end();break}
+case "ajaxError":{html=modalStructure.title;modal.find('#modal-heading').html(html).end();html=modalStructure.text;modal.find('#modal-text').html(html).end();html=modalStructure.image;modal.find('#modal-image').attr("src",html).end();html='window.location.href=\'';html+='{{ url('/')}}'+'\';';modal.find('#modal-button').attr("onclick",html).end();html='Ukončiť hru';modal.find('#modal-button').html(html).end();break}
 case "allMainTasksFinished":{html=modalStructure.title;modal.find('#modal-heading').html(html).end();html=modalStructure.text;modal.find('#modal-text').html(html).end();html=modalStructure.image;modal.find('#modal-image').attr("src",html).end();html='window.location.href=\'';html+='{{ url('/')}}'+'/start/'+this.category+'/'+(this.level+1)+'\';';modal.find('#modal-button').attr("onclick",html).end();html='Ďalšia úroveň';modal.find('#modal-button').html(html).end();break}}
 modal.modal('show')}
+function setAjaxError()
+{this.ajaxError=!0}
 function sendMessage(messageForGame)
 {var iframe=document.getElementById("app-frame");iframe.contentWindow.postMessage({message:messageForGame},"{{url('')}}")}
 function isUserLoggedIn()

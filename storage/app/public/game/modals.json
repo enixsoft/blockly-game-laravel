@@ -59,7 +59,7 @@
 
     "modal": {
     "title": "Hlavná úloha nebola splnená",
-    "text": "Vykonávanie príkazov bolo zastavené. Táto funkcia je experimentálna, v prípade problémov znovu načítajte stránku s hrou.",
+    "text": "Vykonávanie príkazov bolo zastavené.",
     "image": "failure"
   }    
   }

@@ -282,12 +282,11 @@
                         </div>
                        <div class="form-group g-recaptcha" data-sitekey="{{env('GOOGLE_RECAPTCHA_KEY')}}" style="margin: 0 auto;display: table">     
                        </div>
-                        @if ($errors->has('g-recaptcha-response'))
+                        @if ($errors->register->has('g-recaptcha-response'))
                            <div class="help-block mx-auto" style="color:red;">
                            <strong>{{ Lang::get('validation.recaptcha') }}</strong>
                            </div>
-                        @endif
-                                  
+                        @endif                          
                         <br>
                         <div class="col-md-6 mx-auto">
                            <button class="btn btn-lg btn-success" type="submit">
@@ -426,7 +425,7 @@
          <div class="container">
             <a href="https://developers.google.com/blockly"><img class="img-fluid" src="{{ asset('img/logo_built_on_dark.png') }}"></a>
             <br>
-            <p class="mt-3">&copy; 2019 vytvoril Bc. Martin Vančo<br>Naposledy aktualizované: 19.4.2019
+            <p class="mt-3">&copy; 2019 vytvoril Bc. Martin Vančo<br>Naposledy aktualizované: 20.4.2019
             </p>
          </div>
       </footer>

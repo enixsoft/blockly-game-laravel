@@ -377,7 +377,7 @@ Blockly.mainWorkspace.render();
     url: '{{url('')}}/game/reportbug', 
     data: {'username' : user.username, 'category': this.category, 'level': this.level, 'report': report }, 
     success: function(response){ 
-        console.log("reportbug object sent succesfully");  
+        console.log("AJAX: reportbug object sent succesfully");  
     },
     error: function(textStatus, errorThrown) {        
         console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
@@ -561,7 +561,7 @@ Blockly.mainWorkspace.render();
     url: '{{url('')}}/game/savegame', 
     data: {'save' : this.saveObjectToString, 'user' : user.username, 'category': this.category, 'level': this.level, 'progress': this.progress }, //category + level
     success: function(response){ 
-        console.log("save object sent succesfully");  
+        console.log("AJAX: save object sent succesfully");  
     },
     error: function(textStatus, errorThrown) {        
         console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
@@ -592,7 +592,7 @@ Blockly.mainWorkspace.render();
     url: '{{url('')}}/game/updateingameprogress', 
     data: {'progress' : progress, 'user' : user.username, 'category': this.category, 'level': this.level }, //category + level
     success: function(response){ 
-   console.log("ingameprogress object sent succesfully");  
+   console.log("AJAX: ingameprogress object sent succesfully");  
     },
     error: function(textStatus, errorThrown) {        
         console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
@@ -669,9 +669,7 @@ Blockly.mainWorkspace.render();
 
         Blockly.JavaScript.STATEMENT_PREFIX = '%1\n';
 
-        this.code = Blockly.JavaScript.workspaceToCode(workspacePlayground);   
-        
-        console.log(this.code);
+        this.code = Blockly.JavaScript.workspaceToCode(workspacePlayground);
         sendMessage(this.code);
   }
 
@@ -955,8 +953,6 @@ Blockly.mainWorkspace.render();
       playerSolution = playerSolution.split(",");
       this.code = playerSolution.slice();
 
-      console.log(ratings);
-
       var solution = ratings[task].solution;
       solution = solution.split(",");
 
@@ -1044,15 +1040,6 @@ Blockly.mainWorkspace.render();
               else
                 mistakeCount++;
 
-
-              console.log("H = " + h);
-              console.log("playerSolution ");
-              console.log(playerSolution);
-              console.log("solution ");
-              console.log(solution);
-              console.log("mistakeCount ");
-              console.log(mistakeCount);
-
               }                 
            
               if(mistakeCount < 4)
@@ -1086,11 +1073,7 @@ Blockly.mainWorkspace.render();
 
       
 
-      console.log("mistakeCount" + mistakeCount);
-      console.log("ruleError" + this.ruleError);
-
- 
-      
+   
       if(isCorrect) 
       {   
         return true; 
@@ -1110,8 +1093,7 @@ Blockly.mainWorkspace.render();
     function commandFailed(object)
     {
     
-     console.log(object);    
-     
+         
 
      var title = "";
      var text = "";
@@ -1205,7 +1187,7 @@ Blockly.mainWorkspace.render();
     data: {'username' : user.username, 'category': this.category, 'level': this.level, 'level_start': level_start,
     'task': task, 'task_start': task_start, 'task_end': task_end, 'task_elapsed_time': task_elapsed_time, 'rating': rating, 'code': code, 'result': result}, 
     success: function(response){ 
-    console.log("gameplay object sent succesfully");  
+    console.log("AJAX: gameplay object sent succesfully");  
     },
     error: function(textStatus, errorThrown) {        
         console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
@@ -1528,8 +1510,8 @@ Blockly.mainWorkspace.render();
         (
         { message: messageForGame }, 
     
-        "https://playcanv.as/p/62c28f63/"
-        //"{{url('')}}"
+        //"https://playcanv.as/p/62c28f63/"
+        "{{url('')}}"
         );
 
   }
