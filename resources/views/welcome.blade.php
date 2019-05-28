@@ -18,12 +18,33 @@
       <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
       <!-- Custom styles for this template -->
       <link href="{{ asset('css/new-age.min.css') }}" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+      <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
+      <script>
+      window.addEventListener("load", function(){
+      window.cookieconsent.initialise({
+        "palette": {
+          "popup": {
+            "background": "#242c34"
+          },
+          "button": {
+            "background": "#d4282a"
+          }
+        },
+        "theme": "classic",
+        "content": {
+          "message": "WEB POUŽÍVA SÚBORY COOKIES. PREHLIADANÍM VYJADRUJETE SÚHLAS S ICH POUŽÍVANÍM.",
+          "dismiss": "Rozumiem",
+          "link": "Viac informácií",
+          "href": "{{ route('cookies') }}"
+        }
+      })});
+   </script>
    </head>
    <body id="page-top">
       @auth   
       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
-      @endauth
-      <!-- Navigation -->
+      @endauth      
       <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
          <div class="container">
             <a class="navbar-brand js-scroll-trigger" href="#page-top">BLOCKLY HRA</a>
@@ -51,11 +72,11 @@
                </ul>
             </div>
          </div>
-      </nav>
+      </nav> 
       <header class="masthead">
          <div class="container h-100">
          <div class="row h-100">
-            <div id="carousel"  class="carousel slide w-100" data-ride="carousel" data-interval="8000" data-pause="hover">
+            <div id="carousel"  class="carousel slide w-100" data-ride="carousel" data-interval="6000" data-pause="hover">
                <ul class="carousel-indicators">
                   <li data-target="#carousel" data-slide-to="0" class="active"></li>
                   <li data-target="#carousel" data-slide-to="1"></li>
@@ -64,23 +85,24 @@
                <div class="carousel-inner h-100" style="text-align: center;">
                   <div class="carousel-item active h-100" >
                      <div class="d-flex flex-column h-100 align-items-center justify-content-center">
-                        <h1> Blockly hra. <br> Váš úvod do sveta programovania. </h1>
-                        <a href="#game" class="btn btn-outline btn-xl js-scroll-trigger">Začnite hrať!</a>   
-                        <img class="img-fluid" src="{{ asset('img/carousel-1.png') }}">
+                        <h1> Blockly hra. <br> Váš úvod do sveta programovania. </h1> 
+                        <a href="#game" class="btn btn-outline btn-xl js-scroll-trigger mb-2">Začnite hrať!</a>                        
+                        <img class="img-fluid" src="{{ asset('img/carousel-1.png') }}">  
                      </div>
                   </div>
                   <div class="carousel-item h-100">
                      <div class="d-flex flex-column h-100 align-items-center justify-content-center">
-                        <h1> 10 úrovní. <br> Viac ako 40 úloh na riešenie. </h1>
-                        <a href="#game" class="btn btn-outline btn-xl js-scroll-trigger">Začnite hrať!</a>   
-                        <img class="img-fluid" src="{{ asset('img/carousel-2.png') }}">
+                        <h1> 10 úrovní. <br> Viac ako 40 úloh na riešenie. </h1>   
+                        <a href="#game" class="btn btn-outline btn-xl js-scroll-trigger mb-2">Začnite hrať!</a>                        
+                        <img class="img-fluid"  src="{{ asset('img/carousel-2.png') }}"> 
                      </div>
                   </div>
+                  
                   <div class="carousel-item h-100">
                      <div class="d-flex flex-column h-100 align-items-center justify-content-center">
-                        <h1> Tvorte algoritmy. <br> S príkazmi v cykloch a podmienkach.</h1>
-                        <a href="#game" class="btn btn-outline btn-xl js-scroll-trigger">Začnite hrať!</a>   
-                        <img class="img-fluid" src="{{ asset('img/carousel-3.png') }}">
+                        <h1> Tvorte algoritmy. <br> S príkazmi v cykloch a podmienkach.</h1>  
+                        <a href="#game" class="btn btn-outline btn-xl js-scroll-trigger mb-2">Začnite hrať!</a>                      
+                        <img class="img-fluid" src="{{ asset('img/carousel-3.png') }}"> 
                      </div>
                   </div>
                   <a class="carousel-control-prev" href="#carousel" data-slide="prev">
@@ -108,8 +130,8 @@
                         <div class="col-lg-4">
                            <div class="feature-item">
                               <i class="icon-screen-desktop text-primary"></i>
-                              <h3>Responzívny návrh</h3>
-                              <p class="text-muted">Hra sa prispôsobí vášmu rozlíšeniu.</p>
+                              <h3>Optimalizované pre PC</h3>
+                              <p class="text-muted">Hra nie je náročná na výkon počítača.</p>
                            </div>
                         </div>
                         <div class="col-lg-4">
@@ -425,7 +447,7 @@
          <div class="container">
             <a href="https://developers.google.com/blockly"><img class="img-fluid" src="{{ asset('img/logo_built_on_dark.png') }}"></a>
             <br>
-            <p class="mt-3">&copy; 2019 vytvoril Bc. Martin Vančo<br>Naposledy aktualizované: 20.4.2019
+            <p class="mt-3">&copy; 2019 vytvoril Bc. Martin Vančo<br>Naposledy aktualizované: 27.5.2019
             </p>
          </div>
       </footer>
