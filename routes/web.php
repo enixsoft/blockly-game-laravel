@@ -23,6 +23,11 @@ Route::post('/game/reportbug', 'GameController@reportBug');
 //GET
 Route::get('/game/{category}/{level}', 'GameController@runGame')->name('game');
 Route::get('/', 'GameController@welcome')->name('/');
+
+Route::get('/vue', function () {
+    return view('vue');
+})->name('vue');
+
 Route::get('cookies', function () {
     return view('cookies');
 })->name('cookies');

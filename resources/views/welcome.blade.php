@@ -114,6 +114,7 @@
                </div>
             </div>
          </div>
+         </div>
       </header>
       <section class="features" id="features">
          <div class="container">
