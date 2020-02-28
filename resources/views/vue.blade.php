@@ -25,11 +25,21 @@
       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
       @endauth   
    <div id="app"> 
-   <App/>
+   <App      
+      :user="{{ json_encode(auth()->user()) }}"
+      :errors="{{ $errors }}"
+      :old="{{ json_encode(Session::getOldInput()) }}"
+   />
    </div> 
+   {{ $errors }}
+   {{ json_encode(Session::getOldInput()) }}
+   @guest
+   Guest
+   @endguest
+   @auth
+   {{ Auth::user()->username }}
+   @endauth
    </body>
-
-   @include('laravelfunctions')
  
    <script src="{{ asset(mix('js/app.js')) }}"></script>
    <!-- Bootstrap core JavaScript -->

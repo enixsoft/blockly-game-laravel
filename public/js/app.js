@@ -12711,10 +12711,19 @@ module.exports = function normalizeComponent (
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Headers_CarouselHeader__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Headers_CarouselHeader__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Headers_CarouselHeader___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Headers_CarouselHeader__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Navbar__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Navbar___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Navbar__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Sections_Features__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Sections_Features___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Sections_Features__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Sections_HeroInfo__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Sections_HeroInfo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__Sections_HeroInfo__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Sections_UserAccessForms__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Sections_UserAccessForms___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__Sections_UserAccessForms__);
+//
+//
+//
 //
 //
 //
@@ -12725,16 +12734,43 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+
+
+
+
+var user = this.user;
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      login: false,
+      brand: "BLOCKLY HRA VUE",
+      featuresHeading: "Hra ovládaná programovaním",
+      featuresText: "Google Blockly prináša vizuálny editor blokov, ktoré sa premieňajú na kód. Po odoslaní do hry z neho vznikajú príkazy vykonávané hrdinom.",
+      heroInfoHeading: "Vitajte v Blockly hre!",
+      heroInfoText: "Pomocou spájania programovacích blokov v nej budete ovládať hrdinu bojovníka. Ten prišiel na výpravu do starého hradu a aby ho prešiel celý, musí prekonať množstvo prekážok a splniť mnoho úloh. Prezrite si hrdinu a popis jeho schopností, ktoré postupne získa a budete používať."
+
+    };
+  },
+
+  props: {
+    user: Object,
+    errors: [Object, Array],
+    old: [Object, Array]
+  },
   components: {
     CarouselHeader: __WEBPACK_IMPORTED_MODULE_0__Headers_CarouselHeader___default.a,
-    Navbar: __WEBPACK_IMPORTED_MODULE_1__Navbar___default.a
+    Navbar: __WEBPACK_IMPORTED_MODULE_1__Navbar___default.a,
+    Features: __WEBPACK_IMPORTED_MODULE_2__Sections_Features___default.a,
+    HeroInfo: __WEBPACK_IMPORTED_MODULE_3__Sections_HeroInfo___default.a,
+    UserAccessForms: __WEBPACK_IMPORTED_MODULE_4__Sections_UserAccessForms___default.a
   },
-  mounted: function mounted() {
-    // this.axios  //<--- use this.axios instead of `axios`
-    //   .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-    //   .then(response => (this.info = response.data))
+  created: function created() {
+    console.log("this.errors", this.errors);
+    console.log("this.old", this.old);
+    console.log("this.user", this.user);
+    Vue.prototype.$globalCsrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+    Vue.prototype.$globalUser = this.user;
   }
 });
 
@@ -12749,9 +12785,24 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("Navbar", { attrs: { brand: "BLOCKLY HRA" } }),
+      _c("Navbar", { attrs: { brand: _vm.brand } }),
       _vm._v(" "),
-      _c("Carousel-Header")
+      _c("Carousel-Header"),
+      _vm._v(" "),
+      _vm.login
+        ? _c("Features", {
+            attrs: { heading: _vm.featuresHeading, text: _vm.featuresText }
+          })
+        : _c("HeroInfo", {
+            attrs: { heading: _vm.heroInfoHeading, text: _vm.heroInfoText }
+          }),
+      _vm._v(" "),
+      _c("UserAccessForms", {
+        attrs: {
+          errors: Array.isArray(_vm.errors) ? {} : _vm.errors,
+          oldInputs: Array.isArray(_vm.old) ? {} : _vm.old
+        }
+      })
     ],
     1
   )
@@ -12783,12 +12834,378 @@ if (false) {
 /* 20 */,
 /* 21 */,
 /* 22 */,
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */,
-/* 27 */,
-/* 28 */,
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(9)
+/* script */
+var __vue_script__ = __webpack_require__(24)
+/* template */
+var __vue_template__ = __webpack_require__(28)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Headers/CarouselHeader.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-18fc3466", Component.options)
+  } else {
+    hotAPI.reload("data-v-18fc3466", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 24 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CarouselItem__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CarouselItem___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__CarouselItem__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        console.log('Component mounted.');
+    },
+
+    components: {
+        CarouselItem: __WEBPACK_IMPORTED_MODULE_0__CarouselItem___default.a
+    }
+});
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(9)
+/* script */
+var __vue_script__ = __webpack_require__(26)
+/* template */
+var __vue_template__ = __webpack_require__(27)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Headers/CarouselItem.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-00307553", Component.options)
+  } else {
+    hotAPI.reload("data-v-00307553", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 26 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    // data () {
+    // return { 
+    //     folderImagePath: 'img/'
+    // }
+    // },
+    props: {
+        title: String,
+        subtitle: String,
+        imageFileName: String
+    },
+    // computed()
+    // {
+    //     fullImagePath()
+    //     {
+    //         return this.$parent.$props.imageFolderPath + this.imageFileName;
+    //     }
+    // },
+    mounted: function mounted() {
+        console.log('Component mounted.');
+    }
+});
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass:
+        "d-flex flex-column h-100 align-items-center justify-content-center"
+    },
+    [
+      _c("h1", [
+        _vm._v(" " + _vm._s(_vm.title) + " "),
+        _c("br"),
+        _vm._v(" " + _vm._s(_vm.subtitle) + "  ")
+      ]),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-outline btn-xl js-scroll-trigger mb-2",
+          attrs: { href: "#game" }
+        },
+        [_vm._v("Začnite hrať!")]
+      ),
+      _vm._v(" "),
+      _c("img", {
+        staticClass: "img-fluid",
+        attrs: { src: "img/" + _vm.imageFileName }
+      })
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-00307553", module.exports)
+  }
+}
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("header", { staticClass: "masthead" }, [
+    _c("div", { staticClass: "container h-100" }, [
+      _c("div", { staticClass: "row h-100" }, [
+        _c(
+          "div",
+          {
+            staticClass: "carousel slide w-100",
+            attrs: {
+              id: "carousel",
+              "data-ride": "carousel",
+              "data-interval": "6000",
+              "data-pause": "hover"
+            }
+          },
+          [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "carousel-inner h-100",
+                staticStyle: { "text-align": "center" }
+              },
+              [
+                _c(
+                  "div",
+                  { staticClass: "carousel-item h-100 active" },
+                  [
+                    _c("CarouselItem", {
+                      attrs: {
+                        title: "Blockly hra.",
+                        subtitle: "Váš úvod do sveta programovania.",
+                        imageFileName: "carousel-1.png"
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "carousel-item h-100" },
+                  [
+                    _c("CarouselItem", {
+                      attrs: {
+                        title: "10 úrovní.",
+                        subtitle: "Viac ako 40 úloh na riešenie.",
+                        imageFileName: "carousel-2.png"
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "carousel-item h-100" },
+                  [
+                    _c("CarouselItem", {
+                      attrs: {
+                        title: "Tvorte algoritmy.",
+                        subtitle: "S príkazmi v cykloch a podmienkach.",
+                        imageFileName: "carousel-3.png"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _vm._m(1),
+            _vm._v(" "),
+            _vm._m(2)
+          ]
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ul", { staticClass: "carousel-indicators" }, [
+      _c("li", {
+        staticClass: "active",
+        attrs: { "data-target": "#carousel", "data-slide-to": "0" }
+      }),
+      _vm._v(" "),
+      _c("li", { attrs: { "data-target": "#carousel", "data-slide-to": "1" } }),
+      _vm._v(" "),
+      _c("li", { attrs: { "data-target": "#carousel", "data-slide-to": "2" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "carousel-control-prev",
+        attrs: { href: "#carousel", "data-slide": "prev" }
+      },
+      [_c("span", { staticClass: "carousel-control-prev-icon" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "carousel-control-next",
+        attrs: { href: "#carousel", "data-slide": "next" }
+      },
+      [_c("span", { staticClass: "carousel-control-next-icon" })]
+    )
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-18fc3466", module.exports)
+  }
+}
+
+/***/ }),
 /* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13050,19 +13467,15 @@ if (false) {
 }
 
 /***/ }),
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */,
-/* 36 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(9)
 /* script */
-var __vue_script__ = __webpack_require__(37)
+var __vue_script__ = __webpack_require__(33)
 /* template */
-var __vue_template__ = __webpack_require__(41)
+var __vue_template__ = __webpack_require__(37)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -13079,7 +13492,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/Headers/CarouselHeader.vue"
+Component.options.__file = "resources/assets/js/components/Sections/Features.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -13088,9 +13501,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-18fc3466", Component.options)
+    hotAPI.createRecord("data-v-4f6f8ef7", Component.options)
   } else {
-    hotAPI.reload("data-v-18fc3466", Component.options)
+    hotAPI.reload("data-v-4f6f8ef7", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -13101,19 +13514,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 37 */
+/* 33 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CarouselItem__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CarouselItem___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__CarouselItem__);
-//
-//
-//
-//
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__FeatureItem__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__FeatureItem___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__FeatureItem__);
 //
 //
 //
@@ -13144,25 +13551,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        console.log('Component mounted.');
+    props: {
+        heading: String,
+        text: String
     },
-
     components: {
-        CarouselItem: __WEBPACK_IMPORTED_MODULE_0__CarouselItem___default.a
+        FeatureItem: __WEBPACK_IMPORTED_MODULE_0__FeatureItem___default.a
     }
 });
 
 /***/ }),
-/* 38 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(9)
 /* script */
-var __vue_script__ = __webpack_require__(39)
+var __vue_script__ = __webpack_require__(35)
 /* template */
-var __vue_template__ = __webpack_require__(40)
+var __vue_template__ = __webpack_require__(36)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -13179,7 +13586,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/Headers/CarouselItem.vue"
+Component.options.__file = "resources/assets/js/components/Sections/FeatureItem.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -13188,9 +13595,217 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-00307553", Component.options)
+    hotAPI.createRecord("data-v-55a67b5f", Component.options)
   } else {
-    hotAPI.reload("data-v-00307553", Component.options)
+    hotAPI.reload("data-v-55a67b5f", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 35 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        divClass: String,
+        iconClass: String,
+        heading: String,
+        text: String
+    }
+});
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { class: _vm.divClass }, [
+    _c("div", { staticClass: "feature-item" }, [
+      _c("i", { staticClass: "text-primary", class: _vm.iconClass }),
+      _vm._v(" "),
+      _c("h3", [_vm._v(_vm._s(_vm.heading) + " ")]),
+      _vm._v(" "),
+      _c("p", { staticClass: "text-muted" }, [_vm._v(_vm._s(_vm.text))])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-55a67b5f", module.exports)
+  }
+}
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("section", { staticClass: "features", attrs: { id: "features" } }, [
+    _c("div", { staticClass: "container" }, [
+      _c("div", { staticClass: "section-heading text-center" }, [
+        _c("h2", [_vm._v(_vm._s(_vm.heading))]),
+        _vm._v(" "),
+        _c("p", { staticClass: "text-muted" }, [_vm._v(_vm._s(_vm.text))]),
+        _vm._v(" "),
+        _c("hr")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-lg-12 my-auto" }, [
+          _c("div", { staticClass: "container-fluid" }, [
+            _c(
+              "div",
+              { staticClass: "row" },
+              [
+                _c("FeatureItem", {
+                  attrs: {
+                    divClass: "col-lg-4",
+                    iconClass: "icon-screen-desktop",
+                    heading: "Optimalizované pre PC",
+                    text: "Hra nie je náročná na výkon počítača."
+                  }
+                }),
+                _vm._v(" "),
+                _c("FeatureItem", {
+                  attrs: {
+                    divClass: "col-lg-4",
+                    iconClass: "icon-cloud-upload",
+                    heading: "Účet hráča",
+                    text:
+                      "Postup hráča v úrovniach sa automaticky ukladá do databázy."
+                  }
+                }),
+                _vm._v(" "),
+                _c("FeatureItem", {
+                  attrs: {
+                    divClass: "col-lg-4",
+                    iconClass: "icon-clock",
+                    heading: "Meranie času",
+                    text: "Dĺžka trvania riešenia úloh je zaznamenávaná."
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "row" },
+              [
+                _c("FeatureItem", {
+                  attrs: {
+                    divClass: "col-lg-4",
+                    iconClass: "icon-star",
+                    heading: "Hodnotenie",
+                    text:
+                      "Riešenia úrovní sú hodnotené a je nutné dodržiavať zadanie."
+                  }
+                }),
+                _vm._v(" "),
+                _c("FeatureItem", {
+                  attrs: {
+                    divClass: "col-lg-4",
+                    iconClass: "icon-grid",
+                    heading: "PlayCanvas",
+                    text:
+                      "Herná časť je postavená na webovom hernom engine PlayCanvas."
+                  }
+                }),
+                _vm._v(" "),
+                _c("FeatureItem", {
+                  attrs: {
+                    divClass: "col-lg-4",
+                    iconClass: "icon-globe",
+                    heading: "Webová téma",
+                    text:
+                      "Pre webovú stránku bola použitá téma New Age založená na Bootstrap 4."
+                  }
+                })
+              ],
+              1
+            )
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4f6f8ef7", module.exports)
+  }
+}
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(9)
+/* script */
+var __vue_script__ = __webpack_require__(39)
+/* template */
+var __vue_template__ = __webpack_require__(43)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Sections/HeroInfo.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-058d0902", Component.options)
+  } else {
+    hotAPI.reload("data-v-058d0902", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -13206,6 +13821,455 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__HeroInfoItem__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__HeroInfoItem___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__HeroInfoItem__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        heading: String,
+        text: String
+    },
+    components: {
+        HeroInfoItem: __WEBPACK_IMPORTED_MODULE_0__HeroInfoItem___default.a
+    }
+});
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(9)
+/* script */
+var __vue_script__ = __webpack_require__(41)
+/* template */
+var __vue_template__ = __webpack_require__(42)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Sections/HeroInfoItem.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6629e1b5", Component.options)
+  } else {
+    hotAPI.reload("data-v-6629e1b5", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 41 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        divClass: String,
+        heading: String,
+        imageFilename: String,
+        text: String
+    }
+});
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { class: _vm.divClass }, [
+    _c("h3", [_vm._v(_vm._s(_vm.heading))]),
+    _vm._v(" "),
+    _c("img", {
+      staticClass: "img-thumbnail",
+      attrs: { src: "img/" + _vm.imageFilename }
+    }),
+    _vm._v(" "),
+    _c("p", { staticClass: "text-muted" }, [_vm._v(_vm._s(_vm.text))])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6629e1b5", module.exports)
+  }
+}
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("section", { staticClass: "features", attrs: { id: "features" } }, [
+    _c("div", { staticClass: "container" }, [
+      _c("div", { staticClass: "section-heading text-center" }, [
+        _c("h2", [_vm._v(_vm._s(_vm.heading))]),
+        _vm._v(" "),
+        _c("p", { staticClass: "text-muted" }, [_vm._v(_vm._s(_vm.text))]),
+        _vm._v(" "),
+        _c("hr")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-lg-12 my-auto" }, [
+          _c("div", { staticClass: "container-fluid" }, [
+            _c("div", { staticClass: "row text-center" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-6" }, [
+                _c(
+                  "div",
+                  { staticClass: "row" },
+                  [
+                    _c("HeroInfoItem", {
+                      attrs: {
+                        divClass: "col-lg-6",
+                        heading: "Preskočí prekážky",
+                        imageFilename: "thumbnail1.png",
+                        text:
+                          "Keď je v ceste voda alebo nastražená pasca, hrdina ich často dokáže preskočiť a pokračovať ďalej."
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("HeroInfoItem", {
+                      attrs: {
+                        divClass: "col-lg-6",
+                        heading: "Zničí veci",
+                        imageFilename: "thumbnail2.png",
+                        text:
+                          "V ruinách hradu sa nachádza veľa starých vecí ako sú krabice, sudy a vázy, ktoré hrdinov meč dokáže zničiť a uvoľniť cestu."
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "row" },
+                  [
+                    _c("HeroInfoItem", {
+                      attrs: {
+                        divClass: "col-lg-6",
+                        heading: "Otvára truhlice",
+                        imageFilename: "thumbnail3.png",
+                        text:
+                          "Niekedy hrdina potrebuje prehľadať truhlice, aby našiel kľúč od zamknutých dverí."
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("HeroInfoItem", {
+                      attrs: {
+                        divClass: "col-lg-6",
+                        heading: "Používa páky",
+                        imageFilename: "thumbnail4.png",
+                        text:
+                          "Keď treba otvoriť padacie dvere alebo zneškodniť pasce, hrdina použije páku."
+                      }
+                    })
+                  ],
+                  1
+                )
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-6" }, [
+      _c("img", {
+        staticClass: "img-fluid",
+        attrs: { src: "img/character.png" }
+      })
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-058d0902", module.exports)
+  }
+}
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(9)
+/* script */
+var __vue_script__ = __webpack_require__(45)
+/* template */
+var __vue_template__ = __webpack_require__(49)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Sections/UserAccessForms.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-57f86e16", Component.options)
+  } else {
+    hotAPI.reload("data-v-57f86e16", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 45 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__LoginForm__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__LoginForm___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__LoginForm__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            login: false,
+            token: document.head.querySelector('meta[name="csrf-token"]')
+        };
+    },
+
+    props: {
+        errors: Object,
+        oldInputs: Object
+        // errorsRegister: Object,
+        // oldEmail: String,
+        // oldUsername: String,
+        // oldRememberChecked: Boolean,
+        // oldLoginUsername: String
+    },
+    components: {
+        LoginForm: __WEBPACK_IMPORTED_MODULE_0__LoginForm___default.a
+    },
+    computed: {
+        oldLoginUsername: function oldLoginUsername() {
+            return this.oldInputs && this.oldInputs['login-username'] ? this.oldInputs['login-username'] : "";
+        },
+        oldRememberChecked: function oldRememberChecked() {
+            return this.oldInputs && this.oldInputs.remember ? true : false;
+        }
+    },
+    mounted: function mounted() {
+        console.log("token", this.token);
+    }
+});
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(9)
+/* script */
+var __vue_script__ = __webpack_require__(47)
+/* template */
+var __vue_template__ = __webpack_require__(48)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Sections/LoginForm.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-aa71e4fa", Component.options)
+  } else {
+    hotAPI.reload("data-v-aa71e4fa", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 47 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -13216,30 +14280,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    // data () {
-    // return { 
-    //     folderImagePath: 'img/'
-    // }
-    // },
     props: {
-        title: String,
-        subtitle: String,
-        imageFileName: String
+        errors: Object,
+        oldUsername: String,
+        oldRemember: Boolean
     },
-    // computed()
-    // {
-    //     fullImagePath()
-    //     {
-    //         return this.$parent.$props.imageFolderPath + this.imageFileName;
-    //     }
-    // },
+    data: function data() {
+        return {
+            csrfToken: window.csrfToken
+        };
+    },
     mounted: function mounted() {
-        console.log('Component mounted.');
+        console.log("globalUser", this.$globalUser);
+        console.log("globalCsrfToken", this.$globalCsrfToken);
     }
 });
 
 /***/ }),
-/* 40 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -13247,31 +14305,197 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    {
-      staticClass:
-        "d-flex flex-column h-100 align-items-center justify-content-center"
-    },
+    "form",
+    { attrs: { method: "POST", id: "loginForm", action: "login" } },
     [
-      _c("h1", [
-        _vm._v(" " + _vm._s(_vm.title) + " "),
-        _c("br"),
-        _vm._v(" " + _vm._s(_vm.subtitle) + "  ")
-      ]),
+      _c("input", {
+        attrs: { type: "hidden", name: "_token" },
+        domProps: { value: _vm.$globalCsrfToken }
+      }),
       _vm._v(" "),
       _c(
-        "a",
-        {
-          staticClass: "btn btn-outline btn-xl js-scroll-trigger mb-2",
-          attrs: { href: "#game" }
-        },
-        [_vm._v("Začnite hrať!")]
+        "div",
+        { staticClass: "form-group row col-md-6 mx-auto" },
+        [
+          _c(
+            "label",
+            { staticClass: "col-md-12", attrs: { for: "login-username" } },
+            [_vm._v("Prihlasovacie meno:")]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: {
+              id: "login-username",
+              type: "username",
+              name: "login-username",
+              required: ""
+            },
+            domProps: { value: _vm.oldUsername }
+          }),
+          _vm._v(" "),
+          _vm._l(_vm.errors.username, function(error, index) {
+            return _c(
+              "span",
+              { key: index, staticClass: "help-block mx-auto text-danger" },
+              [_c("strong", [_vm._v(_vm._s(error))])]
+            )
+          })
+        ],
+        2
       ),
       _vm._v(" "),
-      _c("img", {
-        staticClass: "img-fluid",
-        attrs: { src: "img/" + _vm.imageFileName }
-      })
+      _c(
+        "div",
+        {
+          staticClass: "form-group row col-md-6 mx-auto",
+          class: { "has-error": _vm.errors.password !== undefined }
+        },
+        [
+          _c(
+            "label",
+            { staticClass: "col-md-12", attrs: { for: "login-password" } },
+            [_vm._v("Heslo:")]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: {
+              id: "login-password",
+              type: "password",
+              name: "login-password",
+              autocomplete: "current-password",
+              required: ""
+            }
+          }),
+          _vm._v(" "),
+          _vm._l(_vm.errors.password, function(error, index) {
+            return _c(
+              "span",
+              { key: index, staticClass: "help-block mx-auto text-danger" },
+              [_c("strong", [_vm._v(_vm._s(error))])]
+            )
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-6 mx-auto" }, [
+        _c("label", { staticClass: "fancy-checkbox" }, [
+          _c("input", {
+            attrs: { type: "checkbox", id: "remember", name: "remember" },
+            domProps: { checked: _vm.oldRemember }
+          }),
+          _vm._v(" "),
+          _c("i", { staticClass: "fa fa-fw fa-square unchecked" }),
+          _vm._v(" "),
+          _c("i", { staticClass: "fa fa-fw fa-check-square checked" }),
+          _vm._v(" Zapamätať\r\n    ")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _vm._m(1)
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-6 mx-auto" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-lg btn-success", attrs: { type: "submit" } },
+        [_vm._v("\r\n    Prihlásiť sa\r\n    ")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-6 mx-auto" }, [
+      _c("p", [
+        _vm._v("\r\n        Nemáte ešte účet?\r\n        "),
+        _c(
+          "a",
+          {
+            staticClass: "btn btn-link",
+            attrs: {
+              "data-toggle": "collapse",
+              href: "",
+              "data-target": ".multi-collapse"
+            }
+          },
+          [_vm._v("\r\n        Zaregistrujte sa.\r\n        ")]
+        )
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-aa71e4fa", module.exports)
+  }
+}
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "section",
+    { staticClass: "download bg-primary text-center", attrs: { id: "game" } },
+    [
+      _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "row" }, [
+          _c(
+            "div",
+            {
+              staticClass: "collapse show multi-collapse col-md-12 mx-auto",
+              attrs: { id: "loginDiv" }
+            },
+            [
+              _c("h2", { staticClass: "section-heading" }, [
+                _vm._v("Prihlásenie")
+              ]),
+              _vm._v(" "),
+              _c("p", [
+                _vm._v("Pre spustenie hry je potrebné byť prihlásený.")
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "form-group" },
+                [
+                  _c("LoginForm", {
+                    attrs: {
+                      errors: _vm.errors,
+                      oldUsername: _vm.oldLoginUsername,
+                      oldRemember: _vm.oldRememberChecked
+                    }
+                  })
+                ],
+                1
+              )
+            ]
+          )
+        ])
+      ])
     ]
   )
 }
@@ -13281,147 +14505,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-00307553", module.exports)
-  }
-}
-
-/***/ }),
-/* 41 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("header", { staticClass: "masthead" }, [
-    _c("div", { staticClass: "container h-100" }, [
-      _c("div", { staticClass: "row h-100" }, [
-        _c(
-          "div",
-          {
-            staticClass: "carousel slide w-100",
-            attrs: {
-              id: "carousel",
-              "data-ride": "carousel",
-              "data-interval": "6000",
-              "data-pause": "hover"
-            }
-          },
-          [
-            _vm._m(0),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "carousel-inner h-100",
-                staticStyle: { "text-align": "center" }
-              },
-              [
-                _c(
-                  "div",
-                  { staticClass: "carousel-item h-100 active" },
-                  [
-                    _c("CarouselItem", {
-                      attrs: {
-                        title: "Blockly hra.",
-                        subtitle: "Váš úvod do sveta programovania.",
-                        imageFileName: "carousel-1.png"
-                      }
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "carousel-item h-100" },
-                  [
-                    _c("CarouselItem", {
-                      attrs: {
-                        title: "10 úrovní.",
-                        subtitle: "Viac ako 40 úloh na riešenie.",
-                        imageFileName: "carousel-2.png"
-                      }
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "carousel-item h-100" },
-                  [
-                    _c("CarouselItem", {
-                      attrs: {
-                        title: "Tvorte algoritmy.",
-                        subtitle: "S príkazmi v cykloch a podmienkach.",
-                        imageFileName: "carousel-3.png"
-                      }
-                    })
-                  ],
-                  1
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _vm._m(1),
-            _vm._v(" "),
-            _vm._m(2)
-          ]
-        )
-      ])
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("ul", { staticClass: "carousel-indicators" }, [
-      _c("li", {
-        staticClass: "active",
-        attrs: { "data-target": "#carousel", "data-slide-to": "0" }
-      }),
-      _vm._v(" "),
-      _c("li", { attrs: { "data-target": "#carousel", "data-slide-to": "1" } }),
-      _vm._v(" "),
-      _c("li", { attrs: { "data-target": "#carousel", "data-slide-to": "2" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "carousel-control-prev",
-        attrs: { href: "#carousel", "data-slide": "prev" }
-      },
-      [_c("span", { staticClass: "carousel-control-prev-icon" })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "carousel-control-next",
-        attrs: { href: "#carousel", "data-slide": "next" }
-      },
-      [_c("span", { staticClass: "carousel-control-next-icon" })]
-    )
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-18fc3466", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-57f86e16", module.exports)
   }
 }
 
