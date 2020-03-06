@@ -2,9 +2,11 @@
 <div>
     <Navbar :brand="brand"/>
     <Carousel-Header/>
-    <Features v-if="login" :heading="featuresHeading" :text="featuresText" />
+    <Features v-if="!$global.User" :heading="featuresHeading" :text="featuresText" />
     <HeroInfo v-else :heading="heroInfoHeading" :text="heroInfoText" />
-    <UserAccessForms :errors="Array.isArray(errors) ? {} : errors" :oldInputs="Array.isArray(old) ? {} : old"/>
+    <UserAccessForms v-if="!$global.User" :errors="Array.isArray(errors) ? {} : errors" :oldInputs="Array.isArray(old) ? {} : old"/>
+    <!-- Game Menu -->
+    <!-- Footer -->
 </div>
 </template>
 
@@ -14,8 +16,6 @@ import Navbar from './Navbar';
 import Features from './Sections/Features';
 import HeroInfo from './Sections/HeroInfo';
 import UserAccessForms from './Sections/UserAccessForms';
-
-const user = this.user;
 
 export default { 
   data(){
@@ -32,7 +32,9 @@ export default {
   props: {
     user: Object,
     errors: [Object, Array],
-    old: [Object, Array]
+    old: [Object, Array],
+    lang: [Object],
+    recaptchaKey: String
   },
   components: {
     CarouselHeader,
@@ -45,8 +47,14 @@ export default {
     console.log("this.errors", this.errors);
     console.log("this.old", this.old);
     console.log("this.user", this.user);
-    Vue.prototype.$globalCsrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
-    Vue.prototype.$globalUser = this.user;
+    console.log("this.lang", this.lang);
+    console.log("this.recaptchaKey", this.recaptchaKey);
+    Vue.prototype.$global = {
+      CsrfToken: document.head.querySelector('meta[name="csrf-token"]').content,
+      User: this.user,
+      Lang: this.lang,
+      RecaptchaKey: this.recaptchaKey
+    };
   }
 }
 </script>

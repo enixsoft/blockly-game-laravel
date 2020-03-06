@@ -1,20 +1,16 @@
 <template>
  <section class="download bg-primary text-center" id="game">
-         <div class="container">
-            <div class="row">  
-               <div class="collapse show multi-collapse col-md-12 mx-auto" id="loginDiv">
-                  <h2 class="section-heading">Prihlásenie</h2>
-                  <p>Pre spustenie hry je potrebné byť prihlásený.</p>
-                  <div class="form-group">
-                      <LoginForm :errors="errors" :oldUsername="oldLoginUsername" :oldRemember="oldRememberChecked"/>
-                  </div>
-               </div>
-             </div>
-             </div>
-    </section>
+    <div class="container">
+            <div class="row">              
+                <LoginForm :errors="errors || {}" :oldUsername="oldLoginUsername" :oldRemember="oldRememberChecked"/>                
+                <RegisterForm :errors="errors || {}" :oldUsername="oldRegisterUsername" :oldEmail="oldRegisterEmail"/>
+            </div>
+    </div>
+</section>
 </template>
 <script>
 import LoginForm from './LoginForm';
+import RegisterForm from './RegisterForm';
 
 export default {
     data(){
@@ -33,7 +29,8 @@ export default {
         // oldLoginUsername: String
     },
     components: {
-        LoginForm
+        LoginForm,
+        RegisterForm
     },
     computed:
     {
@@ -44,11 +41,19 @@ export default {
         oldRememberChecked()
         {
             return this.oldInputs && this.oldInputs.remember ? true : false;
+        },
+        oldRegisterUsername()
+        {
+            return this.oldInputs && this.oldInputs['register-username'] ? this.oldInputs['register-username'] : "";
+        },
+        oldRegisterEmail()
+        {       
+            return this.oldInputs && this.oldInputs['email'] ? this.oldInputs['email'] : "";
         }
     }, 
     mounted()
-    {
-        console.log("token",this.token);
+    {      
+        console.log("errors",this.errors);
     }    
 }
 </script>

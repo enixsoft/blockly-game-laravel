@@ -27,11 +27,14 @@
    <div id="app"> 
    <App      
       :user="{{ json_encode(auth()->user()) }}"
-      :errors="{{ $errors }}"
-      :old="{{ json_encode(Session::getOldInput()) }}"
+      :errors="{{ $errors->merge($errors->register) }}"
+      :old="{{ json_encode(Session::getOldInput()) }}"    
+      :lang="{{ $langJson }}"
+      :recaptcha-key="'{{env('GOOGLE_RECAPTCHA_KEY')}}'"
    />
    </div> 
    {{ $errors }}
+   {{ $errors->register }}
    {{ json_encode(Session::getOldInput()) }}
    @guest
    Guest
@@ -39,6 +42,7 @@
    @auth
    {{ Auth::user()->username }}
    @endauth
+   {{env('GOOGLE_RECAPTCHA_KEY')}}
    </body>
  
    <script src="{{ asset(mix('js/app.js')) }}"></script>
