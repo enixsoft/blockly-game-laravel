@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Lang;
 
 use App\User;
 
@@ -335,7 +336,14 @@ class GameController extends Controller
 
     public function welcome()
     {      
-          if(Auth::check())
+      $files = ['auth', 'pagination', 'passwords', 'validation'];
+      foreach ($files as $file)
+      {
+      $lang[$file] = Lang::get($file);
+      }
+      $langJson =  json_encode($lang);    
+      
+      if(Auth::check())
             {
                 
                 $auth = Auth::user();                
@@ -345,9 +353,7 @@ class GameController extends Controller
                 $inGameProgress = [];
 
                 if($getProgress!=null)
-                {
-
-                
+                {                
                   foreach($getProgress as $item)
                   {
                   
@@ -361,20 +367,14 @@ class GameController extends Controller
 
                   }
 
-                }   
-
-
-
-
-
-                return view("welcome", compact('inGameProgress')); 
+                } 
+                $inGameProgressJson =  json_encode($inGameProgress);    
+                return view("vue", compact('inGameProgressJson', 'langJson')); 
             }
            else
            {
-             return view("welcome");
-           } 
-
-        
+             return view("vue", compact('langJson'));
+           }       
     }
 
 

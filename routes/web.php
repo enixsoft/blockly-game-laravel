@@ -22,18 +22,18 @@ Route::post('/game/reportbug', 'GameController@reportBug');
 
 //GET
 Route::get('/game/{category}/{level}', 'GameController@runGame')->name('game');
-Route::get('/old', 'GameController@welcome')->name('/old');
+Route::get('/', 'GameController@welcome')->name('/');
 
-Route::get('/', function () {    
-    $files = ['auth', 'pagination', 'passwords', 'validation'];
-    foreach ($files as $file)
-    {
-    $lang[$file] = Lang::get($file);
-    }
-    $langJson =  json_encode($lang);
+// Route::get('/', function () {    
+//     $files = ['auth', 'pagination', 'passwords', 'validation'];
+//     foreach ($files as $file)
+//     {
+//     $lang[$file] = Lang::get($file);
+//     }
+//     $langJson =  json_encode($lang);
     
-    return view('vue')->with(compact('langJson'));
-})->name('/');
+//     return view('vue')->with(compact('langJson'));
+// })->name('/');
 
 Route::get('cookies', function () {
     return view('cookies');
