@@ -341,40 +341,36 @@ class GameController extends Controller
       {
       $lang[$file] = Lang::get($file);
       }
-      $langJson =  json_encode($lang);    
+      $langJson =  json_encode($lang);
+      
+      $inGameProgress = [];
       
       if(Auth::check())
+      {          
+          $auth = Auth::user();                
+
+          $getProgress = Progress::where('username', '=', $auth->username)->get();
+
+          if($getProgress!=null)
+          {                
+            foreach($getProgress as $item)
             {
-                
-                $auth = Auth::user();                
-
-                $getProgress = Progress::where('username', '=', $auth->username)->get();
-
-                $inGameProgress = [];
-
-                if($getProgress!=null)
-                {                
-                  foreach($getProgress as $item)
-                  {
-                  
-                  for ($i=1; $i <= $item['level']; $i++) 
-                  { 
-                     if($i==$item['level'])
-                     $inGameProgress[] = $item['progress'];
-                     else
-                     $inGameProgress[] = 100;
-                  }
-
-                  }
-
-                } 
-                $inGameProgressJson =  json_encode($inGameProgress);    
-                return view("vue", compact('inGameProgressJson', 'langJson')); 
+            
+            for ($i=1; $i <= $item['level']; $i++) 
+            { 
+                if($i==$item['level'])
+                $inGameProgress[] = $item['progress'];
+                else
+                $inGameProgress[] = 100;
             }
-           else
-           {
-             return view("vue", compact('langJson'));
-           }       
+
+            }
+
+          }           
+      }
+
+      $inGameProgressJson =  json_encode($inGameProgress);    
+      return view("vue", compact('inGameProgressJson', 'langJson'));    
     }
 
 

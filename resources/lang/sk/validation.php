@@ -150,6 +150,7 @@ return [
         'password' => 'Heslo',
         'email' => 'E-mail',
         'register-password' => 'Heslo',
+        'register-email' => 'E-mail',
 
     ],
 

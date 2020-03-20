@@ -6,17 +6,17 @@
 <form method="POST" id="loginForm" action="login">
 <input type="hidden" name="_token" :value="$global.CsrfToken">
 <div class="form-group row col-md-6 mx-auto">
-    <label for="username" class="col-md-12">Prihlasovacie meno:</label>
-    <input class="form-control" id="username" type="username" name="username" :value="oldUsername" required>    
-    <span v-for="(error, index) in errors.username" :key="index" class="help-block mx-auto text-danger">
+    <label for="login-username" class="col-md-12">Prihlasovacie meno:</label>
+    <input class="form-control" id="login-username" type="username" name="login-username" :value="oldUsername" required>    
+    <span v-for="(error, index) in errors['username']" :key="index" class="help-block mx-auto text-danger">
     <strong>{{ error }}</strong>
     <br>
     </span> 
 </div>
 <div class="form-group row col-md-6 mx-auto" :class="{'has-error': errors.password !== undefined}">
-    <label for="password" class="col-md-12">Heslo:</label>
-    <input class="form-control" id="password" type="password" name="password" autocomplete="current-password" required>
-    <span v-for="(error, index) in errors.password" :key="index" class="help-block mx-auto text-danger">
+    <label for="login-password" class="col-md-12">Heslo:</label>
+    <input class="form-control" id="login-password" type="password" name="login-password" autocomplete="current-password" required>
+    <span v-for="(error, index) in errors['password']" :key="index" class="help-block mx-auto text-danger">
     <strong>{{ error }}</strong>
     <br>
     </span> 
