@@ -32,8 +32,10 @@
       :lang="{{ $langJson }}"
       :recaptcha-key="'{{env('GOOGLE_RECAPTCHA_KEY')}}'"
       :in-game-progress="{{ $inGameProgressJson }}"
+      :game-data="{{ $gameDataJson }}"
    />
    </div> 
+   {{ $gameDataJson }}
    {{ $errors }}
    {{ $errors->register }}
    {{ json_encode(Session::getOldInput()) }}

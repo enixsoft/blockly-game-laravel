@@ -31,6 +31,7 @@ import UserAccessForms from './Sections/UserAccessForms';
 import GameLevels from './Sections/GameLevels';
 import * as $ from 'jquery';
 import 'bootstrap';
+import 'jquery.easing';
 
 
 export default { 
@@ -50,7 +51,8 @@ export default {
     old: [Object, Array],
     lang: [Object],
     recaptchaKey: String,
-    inGameProgress: Array
+    inGameProgress: Array,
+    gameData: [Object, Array]
   },
   components: {
     CarouselHeader,
@@ -65,12 +67,12 @@ export default {
       CsrfToken: document.head.querySelector('meta[name="csrf-token"]').content,
       User: this.user,
       Lang: this.lang,
-      RecaptchaKey: this.recaptchaKey
+      RecaptchaKey: this.recaptchaKey,
+      GameData: this.gameData
     };
     console.log("GLOBAL", this.$global);
   },
   mounted(){
-  // console.log(_);
   if(this.errors['username'] || this.errors['password'])
   {
     $('html, body').animate({
@@ -90,6 +92,7 @@ export default {
     }, 'slow');  
   }
 
+  // Smooth scrolling using jQuery easing
   $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
     if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
       var target = $(this.hash);

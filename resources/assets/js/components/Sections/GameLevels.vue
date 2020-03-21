@@ -11,7 +11,8 @@
                         :key="index"
                     ></GameLevelItem>
                   <div class="col-md-6 mx-auto">
-                     <button onclick="window.location=window.location.href + 'play';" :class="['btn', 'btn-lg', 'btn-success', inGameProgress[9] && inGameProgress[9] === 100 ? 'disabled' : '']">
+                     <!-- <button onclick="window.location=window.location.href + 'play';" :class="['btn', 'btn-lg', 'btn-success', inGameProgress[9] && inGameProgress[9] === 100 ? 'disabled' : '']"> -->
+                     <button v-on:click="runGame()" :class="['btn', 'btn-lg', 'btn-success', inGameProgress[9] && inGameProgress[9] === 100 ? 'disabled' : '']">
                      <i class="fas fa-play"></i>
                    {{ inGameProgress[0] === 0 ? 'Začať novú hru' : 'Pokračovať v hre.' }}
                      </button>             
@@ -72,6 +73,23 @@ export default {
                 category[i] = this.inGameProgress[startIndex + i] ? this.inGameProgress[startIndex + i] : 0;
             }
             return category;
+        },
+        runGame()
+        {
+            fetch('game/99/99', 
+            {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+            })
+            .then((response) => response.json()) //or response.json()
+            .then((json) => {
+            console.log(json);
+            this.$global.GameData = json;
+            });
+            
+            // window.history.pushState("", "", 'play');
         }
     },
     mounted()

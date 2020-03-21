@@ -10,7 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+use Illuminate\Http\Request;
+use App\Http\Controllers\NewGameController;
 
 
 //POST
@@ -21,8 +22,8 @@ Route::post('/game/createlogofgameplay', 'GameController@createLogOfGameplay');
 Route::post('/game/reportbug', 'GameController@reportBug');
 
 //GET
-Route::get('/game/{category}/{level}', 'GameController@runGame')->name('game');
-Route::get('/', 'GameController@welcome')->name('/');
+Route::get('/game/{category}/{level}', 'NewGameController@runGame')->name('game');
+Route::get('/', 'NewGameController@welcome')->name('/');
 
 // Route::get('/', function () {    
 //     $files = ['auth', 'pagination', 'passwords', 'validation'];

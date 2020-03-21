@@ -13,9 +13,9 @@
                   <li class="nav-item">
                      <a class="nav-link js-scroll-trigger" href="#game">Spustiť hru</a>
                   </li>                             
-                  <li v-if="$global.User" class="nav-item dropdown">
+                  <li v-if="isUserLoggedIn" class="nav-item dropdown">
                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                     <i class="fa fa-user-circle"></i> {{ $global.User.username }}
+                     <i class="fa fa-user-circle"></i> {{ userName }}
                      </a>        
                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Odhlásiť sa</a>
@@ -38,11 +38,11 @@
         computed: {
             isUserLoggedIn()
             {
-                return window.user ? true : false;
+                return this.$global.User ? true : false;
             },
             userName()
             {             
-                return window.user ? user.username : undefined;
+                return this.$global.User ? this.$global.User.username : undefined;
             }
         }
     }
