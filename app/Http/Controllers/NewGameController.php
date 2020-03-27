@@ -254,13 +254,17 @@ class NewGameController extends Controller
 
                 //user is not logged in
 
-                return redirect()->route('/');
+                $error = "ERROR_NOT_LOGGED_IN";
+                return $this->redirectOrSendResponse(compact('category', 'level', 'error'), $request);
+
+                // return redirect()->route('/');
           }
         
             
      
          } 
-         return view("game", compact('category', 'level', 'xmlToolbox', 'savedGame', 'jsonTasks', 'jsonModals', 'jsonRatings'));
+         // return view("game", compact('category', 'level', 'xmlToolbox', 'savedGame', 'jsonTasks', 'jsonModals', 'jsonRatings'));
+         return $this->redirectOrSendResponse(compact('category', 'level', 'xmlToolbox', 'savedGame', 'jsonTasks', 'jsonModals', 'jsonRatings'), $request);
         
     }
 
@@ -589,8 +593,8 @@ class NewGameController extends Controller
       $requestData = $request->all();      
 
       if($request->header('Accept') !== null && $request->header('Accept') == "application/json")
-      {
-         return $responseData;
+      {         
+        return $responseData;
       }
 
       return $this->welcome($responseData);

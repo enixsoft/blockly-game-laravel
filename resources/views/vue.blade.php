@@ -35,7 +35,7 @@
       :game-data="{{ $gameDataJson }}"
    />
    </div> 
-   {{ $gameDataJson }}
+   <!-- {{ $gameDataJson }}
    {{ $errors }}
    {{ $errors->register }}
    {{ json_encode(Session::getOldInput()) }}
@@ -45,7 +45,7 @@
    @auth
    {{ Auth::user()->username }}
    @endauth
-   {{env('GOOGLE_RECAPTCHA_KEY')}}
+   {{env('GOOGLE_RECAPTCHA_KEY')}} -->
    </body>
  
    <script src="{{ asset(mix('js/app.js')) }}"></script>

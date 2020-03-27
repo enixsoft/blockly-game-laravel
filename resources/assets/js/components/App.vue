@@ -1,7 +1,11 @@
 <template>
 <div>
     <Navbar :brand="brand"/>
-    <Carousel-Header/>
+    <template v-if="$global.GameInProgress">
+      <GameHeader />
+    </template>    
+    <template v-else>    
+    <Carousel-Header />
     <Features v-if="!$global.User" 
               :heading="featuresHeading" 
               :text="featuresText" />
@@ -19,11 +23,13 @@
             </p>
          </div>
     </footer>
+    </template>
 </div>
 </template>
 
 <script>
 import CarouselHeader from './Headers/CarouselHeader';
+import GameHeader from './Headers/GameHeader';
 import Navbar from './Navbar';
 import Features from './Sections/Features';
 import HeroInfo from './Sections/HeroInfo';
@@ -37,6 +43,13 @@ import 'jquery.easing';
 export default { 
   data(){
     return {
+        CsrfToken: document.head.querySelector('meta[name="csrf-token"]').content,
+        User: this.user,
+        Lang: this.lang,
+        RecaptchaKey: this.recaptchaKey,
+        GameData: this.gameData,
+        GameInProgress: this.gameData.length ? true : false,
+
         login: false,
         brand: "BLOCKLY HRA VUE",
         featuresHeading: "Hra ovládaná programovaním",
@@ -60,16 +73,19 @@ export default {
     Features,
     HeroInfo,
     UserAccessForms,
-    GameLevels
+    GameLevels,
+    GameHeader
   },
   created () {    
-    Vue.prototype.$global = {
-      CsrfToken: document.head.querySelector('meta[name="csrf-token"]').content,
-      User: this.user,
-      Lang: this.lang,
-      RecaptchaKey: this.recaptchaKey,
-      GameData: this.gameData
-    };
+    // Vue.prototype.$global = {
+    //   CsrfToken: document.head.querySelector('meta[name="csrf-token"]').content,
+    //   User: this.user,
+    //   Lang: this.lang,
+    //   RecaptchaKey: this.recaptchaKey,
+    //   GameData: this.gameData,
+    //   GameInProgress: this.gameData.length ? true : false
+    // };
+    Vue.prototype.$global = this.$data;
     console.log("GLOBAL", this.$global);
   },
   mounted(){
@@ -85,7 +101,7 @@ export default {
     $('html, body').animate({
         scrollTop: $('#game').offset().top
     }, 'slow');
-  } else if(this.$global.User)
+  } else if(this.$global.User && !this.$global.GameInProgress)
   {
     $('html, body').animate({
     scrollTop: $('#features').offset().top

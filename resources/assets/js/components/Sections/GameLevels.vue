@@ -46,6 +46,7 @@
 </template>
 <script>
 import GameLevelItem from './GameLevelItem';
+import App from '../App';
 
 export default {
     data(){
@@ -54,7 +55,8 @@ export default {
                 { text: 'V prvej kategórii sa naučíme ovládať hrdinu, zadávať mu príkazy pohyb, skok, útok mečom, použitie páky a otvorenie truhlice.' },
                 { text: 'V druhej kategórii sa naučíme ovládať hrdinu podľa nového herného systému a využívať pri tvorbe algoritmov cykly a podmienky.' }
             ],
-            levelsPerCategory: 5
+            levelsPerCategory: 5,
+            App
         }
     },
     components: {
@@ -76,18 +78,25 @@ export default {
         },
         runGame()
         {
-            fetch('game/99/99', 
+            fetch('game/1/1', 
             {
             method: 'GET',
             headers: {
                 'Accept': 'application/json'
-            }
+            },
+            credentials: 'same-origin'
             })
-            .then((response) => response.json()) //or response.json()
+            .then((response) => {
+            console.log(response);
+            return response.json();}) //or response.json()
             .then((json) => {
-            console.log(json);
-            this.$global.GameData = json;
+            console.log(json);            
+            this.$set(this.$global, 'GameData', json);
+            this.$set(this.$global, 'GameInProgress', true);
             });
+
+            console.log(this.App);
+           
             
             // window.history.pushState("", "", 'play');
         }
