@@ -254,10 +254,10 @@ class NewGameController extends Controller
 
                 //user is not logged in
 
-                $error = "ERROR_NOT_LOGGED_IN";
-                return $this->redirectOrSendResponse(compact('category', 'level', 'error'), $request);
+                // $error = "ERROR_NOT_LOGGED_IN";
+                // return $this->redirectOrSendResponse(compact('category', 'level', 'error'), $request);
 
-                // return redirect()->route('/');
+               return redirect()->route('/');
           }
         
             

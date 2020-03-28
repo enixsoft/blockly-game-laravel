@@ -76,9 +76,11 @@ export default {
             }
             return category;
         },
-        runGame()
-        {
-            fetch('game/1/1', 
+        runGame(category = 1, level = 1){
+            
+            let result;
+
+            fetch(`game/${category}/${level}`, 
             {
             method: 'GET',
             headers: {
@@ -90,15 +92,18 @@ export default {
             console.log(response);
             return response.json();}) //or response.json()
             .then((json) => {
-            console.log(json);            
-            this.$set(this.$global, 'GameData', json);
-            this.$set(this.$global, 'GameInProgress', true);
-            });
+            console.log(json);
 
-            console.log(this.App);
-           
-            
-            // window.history.pushState("", "", 'play');
+            //this.$set(this.$global, 'GameData', json);
+            //this.$set(this.$global, 'GameInProgress', true);
+
+            const result = `${json.category}x${json.level}`;  
+ 
+            this.$global.GameData[result] = json;
+            this.$global.GameInProgress = result;
+
+            window.history.pushState({ page: 'game', data: { level: result }}, "", 'game/1/1');
+            });
         }
     },
     mounted()

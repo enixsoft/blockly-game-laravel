@@ -11,6 +11,7 @@ try {
     window.$ = window.jQuery = require('jquery');
     require('jquery.easing')(window.jQuery);
     require('bootstrap');
+    require('blockly');
     //require('bootstrap-sass');
 } catch (e) {}
 

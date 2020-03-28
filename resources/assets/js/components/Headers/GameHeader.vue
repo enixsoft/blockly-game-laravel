@@ -4,12 +4,12 @@
 <div class="row h-100 w-100 no-padding">
     <div class="col-lg-6 no-padding">
         <iframe id="app-frame" class="game-playcanvas"  
-        src="http://localhost/blocklyapp/game/playcanvas/1x1.html"></iframe> 
+        :src="`http://localhost/blocklyapp/game/playcanvas/${levelString}.html`"></iframe> 
         <!-- src="https://playcanv.as/e/p/62c28f63/"></iframe>-->             
     </div>
     <div class="col-lg-6 no-padding">
         <div class="row h-100 w-100 no-padding">
-            <div class="col-lg-12 game-blockly" id="blocklyArea">            
+            <div class="col-lg-12 game-blockly" id="blocklyArea" ref="blocklyArea">            
             </div>
             <div class= "col-lg-12 game-buttons mx-auto text-center" id="gameButtons">
             <!-- <div class= "btn-group" role="group">
@@ -29,16 +29,270 @@
     </div>
 </div>
 </div>
+<div id="blocklyDiv" ref="blocklyDiv" style="position: absolute;"></div>
+<template id="startBlocks" style="display: none">  
+    <template v-if="category === '1'" type="player" movable="false" deletable="false" inline="false" x="0" y="0"></template> 
+    <template v-else  type="playerDirection" movable="false" deletable="false" inline="false" x="0" y="0"></template>
+    <!-- DEV BLOCKS
+    <block type="cameraplus" movable="false" deletable="false" inline="false" x="650" y="900"></block> 
+    <block type="cameraminus" movable="false" deletable="false" inline="false" x="450" y="900"></block>       
+    <block type="save" movable="false" deletable="false" inline="false" x="250" y="900"></block>
+    <block type="reload" movable="false" deletable="false" inline="false" x="50" y="900"></block> 
+    <block type="load" movable="false" deletable="false" inline="false" x="450" y="900"></block>       
+    -->
+</template>
 </header>
 </template>
 
-<script>   
-    export default {
-        props: {
-            brand: String
+<script>
+// import '../../../../../public/blockly/blockly_compressed';
+// import '../../../../../public/blockly/blocks_compressed';
+// import '../../../../../public/blockly/javascript_compressed';
+// import '../../../../../public/blockly/msg/js/en';
+import * as Blockly from 'blockly/core';
+import 'blockly/blocks';
+import 'blockly/javascript';
+// import * as En from 'blockly/msg/en';
+import '../Game/BlocklyDefinitions';
+import * as $ from 'jquery';
+
+const headers = {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+};
+
+export default {
+        data(){
+        return {
+            failedBlock: [],
+            toolbox: this.gameData[this.levelString].xmlToolbox, //prop  this.gameData[this.levelString].
+            savedGame: this.gameData[this.levelString].savedGame, //prop
+            tasks: JSON.parse(this.gameData[this.levelString].jsonTasks), //prop
+            modals: JSON.parse(this.gameData[this.levelString].jsonModals), //prop
+            ratings: JSON.parse(this.gameData[this.levelString].jsonRatings),
+            locked: true,
+            available_modal: 1,
+            ajaxError: false,
+            category: this.levelString.split('x')[0],
+            level: this.levelString.split('x')[1],
+            progress: this.gameData[this.levelString].savedGame.progress, // jsonSavedGame.progress,
+            rating: 0,
+            ruleError: 0,
+            level_start: new Date(),
+            task_start: new Date(),
+            task_end: new Date(),
+            code: "",
+            main_task: 0,
+            saveObjectToString: this.gameData[this.levelString].savedGame.json,
+            savedGameParsed: JSON.parse(this.gameData[this.levelString].savedGame.json),
+            facingDirection: "",
+            // blocklyArea: document.getElementById('blocklyArea'),
+            // blocklyDiv: document.getElementById('blocklyDiv'),
+            workspacePlayground: undefined
+        }
         },
+        props: {
+            levelString: String,
+            gameData: Object,           
+            // xmlToolbox: String,
+            // jsonSavedGame: Object,
+            // jsonTasks: Object,
+            // jsonModals: Object,
+            // jsonRatings: Object
+        },        
         mounted() {
-            console.log('GameHeader mounted.')
+            console.log('GameHeader mounted:');   
+            console.log(this.$data);             
+
+            // if(this.mobile)
+            // {
+            // var workspacePlayground = Blockly.inject(blocklyDiv,
+            // {toolbox: toolbox, scrollbars:  true, toolboxPosition: 'end', horizontalLayout:true, trashcan: true, zoom: {wheel: true}});
+            // workspacePlayground.scale = 0.6;
+            // }
+            // else
+            // {
+
+            this.workspacePlayground = Blockly.inject(this.$refs.blocklyDiv,
+            {
+                toolbox: this.toolbox, trashcan: true, scrollbars: true}
+            ); 
+            // }
+
+            Blockly.Xml.domToWorkspace(
+                this.startBlocks,
+                this.workspacePlayground
+            ); 
+
+            disableContextMenus();
+            scrollWorkspace();
+
+            if(this.category==2){
+                changeFacingDirectionImage(this.savedGameParsed.character.facingDirection);
+            }
+
+            window.addEventListener('onmessage', this.eventer);             
+        },
+        methods: {
+            eventer(e)
+            {
+                console.log('Web-side script has received message from game:  ', e.data);
+                switch(e.data.action)
+                {
+                case "unlock":
+                {
+                    this.enableButtons();
+                    this.workspacePlayground.highlightBlock(null);
+                    this.locked = false;
+                    break;
+                }
+                case "start":
+                {
+                    // if(this.mobile)                
+                    this.startGame();
+                    break;     
+                }
+                case "introduction":
+                {
+                    this.level_start = Date.now(); 
+
+                    if(this.progress==0)
+                        this.levelIntroduced(e.data.content); 
+                    else
+                        this.mainTaskIntroduced(e.data.content);
+                    break;     
+                }
+
+                case "highlightProgress":
+                {
+                    this.highlightBlock(e.data.content);
+                    break;     
+                }
+
+                case "highlightFailure":
+                {                    
+                    let block = this.workspacePlayground.getBlockById(e.data.content);
+                    block.setColour(0); //COMMAND FAILED BLOCK IS RED 
+                    this.failedBlock.push(block);
+                    break;     
+                }
+                case "mainTaskCompleted":
+                {
+                    this.workspacePlayground.highlightBlock(null);
+                    $('#send_code_button').attr("disabled", true).end();       
+                    
+                    this.task_end = Date.now();
+                    
+                    this.mainTaskCompleted(e.data.content);
+                    break;     
+                }
+                case "commandFailed": 
+                {
+                    this.workspacePlayground.highlightBlock(null);
+                    $('#send_code_button').attr("disabled", true).end();
+                    this.commandFailed(e.data.content);                    
+                    break;     
+                }
+                case "mainTaskFailed": 
+                {
+
+                    this.workspacePlayground.highlightBlock(null);
+                    $('#send_code_button').attr("disabled", true).end();
+
+                    this.mainTaskFailed(e.data.content);                    
+                    break;     
+                }
+                case "stoppedExecution": 
+                {
+
+                    this.workspacePlayground.highlightBlock(null);
+                    $('#send_code_button').attr("disabled", true).end();
+
+                    this.stoppedExecution(e.data.content);
+                    break;     
+                }
+                case "nextMainTask":
+                {
+                    this.workspacePlayground.highlightBlock(null);      
+                    this.mainTaskIntroduced(e.data.content);
+                    break;
+                }
+                case "allMainTasksFinished":
+                {
+                    this.allMainTasksFinished();
+                    break;     
+                }
+                case "save":
+                {
+                    this.saveObjectToJson(e.data.content);
+                    break;     
+                }
+                case "changeFacingDirection":
+                {                    
+                    if(this.category==2)
+                    this.changeFacingDirectionImage(e.data.content);
+                }
+                }
+            },
+            enableButtons()
+            {
+                $('#send_code_button').attr("onclick", "runCode()").end();
+                $('#send_code_button').attr("class", "btn btn-success mr-3").end();  
+                $('#send_code_button').html('<i class="fas fa-play"></i> Spustiť bloky').end(); 
+                $('#send_code_button').attr("disabled", false).end(); 
+                
+                $('#show_task_button').attr("disabled", false).end(); 
+                $('#delete_blocks_button').attr("disabled", false).end(); 
+                $('#report_bug_button').attr("disabled", false).end(); 
+            },
+            async createLogOfGameplay(type, object)
+            {
+            if(this.isUserLoggedIn)
+            {
+                return;
+            }
+            const level_start = convertDateToTime(this.level_start);
+            const task = String(object.currentMainTask);
+            const task_start = convertDateToTime(this.task_start);
+            let task_end = null;
+            let task_elapsed_time = null;
+            let rating = null;
+            let code = "";
+
+            if(object.commandArray.length!=0)   
+                code = String(object.commandArray);
+            else
+                code = "<empty>";
+
+            let result = type;
+
+            switch(type)
+            {
+            case "mainTaskCompleted":
+            {
+                task_elapsed_time = this.task_end - this.task_start;      
+                task_elapsed_time = task_elapsed_time / 1000;
+                task_end = convertDateToTime(this.task_end);
+                rating = this.rating;
+                break;
+            }
+            case "commandFailed":
+            {
+                result = object.failureType;
+                break;
+            }
+            }
+
+            const data = {'username' : this.userName, 'category': this.category, 'level': this.level, 'level_start': level_start,
+            'task': task, 'task_start': task_start, 'task_end': task_end, 'task_elapsed_time': task_elapsed_time, 'rating': rating, 'code': code, 'result': result
+            };
+            
+            try {
+                await sendRequest({headers:this.headers, method:'POST', url: this.$global.Url + 'createlogofgameplay', data});           
+            }
+            catch (e) {
+                this.ajaxError = true;                     
+            }
+        }
         },
         computed: {
             isUserLoggedIn()
@@ -48,6 +302,23 @@
             userName()
             {             
                 return this.$global.User ? this.$global.User.username : undefined;
+            },
+            startBlocks()
+            {
+                //move to back end
+                let xmlString;
+                switch(this.category){
+                case '1':
+                    xmlString = '<xml id="startBlocks"><block type="player" movable="false" deletable="false" inline="false" x="0" y="0"></block></xml>';
+                    break;
+                case '2':
+                    xmlString =  '<xml id="startBlocks"><block type="player" movable="false" deletable="false" inline="false" x="0" y="0"></block></xml>';
+                    break;
+                default:
+                    xmlString =  '<xml id="startBlocks"><block type="player" movable="false" deletable="false" inline="false" x="0" y="0"></block></xml>';
+                    break;
+                }
+                return ( new window.DOMParser() ).parseFromString(xmlString, "text/xml");
             }
         }
     }

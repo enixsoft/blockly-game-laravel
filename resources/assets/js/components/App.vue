@@ -1,8 +1,10 @@
 <template>
 <div>
     <Navbar :brand="brand"/>
-    <template v-if="$global.GameInProgress">
-      <GameHeader />
+    <template v-if="GameInProgress !== undefined">
+      <GameHeader :level-string="GameInProgress"
+                  :game-data="GameData"                  
+       />
     </template>    
     <template v-else>    
     <Carousel-Header />
@@ -47,8 +49,9 @@ export default {
         User: this.user,
         Lang: this.lang,
         RecaptchaKey: this.recaptchaKey,
-        GameData: this.gameData,
-        GameInProgress: this.gameData.length ? true : false,
+        GameData: !Array.isArray(this.gameData) ? Object.assign({}, `${this.gameData.category}x${this.gameData.category}`,this.gameData) : {},
+        GameInProgress: !Array.isArray(this.gameData) ? `${this.gameData.category}x${this.gameData.category}` : undefined,
+        Url: this.url,
 
         login: false,
         brand: "BLOCKLY HRA VUE",
@@ -65,7 +68,8 @@ export default {
     lang: [Object],
     recaptchaKey: String,
     inGameProgress: Array,
-    gameData: [Object, Array]
+    gameData: [Object, Array],
+    url: String
   },
   components: {
     CarouselHeader,
@@ -76,17 +80,29 @@ export default {
     GameLevels,
     GameHeader
   },
-  created () {    
-    // Vue.prototype.$global = {
-    //   CsrfToken: document.head.querySelector('meta[name="csrf-token"]').content,
-    //   User: this.user,
-    //   Lang: this.lang,
-    //   RecaptchaKey: this.recaptchaKey,
-    //   GameData: this.gameData,
-    //   GameInProgress: this.gameData.length ? true : false
-    // };
+  created () {  
     Vue.prototype.$global = this.$data;
     console.log("GLOBAL", this.$global);
+
+    const app = this;
+    window.addEventListener('popstate', function(event) {
+    console.log("POPSTATE", event);
+    if(event.state && event.state.page)
+    {
+      switch(event.state.page)
+      {
+        case "game":
+        {          
+          app.GameInProgress = event.state.data.level;
+        }
+        break;
+      }
+    }
+    else
+    {
+      app.GameInProgress = undefined;
+    }
+    });   
   },
   mounted(){
   if(this.errors['username'] || this.errors['password'])

@@ -33,6 +33,7 @@
       :recaptcha-key="'{{env('GOOGLE_RECAPTCHA_KEY')}}'"
       :in-game-progress="{{ $inGameProgressJson }}"
       :game-data="{{ $gameDataJson }}"
+      url="http://localhost:3000/blocklyapp/"
    />
    </div> 
    <!-- {{ $gameDataJson }}
