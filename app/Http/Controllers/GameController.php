@@ -10,13 +10,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Lang;
 
-use App\User;
-
-
 use App\Models\SavedGame;
 use App\Models\Progress;
 use App\Models\Gameplay;
 use App\Models\Bug;
+use App\Models\User;
 
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;

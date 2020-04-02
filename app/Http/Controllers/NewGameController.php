@@ -10,9 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Lang;
 
-use App\User;
-
-
+use App\Models\User;
 use App\Models\SavedGame;
 use App\Models\Progress;
 use App\Models\Gameplay;

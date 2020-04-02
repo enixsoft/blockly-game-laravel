@@ -2,8 +2,10 @@
 <div>
     <Navbar :brand="brand"/>
     <template v-if="GameInProgress !== undefined">
-      <GameHeader :level-string="GameInProgress"
-                  :game-data="GameData"                  
+      <GameHeader :category="GameInProgress.category"
+						:level="GameInProgress.level"
+                  :game-data="GameData"
+						:data-index="GameData.findIndex((data)=> data.category === GameInProgress.category && data.level === GameInProgress.level)"                  
        />
     </template>    
     <template v-else>    
@@ -43,124 +45,124 @@ import 'jquery.easing';
 
 
 export default { 
-  data(){
-    return {
-        CsrfToken: document.head.querySelector('meta[name="csrf-token"]').content,
-        User: this.user,
-        Lang: this.lang,
-        RecaptchaKey: this.recaptchaKey,
-        GameData: !Array.isArray(this.gameData) ? Object.assign({}, `${this.gameData.category}x${this.gameData.category}`,this.gameData) : {},
-        GameInProgress: !Array.isArray(this.gameData) ? `${this.gameData.category}x${this.gameData.category}` : undefined,
-        Url: this.url,
+	data(){
+		return {
+			CsrfToken: document.head.querySelector('meta[name="csrf-token"]').content,
+			User: this.user,
+			Lang: this.lang,
+			RecaptchaKey: this.recaptchaKey,
+			GameData: !Array.isArray(this.gameData) ? [this.gameData] : [],
+			GameInProgress: !Array.isArray(this.gameData) ? { category:this.gameData.category, level: this.gameData.level } : undefined,
+			Url: (path = undefined) => path ? this.baseUrl + path : this.baseUrl,
 
-        login: false,
-        brand: "BLOCKLY HRA VUE",
-        featuresHeading: "Hra ovládaná programovaním",
-        featuresText: "Google Blockly prináša vizuálny editor blokov, ktoré sa premieňajú na kód. Po odoslaní do hry z neho vznikajú príkazy vykonávané hrdinom.",
-        heroInfoHeading: "Vitajte v Blockly hre!",
-        heroInfoText: "Pomocou spájania programovacích blokov v nej budete ovládať hrdinu bojovníka. Ten prišiel na výpravu do starého hradu a aby ho prešiel celý, musí prekonať množstvo prekážok a splniť mnoho úloh. Prezrite si hrdinu a popis jeho schopností, ktoré postupne získa a budete používať.",
-    }
-  },
-  props: {
-    user: Object,
-    errors: [Object, Array],
-    old: [Object, Array],
-    lang: [Object],
-    recaptchaKey: String,
-    inGameProgress: Array,
-    gameData: [Object, Array],
-    url: String
-  },
-  components: {
-    CarouselHeader,
-    Navbar,
-    Features,
-    HeroInfo,
-    UserAccessForms,
-    GameLevels,
-    GameHeader
-  },
-  created () {  
-    Vue.prototype.$global = this.$data;
-    console.log("GLOBAL", this.$global);
+			login: false,
+			brand: 'BLOCKLY HRA VUE',
+			featuresHeading: 'Hra ovládaná programovaním',
+			featuresText: 'Google Blockly prináša vizuálny editor blokov, ktoré sa premieňajú na kód. Po odoslaní do hry z neho vznikajú príkazy vykonávané hrdinom.',
+			heroInfoHeading: 'Vitajte v Blockly hre!',
+			heroInfoText: 'Pomocou spájania programovacích blokov v nej budete ovládať hrdinu bojovníka. Ten prišiel na výpravu do starého hradu a aby ho prešiel celý, musí prekonať množstvo prekážok a splniť mnoho úloh. Prezrite si hrdinu a popis jeho schopností, ktoré postupne získa a budete používať.',
+		};
+	},
+	props: {
+		user: Object,
+		errors: [Object, Array],
+		old: [Object, Array],
+		lang: [Object],
+		recaptchaKey: String,
+		inGameProgress: Array,
+		gameData: [Object, Array],
+		baseUrl: String
+	},
+	components: {
+		CarouselHeader,
+		Navbar,
+		Features,
+		HeroInfo,
+		UserAccessForms,
+		GameLevels,
+		GameHeader
+	},
+	created () {  
+		Vue.prototype.$global = this.$data;
+		console.log('GLOBAL', this.$global);
 
-    const app = this;
-    window.addEventListener('popstate', function(event) {
-    console.log("POPSTATE", event);
-    if(event.state && event.state.page)
-    {
-      switch(event.state.page)
-      {
-        case "game":
-        {          
-          app.GameInProgress = event.state.data.level;
-        }
-        break;
-      }
-    }
-    else
-    {
-      app.GameInProgress = undefined;
-    }
-    });   
-  },
-  mounted(){
-  if(this.errors['username'] || this.errors['password'])
-  {
-    $('html, body').animate({
-    scrollTop: $('#game').offset().top
-    }, 'slow');     
-  }
-  else if (this.errors['register-username'] || this.errors['register-password'] || this.errors['register-email'] || this.errors['g-recaptcha-response']) {
-    $('#loginDiv').collapse("hide");
-    $('#registerDiv').collapse("show");         
-    $('html, body').animate({
-        scrollTop: $('#game').offset().top
-    }, 'slow');
-  } else if(this.$global.User && !this.$global.GameInProgress)
-  {
-    $('html, body').animate({
-    scrollTop: $('#features').offset().top
-    }, 'slow');  
-  }
+		const app = this;
+		window.addEventListener('popstate', function(event) {
+			console.log('POPSTATE', event);
+			if(event.state && event.state.page)
+			{
+				switch(event.state.page)
+				{
+				case 'game':
+					{          
+						app.GameInProgress = event.state.data;
+					}
+					break;
+				}
+			}
+			else
+			{
+				app.GameInProgress = undefined;
+			}
+		});   
+	},
+	mounted(){
+		if(this.errors['username'] || this.errors['password'])
+		{
+			$('html, body').animate({
+				scrollTop: $('#game').offset().top
+			}, 'slow');     
+		}
+		else if (this.errors['register-username'] || this.errors['register-password'] || this.errors['register-email'] || this.errors['g-recaptcha-response']) {
+			$('#loginDiv').collapse('hide');
+			$('#registerDiv').collapse('show');         
+			$('html, body').animate({
+				scrollTop: $('#game').offset().top
+			}, 'slow');
+		} else if(this.$global.User && !this.$global.GameInProgress)
+		{
+			$('html, body').animate({
+				scrollTop: $('#features').offset().top
+			}, 'slow');  
+		}
 
-  // Smooth scrolling using jQuery easing
-  $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
-    if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-      var target = $(this.hash);
-      target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-      if (target.length) {
-        $('html, body').animate({
-          scrollTop: (target.offset().top - 48)
-        }, 1000, "easeInOutExpo");
-        return false;
-      }
-    }
-  });
+		// Smooth scrolling using jQuery easing
+		$('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
+			if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+				var target = $(this.hash);
+				target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+				if (target.length) {
+					$('html, body').animate({
+						scrollTop: (target.offset().top - 48)
+					}, 1000, 'easeInOutExpo');
+					return false;
+				}
+			}
+		});
 
-  // Closes responsive menu when a scroll trigger link is clicked
-  $('.js-scroll-trigger').click(function() {
-    $('.navbar-collapse').collapse('hide');
-  });
+		// Closes responsive menu when a scroll trigger link is clicked
+		$('.js-scroll-trigger').click(function() {
+			$('.navbar-collapse').collapse('hide');
+		});
 
-  // Activate scrollspy to add active class to navbar items on scroll
-  $('body').scrollspy({
-    target: '#mainNav',
-    offset: 54
-  });
+		// Activate scrollspy to add active class to navbar items on scroll
+		$('body').scrollspy({
+			target: '#mainNav',
+			offset: 54
+		});
 
-  // Collapse Navbar
-  var navbarCollapse = function() {
-    if ($("#mainNav").offset().top > 100) {
-      $("#mainNav").addClass("navbar-shrink");
-    } else {
-      $("#mainNav").removeClass("navbar-shrink");
-    }
-  };
-  // Collapse now if page is not at top
-  navbarCollapse();
-  // Collapse the navbar when page is scrolled
-  $(window).scroll(navbarCollapse);
-}  
-}
+		// Collapse Navbar
+		var navbarCollapse = function() {
+			if ($('#mainNav').offset().top > 100) {
+				$('#mainNav').addClass('navbar-shrink');
+			} else {
+				$('#mainNav').removeClass('navbar-shrink');
+			}
+		};
+		// Collapse now if page is not at top
+		navbarCollapse();
+		// Collapse the navbar when page is scrolled
+		$(window).scroll(navbarCollapse);
+	}  
+};
 </script>
