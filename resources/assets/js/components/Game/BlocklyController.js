@@ -1,14 +1,15 @@
+import app from '../../app';
 import * as Blockly from 'blockly/core';
 import 'blockly/blocks';
 import 'blockly/javascript';
 // import * as En from 'blockly/msg/en';
-import '../Game/BlocklyDefinitions';
 import 'jquery';
-import { app } from '../../app';
 import * as $ from 'jquery';
+import {createBlocklyBlocks} from '../Game/BlocklyDefinitions';
 
 let workspacePlayground = null;
 
+export { createBlocklyBlocks };
 
 export function createOriginal (){
 	var blocklyArea = document.getElementById('blocklyArea');

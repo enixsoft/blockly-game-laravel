@@ -4,9 +4,9 @@
     <template v-if="GameInProgress !== undefined">
       <GameHeader :category="GameInProgress.category"
 						:level="GameInProgress.level"
-                  :game-data="GameData"
-						:data-index="GameData.findIndex((data)=> data.category === GameInProgress.category && data.level === GameInProgress.level)"                  
+                  :game-data="GameInProgress"						
        />
+	<!-- :data-index="GameData.findIndex((data)=> data.category === GameInProgress.category && data.level === GameInProgress.level)"                   -->
     </template>    
     <template v-else>    
     <Carousel-Header />
@@ -21,9 +21,9 @@
     <GameLevels v-else :in-game-progress="inGameProgress" />
     <footer>
          <div class="container">
-            <a href="https://developers.google.com/blockly"><img class="img-fluid" src="img/logo_built_on_dark.png"></a>
+            <a href="https://developers.google.com/blockly"><img class="img-fluid" :src="this.$global.Url('img/logo_built_on_dark.png')"></a>
             <br>
-            <p class="mt-3">&copy; 2019 - 2020<br>Martin Vančo<br>Naposledy aktualizované: 20.3.2020
+            <p class="mt-3">&copy; 2019 - 2020<br>Martin Vančo<br>Naposledy aktualizované: 6.4.2020
             </p>
          </div>
     </footer>
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import CarouselHeader from './Headers/CarouselHeader';
 import GameHeader from './Headers/GameHeader';
 import Navbar from './Navbar';
@@ -42,7 +43,7 @@ import GameLevels from './Sections/GameLevels';
 import * as $ from 'jquery';
 import 'bootstrap';
 import 'jquery.easing';
-
+import HistoryManager from './Managers/HistoryManager';
 
 export default { 
 	data(){
@@ -52,7 +53,7 @@ export default {
 			Lang: this.lang,
 			RecaptchaKey: this.recaptchaKey,
 			GameData: !Array.isArray(this.gameData) ? [this.gameData] : [],
-			GameInProgress: !Array.isArray(this.gameData) ? { category:this.gameData.category, level: this.gameData.level } : undefined,
+			GameInProgress: !Array.isArray(this.gameData) ? this.gameData : undefined,
 			Url: (path = undefined) => path ? this.baseUrl + path : this.baseUrl,
 
 			login: false,
@@ -82,29 +83,50 @@ export default {
 		GameLevels,
 		GameHeader
 	},
-	created () {  
+	created() {		
 		Vue.prototype.$global = this.$data;
 		console.log('GLOBAL', this.$global);
+		
+		$.ajaxSetup({
+			beforeSend: (xhr) => {
+				xhr.setRequestHeader('X-CSRF-TOKEN', this.CsrfToken);
+			}
+		});
+		
+		HistoryManager.enableHistory(this);
 
-		const app = this;
-		window.addEventListener('popstate', function(event) {
-			console.log('POPSTATE', event);
-			if(event.state && event.state.page)
-			{
-				switch(event.state.page)
-				{
-				case 'game':
-					{          
-						app.GameInProgress = event.state.data;
-					}
-					break;
-				}
-			}
-			else
-			{
-				app.GameInProgress = undefined;
-			}
-		});   
+		// window.addEventListener('popstate', (event) => {
+		// 	console.log('state', event.state);
+		// 	// console.log("page", event.state.page);
+		// 	console.log('hash', event.target.location.hash);
+
+		// 	if(event.state && event.state.page)
+		// 	{
+		// 		switch(event.state.page)
+		// 		{
+		// 		case 'game':
+		// 			{          
+		// 				app.GameInProgress = event.state.data;
+		// 			}
+		// 			break;
+		// 		}
+		// 	}
+		// 	else
+		// 	{
+		// 		app.GameInProgress = undefined;
+		// 	}
+
+		// 	if(event.target.location.hash)
+		// 	{
+		// 		var target = $(event.target.location.hash);
+		// 		target = target.length ? target : $('[name=' + event.target.location.hash.slice(1) + ']');
+		// 		if (target.length) {
+		// 			$('html, body').animate({
+		// 				scrollTop: (target.offset().top - 48)
+		// 			}, 1000, 'easeInOutExpo');
+		// 		}
+		// 	}
+		// });   
 	},
 	mounted(){
 		if(this.errors['username'] || this.errors['password'])
@@ -112,6 +134,7 @@ export default {
 			$('html, body').animate({
 				scrollTop: $('#game').offset().top
 			}, 'slow');     
+			HistoryManager.changeView('home', undefined, '', '#game');  
 		}
 		else if (this.errors['register-username'] || this.errors['register-password'] || this.errors['register-email'] || this.errors['g-recaptcha-response']) {
 			$('#loginDiv').collapse('hide');
@@ -119,26 +142,14 @@ export default {
 			$('html, body').animate({
 				scrollTop: $('#game').offset().top
 			}, 'slow');
+			HistoryManager.changeView('home', undefined, '', '#game');  
 		} else if(this.$global.User && !this.$global.GameInProgress)
 		{
 			$('html, body').animate({
 				scrollTop: $('#features').offset().top
-			}, 'slow');  
-		}
-
-		// Smooth scrolling using jQuery easing
-		$('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
-			if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-				var target = $(this.hash);
-				target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-				if (target.length) {
-					$('html, body').animate({
-						scrollTop: (target.offset().top - 48)
-					}, 1000, 'easeInOutExpo');
-					return false;
-				}
-			}
-		});
+			}, 'slow');			
+			HistoryManager.changeView('home', undefined, '', '#features');  
+		}		
 
 		// Closes responsive menu when a scroll trigger link is clicked
 		$('.js-scroll-trigger').click(function() {

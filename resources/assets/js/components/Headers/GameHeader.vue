@@ -3,8 +3,8 @@
 <div class="game-container">
 <div class="row h-100 w-100 no-padding">
     <div class="col-lg-6 no-padding">
-        <iframe id="app-frame" class="game-playcanvas"  
-        :src="`http://localhost/blocklyapp/game/playcanvas/${levelString}.html`"></iframe> 
+        <iframe id="app-frame" class="game-playcanvas" ref="iframe"  
+        :src="this.$global.Url(`game/playcanvas/${levelString}.html`)"></iframe> 
         <!-- src="https://playcanv.as/e/p/62c28f63/"></iframe>-->             
     </div>
     <div class="col-lg-6 no-padding">
@@ -42,32 +42,29 @@ import * as Blockly from 'blockly/core';
 import 'blockly/blocks';
 import 'blockly/javascript';
 // import * as En from 'blockly/msg/en';
-import '../Game/BlocklyDefinitions';
+// import '../Game/BlocklyDefinitions';
 import * as $ from 'jquery';
 import * as BlocklyController from '../Game/BlocklyController';
 import { convertDateToTime, sendRequest } from '../Game/Common';
 
-const headers = {
-	'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-};
+// const headers = {
+// 	'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+// };
 
 export default {
 	data(){
 		return {
 			failedBlock: [],
-			// dataIndex: this.gameData.findIndex((data) => data.category === this.category && data.level === this.level),
-			toolbox: this.gameData[this.dataIndex].xmlToolbox, //prop  this.gameData[this.levelString].
-			savedGame: this.gameData[this.dataIndex].savedGame, //prop
-			tasks: JSON.parse(this.gameData[this.dataIndex].jsonTasks), //prop
-			modals: JSON.parse(this.gameData[this.dataIndex].jsonModals), //prop
-			ratings: JSON.parse(this.gameData[this.dataIndex].jsonRatings),
+			toolbox: this.gameData.xmlToolbox,
+			savedGame: this.gameData.savedGame,
+			tasks: JSON.parse(this.gameData.jsonTasks),
+			modals: JSON.parse(this.gameData.jsonModals),
+			ratings: JSON.parse(this.gameData.jsonRatings),
 			locked: true,
 			available_modal: 1,
 			ajaxError: false,
-			//category: this.levelString.split('x')[0],
-			//level: this.levelString.split('x')[1],
 			levelString: `${this.category}x${this.level}`,
-			progress: this.gameData[this.dataIndex].savedGame.progress, // jsonSavedGame.progress,
+			progress: this.gameData.savedGame.progress,
 			rating: 0,
 			ruleError: 0,
 			level_start: new Date(),
@@ -75,41 +72,24 @@ export default {
 			task_end: new Date(),
 			code: '',
 			main_task: 0,
-			saveObjectToString: this.gameData[this.dataIndex].savedGame.json,
-			savedGameParsed: JSON.parse(this.gameData[this.dataIndex].savedGame.json),
+			saveObjectToString: this.gameData.savedGame.json,
+			savedGameParsed: JSON.parse(this.gameData.savedGame.json),
 			facingDirection: '',
-			// blocklyArea: document.getElementById('blocklyArea'),
-			// blocklyDiv: document.getElementById('blocklyDiv'),
 			workspacePlayground: undefined
 		};
 	},
 	props: {
 		category: String,
 		level: String,
-		gameData: Array,   
-		dataIndex: Number        
-		// xmlToolbox: String,
-		// jsonSavedGame: Object,
-		// jsonTasks: Object,
-		// jsonModals: Object,
-		// jsonRatings: Object
+		gameData: Object
+	},
+	created(){
+		BlocklyController.createBlocklyBlocks(this.$global.Url());
 	},        
 	mounted() {
-		console.log("dataIndex", this.gameData.findIndex((data) => data.category === this.category && data.level === this.level));
 		console.log('GameHeader mounted:');   
-		console.log(this.$data);             
-
-		// if(this.mobile)
-		// {
-		// var workspacePlayground = Blockly.inject(blocklyDiv,
-		// {toolbox: toolbox, scrollbars:  true, toolboxPosition: 'end', horizontalLayout:true, trashcan: true, zoom: {wheel: true}});
-		// workspacePlayground.scale = 0.6;
-		// }
-		// else
-		// {
-
-		// BlocklyController.createWorkspacePlaygroundNew();
-
+		console.log(this.$data);	
+		
 		this.workspacePlayground = BlocklyController.createWorkspacePlayground(
 			this.$refs.blocklyDiv, 
 			this.$refs.blocklyArea, 
@@ -117,13 +97,19 @@ export default {
 			{
 				toolbox: this.toolbox, trashcan: true, scrollbars: true
 			}
+			/* MOBILE TO DO
+			{
+				toolbox: toolbox, scrollbars:  true, toolboxPosition: 'end', horizontalLayout:true, trashcan: true, zoom: {wheel: true}
+			}
+			 workspacePlayground.scale = 0.6;
+			*/
 		);
 
 		if(this.category == 2){
 			BlocklyController.changeFacingDirectionImage(this.savedGameParsed.character.facingDirection);
 		}
 
-		window.addEventListener('onmessage', this.eventer);         
+		window.addEventListener('message', this.eventer);         
 	},
 	methods: {
 		eventer(e)
@@ -140,8 +126,8 @@ export default {
 			}
 			case 'start':
 			{
-				// if(this.mobile)
-				this.startGame();
+				// if(this.mobile) TO DO				
+				this.sendMessage(`start\n${this.saveObjectToString}`);
 				break;     
 			}
 			case 'introduction':
@@ -280,11 +266,19 @@ export default {
 			};
             
 			try {
-				await sendRequest({headers, method:'POST', url: this.$global.Url('createlogofgameplay'), data});           
+				await sendRequest({method:'POST', url: this.$global.Url('createlogofgameplay'), data});           
 			}
 			catch (e) {
 				this.ajaxError = true;                     
 			}
+		},
+		sendMessage(message)
+		{        
+			this.$refs.iframe.contentWindow.postMessage(
+				{ message },    
+				//"https://playcanv.as/p/62c28f63/"
+				this.$global.Url()
+			);
 		}
 	},
 	computed: {
@@ -314,6 +308,9 @@ export default {
 			// return ( new window.DOMParser() ).parseFromString(xmlString, 'text/xml');
 			return xmlString;
 		}
+	},
+	destroyed(){
+		window.removeEventListener('message', this.eventer);
 	}
 };
 </script>

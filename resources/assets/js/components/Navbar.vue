@@ -1,17 +1,19 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
          <div class="container">
-            <a class="navbar-brand js-scroll-trigger" :href="$global.GameInProgress ? $global.Url() : '#page-top'"> {{ brand }}</a>
+            <a v-if="$global.GameInProgress" href="" class="navbar-brand" v-on:click.prevent="changeViewToHome()">{{ brand }}</a>
+            <a v-else class="navbar-brand js-scroll-trigger" :href="'#page-top'">{{ brand }}</a>            
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                <ul class="navbar-nav ml-auto">
                   <li v-if="!$global.GameInProgress" class="nav-item">
-                     <a class="nav-link js-scroll-trigger" href="#features">O hre</a>
+                     <!-- <a class="nav-link js-scroll-trigger" :href="'#features'">O hre</a> -->
+                     <a class="nav-link js-scroll-trigger" :href="'#features'">O hre</a>
                   </li>
                   <li v-if="!$global.GameInProgress" class="nav-item">
-                     <a class="nav-link js-scroll-trigger" href="#game">Spustiť hru</a>
+                     <a class="nav-link js-scroll-trigger" :href="'#game'">Spustiť hru</a>
                   </li>                             
                   <li v-if="isUserLoggedIn" class="nav-item dropdown">
                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -27,7 +29,8 @@
     </nav> 
 </template>
 
-<script>   
+<script>
+import HistoryManager from './Managers/HistoryManager';
 export default {
 	props:{
 		brand: String
@@ -43,6 +46,11 @@ export default {
 		userName()
 		{             
 			return this.$global.User ? this.$global.User.username : undefined;
+		}
+	},
+	methods: {      
+		changeViewToHome(){			
+			HistoryManager.changeView('home', undefined, '', '/' + this.$global.Url('#game').split('/').slice(3).join('/'));			
 		}
 	}
 };

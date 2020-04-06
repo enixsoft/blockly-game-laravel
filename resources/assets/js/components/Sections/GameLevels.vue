@@ -47,6 +47,8 @@
 <script>
 import GameLevelItem from './GameLevelItem';
 import App from '../App';
+import { sendRequest } from '../Game/Common';
+import HistoryManager from '../Managers/HistoryManager';
 
 export default {
 	data(){
@@ -76,39 +78,24 @@ export default {
 			}
 			return category;
 		},
-		runGame(category = 1, level = 1){
-            
-			// let result;
-
-			fetch(`game/${category}/${level}`, 
-				{
-					method: 'GET',
-					headers: {
-						'Accept': 'application/json'
-					},
-					credentials: 'same-origin'
-				})
-				.then((response) => {
-					console.log(response);
-					return response.json();}) //or response.json()
-				.then((json) => {
-					console.log(json);
-
-					//this.$set(this.$global, 'GameData', json);
-					//this.$set(this.$global, 'GameInProgress', true);
-
-					const result = `${json.category}x${json.level}`;  
- 
-					// this.$global.GameData[result] = json;
-					const check = this.$global.GameData.find((data) => data.category === json.category && data.level === json.level);
-					if(!check)
-					{
-						this.$global.GameData.push(json);
-					}
-					this.$global.GameInProgress = { category: json.category, level: json.level };
-
-					window.history.pushState({ page: 'game', data: { category: json.category, level: json.level }}, '', 'game/1/1');
-				});
+		async runGame(category = 1, level = 1){			
+			const dataExists = this.$global.GameData.find((data) => data.category === category && data.level === level);
+			if(dataExists)
+			{
+				// this.$global.GameInProgress = dataExists;
+				HistoryManager.changeView('game', dataExists, `Kategória ${category} Úroveň ${level}`, `game/${category}/${level}`);
+				return;
+			}
+			try {
+				const result = await sendRequest({method: 'GET', headers: {'Accept': 'application/json'}, url: this.$global.Url(`game/${category}/${level}`)});           
+				console.log("AJAX GET GAMEDATA:", result);
+				this.$global.GameData.push(result);
+				// this.$global.GameInProgress = result;
+				HistoryManager.changeView('game', result, `Kategória ${category} Úroveň ${level}`, `game/${category}/${level}`);
+			}
+			catch (e) {
+				console.log("AJAX GET GAMEDATA:", e);
+			}
 		}
 	},
 	mounted()

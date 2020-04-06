@@ -1,6 +1,7 @@
-window.Vue = require('vue');
+import Vue from 'vue';
 import App from './components/App';
 
+Vue.config.devtools = true;
 const app = new Vue({
 	el: '#app',
 	components: {  
@@ -8,6 +9,4 @@ const app = new Vue({
 	}   
 });
 
-Vue.config.devtools = true;
-
-export { app } ;
+export default app;
