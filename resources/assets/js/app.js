@@ -8,5 +8,3 @@ const app = new Vue({
 		App
 	}   
 });
-
-export default app;

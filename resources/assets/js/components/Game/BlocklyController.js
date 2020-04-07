@@ -1,4 +1,3 @@
-import app from '../../app';
 import * as Blockly from 'blockly/core';
 import 'blockly/blocks';
 import 'blockly/javascript';
@@ -94,12 +93,12 @@ export function disableContextMenus()
 	};
 }
 
-export function changeFacingDirectionImage(direction) 
+export function changeFacingDirectionImage(imageUrl, direction) 
 {
 	const player = getBlocksByType('playerDirection'); 
 
 	// this.facingDirection = direction; TO DO: change this logic
-	player[0].setFieldValue(app.$global.Url(`game/${direction}.png`), 'facingDirection_image');
+	// player[0].setFieldValue(app.$global.Url(`game/${direction}.png`), 'facingDirection_image');
 }
 
 function getBlocksByType(type)

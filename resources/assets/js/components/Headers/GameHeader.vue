@@ -45,7 +45,8 @@ import 'blockly/javascript';
 // import '../Game/BlocklyDefinitions';
 import * as $ from 'jquery';
 import * as BlocklyController from '../Game/BlocklyController';
-import { convertDateToTime, sendRequest } from '../Game/Common';
+import { convertDateToTime, sendRequest, getModalImageLink } from '../Game/Common';
+import ModalManager from '../Managers/ModalManager';
 
 // const headers = {
 // 	'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -108,8 +109,9 @@ export default {
 		if(this.category == 2){
 			BlocklyController.changeFacingDirectionImage(this.savedGameParsed.character.facingDirection);
 		}
-
-		window.addEventListener('message', this.eventer);         
+		
+		ModalManager.enableModals(this.modals);
+		window.addEventListener('message', this.eventer);      
 	},
 	methods: {
 		eventer(e)
@@ -135,9 +137,27 @@ export default {
 				this.level_start = Date.now(); 
 
 				if(this.progress==0)
-					this.levelIntroduced(e.data.content); 
-				else
-					this.mainTaskIntroduced(e.data.content);
+				{				
+					const modalStructure = {  
+						title: this.tasks.level.welcome_modal.title,
+						text:  this.tasks.level.welcome_modal.text,
+						image: getModalImageLink(this.tasks.level.welcome_modal.image, 'level'),
+						task: e.data.content
+					};
+					ModalManager.showDynamicModal('levelIntroduced', modalStructure);
+					break;
+				}
+
+				this.task_start = Date.now();
+				this.main_task = 'mainTask' + e.data.content;
+
+				const modalStructure = {  
+					title: this.tasks[this.main_task].introduction_modal.title, 
+					text: this.tasks[this.main_task].introduction_modal.text,
+					image: getModalImageLink(this.$global.Url('game'), this.tasks[this.main_task].introduction_modal.image, 'level')
+				};
+
+				ModalManager.showDynamicModal('mainTaskIntroduced', modalStructure);			
 				break;     
 			}
 

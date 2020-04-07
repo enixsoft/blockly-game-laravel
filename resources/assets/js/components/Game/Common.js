@@ -23,18 +23,13 @@ function convertCodeForModal(code)
 	return result;
 }
 
-function getModalImageLink(imageType, location)
+function getModalImageLink(modalImageUrl, imageType, location)
 {
-	var modalImageUrl = new URL('game');    
-
 	if(location==='level')
 	{
 		return modalImageUrl + '/' + this.category + 'x' + this.level + '/' + imageType + '.png';
 	}
-	else
-	{
-		return modalImageUrl + '/' + 'common' + '/' + imageType + '.png';
-	}
+	return modalImageUrl + '/' + 'common' + '/' + imageType + '.png';
 }
 
 function convertDateToTime(dateToConvert)
