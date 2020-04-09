@@ -46,8 +46,7 @@
 </template>
 <script>
 import GameLevelItem from './GameLevelItem';
-import App from '../App';
-import { sendRequest } from '../Game/Common';
+import { sendRequest } from '../Managers/Common';
 import HistoryManager from '../Managers/HistoryManager';
 
 export default {
@@ -57,15 +56,15 @@ export default {
 				{ text: 'V prvej kategórii sa naučíme ovládať hrdinu, zadávať mu príkazy pohyb, skok, útok mečom, použitie páky a otvorenie truhlice.' },
 				{ text: 'V druhej kategórii sa naučíme ovládať hrdinu podľa nového herného systému a využívať pri tvorbe algoritmov cykly a podmienky.' }
 			],
-			levelsPerCategory: 5,
-			App
+			// levelsPerCategory: 5			
 		};
 	},
 	components: {
 		GameLevelItem
 	},    
 	props: {
-		inGameProgress: Array
+		inGameProgress: Array,
+		levelsPerCategory: Number
 	},
 	methods: {
 		categoryProgress(index)
@@ -74,7 +73,7 @@ export default {
 			const category = [];
 			for(let i = 0; i < this.levelsPerCategory; i++)
 			{
-				category[i] = this.inGameProgress[startIndex + i] ? this.inGameProgress[startIndex + i] : 0;
+				category[i] = this.inGameProgress[startIndex + i] || 0;
 			}
 			return category;
 		},
@@ -82,18 +81,16 @@ export default {
 			const dataExists = this.$global.GameData.find((data) => data.category === category && data.level === level);
 			if(dataExists)
 			{
-				// this.$global.GameInProgress = dataExists;
-				HistoryManager.changeView('game', dataExists, `Kategória ${category} Úroveň ${level}`, `game/${category}/${level}`);
+				HistoryManager.changeView('game', dataExists, '', `game/${category}/${level}`);
 				return;
 			}
 			try {
 				const result = await sendRequest({method: 'GET', headers: {'Accept': 'application/json'}, url: this.$global.Url(`game/${category}/${level}`)});           
-				console.log("AJAX GET GAMEDATA:", result);
 				this.$global.GameData.push(result);
-				// this.$global.GameInProgress = result;
 				HistoryManager.changeView('game', result, `Kategória ${category} Úroveň ${level}`, `game/${category}/${level}`);
 			}
 			catch (e) {
+				// modal error window?
 				console.log("AJAX GET GAMEDATA:", e);
 			}
 		}

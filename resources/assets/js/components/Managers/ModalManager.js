@@ -1,26 +1,83 @@
 import * as $ from 'jquery';
-import {getModalImageLink,convertCodeForModal,convertDateToTime,convertRatingToStars} from '../Game/Common';
+import {convertCodeForModal, convertDateToTime, convertRatingToStars} from './Common';
 
-let modals = undefined;
-let ajaxError = false;
+let modalsArray = undefined;
+let modalsImageUrl = undefined;
+let modalError = undefined;
+let reportBugModalFunction = undefined;
+let isError = false;
 let availableModal = 1;
 
-function enableModals(modalsObj){
-	modals = modalsObj;
-	ajaxError = false;
+function enableModals(modalsArr, modalsUrl, errorModal, reportBugModalFunc){
+	modalsArray = modalsArr;
+	modalsImageUrl = modalsUrl;
+	reportBugModalFunction = reportBugModalFunc;
+	modalsArray.push(createGameplayModal('centeredModal0'), createGameplayModal('centeredModal1'), createReportBugModal('reportBugModal'));
+	modalError = errorModal;
 	availableModal = 1;
 }
 
-function setAjaxError(){
-	ajaxError = true;
+function createGameplayModal(id){
+	return {
+		id,
+		heading: '',
+		text: '',
+		imageUrl: '',
+		buttons:[{
+			onclick: () => {},
+			text: ''
+		}]
+	};
 }
 
-function setModalParameters(modal, title, text, image, buttonOnclick, buttonText){
-	modal.find('#modal-heading').html(title).end();
-	modal.find('#modal-text').html(text).end();
-	modal.find('#modal-image').attr('src', image).end(); 
-	modal.find('#modal-button').attr('onclick', buttonOnclick).end();
-	modal.find('#modal-button').html(buttonText).end();   
+function createReportBugModal(id){
+	return {
+		id,
+		heading: 'Nahlásiť chybu',
+		text: 'Môžete napísať 1000 znakov.',
+		imageUrl: '',
+		reportBug: {
+			maxLength: 1000,
+			rowsLength: 10
+		},
+		buttons:[{
+			onclick: reportBugModalFunction,
+			text: 'Odoslať chybu'
+		},{
+			onclick: () => {},
+			text: 'Zavrieť okno'
+		}]
+	};
+}
+
+function getReportBugModalText()
+{
+	return $('#reportBugModal').find('#reportBugTextArea').val();
+}
+
+function showReportBugModal()
+{
+	const modal = $('#reportBugModal').modal();
+	modal.show();
+}
+
+function setAjaxError()
+{
+	isError = true;
+}
+
+function getModalImageLink(location, image)
+{
+	return modalsImageUrl + '/' + location + '/' + image + '.png';
+}
+
+function setModalParameters(modal, title, text, image, buttonOnclick, buttonText)
+{
+	modal.heading = title;
+	modal.text = text; 
+	modal.imageUrl = image; 
+	modal.buttons[0].onclick = buttonOnclick;
+	modal.buttons[0].text = buttonText;
 }
 
 function showDynamicModal(type, modalStructure)
@@ -32,87 +89,53 @@ function showDynamicModal(type, modalStructure)
 }
 
 function createDynamicModal(type, modalStructure)
-{
-	let modal = '';
-	let html = '';
+{		
+	availableModal = availableModal ? 1 : 0;
+	let modal = modalsArray[availableModal];	
 
-	if(availableModal==1)
-	{
-		availableModal=2;
-		modal = $('#centeredModal1').modal();
-	}
-	else
-	{
-		availableModal=1;
-		modal = $('#centeredModal2').modal();
-	}
-
-	if(ajaxError)
+	if(isError)
 	{
 		type = 'ajaxError';
-		modalStructure.title = modals['ajaxerror'].modal.title;  
-		modalStructure.text = modals['ajaxerror'].modal.text;  
-		modalStructure.image = getModalImageLink(modals['ajaxerror'].modal.image, 'common');  
-	}    
+		modalStructure.data = modalError;
+		modalStructure.imageLocation = 'common';
+	}
 
 	switch(type)
 	{
-
 	case 'levelIntroduced':
-	{
-		setModalParameters(modal, modalStructure.title, modalStructure.text, modalStructure.image, `mainTaskIntroduced('${modalStructure.task}')`,'Pokračovať');
-		break;
-	}
-
 	case 'mainTaskIntroduced':
-	{
-		setModalParameters(modal, modalStructure.title, modalStructure.text, modalStructure.image, 'continueGame()','Pokračovať');
-		break;
-	}
-
 	case 'mainTaskShowed':
 	{
-		setModalParameters(modal, modalStructure.title, modalStructure.text, modalStructure.image, '', 'Pokračovať');
+		setModalParameters(modal, modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), modalStructure.onclick, 'Pokračovať');
 		break;
 	}
 
 	case 'mainTaskCompleted':
 	{
-		html = modalStructure.text;
+		modalStructure.data.text += '<br><br> <h4><i class="fas fa-stopwatch"></i> Čas:</h4>' + convertDateToTime(modalStructure.task_elapsed_time);
+		modalStructure.data.text += '<br><br> <h4><a data-toggle="collapse" href="#collapseCode"><i class="fas fa-code"></i> Kód:</a></h4>';
+		modalStructure.data.text += '<div class="collapse" id="collapseCode">';
+		modalStructure.data.text += '<div><code>';
+		modalStructure.data.text += convertCodeForModal(modalStructure.code);
+		modalStructure.data.text += '</div></code>';
+		modalStructure.data.text += '</div>';
+		modalStructure.data.text += '<br><br> <h4><i class="fas fa-star-half-alt"></i> Hodnotenie:</h4>' + convertRatingToStars(modalStructure.rating);
 
-		let task_elapsed_time = this.task_end - this.task_start; 
-		task_elapsed_time = convertDateToTime(task_elapsed_time);
-
-		html += '<br><br> <h4><i class="fas fa-stopwatch"></i> Čas:</h4>'+ task_elapsed_time;
-		html += '<br><br> <h4><a data-toggle="collapse" href="#collapseCode"><i class="fas fa-code"></i> Kód:</a></h4>';
-		html += '<div class="collapse" id="collapseCode">';
-		html += '<div><code>';
-		html += convertCodeForModal();
-		html += '</div></code>';
-		html += '</div>';
-		html += '<br><br> <h4><i class="fas fa-star-half-alt"></i> Hodnotenie:</h4>' + convertRatingToStars();
-
-		setModalParameters(modal, modalStructure.title, html, modalStructure.image, 'continueGame()', 'Pokračovať');
+		setModalParameters(modal, modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), modalStructure.onclick, 'Pokračovať');
 		break;
 	}
 
-
 	case 'mainTaskFailed':
 	{
-		setModalParameters(modal, modalStructure.title, modalStructure.text, modalStructure.image, 'loadGame()', 'Skúsiť znova');
+		setModalParameters(modal, modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), modalStructure.onclick, 'Skúsiť znova');
 		break;
 	}
 
 	case 'ajaxError':
 	{
-		// TO DO CHANGE VIEW TO HOME
-		// html = 'window.location.href=\''; 
-		// html += '{{ url('/')}}' + '\';'; 
-
-		setModalParameters(modal, modalStructure.title, modalStructure.text, modalStructure.image, html, 'Ukončiť hru');
+		setModalParameters(modal, modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), () => window.location.reload(), 'Reštartovať hru');
 		break;
 	}
-
 
 	case 'allMainTasksFinished':
 	{
@@ -120,15 +143,13 @@ function createDynamicModal(type, modalStructure)
 		// html = 'window.location.href=\''; 
 		// html += '{{ url('/')}}' + '/start/' + this.category + '/' + (this.level+1) + '\';';    
  
-		setModalParameters(modal, modalStructure.title, modalStructure.text, modalStructure.image, html, 'Ďalšia úroveň');
+		setModalParameters(modal, modalStructure.data.title, modalStructure.data.text, modalStructure.image, ()=>{}, 'Ďalšia úroveň');
 		break;
 	}
 
 	}  
 
-	return modal;
-
-	//modal.modal('show'); 
+	return $(`#centeredModal${availableModal}`).modal();
 }
 
-export default { enableModals, setAjaxError, showDynamicModal };
+export default { enableModals, showDynamicModal, setAjaxError, showReportBugModal, getReportBugModalText };

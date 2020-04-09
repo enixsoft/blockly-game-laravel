@@ -18,7 +18,7 @@
       <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
       <!-- Custom styles for this template -->
-      <link href="{{ asset('css/new-age.min.css') }}" rel="stylesheet">
+      <link href="{{ asset('css/new-age.css') }}" rel="stylesheet">
    </head>
    <body id="page-top">
       @auth   
@@ -36,24 +36,7 @@
       base-url="http://localhost:3000/blocklyapp/"
    />
 	</div> 
-	<xml id="toolbox" style="display: none">
-	<block type="player" movable="false" deletable="false" inline="false" x="0" y="0"></block>
-  	</xml>
-   <!-- {{ $gameDataJson }}
-   {{ $errors }}
-   {{ $errors->register }}
-   {{ json_encode(Session::getOldInput()) }}
-   @guest
-   Guest
-   @endguest
-   @auth
-   {{ Auth::user()->username }}
-   @endauth
-   {{env('GOOGLE_RECAPTCHA_KEY')}} -->
-   </body>
- 
+   </body> 
    <script src="{{ asset(mix('js/app.js')) }}"></script>
-   <script src='https://www.google.com/recaptcha/api.js'></script>
-   
-
+   <script src='https://www.google.com/recaptcha/api.js'></script>   
 </html>

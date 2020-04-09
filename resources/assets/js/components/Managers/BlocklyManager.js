@@ -2,47 +2,14 @@ import * as Blockly from 'blockly/core';
 import 'blockly/blocks';
 import 'blockly/javascript';
 // import * as En from 'blockly/msg/en';
-import 'jquery';
 import * as $ from 'jquery';
-import {createBlocklyBlocks} from '../Game/BlocklyDefinitions';
+import {createBlocklyBlocks} from './BlocklyDefinitions';
+
+Blockly.JavaScript.STATEMENT_PREFIX = '%1\n';
 
 let workspacePlayground = null;
 
-export { createBlocklyBlocks };
-
-export function createOriginal (){
-	var blocklyArea = document.getElementById('blocklyArea');
-	var blocklyDiv = document.getElementById('blocklyDiv');
-	var demoWorkspace = Blockly.inject(blocklyDiv,
-		{media: '../../media/',
-			toolbox: document.getElementById('toolbox')});
-
-	var onresize = function(e) {
-		// Compute the absolute coordinates and dimensions of blocklyArea.
-		var element = blocklyArea;
-		var x = 0;
-		var y = 0;
-		do {
-			x += element.offsetLeft;
-			y += element.offsetTop;
-			element = element.offsetParent;
-		} while (element);
-		// Position blocklyDiv over blocklyArea.
-		blocklyDiv.style.left = x + 'px';
-		blocklyDiv.style.top = y + 'px';
-		blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
-		blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
-		Blockly.svgResize(demoWorkspace);
-	};
-
-	window.addEventListener('resize', onresize, false);
-
-	onresize();
-
-	Blockly.svgResize(demoWorkspace);
-}
-
-export function createWorkspacePlayground(blocklyDiv, blocklyArea, startBlocks, config)
+function createWorkspacePlayground(blocklyDiv, blocklyArea, startBlocks, config)
 {
 	workspacePlayground = Blockly.inject(blocklyDiv, config); 
 
@@ -57,13 +24,12 @@ export function createWorkspacePlayground(blocklyDiv, blocklyArea, startBlocks, 
 	$(window).resize(() =>     
 		onResize(blocklyDiv, blocklyArea)
 	);
-	onResize(blocklyDiv, blocklyArea);
-	
+	onResize(blocklyDiv, blocklyArea);	
 
 	return workspacePlayground;
 }
 
-export function scrollWorkspace()
+function scrollWorkspace()
 {
 	var metrics = Blockly.mainWorkspace.getMetrics();
 	var toolboxWidth = Blockly.mainWorkspace.flyout_.width_;
@@ -79,12 +45,19 @@ export function scrollWorkspace()
 	Blockly.mainWorkspace.render();
 }
 
-export function highlightBlock(id)
+function deleteAllBlocks()
 {
-	workspacePlayground.highlightBlock(id);      
+	let allBlocks = workspacePlayground.getAllBlocks();
+	for (let i = 0; i<allBlocks.length; i++)
+	{
+		if(allBlocks[i].type != 'player' && allBlocks[i].type != 'playerDirection')
+		{
+			allBlocks[i].dispose();
+		}
+	}      
 }
 
-export function disableContextMenus()
+function disableContextMenus()
 {
 
 	Blockly.showContextMenu_ = function (e) {
@@ -93,7 +66,7 @@ export function disableContextMenus()
 	};
 }
 
-export function changeFacingDirectionImage(imageUrl, direction) 
+function changeFacingDirectionImage(imageUrl, direction) 
 {
 	const player = getBlocksByType('playerDirection'); 
 
@@ -112,6 +85,36 @@ function getBlocksByType(type)
 		}
 	}
 	return(blocks);
+}
+
+function getWorkspaceCode()
+{
+	return Blockly.JavaScript.workspaceToCode(workspacePlayground);
+}
+
+function clearFailedBlocks(failedBlock)
+{
+	failedBlock.forEach((block) => {	
+		switch(block.type)
+		{
+		case 'do_while_not_finished':
+			block.setColour(230);
+			break;
+		case 'for':
+			block.setColour(230);
+			break;
+		case 'if_next_tile_is':
+			block.setColour(210);
+			break;
+		case 'if_next_tile_has':
+			block.setColour(210);
+			break;
+		default:
+			block.setColour(160);
+			break;
+		}
+	});
+	failedBlock.splice(0, failedBlock.length);
 }
 
 function onResize(blocklyDiv, blocklyArea) 
@@ -134,3 +137,5 @@ function onResize(blocklyDiv, blocklyArea)
 
 	Blockly.svgResize(workspacePlayground); // o_O
 }
+
+export default { changeFacingDirectionImage, deleteAllBlocks, createWorkspacePlayground, createBlocklyBlocks, getWorkspaceCode, clearFailedBlocks};

@@ -10,7 +10,7 @@ function changeView(view, data, title, location)
 
 	if(currentView === null || currentView === view)
 	{
-		// replaceState logic
+		// replaceState logic		
 		window.history.replaceState({ view, data }, title, location);
 		changeData(data, view);
 		return;

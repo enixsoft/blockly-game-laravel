@@ -255,7 +255,7 @@ pointer-events: none;
 header.game-header {
   position: relative;
   width: 100%;  
-  color: white;
+  /*color: white;*/
   padding-top: 74px;
   height: 100vh;  
   background: url("../img/bg-pattern.png"), #7b4397;

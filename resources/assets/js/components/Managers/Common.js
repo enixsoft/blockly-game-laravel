@@ -23,18 +23,8 @@ function convertCodeForModal(code)
 	return result;
 }
 
-function getModalImageLink(modalImageUrl, imageType, location)
-{
-	if(location==='level')
-	{
-		return modalImageUrl + '/' + this.category + 'x' + this.level + '/' + imageType + '.png';
-	}
-	return modalImageUrl + '/' + 'common' + '/' + imageType + '.png';
-}
-
 function convertDateToTime(dateToConvert)
 {
-
 	function addZero(i) {
 		if (i < 10) {
 			i = '0' + i;
@@ -42,30 +32,27 @@ function convertDateToTime(dateToConvert)
 		return i;
 	}
 
-	var date = new Date(dateToConvert);
+	const date = new Date(dateToConvert);
 
-	var h = addZero(date.getUTCHours());
-	var m = addZero(date.getUTCMinutes());
-	var s = addZero(date.getUTCSeconds());
-	var hms = h + ':' + m + ':' + s;
+	const h = addZero(date.getUTCHours());
+	const m = addZero(date.getUTCMinutes());
+	const s = addZero(date.getUTCSeconds());
+	const hms = h + ':' + m + ':' + s;
 	return hms;
 
 }
 
-function rateMainTaskCompletion(object)
+function rateMainTaskCompletion(object, ratings)
 {
 	let rating = 0;
-	var task = 'mainTask' + object.currentMainTask;
+	const task = 'mainTask' + object.currentMainTask;
 
-	var isCorrect = true;
-	var mistakeCount = 0;
-	var playerSolution = String(object.commandArray);      
+	let isCorrect = true;
+	let mistakeCount = 0;
+	let playerSolution = String(object.commandArray);      
 	playerSolution = playerSolution.split(',');
-	// this.code = playerSolution.slice();  
-	
-	const ratings = {}; //TO DO: get ratings
 
-	var solution = ratings[task].solution;
+	let solution = ratings[task].solution;
 	solution = solution.split(',');
 
 	//if there are any rules check if the solution passes 
@@ -94,16 +81,14 @@ function rateMainTaskCompletion(object)
 
 			isCorrect = false;
 
-			for(var k in ruleType)
-			{
-        
+			for(let k in ruleType)
+			{        
 				if(actualCount<ruleCount)
 				{
-					for(var l in playerSolution)
+					for(let l in playerSolution)
 					{
 						if(playerSolution[l].startsWith(ruleType[k]))
-						{
-            
+						{            
 							actualCount++;
         
 							if(actualCount==ruleCount)
@@ -114,69 +99,53 @@ function rateMainTaskCompletion(object)
 						}
 					}
 				}
-
 			}
-
-
-		}       
-    
+		} 
 	}   
-
-
+	
 	if(playerSolution.length==solution.length) //player's solution has same length as defined solution, but the order of blocks could be different
 	{      
-		var index = -1;
+		let index = -1;
 
-		for(var h=0; h<solution.length; h++)
+		for(let h=0; h<solution.length; h++)
 		{
-
 			index = -1;
         
-			for(var i=0; i<playerSolution.length; i++)
+			for(let i=0; i<playerSolution.length; i++)
 			{
-
 				if(playerSolution[i]==solution[h])
 				{             
 					index = i;
 					break;
-				}            
-
+				} 
 			}
 
 			if(index != -1)
 				playerSolution.splice(index, 1);
 			else
 				mistakeCount++;
-
 		}                 
     
 		if(mistakeCount < 4)
 			rating = 5 - mistakeCount;
 		else
-			rating = 1;       
-
-
+			rating = 1;     
 	}
 	else //player's solution has different length than defined solution
 	{
-
 		if(playerSolution.length > solution.length)
-		{
-            
+		{            
 			mistakeCount = + playerSolution.length - solution.length;
             
 			if(mistakeCount < 4)
 				rating = 5 - mistakeCount;
 			else
 				rating = 1;
-
-
 		}
 		else
 		{
 			rating = 5;
 		}
-
 	}
 
 	if(isCorrect) 
@@ -188,7 +157,6 @@ function rateMainTaskCompletion(object)
 		rating = 0;
 		return rating;
 	}     
-
 }
 
 function sendRequest(request) 
@@ -211,4 +179,4 @@ function sendRequest(request)
 	});
 }
 
-export { convertRatingToStars, convertCodeForModal, getModalImageLink, convertDateToTime, rateMainTaskCompletion, sendRequest };
+export { convertRatingToStars, convertCodeForModal, convertDateToTime, rateMainTaskCompletion, sendRequest };

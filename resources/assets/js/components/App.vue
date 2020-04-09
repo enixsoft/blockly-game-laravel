@@ -4,9 +4,9 @@
     <template v-if="GameInProgress !== undefined">
       <GameHeader :category="GameInProgress.category"
 						:level="GameInProgress.level"
-                  :game-data="GameInProgress"						
+                  :game-data="GameInProgress"	
+						v-on:UPDATE_PROGRESS="updateProgress"			
        />
-	<!-- :data-index="GameData.findIndex((data)=> data.category === GameInProgress.category && data.level === GameInProgress.level)"                   -->
     </template>    
     <template v-else>    
     <Carousel-Header />
@@ -18,7 +18,8 @@
     <UserAccessForms v-if="!$global.User" 
                     :errors="Array.isArray(errors) ? {} : errors" 
                     :oldInputs="Array.isArray(old) ? {} : old"/>
-    <GameLevels v-else :in-game-progress="inGameProgress" />
+    <GameLevels v-else	:in-game-progress="Progress"
+	 							:levelsPerCategory="5" />
     <footer>
          <div class="container">
             <a href="https://developers.google.com/blockly"><img class="img-fluid" :src="this.$global.Url('img/logo_built_on_dark.png')"></a>
@@ -33,8 +34,8 @@
 
 <script>
 import Vue from 'vue';
-import CarouselHeader from './Headers/CarouselHeader';
-import GameHeader from './Headers/GameHeader';
+import CarouselHeader from './Sections/CarouselHeader';
+import GameHeader from './Game/GameHeader';
 import Navbar from './Navbar';
 import Features from './Sections/Features';
 import HeroInfo from './Sections/HeroInfo';
@@ -55,6 +56,7 @@ export default {
 			GameData: !Array.isArray(this.gameData) ? [this.gameData] : [],
 			GameInProgress: !Array.isArray(this.gameData) ? this.gameData : undefined,
 			Url: (path = undefined) => path ? this.baseUrl + path : this.baseUrl,
+			Progress: [...this.inGameProgress],
 
 			login: false,
 			brand: 'BLOCKLY HRA VUE',
@@ -93,40 +95,7 @@ export default {
 			}
 		});
 		
-		HistoryManager.enableHistory(this);
-
-		// window.addEventListener('popstate', (event) => {
-		// 	console.log('state', event.state);
-		// 	// console.log("page", event.state.page);
-		// 	console.log('hash', event.target.location.hash);
-
-		// 	if(event.state && event.state.page)
-		// 	{
-		// 		switch(event.state.page)
-		// 		{
-		// 		case 'game':
-		// 			{          
-		// 				app.GameInProgress = event.state.data;
-		// 			}
-		// 			break;
-		// 		}
-		// 	}
-		// 	else
-		// 	{
-		// 		app.GameInProgress = undefined;
-		// 	}
-
-		// 	if(event.target.location.hash)
-		// 	{
-		// 		var target = $(event.target.location.hash);
-		// 		target = target.length ? target : $('[name=' + event.target.location.hash.slice(1) + ']');
-		// 		if (target.length) {
-		// 			$('html, body').animate({
-		// 				scrollTop: (target.offset().top - 48)
-		// 			}, 1000, 'easeInOutExpo');
-		// 		}
-		// 	}
-		// });   
+		HistoryManager.enableHistory(this); 
 	},
 	mounted(){
 		if(this.errors['username'] || this.errors['password'])
@@ -174,6 +143,12 @@ export default {
 		navbarCollapse();
 		// Collapse the navbar when page is scrolled
 		$(window).scroll(navbarCollapse);
+	},
+	methods:{
+		updateProgress(obj)
+		{
+			this.Progress[((obj.category -1) * 5)+(obj.level-1)] = obj.progress;
+		}
 	}  
 };
 </script>
