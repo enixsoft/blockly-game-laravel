@@ -4,11 +4,11 @@ import 'jquery.easing';
 let currentView = null;
 let appRef = null;
 
-function changeView(view, data, title, location)
+function changeView(view, data, title, location, forcePushState = false)
 {
 	console.log('CHANGE VIEW', currentView, view, data, title, location);
 
-	if(currentView === null || currentView === view)
+	if(!forcePushState && currentView === null || currentView === view)
 	{
 		// replaceState logic		
 		window.history.replaceState({ view, data }, title, location);
@@ -16,7 +16,7 @@ function changeView(view, data, title, location)
 		return;
 	}
 	// pushState logic
-	window.history.pushState({ view, data }, title, location);
+	window.history.pushState({view, data}, title, location);
 	changeData(data, view);	
 	
 	if(location.includes('#'))
@@ -41,9 +41,7 @@ function changeData(data, view = 'home')
 
 function scrollToHash(hash) 
 {	
-	console.log(hash);
 	var target = $(hash);
-	console.log(target);
 	target = target.length ? target : $('[name=' + hash.slice(1) + ']');
 	if (target.length) {
 		$('html, body').animate({

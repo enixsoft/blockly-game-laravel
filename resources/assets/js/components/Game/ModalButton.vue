@@ -1,6 +1,6 @@
 <template>
  <div :class="divClass">
-	<button type="button" id="modal-button" class="btn btn-success btn-lg" data-dismiss="modal" v-on:click="onclick">
+	<button type="button" id="modal-button" class="btn btn-success btn-lg" data-dismiss="modal" v-on:click="$emit('click', $event)">
 		{{ text }}
 	</button> 
 	</div>
@@ -9,7 +9,6 @@
 export default {
 	props: {
 		divClass: String,
-		onclick: Function,
 		text: String
 	}
 };

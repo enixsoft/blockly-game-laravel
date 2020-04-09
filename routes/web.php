@@ -39,9 +39,10 @@ Route::get('/', 'NewGameController@welcome')->name('/');
 Route::get('cookies', function () {
     return view('cookies');
 })->name('cookies');
-Route::get('/play', 'GameController@startNewGameOrContinue')->name('play');
-Route::get('/start/{category}/{level}', 'GameController@startLevelAsNew')->name('start');
-Route::get('/continue/{category}/{level}', 'GameController@continueLevel')->name('continue');
+
+Route::get('/play', 'NewGameController@startNewGameOrContinue')->name('play');
+Route::get('/start/{category}/{level}', 'NewGameController@startLevelAsNew')->name('start');
+Route::get('/continue/{category}/{level}', 'NewGameController@continueLevel')->name('continue');
 
 // Authentication Routes
 Route::post('login', 'Auth\LoginController@login')->name('login');

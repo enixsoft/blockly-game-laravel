@@ -4,16 +4,14 @@ import {convertCodeForModal, convertDateToTime, convertRatingToStars} from './Co
 let modalsArray = undefined;
 let modalsImageUrl = undefined;
 let modalError = undefined;
-let reportBugModalFunction = undefined;
 let isError = false;
 let availableModal = 1;
 
-function enableModals(modalsArr, modalsUrl, errorModal, reportBugModalFunc){
+function enableModals(modalsArr, modalsUrl, errorModalData, reportBugModalFunction){
 	modalsArray = modalsArr;
 	modalsImageUrl = modalsUrl;
-	reportBugModalFunction = reportBugModalFunc;
-	modalsArray.push(createGameplayModal('centeredModal0'), createGameplayModal('centeredModal1'), createReportBugModal('reportBugModal'));
-	modalError = errorModal;
+	modalsArray.push(createGameplayModal('centeredModal0'), createGameplayModal('centeredModal1'), createReportBugModal('reportBugModal', reportBugModalFunction));
+	modalError = errorModalData;
 	availableModal = 1;
 }
 
@@ -30,7 +28,7 @@ function createGameplayModal(id){
 	};
 }
 
-function createReportBugModal(id){
+function createReportBugModal(id, reportBugModalFunction){
 	return {
 		id,
 		heading: 'Nahlásiť chybu',
@@ -48,11 +46,6 @@ function createReportBugModal(id){
 			text: 'Zavrieť okno'
 		}]
 	};
-}
-
-function getReportBugModalText()
-{
-	return $('#reportBugModal').find('#reportBugTextArea').val();
 }
 
 function showReportBugModal()
@@ -139,11 +132,7 @@ function createDynamicModal(type, modalStructure)
 
 	case 'allMainTasksFinished':
 	{
-		// TO DO FIX
-		// html = 'window.location.href=\''; 
-		// html += '{{ url('/')}}' + '/start/' + this.category + '/' + (this.level+1) + '\';';    
- 
-		setModalParameters(modal, modalStructure.data.title, modalStructure.data.text, modalStructure.image, ()=>{}, 'Ďalšia úroveň');
+		setModalParameters(modal, modalStructure.data.title, modalStructure.data.text, modalStructure.image, modalStructure.onclick, 'Ďalšia úroveň');
 		break;
 	}
 
@@ -152,4 +141,4 @@ function createDynamicModal(type, modalStructure)
 	return $(`#centeredModal${availableModal}`).modal();
 }
 
-export default { enableModals, showDynamicModal, setAjaxError, showReportBugModal, getReportBugModalText };
+export default { enableModals, showDynamicModal, setAjaxError, showReportBugModal };

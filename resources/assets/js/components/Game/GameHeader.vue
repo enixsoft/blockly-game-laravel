@@ -318,7 +318,7 @@ export default {
 		{
 			ModalManager.showReportBugModal();
 		},
-		reportBug()
+		reportBug(report)
 		{
 			if(!this.isUserLoggedIn)
 			{
@@ -326,7 +326,6 @@ export default {
 				return;
 			}
 
-			const report = ModalManager.getReportBugModalText();
 			const data = {'username' : this.userName, 'category': this.category, 'level': this.level, 'report': report };
 
 			try {
@@ -412,7 +411,6 @@ export default {
 		{   
 			const task = 'mainTask' + object.currentMainTask;
 			this.code = String(object.commandArray).split(',').slice();
-			console.log('this.code', this.code);
 			this.rating = rateMainTaskCompletion(object, this.ratings);
 
 			if(this.rating)
@@ -452,6 +450,26 @@ export default {
 			catch (e) {
 				ModalManager.setAjaxError();                    
 			}  			
+		},
+		allMainTasksFinished()
+		{	 
+			ModalManager.showDynamicModal('allMainTasksFinished', { 
+				data: this.tasks.level.finish_modal, 
+				imageLocation: 'common',
+				onclick: this.loadNextLevel
+			});
+		},
+		async loadNextLevel()
+		{			
+			try {
+				const result = await sendRequest({method: 'GET', headers: {'Accept': 'application/json'}, url: this.$global.Url(`start/${this.category}/${this.level+1}`)});           
+				this.$global.GameData.push(result);
+				HistoryManager.changeView('game', result, '', `/game/${this.category}/${this.level}`, true);
+			}
+			catch (e) {
+				// modal error window?
+				console.log('AJAX loadNextLevel:', e);
+			}
 		}		
 	},
 	computed: {

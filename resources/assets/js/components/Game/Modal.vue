@@ -10,7 +10,7 @@
             <div :class="reportBug ? 'col-lg-12' : 'col-lg-6'">
               <br>
               <h1 id="modal-heading">{{ heading }}</h1> 
-              <ModalReportBugForm v-if="reportBug"
+              <ModalTextArea v-if="reportBug"
 					:max-length="reportBug.maxLength"
 					:rows-length="reportBug.rowsLength"
 					v-on:input="reportBugInput = $event.target.value"
@@ -24,10 +24,11 @@
           <br>
           <div class="row text-center">
 				<ModalButton v-for="(button, index) in buttons"
-				:div-class="`col-lg-${12/buttons.length} mx-auto`"
-				:onclick="button.onclick"
+				:div-class="`col-lg-${12/buttons.length} mx-auto`"				
 				:text="button.text"
-				:key="index" />
+				:key="index" 
+				v-on:click="buttonOnClick(index)"				
+				/>
           </div>        
         </div>
       </div>
@@ -38,7 +39,7 @@
 </div>
 </template>
 <script>
-import ModalReportBugForm from './ModalReportBugForm';
+import ModalTextArea from './ModalTextArea';
 import ModalButton from './ModalButton';
 export default {
 	data(){
@@ -56,7 +57,7 @@ export default {
 		reportBug: Object
 	},
 	components:{
-		ModalReportBugForm,
+		ModalTextArea,
 		ModalButton
 	},
 	mounted() {
@@ -80,6 +81,17 @@ export default {
 				return this.reportBugText;
 			}			
 			return this.text;
+		}
+	},
+	methods: {
+		buttonOnClick(index)
+		{
+			if(this.reportBug)
+			{
+				this.buttons[index].onclick(this.reportBugInput);
+				return;
+			}
+			this.buttons[index].onclick();
 		}
 	}
 };

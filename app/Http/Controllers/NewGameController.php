@@ -159,7 +159,6 @@ class NewGameController extends Controller
                          else
                          {
                            return redirect()->route('game', ['category' => $category, 'level' => 1]);
-
                          }
 
 
@@ -251,7 +250,7 @@ class NewGameController extends Controller
           {   
 
                 //user is not logged in
-
+                // TO DO
                 // $error = "ERROR_NOT_LOGGED_IN";
                 // return $this->redirectOrSendResponse(compact('category', 'level', 'error'), $request);
 
@@ -381,7 +380,7 @@ class NewGameController extends Controller
 
 
 
-   public function startNewGameOrContinue()
+   public function startNewGameOrContinue(Request $request)
     {      
           if(Auth::check())
             {
@@ -393,19 +392,21 @@ class NewGameController extends Controller
                 if($inGameProgress==null)
                 {                 
 
-                  return redirect()->route('game', ['category' => 1, 'level' => 1]);
+                  // return redirect()->route('game', ['category' => 1, 'level' => 1]);
+                  $this->runGame(1, 1, $request);
 
                 }
                 else if($inGameProgress['progress']==100)
-                {
-                  
-                    return redirect()->route('game', ['category' => $inGameProgress['category'], 'level' => $inGameProgress['level'] + 1]);
+                {                  
+                    //return redirect()->route('game', ['category' => $inGameProgress['category'], 'level' => $inGameProgress['level'] + 1]);
+                    $this->runGame($inGameProgress['category'], $inGameProgress['level'] + 1, $request);
                 }
 
                 else  
                 {
                
-                    return redirect()->route('game', ['category' => $inGameProgress['category'], 'level' => $inGameProgress['level']]);
+                    //return redirect()->route('game', ['category' => $inGameProgress['category'], 'level' => $inGameProgress['level']]);
+                    $this->runGame($inGameProgress['category'], $inGameProgress['level'], $request);
                 }
                 
             }
@@ -417,7 +418,7 @@ class NewGameController extends Controller
         
     }
 
-       public function startLevelAsNew($category, $level)
+       public function startLevelAsNew($category, $level, Request $request)
     {      
           if(Auth::check())
             {
@@ -438,7 +439,7 @@ class NewGameController extends Controller
                
                 $levelMin=1;
           
-
+                
                 if($category>$categoryMax || $category<$categoryMin || $level < $levelMin || $level > $levelMax || !is_numeric($category) || !is_numeric($level))
                 {
                 return redirect()->route('/');
@@ -466,17 +467,17 @@ class NewGameController extends Controller
                    'level' => $level,
                    'progress' => 0,
                    'json' => $jsonStartGame            
-                   ));  
+                   ));
 
-
-
-                 return redirect()->route('game', ['category' => $category, 'level' => $level]);
+                 //return redirect()->route('game', ['category' => $category, 'level' => $level]);
+                 $this->runGame($category, $level, $request);
                 
                 }                
                 else if ($inGameProgress['level'] < $level)                  
                 {
 
-                 return redirect()->route('game', ['category' => $category, 'level' => $level]);
+                 // return redirect()->route('game', ['category' => $category, 'level' => $level]);
+                 $this->runGame($category, $level, $request);
 
                 }
 
@@ -493,7 +494,7 @@ class NewGameController extends Controller
         
     }
 
-    public function continueLevel($category, $level)
+    public function continueLevel($category, $level, Request $request)
     {      
           if(Auth::check())
             {
@@ -527,7 +528,8 @@ class NewGameController extends Controller
                 
 
                 if($inGameProgress!= null && $inGameProgress['level']>=$level)                
-                  return redirect()->route('game', ['category' => $category, 'level' => $level]);
+                  //return redirect()->route('game', ['category' => $category, 'level' => $level]);
+                  $this->runGame($category, $level, $request);                  
                 
                 else           
                   return redirect()->route('/');
@@ -588,7 +590,6 @@ class NewGameController extends Controller
 
     public function redirectOrSendResponse($responseData, Request $request)
     {
-      $requestData = $request->all();      
 
       if($request->header('Accept') !== null && $request->header('Accept') == "application/json")
       {         
