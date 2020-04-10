@@ -1,8 +1,8 @@
 <template>
 <header class="masthead">
-        <div class="container h-100">
+        <div class="container-fluid h-100">
         <div class="row h-100">
-        <div id="carousel"  class="carousel slide w-100" data-ride="carousel" data-interval="6000" data-pause="hover">
+        <div id="carousel"  class="carousel slide h-100 w-100" data-ride="carousel" data-interval="6000" data-pause="hover">
             <ul class="carousel-indicators">
                 <li data-target="#carousel" data-slide-to="0" class="active"></li>
                 <li data-target="#carousel" data-slide-to="1"></li>
