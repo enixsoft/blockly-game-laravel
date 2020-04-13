@@ -20,7 +20,7 @@
                      <i class="fa fa-user-circle"></i> {{ userName }}
                      </a>        
                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Odhlásiť sa</a>
+                        <a class="dropdown-item" href="" v-on:click.prevent="logout()">Odhlásiť sa</a>
                      </div>
                   </li>   
                </ul>
@@ -51,6 +51,13 @@ export default {
 	methods: {      
 		changeViewToHome(){			
 			HistoryManager.changeView('home', undefined, '', '/' + this.$global.Url('#game').split('/').slice(3).join('/'));			
+		},
+		logout()
+		{
+			this.$global.User = null;
+			// document.getElementById('logout-form').submit();
+			// TO DO ajax post request
+        
 		}
 	}
 };

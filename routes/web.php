@@ -14,35 +14,23 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\NewGameController;
 
 
+Route::group(['middleware' => 'auth' ], function()
+{
 //POST
-Route::post('registeruserbyadmin', 'GameController@registerUserByAdmin')->name('registeruserbyadmin');
-Route::post('/game/savegame', 'GameController@saveGame');
-Route::post('/game/updateingameprogress', 'GameController@updateIngameProgress');
-Route::post('/game/createlogofgameplay', 'GameController@createLogOfGameplay');
-Route::post('/game/reportbug', 'GameController@reportBug');
+Route::post('registeruserbyadmin', 'NewGameController@registerUserByAdmin')->name('registeruserbyadmin');
+Route::post('/game/savegame', 'NewGameController@saveGame');
+Route::post('/game/updateingameprogress', 'NewGameController@updateIngameProgress');
+Route::post('/game/createlogofgameplay', 'NewGameController@createLogOfGameplay');
+Route::post('/game/reportbug', 'NewGameController@reportBug');
 
 //GET
 Route::get('/game/{category}/{level}', 'NewGameController@runGame')->name('game');
-Route::get('/', 'NewGameController@welcome')->name('/');
-
-// Route::get('/', function () {    
-//     $files = ['auth', 'pagination', 'passwords', 'validation'];
-//     foreach ($files as $file)
-//     {
-//     $lang[$file] = Lang::get($file);
-//     }
-//     $langJson =  json_encode($lang);
-    
-//     return view('vue')->with(compact('langJson'));
-// })->name('/');
-
-Route::get('cookies', function () {
-    return view('cookies');
-})->name('cookies');
-
 Route::get('/play', 'NewGameController@startNewGameOrContinue')->name('play');
 Route::get('/start/{category}/{level}', 'NewGameController@startLevelAsNew')->name('start');
 Route::get('/continue/{category}/{level}', 'NewGameController@continueLevel')->name('continue');
+});
+
+Route::get('/', 'NewGameController@welcome')->name('/');
 
 // Authentication Routes
 Route::post('login', 'Auth\LoginController@login')->name('login');

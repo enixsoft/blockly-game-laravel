@@ -13,7 +13,6 @@
         </tr>
     </thead>
     <tbody>
-        <!-- @for ($i = 1; $i <= 5; $i++)      -->
         <tr v-for="(level, index) in categoryProgress" :key="index">
             <th scope="row">{{ levelValue(index + 1) }}</th>
             <td>
@@ -25,10 +24,10 @@
                 </div>
                 </div>
             </td>
-            <td><a :href="'/start/' + categoryNumber + '/' + levelValue(index + 1)" :class="['btn', 'btn-secondary', 'btn-sm', levelProgressValue(categoryProgress.length - 1) == 100 ? '' : 'disabled']">
+            <td><a href="" v-on:click.prevent="btnClick('start', index + 1)" :class="['btn', 'btn-secondary', 'btn-sm', levelProgressValue(categoryProgress.length - 1) !== 100 || disabled ? 'disabled' : '']">
                 SPUSTIŤ OD ZAČIATKU</a>
             </td>
-            <td><a :href="'/continue/' + categoryNumber + '/' + levelValue(index + 1)" :class="['btn', 'btn-secondary', 'btn-sm', levelProgressValue(categoryProgress.length - 1) == 100 ? '' : 'disabled']">
+            <td><a href="" v-on:click.prevent="btnClick('continue', index + 1)" :class="['btn', 'btn-secondary', 'btn-sm', levelProgressValue(categoryProgress.length - 1) !== 100 || disabled ? 'disabled' : '']">
                 POKRAČOVAŤ V ULOŽENEJ HRE</a>
             </td>
         </tr>
@@ -43,19 +42,24 @@
 </template>
 <script>
 export default {    
-    props: {
-        categoryText: String,
-        categoryNumber: Number,
-        categoryProgress: Array
-    },
-    methods:{
-        levelValue(index){
-           return ((this.categoryNumber - 1) * this.categoryProgress.length) + index;
-        },
-        levelProgressValue(index)
-        {
-            return this.categoryProgress[index] ? this.categoryProgress[index] : 0;
-        }
-    }
-}
+	props: {
+		categoryText: String,
+		categoryNumber: Number,
+		categoryProgress: Array,
+		disabled: Boolean
+	},
+	methods:{
+		levelValue(index){
+			return ((this.categoryNumber - 1) * this.categoryProgress.length) + index;
+		},
+		levelProgressValue(index)
+		{
+			return this.categoryProgress[index] ? this.categoryProgress[index] : 0;
+		},
+		btnClick(type, level)
+		{
+			this.$emit('click', {type, category: this.categoryNumber, level});			
+		}
+	}
+};
 </script>

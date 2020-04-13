@@ -8,8 +8,9 @@ import {createBlocklyBlocks} from './BlocklyDefinitions';
 Blockly.JavaScript.STATEMENT_PREFIX = '%1\n';
 
 let workspacePlayground = null;
+let blocksIds = {};  
 
-function createWorkspacePlayground(blocklyDiv, blocklyArea, startBlocks, config)
+function createWorkspacePlayground(blocklyDiv, blocklyArea, startBlocks, config, blockClickFunctionObj)
 {
 	workspacePlayground = Blockly.inject(blocklyDiv, config); 
 
@@ -24,7 +25,16 @@ function createWorkspacePlayground(blocklyDiv, blocklyArea, startBlocks, config)
 	$(window).resize(() =>     
 		onResize(blocklyDiv, blocklyArea)
 	);
-	onResize(blocklyDiv, blocklyArea);	
+	onResize(blocklyDiv, blocklyArea);
+	blocksIds.player = getBlocksByType('player') || getBlocksByType('playerDirection'); 
+	/*
+	blocksIds.cameraplus = getBlocksByType("cameraplus");
+	blocksIds.cameraminus = getBlocksByType("cameraminus");
+	blocksIds.load = getBlocksByType("load");
+	blocksIds.save = getBlocksByType("save");
+	blocksIds.reload = getBlocksByType("reload"); 
+	*/
+	workspacePlayground.addChangeListener(blockClickController.bind(null, blockClickFunctionObj));	
 
 	return workspacePlayground;
 }
@@ -54,7 +64,7 @@ function deleteAllBlocks()
 		{
 			allBlocks[i].dispose();
 		}
-	}      
+	}
 }
 
 function disableContextMenus()
@@ -68,23 +78,23 @@ function disableContextMenus()
 
 function changeFacingDirectionImage(imageUrl, direction) 
 {
-	const player = getBlocksByType('playerDirection'); 
-
-	// this.facingDirection = direction; TO DO: change this logic
-	// player[0].setFieldValue(app.$global.Url(`game/${direction}.png`), 'facingDirection_image');
+	const player = getBlocksByType('playerDirection');
+	if(player)
+	{
+		player[0].setFieldValue(`${imageUrl}/${direction}.png`, 'facingDirection_image');
+	} 
 }
 
 function getBlocksByType(type)
 {
-	//one type block only
-	var blocks = [];
-	for (var blockID in workspacePlayground.blockDB_) 
+	let blocks = [];
+	for (let blockID in workspacePlayground.blockDB_) 
 	{
 		if (workspacePlayground.blockDB_[blockID].type == type) {
 			blocks.push(workspacePlayground.blockDB_[blockID]);
 		}
 	}
-	return(blocks);
+	return blocks.length ? blocks : undefined;
 }
 
 function getWorkspaceCode()
@@ -136,6 +146,58 @@ function onResize(blocklyDiv, blocklyArea)
 	blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
 
 	Blockly.svgResize(workspacePlayground); // o_O
+}
+
+function blockClickController(functionObject, event) 
+{
+	if(event.element!=='click')
+	{
+		return;
+	}
+
+	console.log('blockClickController', functionObject, event);
+
+	let blockToCheck = Blockly.selected;
+	let blockCheckResult = undefined;
+
+	switch(blockToCheck.id)
+	{		
+	case blocksIds.player:
+		blockCheckResult = 'player';
+		break;
+	/*
+	case blocksIds.load:
+	blockCheckResult = 'load';
+	//loadGame()
+	break;
+
+	case blocksIds.save:
+	blockCheckResult = 'save';
+	//saveGame()
+	break;
+
+	case blocksIds.reload:
+	blockCheckResult = 'reload';
+	//reloadIframe()
+	break;
+
+	case blocksIds.cameraplus:
+	blockCheckResult = 'cameraplus';
+	//cameraPlus()
+	break;
+
+	case blocksIds.cameraminus:
+	blockCheckResult = 'cameraminus';
+	//cameraMinus()
+	break;*/
+	}
+	
+	if(blockCheckResult)
+	{
+		blockToCheck.unselect();
+		console.log(blockCheckResult);		
+		functionObject[blockCheckResult] && functionObject[blockCheckResult]();		
+	}
 }
 
 export default { changeFacingDirectionImage, deleteAllBlocks, createWorkspacePlayground, createBlocklyBlocks, getWorkspaceCode, clearFailedBlocks};

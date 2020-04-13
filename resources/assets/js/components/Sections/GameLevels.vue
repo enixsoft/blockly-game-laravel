@@ -9,12 +9,13 @@
                         :category-number="index + 1"
                         :category-progress="categoryProgress(index)"
                         :key="index"
+								:disabled="disabled"
+								v-on:click="gameLevelClick"
                     ></GameLevelItem>
                   <div class="col-md-6 mx-auto">
-                     <!-- <button onclick="window.location=window.location.href + 'play';" :class="['btn', 'btn-lg', 'btn-success', inGameProgress[9] && inGameProgress[9] === 100 ? 'disabled' : '']"> -->
-                     <button v-on:click="runGame()" :class="['btn', 'btn-lg', 'btn-success', inGameProgress[9] && inGameProgress[9] === 100 ? 'disabled' : '']">
+                     <button v-on:click="runGame('play')" class="btn btn-lg btn-success" :disabled="(inGameProgress[9] && inGameProgress[9] === 100) || disabled">
                      <i class="fas fa-play"></i>
-                   {{ inGameProgress[0] === 0 ? 'Začať novú hru' : 'Pokračovať v hre.' }}
+                  {{ inGameProgress[0] === 0 ? 'Začať novú hru' : 'Pokračovať v hre.' }}
                      </button>             
                   </div>
                   <!-- Admin -->
@@ -56,8 +57,9 @@ export default {
 				{ text: 'V prvej kategórii sa naučíme ovládať hrdinu, zadávať mu príkazy pohyb, skok, útok mečom, použitie páky a otvorenie truhlice.' },
 				{ text: 'V druhej kategórii sa naučíme ovládať hrdinu podľa nového herného systému a využívať pri tvorbe algoritmov cykly a podmienky.' }
 			],
-			// levelsPerCategory: 5			
+			disabled: false	
 		};
+		
 	},
 	components: {
 		GameLevelItem
@@ -76,28 +78,28 @@ export default {
 				category[i] = this.inGameProgress[startIndex + i] || 0;
 			}
 			return category;
-		},
-		async runGame(category = 1, level = 1){			
-			const dataExists = this.$global.GameData.find((data) => data.category === category && data.level === level);
-			if(dataExists)
-			{
-				HistoryManager.changeView('game', dataExists, '', `game/${category}/${level}`);
-				return;
-			}
+		},		
+		async runGame(type, category, level){			
 			try {
-				const result = await sendRequest({method: 'GET', headers: {'Accept': 'application/json'}, url: this.$global.Url(`game/${category}/${level}`)});           
-				this.$global.GameData.push(result);
-				HistoryManager.changeView('game', result, `Kategória ${category} Úroveň ${level}`, `game/${category}/${level}`);
+				const url = type === 'play' ? this.$global.Url('play') : this.$global.Url(`${type}/${category}/${level}`);
+				const result = await sendRequest({method: 'GET', headers: {'Accept': 'application/json'}, url});           
+				// this.$global.GameData.push(result);
+				HistoryManager.changeView('game', result, `Kategória ${result.category} Úroveň ${result.level}`, `game/${result.category}/${result.level}`);
 			}
 			catch (e) {
 				// modal error window?
 				console.log("AJAX GET GAMEDATA:", e);
 			}
+		},
+		gameLevelClick(obj)
+		{
+			this.runGame(obj.type, obj.category, obj.level);
+			this.disabled = true;
 		}
 	},
 	mounted()
 	{
-		console.log('GameLevels', this.inGameProgress);
+		console.log('GameLevels', this.inGameProgress);		
 	}        
 };
 </script>

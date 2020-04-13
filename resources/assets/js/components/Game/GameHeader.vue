@@ -2,12 +2,12 @@
 <header class="game-header">
 <div class="game-container">
 <div class="row h-100 w-100 no-padding">
-    <div class="col-lg-6 no-padding">
+    <div v-if="isUserLoggedIn" class="col-lg-6 no-padding">
         <iframe id="app-frame" class="game-playcanvas" ref="iframe"  
         :src="this.$global.Url(`game/playcanvas/${levelString}.html`)"></iframe> 
         <!-- src="https://playcanv.as/e/p/62c28f63/"></iframe>-->             
     </div>
-    <div class="col-lg-6 no-padding">
+    <div v-if="isUserLoggedIn" class="col-lg-6 no-padding">
         <div class="row h-100 w-100 no-padding">
             <div class="col-lg-12 game-blockly" id="blocklyArea" ref="blocklyArea">            
             </div>
@@ -26,7 +26,7 @@
     </div>
 </div>
 </div>
-<div id="blocklyDiv" ref="blocklyDiv" style="position: absolute;"></div>
+<div v-if="isUserLoggedIn" id="blocklyDiv" ref="blocklyDiv" style="position: absolute;"></div>
 <Modal 
 		v-for="(modal, index) in modalsArray"
 		:heading="modal.heading"
@@ -70,13 +70,12 @@ export default {
 			main_task: 0,
 			saveObjectToString: this.gameData.savedGame.json,
 			savedGameParsed: JSON.parse(this.gameData.savedGame.json),
-			facingDirection: '',
 			workspacePlayground: undefined,
 			modalsArray: [],
 			gameExecutingCode: false,
 			LOGGING_ENABLED: true,
-			SAVING_ENABLED: false,
-			UPDATING_PROGRESS_ENABLED: false
+			SAVING_ENABLED: true,
+			UPDATING_PROGRESS_ENABLED: true
 		};
 	},
 	components: {
@@ -93,6 +92,13 @@ export default {
 	mounted() {
 		console.log('GameHeader mounted:');   
 		console.log(this.$data);	
+		ModalManager.enableModals(this.modalsArray, this.$global.Url('game'), this.modals['ajaxerror'].modal, this.reportBug);
+
+		if(!this.isUserLoggedIn)
+		{
+			ModalManager.setAjaxError();
+			ModalManager.showDynamicModal('', {});
+		}
 		
 		this.workspacePlayground = BlocklyManager.createWorkspacePlayground(
 			this.$refs.blocklyDiv, 
@@ -100,6 +106,9 @@ export default {
 			this.startBlocks, 
 			{
 				toolbox: this.toolbox, trashcan: true, scrollbars: true
+			},
+			{
+				player: this.runCode
 			}
 			/* MOBILE TO DO
 			{
@@ -110,10 +119,9 @@ export default {
 		);
 
 		if(this.category == 2){
-			BlocklyManager.changeFacingDirectionImage(this.savedGameParsed.character.facingDirection);
+			BlocklyManager.changeFacingDirectionImage(this.$global.Url('game'), this.savedGameParsed.character.facingDirection);
 		}
-		
-		ModalManager.enableModals(this.modalsArray, this.$global.Url('game'), this.modals['ajaxerror'].modal, this.reportBug);
+
 		window.addEventListener('message', this.eventer);      
 		// this.$on('EVENT', (obj) => {
 		// });
@@ -121,7 +129,7 @@ export default {
 	methods: {
 		eventer(e)
 		{
-			if(!e.data.action)
+			if(!e.data.action || e.origin !== window.location.origin)
 			{
 				return;
 			}
@@ -223,7 +231,9 @@ export default {
 			case 'changeFacingDirection':
 			{                    
 				if(this.category==2)
-					this.changeFacingDirectionImage(e.data.content);
+				{
+					BlocklyManager.changeFacingDirectionImage(this.$global.Url('game'), e.data.content);
+				}
 			}
 			}
 		},
@@ -339,8 +349,13 @@ export default {
 		{
 			BlocklyManager.deleteAllBlocks();
 		},
-		runCode()
-		{			
+		runCode()		
+		{
+			if(this.locked)
+			{
+				return;
+			}
+
 			this.gameExecutingCode = true; 
 			this.locked = true;	
 
@@ -442,10 +457,10 @@ export default {
 				return; 
 			}
 
-			var progress = this.tasks[task].progress;
-			const data = {'progress' : progress, 'user' : this.userName, 'category': this.category, 'level': this.level }; 
+			const progress = this.tasks[task].progress;
+			const data = {'progress' : progress, 'user': this.userName, 'category': this.category, 'level': this.level }; 
 			try {
-				await sendRequest({method:'POST', url: this.$global.Url('game/savegame'), data});           
+				await sendRequest({method:'POST', url: this.$global.Url('game/updateingameprogress'), data});           
 			}
 			catch (e) {
 				ModalManager.setAjaxError();                    

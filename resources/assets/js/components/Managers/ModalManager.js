@@ -1,7 +1,7 @@
 import * as $ from 'jquery';
 import {convertCodeForModal, convertDateToTime, convertRatingToStars} from './Common';
 
-let modalsArray = undefined;
+let modalsArray = undefined; //TO DO maybe one modal object and modal DOM element ref is enough?
 let modalsImageUrl = undefined;
 let modalError = undefined;
 let isError = false;
