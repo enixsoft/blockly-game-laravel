@@ -82,8 +82,8 @@ export default {
 		Modal
 	},
 	props: {
-		category: String,
-		level: String,
+		category: Number,
+		level: Number,
 		gameData: Object
 	},
 	created(){
@@ -478,8 +478,7 @@ export default {
 		{			
 			try {
 				const result = await sendRequest({method: 'GET', headers: {'Accept': 'application/json'}, url: this.$global.Url(`start/${this.category}/${this.level+1}`)});           
-				this.$global.GameData.push(result);
-				HistoryManager.changeView('game', result, '', `/game/${this.category}/${this.level}`, true);
+				HistoryManager.changeView('game', result, '', '/' + this.$global.Url(`game/${this.category}/${this.level+1}`).split('/').slice(3).join('/'), true);
 			}
 			catch (e) {
 				// modal error window?

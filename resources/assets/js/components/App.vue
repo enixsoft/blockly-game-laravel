@@ -53,12 +53,10 @@ export default {
 			User: this.user,
 			Lang: this.lang,
 			RecaptchaKey: this.recaptchaKey,
-			GameData: !Array.isArray(this.gameData) ? [this.gameData] : [],
 			GameInProgress: !Array.isArray(this.gameData) ? this.gameData : undefined,
 			Url: (path = undefined) => path ? this.baseUrl + path : this.baseUrl,
 			Progress: [...this.inGameProgress],
 
-			login: false,
 			brand: 'BLOCKLY HRA VUE',
 			featuresHeading: 'Hra ovládaná programovaním',
 			featuresText: 'Google Blockly prináša vizuálny editor blokov, ktoré sa premieňajú na kód. Po odoslaní do hry z neho vznikajú príkazy vykonávané hrdinom.',

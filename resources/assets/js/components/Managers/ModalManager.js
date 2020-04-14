@@ -132,7 +132,7 @@ function createDynamicModal(type, modalStructure)
 
 	case 'allMainTasksFinished':
 	{
-		setModalParameters(modal, modalStructure.data.title, modalStructure.data.text, modalStructure.image, modalStructure.onclick, 'Ďalšia úroveň');
+		setModalParameters(modal, modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), modalStructure.onclick, 'Ďalšia úroveň');
 		break;
 	}
 

@@ -82,8 +82,7 @@ export default {
 		async runGame(type, category, level){			
 			try {
 				const url = type === 'play' ? this.$global.Url('play') : this.$global.Url(`${type}/${category}/${level}`);
-				const result = await sendRequest({method: 'GET', headers: {'Accept': 'application/json'}, url});           
-				// this.$global.GameData.push(result);
+				const result = await sendRequest({method: 'GET', headers: {'Accept': 'application/json'}, url});
 				HistoryManager.changeView('game', result, `Kategória ${result.category} Úroveň ${result.level}`, `game/${result.category}/${result.level}`);
 			}
 			catch (e) {

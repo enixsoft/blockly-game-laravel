@@ -71,9 +71,9 @@ function enableHistory(app)
 
 		if(event.target.location.hash)
 		{
-			scrollToHash(event.target.location.hash);
+			setTimeout(() => scrollToHash(event.target.location.hash), 100);
 		}
 	}); 
 }
 
-export default { changeView, enableHistory };
+export default { changeView, enableHistory, scrollToHash };

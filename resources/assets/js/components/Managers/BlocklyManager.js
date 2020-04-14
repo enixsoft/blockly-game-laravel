@@ -8,7 +8,7 @@ import {createBlocklyBlocks} from './BlocklyDefinitions';
 Blockly.JavaScript.STATEMENT_PREFIX = '%1\n';
 
 let workspacePlayground = null;
-let blocksIds = {};  
+let clickableBlocks = {};  
 
 function createWorkspacePlayground(blocklyDiv, blocklyArea, startBlocks, config, blockClickFunctionObj)
 {
@@ -26,13 +26,14 @@ function createWorkspacePlayground(blocklyDiv, blocklyArea, startBlocks, config,
 		onResize(blocklyDiv, blocklyArea)
 	);
 	onResize(blocklyDiv, blocklyArea);
-	blocksIds.player = getBlocksByType('player') || getBlocksByType('playerDirection'); 
+	clickableBlocks.player = getBlocksByType('player') || getBlocksByType('playerDirection');
+	
 	/*
-	blocksIds.cameraplus = getBlocksByType("cameraplus");
-	blocksIds.cameraminus = getBlocksByType("cameraminus");
-	blocksIds.load = getBlocksByType("load");
-	blocksIds.save = getBlocksByType("save");
-	blocksIds.reload = getBlocksByType("reload"); 
+	clickableBlocks.cameraplus = getBlocksByType("cameraplus");
+	clickableBlocks.cameraminus = getBlocksByType("cameraminus");
+	clickableBlocks.load = getBlocksByType("load");
+	clickableBlocks.save = getBlocksByType("save");
+	clickableBlocks.reload = getBlocksByType("reload"); 
 	*/
 	workspacePlayground.addChangeListener(blockClickController.bind(null, blockClickFunctionObj));	
 
@@ -155,47 +156,44 @@ function blockClickController(functionObject, event)
 		return;
 	}
 
-	console.log('blockClickController', functionObject, event);
-
 	let blockToCheck = Blockly.selected;
 	let blockCheckResult = undefined;
 
 	switch(blockToCheck.id)
 	{		
-	case blocksIds.player:
+	case clickableBlocks.player[0].id:
 		blockCheckResult = 'player';
 		break;
 	/*
-	case blocksIds.load:
+	case clickableBlocks.load[0].id:
 	blockCheckResult = 'load';
 	//loadGame()
 	break;
 
-	case blocksIds.save:
+	case clickableBlocks.save[0].id:
 	blockCheckResult = 'save';
 	//saveGame()
 	break;
 
-	case blocksIds.reload:
+	case clickableBlocks.reload[0].id:
 	blockCheckResult = 'reload';
 	//reloadIframe()
 	break;
 
-	case blocksIds.cameraplus:
+	case clickableBlocks.cameraplus[0].id:
 	blockCheckResult = 'cameraplus';
 	//cameraPlus()
 	break;
 
-	case blocksIds.cameraminus:
+	case clickableBlocks.cameraminus[0].id:
 	blockCheckResult = 'cameraminus';
 	//cameraMinus()
 	break;*/
 	}
-	
+
 	if(blockCheckResult)
 	{
 		blockToCheck.unselect();
-		console.log(blockCheckResult);		
 		functionObject[blockCheckResult] && functionObject[blockCheckResult]();		
 	}
 }
