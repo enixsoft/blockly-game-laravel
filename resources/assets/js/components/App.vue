@@ -92,8 +92,10 @@ export default {
 				xhr.setRequestHeader('X-CSRF-TOKEN', this.CsrfToken);
 			}
 		});
-		
-		HistoryManager.enableHistory(this); 
+
+		HistoryManager.enableHistory(this, this.$global.Url(''), window.location.href, this.GameInProgress); 
+		console.log(this.$global.Url('game/1/2'));
+		window.getLocation = HistoryManager.getLocationFromUrl;
 	},
 	mounted(){
 		if(this.errors['username'] || this.errors['password'])
@@ -101,7 +103,7 @@ export default {
 			$('html, body').animate({
 				scrollTop: $('#game').offset().top
 			}, 'slow');     
-			HistoryManager.changeView('home', undefined, '', '#game');  
+			HistoryManager.changeView('home', undefined, '', '');  
 		}
 		else if (this.errors['register-username'] || this.errors['register-password'] || this.errors['register-email'] || this.errors['g-recaptcha-response']) {
 			$('#loginDiv').collapse('hide');
@@ -109,13 +111,13 @@ export default {
 			$('html, body').animate({
 				scrollTop: $('#game').offset().top
 			}, 'slow');
-			HistoryManager.changeView('home', undefined, '', '#game');  
+			HistoryManager.changeView('home', undefined, '', '');  
 		} else if(this.$global.User && !this.$global.GameInProgress)
 		{
 			$('html, body').animate({
 				scrollTop: $('#features').offset().top
 			}, 'slow');			
-			HistoryManager.changeView('home', undefined, '', '#features');  
+			HistoryManager.changeView('home', undefined, '', '');  
 		}		
 
 		// Closes responsive menu when a scroll trigger link is clicked

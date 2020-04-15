@@ -220,6 +220,8 @@ class NewGameController extends Controller
             }
 
         }
+        $category = "$category";
+        $level = "$level";
         return $this->redirectOrSendResponse(compact('category', 'level', 'xmlToolbox', 'savedGame', 'jsonTasks', 'jsonModals', 'jsonRatings') , $request);
     }
 

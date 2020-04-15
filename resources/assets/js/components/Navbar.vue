@@ -60,7 +60,7 @@ export default {
 		},
 		scrollTo(hash){
 			HistoryManager.scrollToHash(hash);
-			HistoryManager.changeView('home', undefined, '', '/' + this.$global.Url(hash).split('/').slice(3).join('/'));
+			//HistoryManager.changeView('home', undefined, '', '/' + this.$global.Url(hash).split('/').slice(3).join('/'));
 		}
 	}
 };

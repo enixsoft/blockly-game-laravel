@@ -8,7 +8,8 @@ import {createBlocklyBlocks} from './BlocklyDefinitions';
 Blockly.JavaScript.STATEMENT_PREFIX = '%1\n';
 
 let workspacePlayground = null;
-let clickableBlocks = {};  
+let clickableBlocks = {};
+let changeListener = null;
 
 function createWorkspacePlayground(blocklyDiv, blocklyArea, startBlocks, config, blockClickFunctionObj)
 {
@@ -25,6 +26,7 @@ function createWorkspacePlayground(blocklyDiv, blocklyArea, startBlocks, config,
 	$(window).resize(() =>     
 		onResize(blocklyDiv, blocklyArea)
 	);
+
 	onResize(blocklyDiv, blocklyArea);
 	clickableBlocks.player = getBlocksByType('player') || getBlocksByType('playerDirection');
 	
@@ -35,9 +37,18 @@ function createWorkspacePlayground(blocklyDiv, blocklyArea, startBlocks, config,
 	clickableBlocks.save = getBlocksByType("save");
 	clickableBlocks.reload = getBlocksByType("reload"); 
 	*/
-	workspacePlayground.addChangeListener(blockClickController.bind(null, blockClickFunctionObj));	
+
+	changeListener = blockClickController.bind(null, blockClickFunctionObj);
+	workspacePlayground.addChangeListener(changeListener);	
 
 	return workspacePlayground;
+}
+
+function changeWorkspacePlayground(toolbox, startBlocks)
+{
+	console.log("changeWorkspacePlayground", toolbox, startBlocks);
+	Blockly.Xml.clearWorkspaceAndLoadFromXml(Blockly.Xml.textToDom(startBlocks), workspacePlayground);
+	workspacePlayground.updateToolbox(toolbox);
 }
 
 function scrollWorkspace()
@@ -198,4 +209,4 @@ function blockClickController(functionObject, event)
 	}
 }
 
-export default { changeFacingDirectionImage, deleteAllBlocks, createWorkspacePlayground, createBlocklyBlocks, getWorkspaceCode, clearFailedBlocks};
+export default { changeFacingDirectionImage, deleteAllBlocks, createWorkspacePlayground, createBlocklyBlocks, getWorkspaceCode, clearFailedBlocks, changeWorkspacePlayground};

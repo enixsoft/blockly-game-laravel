@@ -45,6 +45,7 @@ function convertDateToTime(dateToConvert)
 function rateMainTaskCompletion(object, ratings)
 {
 	let rating = 0;
+	let ruleError = 0;
 	const task = 'mainTask' + object.currentMainTask;
 
 	let isCorrect = true;
@@ -71,7 +72,7 @@ function rateMainTaskCompletion(object, ratings)
 				break;
 			}
 
-			this.ruleError = j;
+			ruleError = j;
 
 			actualCount = 0;
 
@@ -150,12 +151,12 @@ function rateMainTaskCompletion(object, ratings)
 
 	if(isCorrect) 
 	{   
-		return rating; 
+		return { rating, ruleError }; 
 	}
 	else
 	{ 
 		rating = 0;
-		return rating;
+		return { rating, ruleError };
 	}     
 }
 

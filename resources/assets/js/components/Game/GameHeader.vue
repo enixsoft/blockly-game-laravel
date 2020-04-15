@@ -82,8 +82,8 @@ export default {
 		Modal
 	},
 	props: {
-		category: Number,
-		level: Number,
+		category: String,
+		level: String,
 		gameData: Object
 	},
 	created(){
@@ -426,7 +426,10 @@ export default {
 		{   
 			const task = 'mainTask' + object.currentMainTask;
 			this.code = String(object.commandArray).split(',').slice();
-			this.rating = rateMainTaskCompletion(object, this.ratings);
+			
+			const rateMainTaskResult = rateMainTaskCompletion(object, this.ratings);
+			this.rating = rateMainTaskResult.rating;
+			this.ruleError = rateMainTaskResult.ruleError;
 
 			if(this.rating)
 			{
@@ -477,14 +480,34 @@ export default {
 		async loadNextLevel()
 		{			
 			try {
-				const result = await sendRequest({method: 'GET', headers: {'Accept': 'application/json'}, url: this.$global.Url(`start/${this.category}/${this.level+1}`)});           
-				HistoryManager.changeView('game', result, '', '/' + this.$global.Url(`game/${this.category}/${this.level+1}`).split('/').slice(3).join('/'), true);
+				const result = await sendRequest({method: 'GET', headers: {'Accept': 'application/json'}, url: this.$global.Url(`start/${this.category}/${Number(this.level)+1}`)});           
+				await HistoryManager.changeView('game', result, '', HistoryManager.getLocationFromUrl(this.$global.Url(`game/${this.category}/${Number(this.level)+1}`)), true);		
+				this.loadNextLevelData();
 			}
 			catch (e) {
 				// modal error window?
 				console.log('AJAX loadNextLevel:', e);
-			}
-		}		
+			}			
+		},
+		loadNextLevelData()
+		{
+			this.toolbox = this.gameData.xmlToolbox,
+			this.savedGame = this.gameData.savedGame,
+			this.tasks = JSON.parse(this.gameData.jsonTasks),
+			this.modals = JSON.parse(this.gameData.jsonModals),
+			this.ratings = JSON.parse(this.gameData.jsonRatings),
+			this.locked = true,
+		
+			this.levelString = `${this.category}x${this.level}`,
+			this.progress = this.gameData.savedGame.progress,
+
+			this.level_start = new Date();
+			this.main_task = 0,
+			this.saveObjectToString = this.gameData.savedGame.json,
+			this.savedGameParsed = JSON.parse(this.gameData.savedGame.json),
+			
+			BlocklyManager.changeWorkspacePlayground(this.toolbox, this.startBlocks);
+		}	
 	},
 	computed: {
 		isUserLoggedIn()

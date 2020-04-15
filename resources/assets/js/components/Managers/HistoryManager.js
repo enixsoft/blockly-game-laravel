@@ -7,22 +7,26 @@ let appRef = null;
 function changeView(view, data, title, location, forcePushState = false)
 {
 	console.log('CHANGE VIEW', currentView, view, data, title, location);
-
-	if(!forcePushState && currentView === null || currentView === view)
+	
+	if(currentView === view && !forcePushState)
 	{
-		// replaceState logic		
+		// replaceState logic	
+		console.log('replaceState logic');	
 		window.history.replaceState({ view, data }, title, location);
 		changeData(data, view);
 		return;
 	}
 	// pushState logic
-	window.history.pushState({view, data}, title, location);
+	console.log('pushState logic');
 	changeData(data, view);	
-	
+
 	if(location.includes('#'))
 	{
 		setTimeout(() => { scrollToHash('#' + location.split('#')[1]); }, 100);
-	}
+		window.history.pushState({view, data}, title, location.split('#')[0]);
+		return;		
+	}	
+	window.history.pushState({view, data}, title, location);	
 }
 
 function changeData(data, view = 'home') 
@@ -50,10 +54,31 @@ function scrollToHash(hash)
 	}
 }
 
+function getLocationFromUrl(url)
+{
+	return '/' + url.split('/').slice(3).join('/');
+}
 
-function enableHistory(app)
+function getViewFromUrl(baseUrl, url)
+{
+	let view = url.replace(baseUrl, '');
+	view = view.split('/').filter(x => x)[0];
+	switch(view)
+	{
+	default:
+		return 'home';
+	case 'game':
+		return 'game';		
+	}
+}
+
+function enableHistory(app, baseUrl, url, data)
 {
 	appRef = app;
+	currentView = getViewFromUrl(baseUrl, url);
+
+	window.history.replaceState({ view: currentView, data }, '', getLocationFromUrl(url));
+	
 	window.addEventListener('popstate', (event) => {
 		console.log('event', event);
 		console.log('state', event.state);
@@ -76,4 +101,4 @@ function enableHistory(app)
 	}); 
 }
 
-export default { changeView, enableHistory, scrollToHash };
+export default { changeView, enableHistory, scrollToHash, getLocationFromUrl, getViewFromUrl };
