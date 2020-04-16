@@ -142,7 +142,7 @@ class NewGameController extends Controller
 
                         else
                         {
-                            return redirect()->route('game', ['category' => $category, 'level' => 1]);
+                            return $this->runGame($category, 1, $request);
                         }
 
                     }
@@ -359,43 +359,33 @@ class NewGameController extends Controller
         {
             return $this->redirectOrSendResponse([],$request);
         }
-        else
+
+        $auth = Auth::user();
+
+        $inGameProgress = Progress::where('username', '=', $auth->username)
+            ->where('category', '=', $category)->latest()
+            ->first();
+
+        if ($inGameProgress == null)
+        {
+            return $this->redirectOrSendResponse([],$request);
+        }
+        else if ($inGameProgress['level'] > $level || ($inGameProgress['level'] == $level && $inGameProgress['progress'] == 100))
         {
 
-            $auth = Auth::user();
+            $jsonStartGamePath = "public/game/" . $category . "x" . $level . "/start" . $category . "x" . $level . ".json";
+            $jsonStartGame = Storage::get($jsonStartGamePath);
 
-            $inGameProgress = Progress::where('username', '=', $auth->username)
-                ->where('category', '=', $category)->latest()
-                ->first();
-
-            if ($inGameProgress == null)
-            {
-                return $this->redirectOrSendResponse([],$request);
-            }
-            else if ($inGameProgress['level'] >= $level)
-            {
-
-                $jsonStartGamePath = "public/game/" . $category . "x" . $level . "/start" . $category . "x" . $level . ".json";
-                $jsonStartGame = Storage::get($jsonStartGamePath);
-
-                SavedGame::create(array(
-                    'username' => $auth->username,
-                    'category' => $category,
-                    'level' => $level,
-                    'progress' => 0,
-                    'json' => $jsonStartGame
-                ));
-
-                return $this->runGame($category, $level, $request);
-
-            }
-            else if ($inGameProgress['level'] < $level)
-            {
-                return $this->runGame($category, $level, $request);
-            }
-
+            SavedGame::create(array(
+                'username' => $auth->username,
+                'category' => $category,
+                'level' => $level,
+                'progress' => 0,
+                'json' => $jsonStartGame
+            ));
         }
 
+        return redirect()->route('game', ['category' => $category, 'level' => $level], 302, $request->headers->all());
     }
 
     public function continueLevel($category, $level, Request $request)
@@ -467,10 +457,10 @@ class NewGameController extends Controller
     {	
         if ($request->expectsJson())
         {
-				if(empty($responseData))
-				{
-					return response()->json(['error' => 'Internal Server Error'], 500);
-				}
+            if(empty($responseData))
+            {
+                return response()->json(['error' => 'Internal Server Error'], 500);
+            }
             return $responseData;
 		  }
 		  

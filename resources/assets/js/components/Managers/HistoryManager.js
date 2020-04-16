@@ -6,7 +6,7 @@ let appRef = null;
 
 function changeView(view, data, title, location, forcePushState = false)
 {
-	console.log('CHANGE VIEW', currentView, view, data, title, location);
+	console.log('CHANGE VIEW', currentView, view, data, title, location, forcePushState);
 	
 	if(currentView === view && !forcePushState)
 	{

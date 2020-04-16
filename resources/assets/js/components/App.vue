@@ -147,7 +147,12 @@ export default {
 	methods:{
 		updateProgress(obj)
 		{
-			this.Progress[((obj.category -1) * 5)+(obj.level-1)] = obj.progress;
+			const actualProgress = this.Progress[((obj.category -1) * 5)+(obj.level-1)];
+			const newProgress = Number(obj.progress);
+			if(actualProgress === undefined || actualProgress < newProgress)
+			{
+				this.Progress[((obj.category -1) * 5)+(obj.level-1)] = newProgress;
+			}
 		}
 	}  
 };

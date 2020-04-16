@@ -57,9 +57,8 @@ export default {
 			tasks: JSON.parse(this.gameData.jsonTasks),
 			modals: JSON.parse(this.gameData.jsonModals),
 			ratings: JSON.parse(this.gameData.jsonRatings),
-			locked: true,
-			available_modal: 1,			
 			levelString: `${this.category}x${this.level}`,
+			locked: true,
 			progress: this.gameData.savedGame.progress,
 			rating: 0,
 			ruleError: 0,
@@ -67,7 +66,7 @@ export default {
 			task_start: new Date(),
 			task_end: new Date(),
 			code: '',
-			main_task: 0,
+			main_task: '',
 			saveObjectToString: this.gameData.savedGame.json,
 			savedGameParsed: JSON.parse(this.gameData.savedGame.json),
 			workspacePlayground: undefined,
@@ -98,7 +97,7 @@ export default {
 		{
 			ModalManager.setAjaxError();
 			ModalManager.showDynamicModal('', {});
-		}
+		}		
 		
 		this.workspacePlayground = BlocklyManager.createWorkspacePlayground(
 			this.$refs.blocklyDiv, 
@@ -405,6 +404,7 @@ export default {
 			});
 		},
 		async saveObjectToJson(object){
+			console.log('saveObjectToJson');
 			this.saveObjectToString = JSON.stringify(object);  
 			this.gameData.savedGame.json = this.saveObjectToString;
 			this.gameData.savedGame.progress = this.progress;
@@ -482,31 +482,38 @@ export default {
 			try {
 				const result = await sendRequest({method: 'GET', headers: {'Accept': 'application/json'}, url: this.$global.Url(`start/${this.category}/${Number(this.level)+1}`)});           
 				await HistoryManager.changeView('game', result, '', HistoryManager.getLocationFromUrl(this.$global.Url(`game/${this.category}/${Number(this.level)+1}`)), true);		
-				this.loadNextLevelData();
 			}
 			catch (e) {
-				// modal error window?
-				console.log('AJAX loadNextLevel:', e);
+				ModalManager.setAjaxError();
+				ModalManager.showDynamicModal('', {});
 			}			
 		},
-		loadNextLevelData()
+		changeLevelData()
 		{
-			this.toolbox = this.gameData.xmlToolbox,
-			this.savedGame = this.gameData.savedGame,
-			this.tasks = JSON.parse(this.gameData.jsonTasks),
-			this.modals = JSON.parse(this.gameData.jsonModals),
-			this.ratings = JSON.parse(this.gameData.jsonRatings),
-			this.locked = true,
-		
-			this.levelString = `${this.category}x${this.level}`,
-			this.progress = this.gameData.savedGame.progress,
+			this.toolbox = this.gameData.xmlToolbox;
+			this.savedGame = this.gameData.savedGame;
+			this.tasks = JSON.parse(this.gameData.jsonTasks);
+			this.modals = JSON.parse(this.gameData.jsonModals);
+			this.ratings = JSON.parse(this.gameData.jsonRatings);
+			this.locked = true;
+
+			this.progress = this.gameData.savedGame.progress;
 
 			this.level_start = new Date();
-			this.main_task = 0,
-			this.saveObjectToString = this.gameData.savedGame.json,
-			this.savedGameParsed = JSON.parse(this.gameData.savedGame.json),
+			this.saveObjectToString = this.gameData.savedGame.json;
+			this.savedGameParsed = JSON.parse(this.gameData.savedGame.json);
 			
 			BlocklyManager.changeWorkspacePlayground(this.toolbox, this.startBlocks);
+
+			if(this.category == 2){
+				BlocklyManager.changeFacingDirectionImage(this.$global.Url('game'), this.savedGameParsed.character.facingDirection);
+			}
+				
+			const container = this.$refs.iframe.parentElement;
+			this.$refs.iframe.remove();
+			this.levelString = `${this.category}x${this.level}`;
+			this.$refs.iframe.setAttribute('src', this.$global.Url(`game/playcanvas/${this.levelString}.html`));
+			container.append(this.$refs.iframe);
 		}	
 	},
 	computed: {
@@ -535,6 +542,11 @@ export default {
 			}
 			// return ( new window.DOMParser() ).parseFromString(xmlString, 'text/xml');
 			return xmlString;
+		}
+	},
+	watch: { 
+		gameData: function (newVal, oldVal) {
+			this.changeLevelData();
 		}
 	},
 	destroyed(){

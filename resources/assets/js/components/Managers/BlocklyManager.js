@@ -28,15 +28,8 @@ function createWorkspacePlayground(blocklyDiv, blocklyArea, startBlocks, config,
 	);
 
 	onResize(blocklyDiv, blocklyArea);
-	clickableBlocks.player = getBlocksByType('player') || getBlocksByType('playerDirection');
-	
-	/*
-	clickableBlocks.cameraplus = getBlocksByType("cameraplus");
-	clickableBlocks.cameraminus = getBlocksByType("cameraminus");
-	clickableBlocks.load = getBlocksByType("load");
-	clickableBlocks.save = getBlocksByType("save");
-	clickableBlocks.reload = getBlocksByType("reload"); 
-	*/
+
+	enableClickableBlocks();
 
 	changeListener = blockClickController.bind(null, blockClickFunctionObj);
 	workspacePlayground.addChangeListener(changeListener);	
@@ -46,9 +39,21 @@ function createWorkspacePlayground(blocklyDiv, blocklyArea, startBlocks, config,
 
 function changeWorkspacePlayground(toolbox, startBlocks)
 {
-	console.log("changeWorkspacePlayground", toolbox, startBlocks);
 	Blockly.Xml.clearWorkspaceAndLoadFromXml(Blockly.Xml.textToDom(startBlocks), workspacePlayground);
 	workspacePlayground.updateToolbox(toolbox);
+	enableClickableBlocks();
+}
+
+function enableClickableBlocks()
+{
+	clickableBlocks.player = getBlocksByType('player') || getBlocksByType('playerDirection');	
+	/*
+	clickableBlocks.cameraplus = getBlocksByType("cameraplus");
+	clickableBlocks.cameraminus = getBlocksByType("cameraminus");
+	clickableBlocks.load = getBlocksByType("load");
+	clickableBlocks.save = getBlocksByType("save");
+	clickableBlocks.reload = getBlocksByType("reload"); 
+	*/
 }
 
 function scrollWorkspace()
