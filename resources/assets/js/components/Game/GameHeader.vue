@@ -27,7 +27,7 @@
 </div>
 </div>
 <div v-if="isUserLoggedIn" id="blocklyDiv" ref="blocklyDiv" style="position: absolute;"></div>
-<Modal 
+<!-- <Modal 
 		v-for="(modal, index) in modalsArray"
 		:heading="modal.heading"
 		:text="modal.text"
@@ -36,6 +36,15 @@
 		:reportBug="modal.reportBug || undefined"
 		:id="modal.id"
 		:key="index"
+/> -->
+<Modal 
+		ref="modal"
+
+		:heading="modalData.heading"
+		:text="modalData.text"
+		:image-url="modalData.imageUrl"
+		:buttons="modalData.buttons"
+		:reportBug="modalData.reportBug || undefined"	
 />
 </header>                
 </template>
@@ -70,7 +79,14 @@ export default {
 			saveObjectToString: this.gameData.savedGame.json,
 			savedGameParsed: JSON.parse(this.gameData.savedGame.json),
 			workspacePlayground: undefined,
-			modalsArray: [],
+			modalData: { 
+				heading: '',
+				text: '',
+				imageUrl: '',
+				buttons:[{
+					onclick: () => {},
+					text: ''
+				}]},
 			gameExecutingCode: false,
 			LOGGING_ENABLED: true,
 			SAVING_ENABLED: true,
@@ -91,7 +107,8 @@ export default {
 	mounted() {
 		console.log('GameHeader mounted:');   
 		console.log(this.$data);	
-		ModalManager.enableModals(this.modalsArray, this.$global.Url('game'), this.modals['ajaxerror'].modal, this.reportBug);
+		// ModalManager.enableModals(this.modalsArray, this.$global.Url('game'), this.modals['ajaxerror'].modal, this.reportBug);
+		ModalManager.enableModals(this.$refs.modal.$refs.centeredModal, this.modalData, this.$global.Url('game'), this.modals['ajaxerror'].modal);
 
 		if(!this.isUserLoggedIn)
 		{
@@ -107,7 +124,7 @@ export default {
 				toolbox: this.toolbox, trashcan: true, scrollbars: true
 			},
 			{
-				player: this.runCode
+				player: this.runCode.bind(null, true)
 			}
 			/* MOBILE TO DO
 			{
@@ -324,8 +341,11 @@ export default {
 			});
 		},
 		reportBugButton()
-		{
-			ModalManager.showReportBugModal();
+		{			
+			ModalManager.showDynamicModal('reportBug', {			
+				onclick: this.reportBug					
+			});
+				
 		},
 		reportBug(report)
 		{
@@ -348,7 +368,7 @@ export default {
 		{
 			BlocklyManager.deleteAllBlocks();
 		},
-		runCode()		
+		runCode(solution = false)		
 		{
 			if(this.locked)
 			{
@@ -360,7 +380,20 @@ export default {
 
 			BlocklyManager.clearFailedBlocks(this.failedBlock);			
 
-			this.code = BlocklyManager.getWorkspaceCode();
+			// this.code = BlocklyManager.getWorkspaceCode();
+
+			if(solution)
+			{
+				this.code = '\'abc\'\nPlayer:\n';
+				let arr = this.ratings[this.main_task].solution.split(',');
+				let newArr = ['\'abc\''].concat(...arr.map(e => [e, '\'abc\'']));
+				this.code += newArr.join('\n');		
+			}
+			else
+			{
+				this.code = BlocklyManager.getWorkspaceCode();
+			}
+
 			this.sendMessage(this.code);
 		},		
 		stopExecution(event)
@@ -376,8 +409,7 @@ export default {
 				data: this.modals['stoppedexecution'].modal, 
 				imageLocation: 'common',
 				onclick: this.sendMessage.bind(null, `load\n${this.saveObjectToString}`)
-			});
-			
+			});			
 		},
 		commandFailed(object)
 		{ 		
@@ -404,11 +436,9 @@ export default {
 			});
 		},
 		async saveObjectToJson(object){
-			console.log('saveObjectToJson');
 			this.saveObjectToString = JSON.stringify(object);  
 			this.gameData.savedGame.json = this.saveObjectToString;
 			this.gameData.savedGame.progress = this.progress;
-			this.$emit('UPDATE_PROGRESS', {category: this.category, level: this.level, progress: this.progress});
 			HistoryManager.changeView('game', this.gameData, '', ''); 
 
 			if(this.SAVING_ENABLED && this.isUserLoggedIn)
@@ -461,6 +491,7 @@ export default {
 			}
 
 			const progress = this.tasks[task].progress;
+			this.$emit('UPDATE_PROGRESS', {category: this.category, level: this.level, progress: this.progress});
 			const data = {'progress' : progress, 'user': this.userName, 'category': this.category, 'level': this.level }; 
 			try {
 				await sendRequest({method:'POST', url: this.$global.Url('game/updateingameprogress'), data});           

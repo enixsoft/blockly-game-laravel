@@ -1,57 +1,27 @@
 import * as $ from 'jquery';
 import {convertCodeForModal, convertDateToTime, convertRatingToStars} from './Common';
 
-let modalsArray = undefined; //TO DO maybe one modal object and modal DOM element ref is enough?
-let modalsImageUrl = undefined;
+let modalRef = undefined;
+let modalData = undefined;
+const modalDataQueue = [];
+let modalImageUrl = undefined;
 let modalError = undefined;
-let isError = false;
-let availableModal = 1;
+let isError = false; //remove, not needed because of queue
+let availableModal = true;
 
-function enableModals(modalsArr, modalsUrl, errorModalData, reportBugModalFunction){
-	modalsArray = modalsArr;
-	modalsImageUrl = modalsUrl;
-	modalsArray.push(createGameplayModal('centeredModal0'), createGameplayModal('centeredModal1'), createReportBugModal('reportBugModal', reportBugModalFunction));
-	modalError = errorModalData;
-	availableModal = 1;
+function enableModals(ref, data, url, error){
+	modalRef = ref;
+	modalData = data;
+	modalImageUrl = url;
+	modalError = error;
+
+	$(modalRef).on('hidden.bs.modal', modalHiddenEvent);
 }
 
-function createGameplayModal(id){
-	return {
-		id,
-		heading: '',
-		text: '',
-		imageUrl: '',
-		buttons:[{
-			onclick: () => {},
-			text: ''
-		}]
-	};
-}
-
-function createReportBugModal(id, reportBugModalFunction){
-	return {
-		id,
-		heading: 'Nahlásiť chybu',
-		text: 'Môžete napísať 1000 znakov.',
-		imageUrl: '',
-		reportBug: {
-			maxLength: 1000,
-			rowsLength: 10
-		},
-		buttons:[{
-			onclick: reportBugModalFunction,
-			text: 'Odoslať chybu'
-		},{
-			onclick: () => {},
-			text: 'Zavrieť okno'
-		}]
-	};
-}
-
-function showReportBugModal()
+function modalHiddenEvent()
 {
-	const modal = $('#reportBugModal').modal();
-	modal.show();
+	availableModal = true;
+	show();
 }
 
 function setAjaxError()
@@ -61,31 +31,42 @@ function setAjaxError()
 
 function getModalImageLink(location, image)
 {
-	return modalsImageUrl + '/' + location + '/' + image + '.png';
+	return modalImageUrl + '/' + location + '/' + image + '.png';
 }
 
-function setModalParameters(modal, title, text, image, buttonOnclick, buttonText)
+function setModalParameters(heading, text, imageUrl, buttons, reportBug = undefined)
 {
-	modal.heading = title;
-	modal.text = text; 
-	modal.imageUrl = image; 
-	modal.buttons[0].onclick = buttonOnclick;
-	modal.buttons[0].text = buttonText;
+	return {
+		heading,
+		text,
+		imageUrl,
+		buttons,
+		reportBug
+	};
 }
 
 function showDynamicModal(type, modalStructure)
 {
-	setTimeout(() => {
-		const modal = createDynamicModal(type, modalStructure);
-		modal.modal('show'); 
-	},500);  
+	modalDataQueue.push(createDynamicModal(type, modalStructure));
+	
+	if(availableModal)
+	{
+		show(); 
+	}
+}
+
+function show()
+{
+	if(modalDataQueue.length)
+	{
+		Object.assign(modalData, modalDataQueue.shift());
+		availableModal = false;
+		$(modalRef).modal('show'); 
+	}
 }
 
 function createDynamicModal(type, modalStructure)
-{		
-	availableModal = availableModal ? 1 : 0;
-	let modal = modalsArray[availableModal];	
-
+{
 	if(isError)
 	{
 		type = 'ajaxError';
@@ -98,10 +79,7 @@ function createDynamicModal(type, modalStructure)
 	case 'levelIntroduced':
 	case 'mainTaskIntroduced':
 	case 'mainTaskShowed':
-	{
-		setModalParameters(modal, modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), modalStructure.onclick, 'Pokračovať');
-		break;
-	}
+		return setModalParameters(modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), [{onclick: modalStructure.onclick, text: 'Pokračovať'}]);
 
 	case 'mainTaskCompleted':
 	{
@@ -114,31 +92,21 @@ function createDynamicModal(type, modalStructure)
 		modalStructure.data.text += '</div>';
 		modalStructure.data.text += '<br><br> <h4><i class="fas fa-star-half-alt"></i> Hodnotenie:</h4>' + convertRatingToStars(modalStructure.rating);
 
-		setModalParameters(modal, modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), modalStructure.onclick, 'Pokračovať');
-		break;
+		return setModalParameters(modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), [{onclick: modalStructure.onclick, text: 'Pokračovať'}]);
 	}
 
-	case 'mainTaskFailed':
-	{
-		setModalParameters(modal, modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), modalStructure.onclick, 'Skúsiť znova');
-		break;
+	case 'mainTaskFailed':	
+		return setModalParameters(modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), [{onclick: modalStructure.onclick, text: 'Skúsiť znova'}]);	
+
+	case 'ajaxError':	
+		return setModalParameters(modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), [{onclick: () => window.location.reload(), text: 'Reštartovať hru'}]);	
+
+	case 'allMainTasksFinished':	
+		return setModalParameters(modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), [{onclick: modalStructure.onclick, text: 'Ďalšia úroveň'}]);
+	
+	case 'reportBug':
+		return setModalParameters('Nahlásiť chybu', 'Môžete napísať 1000 znakov.', '', [{onclick: modalStructure.onclick, text: 'Odoslať chybu'}, {onclick: () => {}, text: 'Zavrieť okno'}], {maxLength: 1000, rowsLength: 10});
 	}
-
-	case 'ajaxError':
-	{
-		setModalParameters(modal, modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), () => window.location.reload(), 'Reštartovať hru');
-		break;
-	}
-
-	case 'allMainTasksFinished':
-	{
-		setModalParameters(modal, modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), modalStructure.onclick, 'Ďalšia úroveň');
-		break;
-	}
-
-	}  
-
-	return $(`#centeredModal${availableModal}`).modal();
 }
 
-export default { enableModals, showDynamicModal, setAjaxError, showReportBugModal };
+export default { enableModals, showDynamicModal, setAjaxError };

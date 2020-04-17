@@ -1,5 +1,5 @@
 <template>
-<div class="modal fade" :id="id" tabindex="-1" role="dialog"  data-backdrop="static" data-keyboard="false" aria-labelledby="centeredModalLabel" aria-hidden="true">
+<div class="modal fade" ref="centeredModal" tabindex="-1" role="dialog"  data-backdrop="static" data-keyboard="false" aria-labelledby="centeredModalLabel" aria-hidden="true">
   <div class="vertical-alignment-helper">
   <div class="modal-dialog vertical-align-center" role="document">
     <div class="modal-content">
@@ -76,7 +76,7 @@ export default {
 	computed: { 
 		modalText()
 		{
-			if(this.reportBugText.length)
+			if(this.reportBug && this.reportBugText.length)
 			{
 				return this.reportBugText;
 			}			
