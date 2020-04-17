@@ -107,13 +107,16 @@ export default {
 	mounted() {
 		console.log('GameHeader mounted:');   
 		console.log(this.$data);	
-		// ModalManager.enableModals(this.modalsArray, this.$global.Url('game'), this.modals['ajaxerror'].modal, this.reportBug);
-		ModalManager.enableModals(this.$refs.modal.$refs.centeredModal, this.modalData, this.$global.Url('game'), this.modals['ajaxerror'].modal);
+
+		ModalManager.enableModals(this.$refs.modal.$refs.centeredModal, this.modalData, this.$global.Url('game'));
 
 		if(!this.isUserLoggedIn)
 		{
-			ModalManager.setAjaxError();
-			ModalManager.showDynamicModal('', {});
+			ModalManager.showDynamicModal('ajaxError', { 
+				data: this.modals.ajaxerror.modal,
+				imageLocation: 'common',
+				onclick: () => window.location.reload()
+			});
 		}		
 		
 		this.workspacePlayground = BlocklyManager.createWorkspacePlayground(
@@ -299,7 +302,11 @@ export default {
 				await sendRequest({method:'POST', url: this.$global.Url('game/createlogofgameplay'), data});           
 			}
 			catch (e) {
-				ModalManager.setAjaxError();                    
+				ModalManager.showDynamicModal('ajaxError', { 
+					data: this.modals.ajaxerror.modal,
+					imageLocation: 'common',
+					onclick: () => window.location.reload()
+				});                   
 			}
 		},
 		sendMessage(message)
@@ -351,7 +358,11 @@ export default {
 		{
 			if(!this.isUserLoggedIn)
 			{
-				ModalManager.setAjaxError();
+				ModalManager.showDynamicModal('ajaxError', { 
+					data: this.modals.ajaxerror.modal,
+					imageLocation: 'common',
+					onclick: () => window.location.reload()
+				});
 				return;
 			}
 
@@ -361,7 +372,11 @@ export default {
 				sendRequest({method:'POST', url: this.$global.Url('game/reportbug'), data});           
 			}
 			catch (e) {
-				ModalManager.setAjaxError();                    
+				ModalManager.showDynamicModal('ajaxError', { 
+					data: this.modals.ajaxerror.modal,
+					imageLocation: 'common',
+					onclick: () => window.location.reload()
+				});               
 			}
 		},		
 		deleteAllBlocksButton()
@@ -448,7 +463,11 @@ export default {
 					await sendRequest({method:'POST', url: this.$global.Url('game/savegame'), data});           
 				}
 				catch (e) {
-					ModalManager.setAjaxError();                    
+					ModalManager.showDynamicModal('ajaxError', { 
+						data: this.modals.ajaxerror.modal,
+						imageLocation: 'common',
+						onclick: () => window.location.reload()
+					});                   
 				}  
 			}			
 		},
@@ -497,7 +516,11 @@ export default {
 				await sendRequest({method:'POST', url: this.$global.Url('game/updateingameprogress'), data});           
 			}
 			catch (e) {
-				ModalManager.setAjaxError();                    
+				ModalManager.showDynamicModal('ajaxError', { 
+					data: this.modals.ajaxerror.modal,
+					imageLocation: 'common',
+					onclick: () => window.location.reload()
+				});                    
 			}  			
 		},
 		allMainTasksFinished()
@@ -515,8 +538,11 @@ export default {
 				await HistoryManager.changeView('game', result, '', HistoryManager.getLocationFromUrl(this.$global.Url(`game/${this.category}/${Number(this.level)+1}`)), true);		
 			}
 			catch (e) {
-				ModalManager.setAjaxError();
-				ModalManager.showDynamicModal('', {});
+				ModalManager.showDynamicModal('ajaxError', { 
+					data: this.modals.ajaxerror.modal,
+					imageLocation: 'common',
+					onclick: () => window.location.reload()
+				});
 			}			
 		},
 		changeLevelData()

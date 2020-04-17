@@ -5,15 +5,12 @@ let modalRef = undefined;
 let modalData = undefined;
 const modalDataQueue = [];
 let modalImageUrl = undefined;
-let modalError = undefined;
-let isError = false; //remove, not needed because of queue
 let availableModal = true;
 
-function enableModals(ref, data, url, error){
+function enableModals(ref, data, url){
 	modalRef = ref;
 	modalData = data;
 	modalImageUrl = url;
-	modalError = error;
 
 	$(modalRef).on('hidden.bs.modal', modalHiddenEvent);
 }
@@ -22,11 +19,6 @@ function modalHiddenEvent()
 {
 	availableModal = true;
 	show();
-}
-
-function setAjaxError()
-{
-	isError = true;
 }
 
 function getModalImageLink(location, image)
@@ -67,13 +59,6 @@ function show()
 
 function createDynamicModal(type, modalStructure)
 {
-	if(isError)
-	{
-		type = 'ajaxError';
-		modalStructure.data = modalError;
-		modalStructure.imageLocation = 'common';
-	}
-
 	switch(type)
 	{
 	case 'levelIntroduced':
@@ -99,7 +84,7 @@ function createDynamicModal(type, modalStructure)
 		return setModalParameters(modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), [{onclick: modalStructure.onclick, text: 'Skúsiť znova'}]);	
 
 	case 'ajaxError':	
-		return setModalParameters(modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), [{onclick: () => window.location.reload(), text: 'Reštartovať hru'}]);	
+		return setModalParameters(modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), [{onclick: modalStructure.onclick, text: 'Reštartovať hru'}]);	
 
 	case 'allMainTasksFinished':	
 		return setModalParameters(modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), [{onclick: modalStructure.onclick, text: 'Ďalšia úroveň'}]);
@@ -109,4 +94,4 @@ function createDynamicModal(type, modalStructure)
 	}
 }
 
-export default { enableModals, showDynamicModal, setAjaxError };
+export default { enableModals, showDynamicModal };
