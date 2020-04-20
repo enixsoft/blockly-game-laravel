@@ -1,15 +1,15 @@
 <template>
 <div>
-<h2 class="section-heading">Kategória {{ categoryNumber }}</h2>
+<h2 class="section-heading">{{ `${getLocalizedString(locales.category)} ${categoryNumber}` }}</h2>
 <p> {{ categoryText }} </p>
  <div class="table-responsive">
     <table class="table table-hover">
     <thead>
         <tr>
-            <th scope="col">Úroveň</th>
-            <th scope="col">Postup</th>
-            <th scope="col">Spustiť</th>
-            <th scope="col">Pokračovať</th>
+            <th scope="col">{{ getLocalizedString(locales.level) }}</th>
+            <th scope="col">{{ getLocalizedString(locales.progress) }}</th>
+            <th scope="col">{{ getLocalizedString(locales.start) }}</th>
+            <th scope="col">{{ getLocalizedString(locales.continue) }}</th>
         </tr>
     </thead>
     <tbody>
@@ -25,23 +25,29 @@
                 </div>
             </td>
             <td><a href="" v-on:click.prevent="btnClick('start', index + 1)" :class="['btn', 'btn-secondary', 'btn-sm', levelProgressValue(categoryProgress.length - 1) !== 100 || disabled ? 'disabled' : '']">
-                SPUSTIŤ OD ZAČIATKU</a>
+            {{ getLocalizedString(locales.startBtn) }}</a>
             </td>
             <td><a href="" v-on:click.prevent="btnClick('continue', index + 1)" :class="['btn', 'btn-secondary', 'btn-sm', levelProgressValue(categoryProgress.length - 1) !== 100 || disabled ? 'disabled' : '']">
-                POKRAČOVAŤ V ULOŽENEJ HRE</a>
+            {{ getLocalizedString(locales.continueBtn) }}</a>
             </td>
         </tr>
     </tbody>
     </table>
     </div>
     <br>
-    <p v-if="categoryNumber === 1"><i class="fas fa-exclamation-circle"></i> Tlačidlá Spustiť od začiatku a Pokračovať v uloženej hre sa odomknú po dokončení všetkých úrovní kategórie.<br>
-    Na spustenie hry používajte zelené tlačidlo {{ categoryProgress[0] ? 'Začať novú hru' : 'Pokračovať v hre.' }}
+    <p v-if="categoryNumber === 1"><i class="fas fa-exclamation-circle"></i> {{ getLocalizedString(locales.btnInfoLock) }}<br>{{ getLocalizedString(locales.btnInfoUse) + (categoryProgress[0] ? ` ${getLocalizedString(locales.bigBtnContinue)}.` : ` ${getLocalizedString(locales.bigBtnStart)}.`) }}
     </p>
 </div>
 </template>
 <script>
-export default {    
+import { gameLevels as locales } from '../Managers/LocaleManager.js';
+export default { 
+	data(){
+		return {
+			locales,
+			getLocalizedString: this.$global.getLocalizedString
+		};
+	},
 	props: {
 		categoryText: String,
 		categoryNumber: Number,

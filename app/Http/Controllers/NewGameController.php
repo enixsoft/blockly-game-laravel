@@ -272,12 +272,15 @@ class NewGameController extends Controller
 
     public function welcome($gameData = [])
     {
-        $files = ['auth', 'pagination', 'passwords', 'validation'];
-        foreach ($files as $file)
-        {
-            $lang[$file] = Lang::get($file);
-        }
-        $langJson = json_encode($lang);
+        // $files = ['auth', 'pagination', 'passwords', 'validation'];
+        // foreach ($files as $file)
+        // {
+        //     $lang[$file] = Lang::get($file);
+        // }
+        // $langJson = json_encode($lang);
+
+        $langPath = "public/game/common/en/app.json";
+        $langJson = Storage::get($langPath);
 
         $inGameProgress = [];
 

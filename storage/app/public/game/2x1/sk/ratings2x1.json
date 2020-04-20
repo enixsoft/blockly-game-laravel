@@ -1,0 +1,18 @@
+{
+   "level":{
+      "category":2,
+      "level":1
+   },
+   "mainTask0":{
+      "solution":"rotateCharacter(left);,moveForward(1);,rotateCharacter(right);,jumpForward(1);,rotateCharacter(left);,jumpForward(1);"
+   },
+   "mainTask1":{
+      "solution":"moveForward(1);,jumpForward(1);,jumpForward(1);,attackForward();,moveForward(1);,rotateCharacter(right);,jumpForward(1);,moveForward(1);,rotateCharacter(right);,jumpForward(1);,moveForward(1);"
+   },
+   "mainTask2":{
+      "solution":"rotateCharacter(left);,jumpForward(1);,moveForward(1);,useForward();,rotateCharacter(right);,jumpForward(1);,attackForward();,moveForward(1);,rotateCharacter(left);,jumpForward(1);"
+   },
+   "mainTask3":{
+      "solution":"jumpForward(1);,attackForward();,moveForward(1);,rotateCharacter(right);,jumpForward(1);,rotateCharacter(left);,moveForward(1);,rotateCharacter(left);,attackForward();,moveForward(1);,jumpForward(1);,jumpForward(1);"
+   }
+}

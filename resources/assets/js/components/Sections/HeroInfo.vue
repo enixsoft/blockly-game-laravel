@@ -2,8 +2,8 @@
 <section class="features" id="features">
 <div class="container">
     <div class="section-heading text-center">
-        <h2>{{ heading }}</h2>
-        <p class="text-muted">{{ text }}</p>
+        <h2>{{ getLocalizedString(locales.heading) }}</h2>
+        <p class="text-muted">{{ getLocalizedString(locales.text) }}</p>
         <hr>
     </div>
     <div class="row">
@@ -11,20 +11,20 @@
             <div class="container-fluid">
                 <div class="row text-center">
                 <div class="col-lg-6">
-                    <img class="img-fluid" src="img/character.png">
+                    <img class="img-fluid" :src="$global.Url('img/character.png')">
                 </div>
                 <div class="col-lg-6">
                     <div class="row">
-                        <HeroInfoItem divClass="col-lg-6" heading="Preskočí prekážky" imageFilename="thumbnail1.png" 
-                                      text="Keď je v ceste voda alebo nastražená pasca, hrdina ich často dokáže preskočiť a pokračovať ďalej."/>
-                        <HeroInfoItem divClass="col-lg-6" heading="Zničí veci" imageFilename="thumbnail2.png" 
-                                      text="V ruinách hradu sa nachádza veľa starých vecí ako sú krabice, sudy a vázy, ktoré hrdinov meč dokáže zničiť a uvoľniť cestu."/>
+                        <HeroInfoItem divClass="col-lg-6" :heading="getLocalizedString(locales.heading1)" imageFilename="thumbnail1.png" 
+                                      :text="getLocalizedString(locales.text1)"/>
+                        <HeroInfoItem divClass="col-lg-6" :heading="getLocalizedString(locales.heading2)" imageFilename="thumbnail2.png" 
+                                      :text="getLocalizedString(locales.text2)"/>
                     </div>
                     <div class="row">
-                        <HeroInfoItem divClass="col-lg-6" heading="Otvára truhlice" imageFilename="thumbnail3.png" 
-                                      text="Niekedy hrdina potrebuje prehľadať truhlice, aby našiel kľúč od zamknutých dverí."/>
-                        <HeroInfoItem divClass="col-lg-6" heading="Používa páky" imageFilename="thumbnail4.png" 
-                                      text="Keď treba otvoriť padacie dvere alebo zneškodniť pasce, hrdina použije páku."/>
+                        <HeroInfoItem divClass="col-lg-6" :heading="getLocalizedString(locales.heading3)" imageFilename="thumbnail3.png" 
+                                      :text="getLocalizedString(locales.text3)"/>
+                        <HeroInfoItem divClass="col-lg-6" :heading="getLocalizedString(locales.heading4)" imageFilename="thumbnail4.png" 
+                                      :text="getLocalizedString(locales.text4)"/>
                     </div>
                 </div>
                 </div>
@@ -35,16 +35,23 @@
 </section>
 </template>
 <script>
-    import HeroInfoItem from './HeroInfoItem';
-    export default {         
-        props: 
-        {           
-            heading: String,
-            text: String
-        },     
-        components:
-        {
-            HeroInfoItem
-        }
-    }
+import HeroInfoItem from './HeroInfoItem';
+import { heroInfo as locales } from '../Managers/LocaleManager';
+export default { 
+	data(){
+		return {
+			locales,
+			getLocalizedString: this.$global.getLocalizedString
+		};
+	},        
+	props: 
+	{
+		heading: String,
+		text: String
+	},     
+	components:
+	{
+		HeroInfoItem
+	}
+};
 </script>

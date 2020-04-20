@@ -12,48 +12,33 @@
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 
-export default {
-    data(){
-        return {
-            login: false,
-            token: document.head.querySelector('meta[name="csrf-token"]')
-        }
-    },
-    props: {
-        errors: Object,
-        oldInputs: Object
-        // errorsRegister: Object,
-        // oldEmail: String,
-        // oldUsername: String,
-        // oldRememberChecked: Boolean,
-        // oldLoginUsername: String
-    },
-    components: {
-        LoginForm,
-        RegisterForm
-    },
-    computed:
-    {
-        oldLoginUsername()
-        {
-            return this.oldInputs && this.oldInputs['login-username'] ? this.oldInputs['login-username'] : "";
-        },
-        oldRememberChecked()
-        {
-            return this.oldInputs && this.oldInputs.remember ? true : false;
-        },
-        oldRegisterUsername()
-        {
-            return this.oldInputs && this.oldInputs['register-username'] ? this.oldInputs['register-username'] : "";
-        },
-        oldRegisterEmail()
-        {       
-            return this.oldInputs && this.oldInputs['email'] ? this.oldInputs['email'] : "";
-        }
-    }, 
-    mounted()
-    {      
-        console.log("errors",this.errors);
-    }    
-}
+export default {	
+	props: {
+		errors: Object,
+		oldInputs: Object
+	},
+	components: {
+		LoginForm,
+		RegisterForm
+	},
+	computed:
+	{
+		oldLoginUsername()
+		{
+			return this.oldInputs && this.oldInputs['login-username'] ? this.oldInputs['login-username'] : '';
+		},
+		oldRememberChecked()
+		{
+			return this.oldInputs && this.oldInputs.remember ? true : false;
+		},
+		oldRegisterUsername()
+		{
+			return this.oldInputs && this.oldInputs['register-username'] ? this.oldInputs['register-username'] : '';
+		},
+		oldRegisterEmail()
+		{       
+			return this.oldInputs && this.oldInputs['email'] ? this.oldInputs['email'] : '';
+		}
+	}  
+};
 </script>

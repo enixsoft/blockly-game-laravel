@@ -5,7 +5,7 @@
                  <div class="col-md-12 mx-auto">
                     <GameLevelItem
                         v-for="(category, index) in categories"
-                        :category-text="category.text"
+                        :category-text="getLocalizedString(category.text)"
                         :category-number="index + 1"
                         :category-progress="categoryProgress(index)"
                         :key="index"
@@ -15,31 +15,25 @@
                   <div class="col-md-6 mx-auto">
                      <button v-on:click="runGame('play')" class="btn btn-lg btn-success" :disabled="(inGameProgress[9] && inGameProgress[9] === 100) || disabled">
                      <i class="fas fa-play"></i>
-                  {{ inGameProgress[0] === 0 ? 'Začať novú hru' : 'Pokračovať v hre.' }}
+                  {{ inGameProgress[0] === 0 ? getLocalizedString(locales.bigBtnStart) : getLocalizedString(locales.bigBtnContinue) }}
                      </button>             
-                  </div>
-                  <!-- Admin -->
-                  <!-- <br>
+                  </div>                 
                   <br>
-                  <div class="form-group">
-                     <h2 class="section-heading">Registrácia (admin)</h2>
-                     <form class="form-horizontal" method="POST" id="registrationForm" action="{{ route('registeruserbyadmin') }}">
-                        {{ csrf_field() }}
+                  <!-- <div v-if="$global.User.role==='admin'" class="form-group">
+                     <h2 class="section-heading">Registration Admin</h2>
                         <div class="form-group col-md-6 mx-auto">
-                           <input class="form-control" placeholder="Prihlasovacie meno" id="username" type="username" name="username" required>          
+                           <input ref="username" class="form-control" placeholder="Prihlasovacie meno" id="username" type="username" name="username">          
                         </div>
                         <div class="form-group col-md-6 mx-auto">
-                           <input class="form-control" id="password" placeholder="Heslo" type="password" name="password" required>              
+                           <input ref="password" class="form-control" id="password" placeholder="Heslo" type="password" name="password">              
                         </div>
                         <br>
                         <div class="col-md-6 mx-auto">
-                           <button class="btn btn-lg btn-success" type="submit">
+                           <button class="btn btn-lg btn-success" v-on:click="registerByAdmin()">
                            Registrácia
-                           </button>
-                           <br>
-                        </div>
-                     </form>
-                  </div> -->
+                           </button>                           
+                        </div>         
+                  </div>  -->
                 </div> 
             </div>
          </div>
@@ -49,13 +43,15 @@
 import GameLevelItem from './GameLevelItem';
 import { sendRequest } from '../Managers/Common';
 import HistoryManager from '../Managers/HistoryManager';
-
+import { gameLevels as locales } from '../Managers/LocaleManager';
 export default {
 	data(){
 		return {
+			locales,
+			getLocalizedString: this.$global.getLocalizedString,
 			categories: [
-				{ text: 'V prvej kategórii sa naučíme ovládať hrdinu, zadávať mu príkazy pohyb, skok, útok mečom, použitie páky a otvorenie truhlice.' },
-				{ text: 'V druhej kategórii sa naučíme ovládať hrdinu podľa nového herného systému a využívať pri tvorbe algoritmov cykly a podmienky.' }
+				{ text: locales.category1 },
+				{ text: locales.category2 }
 			],
 			disabled: false	
 		};
@@ -94,6 +90,12 @@ export default {
 		{
 			this.runGame(obj.type, obj.category, obj.level);
 			this.disabled = true;
+		},
+		async registerByAdmin()
+		{
+			const url = this.$global.Url('registeruserbyadmin');
+			const data = {username: this.$refs.usernameInput.value, password: this.$refs.passwordInput.value};
+			await sendRequest({method: 'POST', url, data});
 		}
 	},
 	mounted()

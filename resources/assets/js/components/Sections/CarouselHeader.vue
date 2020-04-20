@@ -9,14 +9,14 @@
                 <li data-target="#carousel" data-slide-to="2"></li>
             </ul>
             <div class="carousel-inner h-100" style="text-align: center;"> 
-                <div class="carousel-item h-100 active" >
-                <CarouselItem title="Blockly hra." subtitle="Váš úvod do sveta programovania." imageFileName="carousel-1.png" />
+                <div class="carousel-item h-100 active">
+                <CarouselItem :title="getLocalizedString(locales.title1)" :subtitle="getLocalizedString(locales.subtitle1)" :button-text="getLocalizedString(locales.buttonText)"  imageFileName="carousel-1.png" />
                 </div>
                 <div class="carousel-item h-100" >
-                <CarouselItem title="10 úrovní." subtitle="Viac ako 40 úloh na riešenie."  imageFileName="carousel-2.png" />
+                <CarouselItem :title="getLocalizedString(locales.title2)" :subtitle="getLocalizedString(locales.subtitle2)" :button-text="getLocalizedString(locales.buttonText)"  imageFileName="carousel-2.png" />
                 </div>
                 <div class="carousel-item h-100" >
-                <CarouselItem title="Tvorte algoritmy." subtitle="S príkazmi v cykloch a podmienkach."  imageFileName="carousel-3.png" />
+                <CarouselItem :title="getLocalizedString(locales.title3)" :subtitle="getLocalizedString(locales.subtitle3)" :button-text="getLocalizedString(locales.buttonText)"  imageFileName="carousel-3.png" />
                  </div>
             </div>
             <a class="carousel-control-prev" href="#carousel" data-slide="prev">
@@ -32,14 +32,17 @@
 </template>
 
 <script>
-    import CarouselItem from './CarouselItem';
-    export default {
-        mounted() {
-            console.log('Component mounted.')
-        },
-        components:
-        {
-            CarouselItem
-        }
-    }
+import CarouselItem from './CarouselItem';
+import { carousel as locales } from '../Managers/LocaleManager';
+export default {
+	data(){
+		return {
+			locales,
+			getLocalizedString: this.$global.getLocalizedString
+		};
+	},
+	components: {
+		CarouselItem
+	}        
+};
 </script>

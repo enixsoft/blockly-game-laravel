@@ -9,12 +9,11 @@
 </template>
 <script>
 export default {
-    props:
-    {
-        divClass: String,
-        iconClass: String,
-        heading: String,
-        text:String
-    },
-}
+	props: {
+		divClass: String,
+		iconClass: String,
+		heading: String,
+		text: String
+	},
+};
 </script>

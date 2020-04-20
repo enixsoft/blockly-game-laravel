@@ -1,0 +1,81 @@
+{
+   "level":{
+      "category":2,
+      "level":5
+   },
+   "mainTask0":{
+      "solution":"doWhileNotFinished(){,rotateCharacter(left);,attackForward();,moveForward(1);,jumpForward(1);,rotateCharacter(right);,jumpForward(1);,};",
+      "rules":{
+         "0":{
+            "blocks":"doWhile",
+            "count":1,
+            "error":"Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj pokiaľ nie je hrdina v cieli. Skúste to znova."
+         }
+      }
+   },
+   "mainTask1":{
+      "solution":"doWhileNotFinished(){,moveForward(1);,ifNextTileIs(water){,rotateCharacter(right);,};,ifNextTileIs(wall){,rotateCharacter(left);,};,for(4){,ifNextTileHas(lever){,useForward();,};,ifNextTileHas(chest){,openForward();,};,rotateCharacter(right);,};,};",
+      "rules":{
+         "0":{
+            "blocks":"doWhile",
+            "count":1,
+            "error":"Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj pokiaľ nie je hrdina v cieli. Skúste to znova."
+         },
+         "1":{
+            "blocks":"for",
+            "count":1,
+            "error":"Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj x-krát. Skúste to znova."
+         },
+         "2":{
+            "blocks":"ifNextTileHas",
+            "count":2,
+            "error":"Vaše riešenie nebolo uznané, pretože ste nepoužili blok - ak v smere na dlaždici je - dva krát. Skúste to znova."
+         },
+         "3":{
+            "blocks":"ifNextTileIs",
+            "count":2,
+            "error":"Vaše riešenie nebolo uznané, pretože ste nepoužili blok - ak v smere nasleduje - dva krát. Skúste to znova."
+         }
+      }
+   },
+   "mainTask2":{
+      "solution":"rotateCharacter(left);,doWhileNotFinished(){,moveForward(1);,ifNextTileIs(wall){,rotateCharacter(right);,};,ifNextTileHas(trap){,jumpForward(1);,};,ifNextTileIs(water){,rotateCharacter(left);,};,};",
+      "rules":{
+         "0":{
+            "blocks":"doWhile",
+            "count":1,
+            "error":"Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj pokiaľ nie je hrdina v cieli. Skúste to znova."
+         },
+         "1":{
+            "blocks":"ifNextTileHas",
+            "count":1,
+            "error":"Vaše riešenie nebolo uznané, pretože ste nepoužili blok - ak v smere na dlaždici je. Skúste to znova."
+         },
+         "2":{
+            "blocks":"ifNextTileIs",
+            "count":2,
+            "error":"Vaše riešenie nebolo uznané, pretože ste nepoužili blok - ak v smere nasleduje - dva krát. Skúste to znova."
+         }
+      }
+   },
+   "mainTask3":{
+      "solution":"doWhileNotFinished(){,ifNextTileHas(destructible){,attackForward();,};,ifNextTileHas(lever){,useForward();,rotateCharacter(right);,};,ifNextTileIs(wall){,rotateCharacter(left);,};,moveForward(1);,};",
+      "rules":{
+         "0":{
+            "blocks":"doWhile",
+            "count":1,
+            "error":"Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj pokiaľ nie je hrdina v cieli. Skúste to znova."
+         },
+         "1":{
+            "blocks":"ifNextTileHas",
+            "count":2,
+            "error":"Vaše riešenie nebolo uznané, pretože ste nepoužili blok - ak v smere na dlaždici je - dva krát. Skúste to znova."
+         },
+         "2":{
+            "blocks":"ifNextTileIs",
+            "count":1,
+            "error":"Vaše riešenie nebolo uznané, pretože ste nepoužili blok - ak v smere nasleduje. Skúste to znova."
+         }
+      }
+   }
+}

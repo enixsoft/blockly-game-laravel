@@ -1,0 +1,86 @@
+{
+  "level":{
+    "category":2,
+    "level":4,
+    
+  "welcome_modal": {
+    "title": "Kategória 2 Úroveň 4",
+   "text": "Vo štvrtej úrovni získavate až dva nové bloky - blok ak v smere nasleduje a blok ak v smere na dlaždici je. Tieto bloky fungujú ako podmienka if, teda iné bloky vložené do nich sa vykonajú len vtedy, ak zadaná podmienka je splnená. Toto nám umožňuje vykonávať rozličné príkazy podľa toho, kde sa hrdina práve nachádza.",
+    "image": "welcome_modal"
+  },
+  
+   "finish_modal": {
+    "title": "Všetky úlohy boli splnené!",
+    "text": "Úspešne ste sa naučili používať podmienky if. Nasleduje záverečná úroveň hry.",
+    "image": "success"  
+  }
+  },
+  
+  "mainTask0":{
+    "progress": "25",
+    
+    "introduction_modal": {
+    "title": "Zadanie prvej úlohy",
+    "text": "Cestu k prvému kamennému tlačidlu neblokujú žiadne prekážky, avšak hrdina sa musí otočiť vždy na správnom mieste. Použite blok opakuj pokiaľ nie je hrdina v cieli a dvakrát blok ak v smere nasleduje.",
+    "image": "maintask0_introduction_modal"
+  },
+
+  "success_modal": {
+    "title": "Výborne! Splnili ste prvú úlohu!",
+    "text": "Váš prvý algoritmus s podmienkou fungoval výborne a hrdina dorazil na kamenné tlačidlo.",
+    "image": "success"
+  }
+  },
+  
+  "mainTask1": {
+    "progress": "50",  
+  
+    "introduction_modal": {
+    "title": "Zadanie druhej úlohy",
+    "text": "Aby sa hrdina dostal ďalej, musí použiť každú páku v ceste na zneškodnenie pascí a otvorenie padacích dverí. Použite blok opakuj pokiaľ nie je hrdina v cieli, blok ak v smere nasleduje a blok ak v smere na dlaždici je.",
+    "image": "maintask1_introduction_modal"
+  },
+
+  "success_modal": {
+    "title": "Výborne! Splnili ste druhú úlohu!",
+    "text": "Úspešne ste zneškodnili pasce a otvorili dvere. Hrdina môže pokračovať ďalej v ceste.",
+    "image": "success"
+  }
+  },
+
+
+
+  "mainTask2": {
+    "progress": "75",  
+  
+    "introduction_modal": {
+    "title": "Zadanie tretej úlohy",
+    "text": "V tejto úlohe hrdinovi v ceste stoja vázy, ktoré je treba zničiť a zároveň treba hrdinovi zmeniť smer, keď je pred ním voda alebo stena. Na začiatku hrdinu otočte raz doprava a potom použite blok opakuj pokiaľ nie je hrdina v cieli, blok ak v smere nasleduje a blok ak v smere na dlaždici je.",
+    "image": "maintask2_introduction_modal"
+  },
+
+  "success_modal": {
+    "title": "Výborne! Splnili ste tretiu úlohu!",
+    "text": "Vo vašom treťom algoritme ste využili obe podmienky presne tak, ako bolo zadané.",
+    "image": "success"
+  }
+  },
+  
+    "mainTask3": {
+    "progress": "100",  
+  
+    "introduction_modal": {
+    "title": "Zadanie štvrtej úlohy",
+    "text": "Ku kamennému tlačidlu pre dokončenie tejto úrovne vedie celkom krátka cesta, avšak sú na nej pasce a vodná plocha, ktoré treba preskočiť. Najprv nasmerujte hrdinu smerom doprava a potom použite blok opakuj pokiaľ nie je hrdina v cieli, blok ak v smere nasleduje a blok ak v smere na dlaždici je.",
+    "image": "maintask3_introduction_modal"
+  },
+
+  "success_modal": {
+    "title": "Výborne! Splnili ste štvrtú úlohu!",
+    "text": "Dobrá práca, váš hrdina sa dostal do cieľa.",
+    "image": "success"
+  }
+  }  
+
+
+}

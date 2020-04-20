@@ -1,6 +1,6 @@
 <template>
 <div>
-    <Navbar :brand="brand"/>
+    <Navbar/>
     <template v-if="GameInProgress !== undefined">
       <GameHeader :category="GameInProgress.category"
 						:level="GameInProgress.level"
@@ -10,22 +10,18 @@
     </template>    
     <template v-else>    
     <Carousel-Header />
-    <Features v-if="!$global.User" 
-              :heading="featuresHeading" 
-              :text="featuresText" />
-    <HeroInfo v-else :heading="heroInfoHeading" 
-              :text="heroInfoText" />
-    <UserAccessForms v-if="!$global.User" 
+    <Features v-if="!$global.User" />
+    <HeroInfo v-else />
+    <UserAccessForms v-if="!$global.User"
                     :errors="Array.isArray(errors) ? {} : errors" 
                     :oldInputs="Array.isArray(old) ? {} : old"/>
-    <GameLevels v-else	:in-game-progress="Progress"
-	 							:levelsPerCategory="5" />
+    <GameLevels v-else :in-game-progress="Progress" :levelsPerCategory="5" />
     <footer>
          <div class="container">
-            <a href="https://developers.google.com/blockly"><img class="img-fluid" :src="this.$global.Url('img/logo_built_on_dark.png')"></a>
+            <a href="https://developers.google.com/blockly"><img class="img-fluid" :src="Url('img/logo_built_on_dark.png')"></a>
             <br>
-            <p class="mt-3">&copy; 2019 - 2020<br>Martin Vančo<br>Naposledy aktualizované: 6.4.2020
-            </p>
+            <p class="mt-3">{{ getLocalizedString('last.updated') + ': 20.4.2020' }}
+				</p>
          </div>
     </footer>
     </template>
@@ -51,17 +47,11 @@ export default {
 		return {
 			CsrfToken: document.head.querySelector('meta[name="csrf-token"]').content,
 			User: this.user,
-			Lang: this.lang,
 			RecaptchaKey: this.recaptchaKey,
 			GameInProgress: !Array.isArray(this.gameData) ? this.gameData : undefined,
 			Url: (path = undefined) => path ? this.baseUrl + path : this.baseUrl,
-			Progress: [...this.inGameProgress],
-
-			brand: 'BLOCKLY HRA VUE',
-			featuresHeading: 'Hra ovládaná programovaním',
-			featuresText: 'Google Blockly prináša vizuálny editor blokov, ktoré sa premieňajú na kód. Po odoslaní do hry z neho vznikajú príkazy vykonávané hrdinom.',
-			heroInfoHeading: 'Vitajte v Blockly hre!',
-			heroInfoText: 'Pomocou spájania programovacích blokov v nej budete ovládať hrdinu bojovníka. Ten prišiel na výpravu do starého hradu a aby ho prešiel celý, musí prekonať množstvo prekážok a splniť mnoho úloh. Prezrite si hrdinu a popis jeho schopností, ktoré postupne získa a budete používať.',
+			getLocalizedString: (string) => this.lang[string] || 'ERROR_LANG_STRING_NOT_FOUND',
+			Progress: [...this.inGameProgress]			
 		};
 	},
 	props: {
@@ -83,7 +73,7 @@ export default {
 		GameLevels,
 		GameHeader
 	},
-	created() {		
+	created() {
 		Vue.prototype.$global = this.$data;
 		console.log('GLOBAL', this.$global);
 		
@@ -93,9 +83,7 @@ export default {
 			}
 		});
 
-		HistoryManager.enableHistory(this, this.$global.Url(''), window.location.href, this.GameInProgress); 
-		console.log(this.$global.Url('game/1/2'));
-		window.getLocation = HistoryManager.getLocationFromUrl;
+		HistoryManager.enableHistory(this, this.$global.Url(''), window.location.href, this.GameInProgress);
 	},
 	mounted(){
 		if(this.errors['username'] || this.errors['password'])

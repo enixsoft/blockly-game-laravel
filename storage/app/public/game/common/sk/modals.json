@@ -1,0 +1,69 @@
+{
+  "dizzy":{
+
+    
+    "modal": {
+    "title": "Chyba!",
+    "text": "Hrdina nemohol vykonať počet krokov alebo skok, pretože v jeho ceste bola stena, prekážka alebo voda.",
+    "image": "dizzy"
+  }    
+  },
+  
+  "zerosteps": {
+
+    "modal": {
+    "title": "Chyba!",
+    "text": "Hrdina nedokáže vykonať zadaný počet krokov.",
+    "image": "zerosteps"
+  }    
+  },
+
+  
+  "death": {
+
+    "modal": {
+    "title": "Chyba!",
+    "text": "Hrdina vošiel do nastraženej pasce.",
+    "image": "death"
+  }    
+  },
+  
+  "functionerror": {
+
+    "modal": {
+    "title": "Chyba!",
+    "text": "Medzi blokmi sa nachádza chybne nastavená podmienka alebo chybný cyklus. Vložte do nich nejaký príkaz ak sú prázdne, prípadne znížte počet opakovaní alebo ich odstráňte.",
+    "image": "functionerror"
+  }    
+  },
+  
+  "maintaskfailed": {
+
+    "modal": {
+    "title": "Hlavná úloha nebola splnená",
+    "text": "Hrdina nedorazil do cieľa. Uprav sekvenciu blokov tak, aby sa mu to podarilo. Ak potrebujete nápovedu, kliknite na tlačidlo Zadanie úlohy.",
+    "image": "failure"
+  }    
+  },
+  
+  "ajaxerror": {
+
+    "modal": {
+    "title": "Komunikácia so serverom bola prerušená",
+    "text": "Hra nemôže ďalej pokračovať, lebo pri komunikácii so serverom došlo ku chybe. Je potrebné spustiť hru znova.",
+    "image": "failure"
+  }    
+  },
+  
+    "stoppedexecution": {
+
+    "modal": {
+    "title": "Hlavná úloha nebola splnená",
+    "text": "Vykonávanie príkazov bolo zastavené.",
+    "image": "failure"
+  }    
+  }
+  
+  
+
+}

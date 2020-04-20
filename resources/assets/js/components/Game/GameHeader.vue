@@ -14,12 +14,12 @@
             <div class= "col-lg-12 game-buttons mx-auto text-center" id="gameButtons">
             <div class= "btn-group d-flex" role="group">
 					<button v-if="gameExecutingCode" type="button" id="stop_execution_button" class="btn btn-danger mr-3 w-100" 
-						v-on:click="stopExecution($event)"><i class="fas fa-times"></i> Zastaviť vykonávanie</button>
+						v-on:click="stopExecution($event)"><i class="fas fa-times"></i> {{ locales.stopExecution }}</button>
 					<button v-else type="button" id="send_code_button" class="btn btn-success mr-3 w-100" 
-						v-on:click="runCode()" :disabled="locked"><i class="fas fa-play"></i> Spustiť bloky</button>
-					<button type="button" id="show_task_button" class="btn btn-success mr-3 w-100" v-on:click="showTaskButton()" :disabled="locked"><i class="fas fa-tasks"></i> Zadanie úlohy</button>
-					<button type="button" id="delete_blocks_button" class="btn btn-success mr-3 w-100" v-on:click="deleteAllBlocksButton()" :disabled="locked"><i class="fas fa-trash"></i> Vymazať všetky bloky</button>       
-					<button type="button" id="report_bug_button" class="btn btn-success mr-3 w-100" v-on:click="reportBugButton()" :disabled="locked"><i class="fas fa-bug"></i> Nahlásiť chybu</button>                 
+						v-on:click="runCode()" :disabled="locked"><i class="fas fa-play"></i> {{ locales.sendCode }}</button>
+					<button type="button" id="show_task_button" class="btn btn-success mr-3 w-100" v-on:click="showTaskButton()" :disabled="locked"><i class="fas fa-tasks"></i> {{ locales.showTask }}</button>
+					<button type="button" id="delete_blocks_button" class="btn btn-success mr-3 w-100" v-on:click="deleteAllBlocksButton()" :disabled="locked"><i class="fas fa-trash"></i> {{ locales.deleteBlocks }}</button>       
+					<button type="button" id="report_bug_button" class="btn btn-success mr-3 w-100" v-on:click="reportBugButton()" :disabled="locked"><i class="fas fa-bug"></i> {{ locales.reportBug }}</button>                 
             </div>
             </div>
         </div>
@@ -27,19 +27,8 @@
 </div>
 </div>
 <div v-if="isUserLoggedIn" id="blocklyDiv" ref="blocklyDiv" style="position: absolute;"></div>
-<!-- <Modal 
-		v-for="(modal, index) in modalsArray"
-		:heading="modal.heading"
-		:text="modal.text"
-		:image-url="modal.imageUrl"
-		:buttons="modal.buttons"
-		:reportBug="modal.reportBug || undefined"
-		:id="modal.id"
-		:key="index"
-/> -->
 <Modal 
 		ref="modal"
-
 		:heading="modalData.heading"
 		:text="modalData.text"
 		:image-url="modalData.imageUrl"
@@ -56,6 +45,7 @@ import { convertDateToTime, sendRequest, rateMainTaskCompletion } from '../Manag
 import ModalManager from '../Managers/ModalManager';
 import Modal from './Modal';
 import HistoryManager from '../Managers/HistoryManager';
+import { game as locales } from '../Managers/LocaleManager';
 
 export default {
 	data(){
@@ -396,7 +386,7 @@ export default {
 			BlocklyManager.clearFailedBlocks(this.failedBlock);			
 
 			// this.code = BlocklyManager.getWorkspaceCode();
-
+			// <DEV>
 			if(solution)
 			{
 				this.code = '\'abc\'\nPlayer:\n';
@@ -408,6 +398,7 @@ export default {
 			{
 				this.code = BlocklyManager.getWorkspaceCode();
 			}
+			// </DEV>
 
 			this.sendMessage(this.code);
 		},		
@@ -431,16 +422,16 @@ export default {
 			let text = '';
 
 			if(object.commandNumber==1)
-				text = 'Váš prvý Blockly blok je chybný: <br>'; 
+				text = `${locales.commandFailedFirst} <br>`;
 			else if(object.commandNumber==2)
-				text = 'Váš prvý Blockly blok fungoval, ale v nasledujúcom nastala chyba: <br>';
+				text = `${locales.commandFailedSecond} <br>`;
 			else 
-				text = 'Niekoľko vašich Blockly blokov fungovalo, ale potom nastala chyba: <br>';
+				text = `${locales.commandFailedMore} <br>`;
 
 			let title = this.modals[object.failureType].modal.title;
 			text += this.modals[object.failureType].modal.text; 
 			let image = this.modals[object.failureType].modal.image;
-			text += '<br> Chybný blok je zafarbený na červeno.';
+			text += `<br> ${locales.commandFailedBlock}`;
 
 			this.createLogOfGameplay('commandFailed', object);			
 			
