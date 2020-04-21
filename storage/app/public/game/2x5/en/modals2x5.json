@@ -4,14 +4,14 @@
     "level":5,
     
   "welcome_modal": {
-    "title": "Kategória 2 Úroveň 5",
-    "text": "V piatej úrovni už nebude pridaný ďaľší blok - avšak si zopakujeme, čo bolo hlavnou témou druhej kategórie a teda práca s cyklami a podmienkami.",
+    "title": "Category 2 Level 5",
+    "text": "In the fifth level you will not find a new block - but we will repeat what was the main topic of the second category and thus working with cycles and conditions.",
     "image": "welcome_modal"
   },
   
    "finish_modal": {
-    "title": "Všetky úrovne hry boli odohrané!",
-    "text": "Gratulujeme! Úspešne ste sa naučili základy tvorby algoritmov pomocou Google Blockly.",
+    "title": "All levels of the game have been played!",
+    "text": "Congratulations! You've successfully learned the basics of creating algorithms using Google Blockly.",
     "image": "success"  
   }
   },
@@ -20,14 +20,14 @@
     "progress": "25",
     
     "introduction_modal": {
-    "title": "Zadanie prvej úlohy",
-    "text": "Ku kamennému tlačidlu sa hrdina musí dostať cez vodu a zničiť sud. Použite len blok opakuj pokiaľ nie je hrdina v cieli a vyriešte úlohu bez použitia podmienok.",
+    "title": "The first task assignment",
+    "text": "To the stone button the hero must get through the water and destroy the barrel. Use only the block repeart until the hero is at the target and solve the task without using conditions.",
     "image": "maintask0_introduction_modal"
   },
     
   "success_modal": {
-    "title": "Výborne! Splnili ste prvú úlohu!",
-    "text": "Zdá sa, že používať cyklus doWhile vám naozaj ide dobre.",
+    "title": "Well done! You've completed your first task!",
+    "text": "It seems that using the doWhile cycle is really going well.",
     "image": "success"
   }
   },
@@ -36,14 +36,14 @@
     "progress": "50",  
   
     "introduction_modal": {
-    "title": "Zadanie druhej úlohy",
-    "text": "Aby sa hrdina dostal ďalej, musí otvoriť všetky truhlice aby našiel kľúč od dverí a zároveň použiť všetky páky, aby zneškodnil pasce v ceste. Použite blok opakuj pokiaľ nie je hrdina v cieli, v ktorom bude dvakrát blok ak v smere nasleduje a za ním blok opakuj x-krát, ktorý bude obsahovať podmienku pre truhlicu a podmienku pre páku.",
+    "title": "The second task asssignment",
+    "text": "To get further, the hero must open all the chests to find the door key while using all the levers to defeat the traps in the way. Use the block repeat until hero is in the target in which there will be block if it follows in the direction twice, followed by the block repeat x times, which will include a chest condition and a lever condition.",
     "image": "maintask1_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste druhú úlohu!",
-    "text": "Váš algoritmus umonžil hrdinovi prehľadať všetky truhlice, použiť páky na deaktivovanie pasce a dostať sa cez dvere. Hrdina môže pokračovať ďalej v ceste.",
+    "title": "Great! You did the second task!",
+    "text": "Your algorithm allowed the hero to search all the chests, use the levers to deactivate the trap, and get through the door. The hero can continue his journey.",
     "image": "success"
   }
   },
@@ -54,14 +54,14 @@
     "progress": "75",  
   
     "introduction_modal": {
-    "title": "Zadanie tretej úlohy",
-    "text": "V tejto úlohe máme kamenné tlačidlo trochu ďalej a na ceste sú pasce, ktoré treba preskočiť. Na začiatku otočte hrdinu raz doľava a potom použite blok opakuj pokiaľ nie je hrdina v cieli, dvakrát blok ak v smere nasleduje a raz blok ak v smere na dlaždici je.",
+    "title": "The third task asssignment",
+    "text": "In this task, we have a stone button a little further and there are traps to avoid. At the beginning, turn the hero once to the left and then use the repeat block until the hero is in the target, twice the block if it follows in the direction and once the block if it is in the direction of the tile.",
     "image": "maintask2_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste tretiu úlohu!",
-    "text": "Vo vašom treťom algoritme ste použili obe podmienky a tak hrdina úspešne dorazil na kamenné tlačidlo.",
+    "title": "Well done! You've completed your third task! ",
+    "text": "You used both conditions in your third algorithm, so the hero successfully reached the stone button.",
     "image": "success"
   }
   },
@@ -70,14 +70,14 @@
     "progress": "100",  
   
     "introduction_modal": {
-    "title": "Zadanie štvrtej úlohy",
-    "text": "A na záver, hrdina potrebuje zničiť vázy a použiť páku na otvorenie padacích dverí, aby mohol prísť na posledné kamenné tlačidlo v tejto hre. Použite blok opakuj pokiaľ nie je hrdina v cieli, jeden krát blok ak v smere nasleduje a dvakrát blok ak v smere na dlaždici je.",
+    "title": "The fourth task asssignment",
+    "text": "Finally, the hero needs to destroy the vases and use the lever to open the trapdoor so he can come to the last stone button in this game. Use the repeat block until the hero is in the target, once block if in the direction follows and twice block if in the direction on the tile.",
     "image": "maintask3_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste štvrtú úlohu!",
-    "text": "Posledná úloha v hre bola práve splnená.",
+    "title": "Well done! You've completed your fourth task!",
+    "text": "The last role in the game has just been accomplished.",
     "image": "success"
   }
   }  

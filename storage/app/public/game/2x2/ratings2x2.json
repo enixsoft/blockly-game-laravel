@@ -7,9 +7,8 @@
       "solution":"for(3){,rotateCharacter(left);,moveForward(1);,rotateCharacter(right);,moveForward(1);,};",
       "rules":{
          "0":{
-            "blocks":"for",
-            "count":1,
-            "error":"Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj x-krát tak, ako bolo zadané. Skúste to znova."
+            "block":"for",
+            "count":1            
          }
       }
    },
@@ -17,9 +16,8 @@
       "solution":"rotateCharacter(left);,for(3){,for(2){,jumpForward(1);,};,rotateCharacter(right);,};",
       "rules":{
          "0":{
-            "blocks":"for",
-            "count":2,
-            "error":"Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj x-krát tak, ako bolo zadané. Je treba ho mať v algoritme dvakrát. Skúste to znova."
+            "block":"for",
+            "count":2            
          }
       }
    },
@@ -27,9 +25,8 @@
       "solution":"for(3){,openForward();,rotateCharacter(right);,rotateCharacter(right);,openForward();,rotateCharacter(right);,moveForward(1);,rotateCharacter(right);,};,rotateCharacter(right);,rotateCharacter(right);,for(3){,moveForward(1);,};",
       "rules":{
          "0":{
-            "blocks":"for",
-            "count":2,
-            "error":"Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj x-krát tak, ako bolo zadané. Je treba ho mať v algoritme dvakrát. Skúste to znova."
+            "block":"for",
+            "count":2           
          }
       }
    },
@@ -37,9 +34,8 @@
       "solution":"rotateCharacter(left);,for(3){,moveForward(1);,};,rotateCharacter(right);,for(4){,attackForward();,moveForward(1);,};",
       "rules":{
          "0":{
-            "blocks":"for",
-            "count":2,
-            "error":"Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj x-krát tak, ako bolo zadané. Je treba ho mať v algoritme dvakrát. Skúste to znova."
+            "block":"for",
+            "count":2            
          }
       }
    },
@@ -47,9 +43,8 @@
       "solution":"rotateCharacter(right);,for(2){,moveForward(1);,rotateCharacter(right);,useForward();,rotateCharacter(left);,};,rotateCharacter(right);,rotateCharacter(right);,for(3){,jumpForward(1);,};",
       "rules":{
          "0":{
-            "blocks":"for",
-            "count":2,
-            "error":"Vaše riešenie nebolo uznané, pretože ste nepoužili blok - opakuj x-krát tak, ako bolo zadané. Je treba ho mať v algoritme dvakrát. Skúste to znova."
+            "block":"for",
+            "count":2
          }
       }
    }

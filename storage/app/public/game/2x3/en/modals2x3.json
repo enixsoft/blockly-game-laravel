@@ -4,14 +4,14 @@
     "level":3,
     
   "welcome_modal": {
-    "title": "Kategória 2 Úroveň 3",
-    "text": "V tretej úrovni získavate nový blok - opakuj pokiaľ nie je hrdina v cieli. Tento blok, ktorý je cyklom typu doWhile funguje podobne ako blok opakuj x-krát, až na to, že nemusíte nastavovať počet opakovaní. Všetky bloky v ňom sa teda budú postupne opakovať, až kým úloha nebude splnená alebo nedôjde k chybe pri plnení nejakého bloku.",
+    "title": "Category 2 Level 3",
+    "text": "In the third level you get a new block - repeat until the hero is in the target. This block, which is a doWhile cycle, works similar to the repeat block x times, except that you don't have to set the number of repetitions. Therefore, all blocks in it will be repeated sequentially until the task is completed or an error occurs while performing action of some block.",
     "image": "welcome_modal"
   },
   
    "finish_modal": {
-    "title": "Všetky úlohy boli splnené!",
-    "text": "Úspešne ste sa naučili používať blok opakuj pokiaľ nie je hrdina v cieli.",
+    "title": "All tasks completed!",
+    "text": "You have successfully learned to use the repeat until the hero is at the target block.",
     "image": "success"  
   }
   },
@@ -20,14 +20,14 @@
     "progress": "20",
     
     "introduction_modal": {
-    "title": "Zadanie prvej úlohy",
-    "text": "Cestu k prvému kamennému tlačidlu je priama a bez žiadnych prekážok. Použite nový blok.",
+    "title": "The first task assignment",
+    "text": "The way to the first stone button is straight and without any obstacles. Use the new block.",
     "image": "maintask0_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste prvú úlohu!",
-    "text": "Cyklus typu doWhile je jednoduchý a beží vynikajúco. Uvidíme, ako to pôjde na zložitejších úlohách.",
+    "title": "Well done! You've completed your first task!",
+    "text": "The doWhile cycle is simple and runs great. Let's see how it goes on more complex tasks.",
     "image": "success"
   }
   },
@@ -36,14 +36,14 @@
     "progress": "40",  
   
     "introduction_modal": {
-    "title": "Zadanie druhej úlohy",
-    "text": "Aby sa hrdina dostal ďalej, musíte okrem nového bloku použiť aj blok opakuj x-krát, ktorý vložíte dovnútra.",
+    "title": "The second task assignment",
+    "text": "In order for the hero to go further, you must use a repeat block in addition to the new block.",
     "image": "maintask1_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste druhú úlohu!",
-    "text": "Úspešne ste skombinovali dva cykly. Hrdina môže pokračovať ďalej v ceste.",
+    "title": "Great! You did the second task!",
+    "text": "You have successfully combined two cycles. The hero can continue his journey."
     "image": "success"
   }  
   },
@@ -54,14 +54,14 @@
     "progress": "60",  
   
     "introduction_modal": {
-    "title": "Zadanie tretej úlohy",
-    "text": "V tejto úlohe sa ku kamennému tlačidlo hrdina dostane skokmi. Blok opakuj x-krát tu netreba použiť.",
+    "title": "The third task assignment",
+    "text": "In this task, the stone button hero must reach by jumping. You do not need to use the block repeat again x times.",
     "image": "maintask2_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste tretiu úlohu!",
-    "text": "Zdá sa, že vám používanie cyklu typu doWhile nerobí žiaden problém.",
+    "title": "Great! You've done your third task!",
+    "text": "It seems that using the doWhile cycle is not a problem for you.",
     "image": "success"
   }
   },
@@ -70,14 +70,14 @@
     "progress": "80",  
   
     "introduction_modal": {
-    "title": "Zadanie štvrtej úlohy",
-    "text": "Dostať sa ku ďalšiemu kamennému tlačidlu je tentokrát ťažšie, na jednom z blokov sa nachádza pasca. Vypnite ju pomocou páky. Opäť použite aj blok opakuj x-krát, ktorý vložíte dovnútra.",
+    "title": "The fourth task assignment",
+    "text": "Getting to the next stone button is harder this time, one of the blocks has a trap. Turn it off with the lever. Also, use the repeat block x times that you put inside.",
     "image": "maintask3_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste štvrtú úlohu!",
-    "text": "Dobrá práca, váš hrdina už má cieľ na dosah.",
+    "title": "Great! You've completed your fourth task!",
+    "text": "Well done, your hero already has a target within reach.",
     "image": "success"
   }
   },
@@ -86,14 +86,14 @@
     "progress": "100",  
   
     "introduction_modal": {
-    "title": "Zadanie piatej úlohy",
-    "text": "V poslednej úlohe tretej úrovne použite opäť oba cykly - pričom cyklus for sa bude nachádzať vnútri cyklu doWhile. Pred použítím cyklu doWhile hrdinu otočte raz doprava.",
+    "title": "The fifth task assignment",
+    "text": "In the last task of this level, use both cycles again - with the for loop inside the doWhile loop. Turn the hero once to the right before using the doWhile cycle.",
     "image": "maintask4_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste piatu úlohu!",
-    "text": "Je zrejmé, že používanie oboch cyklov už zvládate dokonale.",
+    "title": "Well done! You have completed your fifth task!",
+    "text": "Obviously, you can master both cycles perfectly.",
     "image": "success"
   }
   }

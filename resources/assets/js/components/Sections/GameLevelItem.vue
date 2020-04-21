@@ -1,15 +1,15 @@
 <template>
 <div>
-<h2 class="section-heading">{{ `${getLocalizedString(locales.category)} ${categoryNumber}` }}</h2>
+<h2 class="section-heading">{{ `${locales.category} ${categoryNumber}` }}</h2>
 <p> {{ categoryText }} </p>
  <div class="table-responsive">
     <table class="table table-hover">
     <thead>
         <tr>
-            <th scope="col">{{ getLocalizedString(locales.level) }}</th>
-            <th scope="col">{{ getLocalizedString(locales.progress) }}</th>
-            <th scope="col">{{ getLocalizedString(locales.start) }}</th>
-            <th scope="col">{{ getLocalizedString(locales.continue) }}</th>
+            <th scope="col">{{ locales.level }}</th>
+            <th scope="col">{{ locales.progress }}</th>
+            <th scope="col">{{ locales.start }}</th>
+            <th scope="col">{{ locales.continue }}</th>
         </tr>
     </thead>
     <tbody>
@@ -25,17 +25,17 @@
                 </div>
             </td>
             <td><a href="" v-on:click.prevent="btnClick('start', index + 1)" :class="['btn', 'btn-secondary', 'btn-sm', levelProgressValue(categoryProgress.length - 1) !== 100 || disabled ? 'disabled' : '']">
-            {{ getLocalizedString(locales.startBtn) }}</a>
+            {{ locales.startBtn }}</a>
             </td>
             <td><a href="" v-on:click.prevent="btnClick('continue', index + 1)" :class="['btn', 'btn-secondary', 'btn-sm', levelProgressValue(categoryProgress.length - 1) !== 100 || disabled ? 'disabled' : '']">
-            {{ getLocalizedString(locales.continueBtn) }}</a>
+            {{ locales.continueBtn }}</a>
             </td>
         </tr>
     </tbody>
     </table>
     </div>
     <br>
-    <p v-if="categoryNumber === 1"><i class="fas fa-exclamation-circle"></i> {{ getLocalizedString(locales.btnInfoLock) }}<br>{{ getLocalizedString(locales.btnInfoUse) + (categoryProgress[0] ? ` ${getLocalizedString(locales.bigBtnContinue)}.` : ` ${getLocalizedString(locales.bigBtnStart)}.`) }}
+    <p v-if="categoryNumber === 1"><i class="fas fa-exclamation-circle"></i> {{ locales.btnInfoLock }}<br>{{ locales.btnInfoUse + (categoryProgress[0] ? ` ${locales.bigBtnContinue}.` : ` ${locales.bigBtnStart}.`) }}
     </p>
 </div>
 </template>
@@ -44,8 +44,7 @@ import { gameLevels as locales } from '../Managers/LocaleManager.js';
 export default { 
 	data(){
 		return {
-			locales,
-			getLocalizedString: this.$global.getLocalizedString
+			locales: this.$global.getLocalizedStrings(locales)
 		};
 	},
 	props: {

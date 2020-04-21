@@ -5,7 +5,7 @@
                  <div class="col-md-12 mx-auto">
                     <GameLevelItem
                         v-for="(category, index) in categories"
-                        :category-text="getLocalizedString(category.text)"
+                        :category-text="category.text"
                         :category-number="index + 1"
                         :category-progress="categoryProgress(index)"
                         :key="index"
@@ -15,7 +15,7 @@
                   <div class="col-md-6 mx-auto">
                      <button v-on:click="runGame('play')" class="btn btn-lg btn-success" :disabled="(inGameProgress[9] && inGameProgress[9] === 100) || disabled">
                      <i class="fas fa-play"></i>
-                  {{ inGameProgress[0] === 0 ? getLocalizedString(locales.bigBtnStart) : getLocalizedString(locales.bigBtnContinue) }}
+                  {{ inGameProgress[0] === 0 ? locales.bigBtnStart : locales.bigBtnContinue }}
                      </button>             
                   </div>                 
                   <br>
@@ -47,11 +47,10 @@ import { gameLevels as locales } from '../Managers/LocaleManager';
 export default {
 	data(){
 		return {
-			locales,
-			getLocalizedString: this.$global.getLocalizedString,
+			locales: this.$global.getLocalizedStrings(locales),			
 			categories: [
-				{ text: locales.category1 },
-				{ text: locales.category2 }
+				{ text: this.$global.getLocalizedString(locales.category1) },
+				{ text: this.$global.getLocalizedString(locales.category2) }
 			],
 			disabled: false	
 		};

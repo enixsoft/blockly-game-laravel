@@ -85,6 +85,8 @@ function enableHistory(app, baseUrl, url, data)
 		console.log('view', event.state && event.state.view);
 		console.log('hash', event.target.location.hash);
 
+		$('.modal').modal('hide');
+
 		if(event.state && event.state.view)
 		{
 			changeData(event.state.data, event.state.view);
@@ -97,7 +99,7 @@ function enableHistory(app, baseUrl, url, data)
 		if(event.target.location.hash)
 		{
 			setTimeout(() => scrollToHash(event.target.location.hash), 100);
-		}
+		}		
 	}); 
 }
 

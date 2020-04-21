@@ -10,13 +10,13 @@
             </ul>
             <div class="carousel-inner h-100" style="text-align: center;"> 
                 <div class="carousel-item h-100 active">
-                <CarouselItem :title="getLocalizedString(locales.title1)" :subtitle="getLocalizedString(locales.subtitle1)" :button-text="getLocalizedString(locales.buttonText)"  imageFileName="carousel-1.png" />
+                <CarouselItem :title="locales.title1" :subtitle="locales.subtitle1" :button-text="locales.buttonText"  imageFileName="carousel-1.png" />
                 </div>
                 <div class="carousel-item h-100" >
-                <CarouselItem :title="getLocalizedString(locales.title2)" :subtitle="getLocalizedString(locales.subtitle2)" :button-text="getLocalizedString(locales.buttonText)"  imageFileName="carousel-2.png" />
+                <CarouselItem :title="locales.title2" :subtitle="locales.subtitle2" :button-text="locales.buttonText"  imageFileName="carousel-2.png" />
                 </div>
                 <div class="carousel-item h-100" >
-                <CarouselItem :title="getLocalizedString(locales.title3)" :subtitle="getLocalizedString(locales.subtitle3)" :button-text="getLocalizedString(locales.buttonText)"  imageFileName="carousel-3.png" />
+                <CarouselItem :title="locales.title3" :subtitle="locales.subtitle3" :button-text="locales.buttonText"  imageFileName="carousel-3.png" />
                  </div>
             </div>
             <a class="carousel-control-prev" href="#carousel" data-slide="prev">
@@ -37,8 +37,7 @@ import { carousel as locales } from '../Managers/LocaleManager';
 export default {
 	data(){
 		return {
-			locales,
-			getLocalizedString: this.$global.getLocalizedString
+			locales: this.$global.getLocalizedStrings(locales),
 		};
 	},
 	components: {

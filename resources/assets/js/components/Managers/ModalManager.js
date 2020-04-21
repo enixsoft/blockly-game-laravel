@@ -6,11 +6,15 @@ let modalData = undefined;
 const modalDataQueue = [];
 let modalImageUrl = undefined;
 let availableModal = true;
+let modalLocales = undefined;
 
-function enableModals(ref, data, url){
+function enableModals(ref, data, url, locales){
+	console.log(locales);
+
 	modalRef = ref;
 	modalData = data;
 	modalImageUrl = url;
+	modalLocales = locales;
 
 	$(modalRef).on('hidden.bs.modal', modalHiddenEvent);
 }
@@ -64,33 +68,33 @@ function createDynamicModal(type, modalStructure)
 	case 'levelIntroduced':
 	case 'mainTaskIntroduced':
 	case 'mainTaskShowed':
-		return setModalParameters(modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), [{onclick: modalStructure.onclick, text: 'Pokračovať'}]);
+		return setModalParameters(modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), [{onclick: modalStructure.onclick, text: modalLocales.continue }]);
 
 	case 'mainTaskCompleted':
 	{
-		modalStructure.data.text += '<br><br> <h4><i class="fas fa-stopwatch"></i> Čas:</h4>' + convertDateToTime(modalStructure.task_elapsed_time);
-		modalStructure.data.text += '<br><br> <h4><a data-toggle="collapse" href="#collapseCode"><i class="fas fa-code"></i> Kód:</a></h4>';
+		modalStructure.data.text += `<br><br> <h4><i class="fas fa-stopwatch"></i> ${modalLocales.time}:</h4>${convertDateToTime(modalStructure.task_elapsed_time)}`;
+		modalStructure.data.text += `<br><br> <h4><a data-toggle="collapse" href="#collapseCode"><i class="fas fa-code"></i> ${modalLocales.code}:</a></h4>`;
 		modalStructure.data.text += '<div class="collapse" id="collapseCode">';
 		modalStructure.data.text += '<div><code>';
 		modalStructure.data.text += convertCodeForModal(modalStructure.code);
 		modalStructure.data.text += '</div></code>';
 		modalStructure.data.text += '</div>';
-		modalStructure.data.text += '<br><br> <h4><i class="fas fa-star-half-alt"></i> Hodnotenie:</h4>' + convertRatingToStars(modalStructure.rating);
+		modalStructure.data.text += `<br><br> <h4><i class="fas fa-star-half-alt"></i> ${modalLocales.rating}:</h4>${convertRatingToStars(modalStructure.rating)}`;
 
-		return setModalParameters(modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), [{onclick: modalStructure.onclick, text: 'Pokračovať'}]);
+		return setModalParameters(modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), [{onclick: modalStructure.onclick, text: modalLocales.continue }]);
 	}
 
 	case 'mainTaskFailed':	
-		return setModalParameters(modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), [{onclick: modalStructure.onclick, text: 'Skúsiť znova'}]);	
+		return setModalParameters(modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), [{onclick: modalStructure.onclick, text: modalLocales.tryAgain}]);	
 
 	case 'ajaxError':	
-		return setModalParameters(modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), [{onclick: modalStructure.onclick, text: 'Reštartovať hru'}]);	
+		return setModalParameters(modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), [{onclick: modalStructure.onclick, text: modalLocales.restartGame}]);	
 
 	case 'allMainTasksFinished':	
-		return setModalParameters(modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), [{onclick: modalStructure.onclick, text: 'Ďalšia úroveň'}]);
+		return setModalParameters(modalStructure.data.title, modalStructure.data.text, getModalImageLink(modalStructure.imageLocation, modalStructure.data.image), [{onclick: modalStructure.onclick, text: modalLocales.nextLevel }]);
 	
 	case 'reportBug':
-		return setModalParameters('Nahlásiť chybu', 'Môžete napísať 1000 znakov.', '', [{onclick: modalStructure.onclick, text: 'Odoslať chybu'}, {onclick: () => {}, text: 'Zavrieť okno'}], {maxLength: 1000, rowsLength: 10});
+		return setModalParameters(modalLocales.reportBug, `${modalLocales.textAreaWarning} 1000 ${modalLocales.textAreaCharacters}.`, '', [{onclick: modalStructure.onclick, text: modalLocales.sendBug}, {onclick: () => {}, text: modalLocales.closeWindow }], {maxLength: 1000, rowsLength: 10});
 	}
 }
 

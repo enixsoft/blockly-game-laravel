@@ -45,16 +45,17 @@ import { convertDateToTime, sendRequest, rateMainTaskCompletion } from '../Manag
 import ModalManager from '../Managers/ModalManager';
 import Modal from './Modal';
 import HistoryManager from '../Managers/HistoryManager';
-import { game as locales } from '../Managers/LocaleManager';
+import { game as locales, blocks as blocksLocales } from '../Managers/LocaleManager';
 
 export default {
 	data(){
 		return {
+			locales: this.$global.getLocalizedStrings(locales),
 			failedBlock: [],
 			toolbox: this.gameData.xmlToolbox,
 			savedGame: this.gameData.savedGame,
 			tasks: JSON.parse(this.gameData.jsonTasks),
-			modals: JSON.parse(this.gameData.jsonModals),
+			modals: JSON.parse(this.gameData.jsonModals),			
 			ratings: JSON.parse(this.gameData.jsonRatings),
 			levelString: `${this.category}x${this.level}`,
 			locked: true,
@@ -92,13 +93,13 @@ export default {
 		gameData: Object
 	},
 	created(){
-		BlocklyManager.createBlocklyBlocks(this.$global.Url());
+		BlocklyManager.createBlocklyBlocks(this.$global.Url(), this.$global.getLocalizedStrings(blocksLocales));
 	},        
 	mounted() {
 		console.log('GameHeader mounted:');   
 		console.log(this.$data);	
 
-		ModalManager.enableModals(this.$refs.modal.$refs.centeredModal, this.modalData, this.$global.Url('game'));
+		ModalManager.enableModals(this.$refs.modal.$refs.centeredModal, this.modalData, this.$global.Url('game'), this.locales);
 
 		if(!this.isUserLoggedIn)
 		{
@@ -329,6 +330,31 @@ export default {
 				onclick: this.sendMessage.bind(null, `load\n${this.saveObjectToString}`)
 			});
 		},
+		mainTaskFailedRule(object)
+		{
+			this.gameExecutingCode = false;
+			this.createLogOfGameplay('mainTaskFailedRule', object);
+
+			const rule = this.ratings[this.main_task].rules[this.ruleError];
+			let text = this.locales.ruleError;
+			text += ' ' + this.locales[rule.blocks] + '.';
+			if(rule.count>1)
+			{
+				text += this.locales.ruleErrorCount + ' ' + rule.count + ' ' + this.locales.ruleErrorTimes;
+			}
+			text += this.locales.ruleErrorTryAgain;
+
+
+			ModalManager.showDynamicModal('mainTaskFailed', { 
+				data: { 
+					title: this.modals['maintaskfailed'].modal.title,
+					text,
+					image: this.modals['maintaskfailed'].modal.image
+				}, 
+				imageLocation: 'common',
+				onclick: this.sendMessage.bind(null, `load\n${this.saveObjectToString}`)
+			});
+		},
 		showTaskButton() 
 		{
 			ModalManager.showDynamicModal('mainTaskShowed', { 
@@ -422,16 +448,16 @@ export default {
 			let text = '';
 
 			if(object.commandNumber==1)
-				text = `${locales.commandFailedFirst} <br>`;
+				text = `${this.locales.commandFailedFirst} <br>`;
 			else if(object.commandNumber==2)
-				text = `${locales.commandFailedSecond} <br>`;
+				text = `${this.locales.commandFailedSecond} <br>`;
 			else 
-				text = `${locales.commandFailedMore} <br>`;
+				text = `${this.locales.commandFailedMore} <br>`;
 
 			let title = this.modals[object.failureType].modal.title;
 			text += this.modals[object.failureType].modal.text; 
 			let image = this.modals[object.failureType].modal.image;
-			text += `<br> ${locales.commandFailedBlock}`;
+			text += `<br> ${this.locales.commandFailedBlock}`;
 
 			this.createLogOfGameplay('commandFailed', object);			
 			

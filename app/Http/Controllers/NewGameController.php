@@ -70,20 +70,21 @@ class NewGameController extends Controller
         }
         else
         {
+            $lang = "en";
 
-            $xmlToolboxPath = "public/game" . "/" . $category . "x" . $level . "/toolbox" . $category . "x" . $level . ".xml";
+            $xmlToolboxPath = "public/game" . "/" . $category . "x" . $level . "/" . "toolbox" . $category . "x" . $level . ".xml";
             $xmlToolbox = Storage::get($xmlToolboxPath);
 
-            $jsonStartGamePath = "public/game/" . $category . "x" . $level . "/start" . $category . "x" . $level . ".json";
+            $jsonStartGamePath = "public/game/" . $category . "x" . $level . "/" . "start" . $category . "x" . $level . ".json";
             $jsonStartGame = Storage::get($jsonStartGamePath);
 
-            $jsonTasksPath = "public/game/" . $category . "x" . $level . "/modals" . $category . "x" . $level . ".json";
+            $jsonTasksPath = "public/game/" . $category . "x" . $level . "/" . $lang . "/" . "modals" . $category . "x" . $level . ".json";
             $jsonTasks = Storage::get($jsonTasksPath);
 
-            $jsonRatingsPath = "public/game/" . $category . "x" . $level . "/ratings" . $category . "x" . $level . ".json";
+            $jsonRatingsPath = "public/game/" . $category . "x" . $level . "/" . "ratings" . $category . "x" . $level . ".json";
             $jsonRatings = Storage::get($jsonRatingsPath);
 
-            $jsonModalsPath = "public/game/modals.json";
+            $jsonModalsPath = "public/game/common" . "/" . $lang . "/" . "modals.json";
             $jsonModals = Storage::get($jsonModalsPath);
 
             $auth = Auth::user();

@@ -4,14 +4,14 @@
     "level":2,
     
   "welcome_modal": {
-    "title": "Kategória 2 Úroveň 2",
-    "text": "V druhej úrovni druhej kategórie hrdina získavate nový blok - opakuj x-krát. Ide o cyklus typu for, ktorý vykoná všetky bloky, ktoré k nemu pripojíte, toľko krát, koľko nastavíte. Toto sa hodí, pokiaľ k splneniu úlohy stačí vykonať postupnosť nejakých blokov viac krát za sebou.",
+    "title": "Category 2 Level 2",
+    "text": "In the second level of the second hero category you get a new block - repeat x times. This is a for loop that executes all the blocks you attach to it as many times as you set. This is useful if you need to perform a sequence of blocks several times in a row to complete the task.",
     "image": "welcome_modal"
   },
   
    "finish_modal": {
-    "title": "Všetky úlohy boli splnené!",
-    "text": "Úspešne ste sa naučili pracovať s cyklom typu for.",
+    "title": "All tasks completed!",
+    "text": "You have successfully learned to work with a for loop.",
     "image": "success"  
   }
   },
@@ -20,14 +20,14 @@
     "progress": "25",
     
     "introduction_modal": {
-    "title": "Zadanie prvej úlohy",
-    "text": "V prvej úlohe vám stačia bloky pohybu o jeden krok a otáčania. Umiestnite ich do bloku opakuj x-krát a nastavte správne počet opakovaní. Na začiatku je hrdina nasmerovaný doprava.",
+    "title": "The first task assignment",
+    "text": "In the first task, all you need is one-step motion and rotation blocks. Place them in the block repeated x times and set the correct number of repetitions. In the beginning, the hero is directed to the right.",
     "image": "maintask0_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste prvú úlohu!",
-    "text": "Vo vašom prvom algoritme ste správne použili a nastavili cyklus for a tým umožnili hrdinovi prejsť na prvé kamenné tlačidlo.",
+    "title": "Well done! You've completed your first task!",
+    "text": "In your first algorithm, you correctly used and set up the for loop to allow the hero to go to the first stone button.",
     "image": "success"
   }
   },
@@ -36,14 +36,14 @@
     "progress": "40",  
   
     "introduction_modal": {
-    "title": "Zadanie druhej úlohy",
-    "text": "Teraz hrdinu čaká skákanie cez vodu. To sa dá skvele optimalizovať pomocou bloku opakuj x-krát a na splnenie tejto úlohy je treba použiť dva také bloky. Začnite nasmerovaním hrdinu smerom hore, a potom použite bloky opakovania tak, že druhý bude vnútri prvého.",
+    "title": "The second task assignment",
+    "text": "Now the hero needs to jump over the water. This can be greatly optimized using the repeat block x times, and two such blocks must be used to accomplish this task. Start by directing the hero up, and then use the repeating blocks so that the second is inside the first.",
     "image": "maintask1_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste druhú úlohu!",
-    "text": "Zvládli ste použiť vnorený cyklus for a hrdina môže pokračovať ďalej v ceste.",
+    "title": "Great! You've done your second task!",
+    "text": "You've mastered a nested for loop, and the hero can continue on his way.",
     "image": "success"
   }
   },
@@ -54,14 +54,14 @@
     "progress": "60",  
   
     "introduction_modal": {
-    "title": "Zadanie tretej úlohy",
-    "text": "V tejto úlohe máme kamenné tlačidlo až za zatvorenými dverami, ktoré sú zamknuté kľúčom, ktorý musíme nájsť v truhlici. Hrdina teda potrebuje otvoriť všetky truhlice. Použite blok opakuj x-krát, blok pohybu a otáčania doprava.",
+    "title": "The third task assignment",
+    "text": "In this task we have a stone button behind closed doors that are locked with a key that we have to find in the chest. So the hero needs to open all the chests. Use the repeat block x times, move the block and rotate clockwise.",
     "image": "maintask2_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste tretiu úlohu!",
-    "text": "Vo vašom treťom algoritme ste otvorili 6 truhlíc,  hrdina našiel kľúč a dostal sa cez zatvorené dvere.",
+    "title": "Great! You've done your third task!",
+    "text": "In your third algorithm you opened 6 chests, the hero found the key and got through the closed door.",
     "image": "success"
   }
   },
@@ -70,14 +70,14 @@
     "progress": "80",  
   
     "introduction_modal": {
-    "title": "Zadanie štvrtej úlohy",
-    "text": "Cesta ku kamennému tlačidlu pre splnenie tejto úlohy je blokovaná vázami, ktoré treba zničiť. Opäť dva razy použite blok opakuj x-krát.",
+    "title": "The fourth task assignment",
+    "text": "The way to the stone button to accomplish this task is blocked by vases that need to be destroyed. Once again, use the repeat block x times.",
     "image": "maintask3_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste štvrtú úlohu!",
-    "text": "Zdá sa, že optimalizovať algoritmy pomocou cyklu typu for vám nerobí žiaden problém. Ešte jedna úloha a ste v cieli.",
+    "title": "Well done! You've completed your fourth task!",
+    "text": "It doesn't seem to be a problem to optimize your algorithms with a for loop. One more task and you're going to finish this level.",
     "image": "success"
   }
   },
@@ -86,14 +86,14 @@
     "progress": "100",  
   
     "introduction_modal": {
-    "title": "Zadanie štvrtej úlohy",
-    "text": "A na dokončenie úrovne stačí už len použiť dve páky, aby ste zneškodnili pasce blokujúce prístup do cieľa. Na začiatku nasmerujte hrdinu dole a dva razy použite blok opakuj x-krát.",
-    "image": "maintask3_introduction_modal"
+    "title": "The fifth task assignment",
+    "text": "And to complete the level, just use two levers to defeat the traps blocking access to the target. In the beginning, point the hero down and use the repeat block x twice.",
+    "image": "maintask4_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste štvrtú úlohu!",
-    "text": "Dobrá práca, váš hrdina už má cieľ na dosah.",
+    "title": "Well done! You've completed your fifth task!",
+    "text": "Well done, your hero already has a target within reach.",
     "image": "success"
   }
   }

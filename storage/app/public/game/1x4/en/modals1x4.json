@@ -4,14 +4,14 @@
     "level":4,
     
   "welcome_modal": {
-    "title": "Kategória 1 Úroveň 4",
-    "text": "Vo štvrtej úrovni hrdina získava novú schopnosť - použitie páky. Túto schopnosť bude potrebovať, aby mohol deaktivovať pasce ohrozujúce ho v ceste a aby mohol otvárať dvere.",
+    "title": "Category 1 Level 4",
+    "text": "In the fourth level, the hero gains a new ability - using the lever. He would need this ability to deactivate the traps in the road and to open the door.",
     "image": "welcome_modal"
   },
   
    "finish_modal": {
-    "title": "Všetky úlohy boli splnené!",
-    "text": "Úspešne ste sa naučili schopnosť používať páku s hrdinom. Nasleduje ďalšia úroveň.",
+    "title": "All tasks completed!",
+    "text": "You have successfully learned the ability to use a lever with a hero. The next level follows.",
     "image": "success"  
   }
   },
@@ -20,14 +20,14 @@
     "progress": "25",
     
     "introduction_modal": {
-    "title": "Zadanie prvej úlohy",
-    "text": "Cestu k prvému kamennému tlačidlu blokuje niekoľko sudov a zatvorené dvere. Zničte sudy a použite páku.",
+    "title": "The first task assignment",
+    "text": "The road to the first stone button is blocked by several barrels and closed doors. Destroy the barrels and use the lever.",
     "image": "maintask0_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste prvú úlohu!",
-    "text": "Váš prvý algoritmus v tejto úrovni umožnil hrdinovi rozsekať sudy stojace v ceste a otvoriť dvere pomocou páky.",
+    "title": "Well done! You've completed your first task!",
+    "text": "Your first algorithm at this level allowed the hero to chop the barrels standing in the path and open the door using the lever.",
     "image": "success"
   }
   },
@@ -36,14 +36,14 @@
     "progress": "50",  
   
     "introduction_modal": {
-    "title": "Zadanie druhej úlohy",
-    "text": "V tejto úlohe hrdinu čaká dlhšia cesta, ktorá obsahuje skákanie, zničenie krabice a obídenie pasce.",
+    "title": "The second task assignment",
+    "text": "In this role the hero awaits a longer journey, which includes jumping, destroying boxes and circumventing traps.",
     "image": "maintask1_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste druhú úlohu!",
-    "text": "Váš druhý algoritmus umožnil hrdinovi úspešne dosiahnuť cieľ a prekonať všetky prekážky.",
+    "title": "Well done! You've completed your second task!",
+    "text": "Well done! Your second algorithm allowed the hero to successfully reach the target and overcome all obstacles.",
     "image": "success"
   }
   },
@@ -54,14 +54,14 @@
     "progress": "75",  
   
     "introduction_modal": {
-    "title": "Zadanie tretej úlohy",
-    "text": "Cestu hrdinovi blokujú dve po sebe nasledujúce pasce, ktoré sa nedajú preskočiť. Našťastie páky na ich vypnutie sú nablízku, použite ich.",
+    "title": "The third task assignment",
+    "text": "The hero's path is blocked by two successive traps that cannot be avoided. Fortunately, the levers to turn them off are nearby, use them.",
     "image": "maintask2_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste tretiu úlohu!",
-    "text": "Vo vašom treťom algoritme ste použili obe páky a tak hrdina úspešne prekonal nebezpečnú prekážku.",
+    "title": "Well done! You've completed your third task!",
+    "text": "In your third algorithm, you used both levers and so the hero successfully overcomes a dangerous obstacle.",
     "image": "success"
   }
   },
@@ -70,14 +70,14 @@
     "progress": "100",  
   
     "introduction_modal": {
-    "title": "Zadanie štvrtej úlohy",
-    "text": "A už nasleduje posledná úloha tejto úrovne, v ktorej opäť treba otvoriť dvere. Otvorte ich pákou nachádzajúcou sa za vázou. ",
+    "title": "The fourth task assignment",
+    "text": "And this is the last task of this level, in which the door must be opened again. Open with the lever behind the vase.",
     "image": "maintask3_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste štvrtú úlohu!",
-    "text": "Dokázali ste, že používanie páky vám ide tak dobre, ako skákanie a sekanie mečom.",
+    "title": "Well done! You've completed your fourth task!",
+    "text": "You have proven that using the lever is as easy for you as jumping and sword swinging.",
     "image": "success"
   }
   }

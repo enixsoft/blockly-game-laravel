@@ -86,13 +86,13 @@
     "progress": "100",  
   
     "introduction_modal": {
-    "title": "Zadanie štvrtej úlohy",
+    "title": "Zadanie piatej úlohy",
     "text": "A na dokončenie úrovne stačí už len použiť dve páky, aby ste zneškodnili pasce blokujúce prístup do cieľa. Na začiatku nasmerujte hrdinu dole a dva razy použite blok opakuj x-krát.",
-    "image": "maintask3_introduction_modal"
+    "image": "maintask4_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste štvrtú úlohu!",
+    "title": "Výborne! Splnili ste piatu úlohu!",
     "text": "Dobrá práca, váš hrdina už má cieľ na dosah.",
     "image": "success"
   }

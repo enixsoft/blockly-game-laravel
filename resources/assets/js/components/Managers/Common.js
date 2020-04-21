@@ -76,7 +76,7 @@ function rateMainTaskCompletion(object, ratings)
 
 			actualCount = 0;
 
-			ruleType = ratings[task].rules[j].blocks.split(',');                       
+			ruleType = ratings[task].rules[j].block.split(',');                       
         
 			ruleCount = ratings[task].rules[j].count;
 

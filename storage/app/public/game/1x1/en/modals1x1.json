@@ -4,14 +4,14 @@
     "level":1,
     
    "welcome_modal": {
-    "title": "Kategória 1 Úroveň 1",
-    "text": "V prvej úrovni si predstavíme základ ovládania, ktorým je pohyb. Hrdina sa dokáže pohybovať v štyroch smeroch. Vyberte blok s potrebným smerom pohybu, pripojte ho k bloku hráča a  nastavte počet krokov. Potom kliknite na tlačidlo Spustiť bloky. Vaša herná postava sa potom pokúsi výkonať príkazy. Pri všetkých úlohách sa vám meria čas, takže sa ich snažte riešiť čo najrýchlejšie.",
+    "title": "Category 1 Level 1",
+    "text": "In the first level, we will introduce the basis of control, which is movement. The hero can move in four directions. Select the block with the necessary direction of movement, attach it to the player block and set the number of steps. Then click Run Blocks. Your game character will then try to execute commands. All your tasks take time, so try to solve them as quickly as possible.",
     "image": "welcome_modal"
   },
   
    "finish_modal": {
-    "title": "Všetky úlohy boli splnené!",
-    "text": "Úspešne ste sa naučili pohybovať s hrdinom. Nasleduje ďalšia úroveň.",
+    "title": "All tasks completed!",
+    "text": "You have successfully learned to move with the hero. The next level follows.",
     "image": "success"  
   }
   },
@@ -20,14 +20,14 @@
     "progress": "25",
     
     "introduction_modal": {
-    "title": "Zadanie prvej úlohy",
+    "title": "The first task assignment",
     "text": "Váš hrdina potrebuje prejsť chodbou a dostať sa až na kamenné tlačidlo pred železnými dverami. Spojte vyžadované bloky a nastavte im potrebný počet krokov, aby sa mu to podarilo.",
     "image": "maintask0_introduction_modal"
   },
       
   "success_modal": {
-    "title": "Výborne! Splnili ste prvú úlohu!",
-    "text": "Váš prvý algoritmus umožnil hrdinovi úspešne doraziť ku železným dverám. Jeho cesta môže pokračovať ďalej.",
+    "title": "Well done! You've completed your first task!",
+    "text": "Your first algorithm allowed the hero to successfully reach the iron door. His journey can continue.",
     "image": "success"
   }
   },
@@ -36,14 +36,14 @@
     "progress": "50",  
   
     "introduction_modal": {
-    "title": "Zadanie druhej úlohy",
-    "text": "Pred hrdinom sa otvorili padacie dvere a nasleduje krátka chodba, ktorá vedie k ďalšiemu kamennému tlačidlu za otvorenými dverami. Pošlite tam vášho hrdinu pomocou blokov.",
+    "title": "The second task assignment",
+    "text": "A trapdoor was opened in front of the hero, followed by a short corridor that leads to another stone button behind the open door. Send your hero there using blocks.",
     "image": "maintask1_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste druhú úlohu!",
-    "text": "Váš druhý algoritmus umožnil hrdinovi úspešne doraziť do skladu. Polovica cesty v tejto úrovni je už za ním.",
+    "title": "Well done! You have completed the second task!",
+    "text": "Your second algorithm allowed the hero to successfully reach the warehouse. Half the way at this level is already behind him.",
     "image": "success"
   }
   },
@@ -54,14 +54,14 @@
     "progress": "75",  
   
     "introduction_modal": {
-    "title": "Zadanie tretej úlohy",
-    "text": "Hrdina sa nachádza v sklade plnom vecí, medzi ktorými sa musí pohybovať. Skúste nájsť správnu cestu k najbližšiemu kamennému tlačidlu.",
+    "title": "The third task assignment",
+    "text": "The hero is in a store full of things and he must move between them. Try to find the right way to the nearest stone button.",
     "image": "maintask2_introduction_modal"
   },
     
   "success_modal": {
-    "title": "Výborne! Splnili ste tretiu úlohu!",
-    "text": "Váš tretí algoritmus umožnil hrdinovi úspešne prejsť polovicu skladu. Koniec úrovne je už na dohľad.",
+    "title": "Well done! You've completed your third task!",
+    "text": "Your third algorithm allowed the hero to successfully pass half the warehouse. The end of the level is already in sight.",
     "image": "success"
   }
   },
@@ -70,14 +70,14 @@
     "progress": "100",  
   
     "introduction_modal": {
-    "title": "Zadanie štvrtej úlohy",
-    "text": "Dokončite úroveň 1 a prejdite s hrdinom k poslednému kamennému tlačidlu, za ktorým už sú schody do ďalšej úrovne.",
+    "title": "The fourth task assignment",
+    "text": "Complete level 1 and go with the hero to the last stone button, which is followed by stairs to the next level.",
     "image": "maintask3_introduction_modal"
   },
   
   "success_modal": {
-    "title": "Výborne! Splnili ste štvrtú úlohu!",
-    "text": "Hrdina prešiel chodbami a skladom až ku schodom do ďalšej úrovne.",
+    "title": "Well done! You've completed your fourth task!",
+    "text": "The hero walked down the corridors and into the storehouse to the next level.",
     "image": "success"
   }
   }

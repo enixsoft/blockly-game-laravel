@@ -10,7 +10,10 @@
             <div :class="reportBug ? 'col-lg-12' : 'col-lg-6'">
               <br>
               <h1 id="modal-heading">{{ heading }}</h1> 
-              <ModalTextArea v-if="reportBug"
+              <ModalTextArea 				  
+				  	v-if="reportBug"
+					ref="modalTextArea"
+				   :label="locales.textAreaLabel"
 					:max-length="reportBug.maxLength"
 					:rows-length="reportBug.rowsLength"
 					v-on:input="reportBugInput = $event.target.value"
@@ -41,9 +44,11 @@
 <script>
 import ModalTextArea from './ModalTextArea';
 import ModalButton from './ModalButton';
+import { modal as locales } from '../Managers/LocaleManager';
 export default {
 	data(){
 		return {
+			locales: this.$global.getLocalizedStrings(locales),
 			reportBugInput: '',
 			reportBugText: ''
 		};
@@ -60,17 +65,14 @@ export default {
 		ModalTextArea,
 		ModalButton
 	},
-	mounted() {
-		console.log('Modal mounted.');
-	},
 	watch: {
 		reportBugInput(){
 			if(this.reportBugInput.length >= this.reportBug.maxLength)
 			{        
-				this.reportBugText = 'Dosiahli ste maximum povolených znakov.';
+				this.reportBugText = this.locales.textAreaLimit;
 				return;
 			}      	
-			this.reportBugText = `Ešte môžete napísať ${( + this.reportBug.maxLength - this.reportBugInput.length)} znakov.`;
+			this.reportBugText = `${this.locales.textAreaWarning} ${( + this.reportBug.maxLength - this.reportBugInput.length)} ${this.locales.textAreaCharacters}.`;
 		}
 	},
 	computed: { 
@@ -88,7 +90,11 @@ export default {
 		{
 			if(this.reportBug)
 			{
-				this.buttons[index].onclick(this.reportBugInput);
+				this.buttons[index].onclick(this.reportBugInput);			
+				this.$refs.modalTextArea.clear();
+				setTimeout(() => 
+				{ this.reportBugInput = '';					
+				}, 100);
 				return;
 			}
 			this.buttons[index].onclick();

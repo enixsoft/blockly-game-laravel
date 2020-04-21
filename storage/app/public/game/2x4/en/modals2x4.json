@@ -4,14 +4,14 @@
     "level":4,
     
   "welcome_modal": {
-    "title": "Kategória 2 Úroveň 4",
-   "text": "Vo štvrtej úrovni získavate až dva nové bloky - blok ak v smere nasleduje a blok ak v smere na dlaždici je. Tieto bloky fungujú ako podmienka if, teda iné bloky vložené do nich sa vykonajú len vtedy, ak zadaná podmienka je splnená. Toto nám umožňuje vykonávať rozličné príkazy podľa toho, kde sa hrdina práve nachádza.",
+    "title": "Category 2 Level 4",
+   "text": "In the fourth level you get up to two new blocks - a block if it follows in the direction and a block if it is in the direction of the tile. These blocks act as if conditions, so other blocks inserted in them are executed only if the specified condition is met. This allows us to execute various commands depending on where the hero is.",
     "image": "welcome_modal"
   },
   
    "finish_modal": {
-    "title": "Všetky úlohy boli splnené!",
-    "text": "Úspešne ste sa naučili používať podmienky if. Nasleduje záverečná úroveň hry.",
+    "title": "All tasks completed!",
+    "text": "You have successfully learned to use the conditions. The final level of the game follows.",
     "image": "success"  
   }
   },
@@ -20,14 +20,14 @@
     "progress": "25",
     
     "introduction_modal": {
-    "title": "Zadanie prvej úlohy",
-    "text": "Cestu k prvému kamennému tlačidlu neblokujú žiadne prekážky, avšak hrdina sa musí otočiť vždy na správnom mieste. Použite blok opakuj pokiaľ nie je hrdina v cieli a dvakrát blok ak v smere nasleduje.",
+    "title": "The first task assignment",
+    "text": "The road to the first stone button is not blocked by any obstacles, but the hero must always turn in the right place. Use the block repeat until the hero is in the target and twice the block if it follows in the direction.",
     "image": "maintask0_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste prvú úlohu!",
-    "text": "Váš prvý algoritmus s podmienkou fungoval výborne a hrdina dorazil na kamenné tlačidlo.",
+    "title": "Well done! You've completed your first task!",
+    "text": "Your first condition algorithm worked well and the hero arrived at the stone button.",
     "image": "success"
   }
   },
@@ -36,14 +36,14 @@
     "progress": "50",  
   
     "introduction_modal": {
-    "title": "Zadanie druhej úlohy",
-    "text": "Aby sa hrdina dostal ďalej, musí použiť každú páku v ceste na zneškodnenie pascí a otvorenie padacích dverí. Použite blok opakuj pokiaľ nie je hrdina v cieli, blok ak v smere nasleduje a blok ak v smere na dlaždici je.",
+    "title": "The second task assignment",
+    "text": "In order to get further, the hero must use every lever in the way to defeat the traps and open the trapdoor. Use the Repeat block until the hero is in the target, the block if it follows in the direction and the block if it is in the direction of the tile.",
     "image": "maintask1_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste druhú úlohu!",
-    "text": "Úspešne ste zneškodnili pasce a otvorili dvere. Hrdina môže pokračovať ďalej v ceste.",
+    "title": "Well done! You've completed your second task!",
+    "text": "You have successfully eliminated the traps and opened the door. The hero can continue his journey.",
     "image": "success"
   }
   },
@@ -54,14 +54,14 @@
     "progress": "75",  
   
     "introduction_modal": {
-    "title": "Zadanie tretej úlohy",
-    "text": "V tejto úlohe hrdinovi v ceste stoja vázy, ktoré je treba zničiť a zároveň treba hrdinovi zmeniť smer, keď je pred ním voda alebo stena. Na začiatku hrdinu otočte raz doprava a potom použite blok opakuj pokiaľ nie je hrdina v cieli, blok ak v smere nasleduje a blok ak v smere na dlaždici je.",
+    "title": "The third task assignment",
+    "text": "In this task, there are vases in the hero's path that need to be destroyed and at the same time the hero needs to change direction when there is water or a wall in front of him. At the beginning, turn the hero once to the right and then use the repeat block until the hero is in the target, the block if in the direction following, and the block if in the direction of the tile.",
     "image": "maintask2_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste tretiu úlohu!",
-    "text": "Vo vašom treťom algoritme ste využili obe podmienky presne tak, ako bolo zadané.",
+    "title": "Well done! You've completed your third task!",
+    "text": "In your third algorithm, you used both conditions exactly as specified.",
     "image": "success"
   }
   },
@@ -70,14 +70,14 @@
     "progress": "100",  
   
     "introduction_modal": {
-    "title": "Zadanie štvrtej úlohy",
-    "text": "Ku kamennému tlačidlu pre dokončenie tejto úrovne vedie celkom krátka cesta, avšak sú na nej pasce a vodná plocha, ktoré treba preskočiť. Najprv nasmerujte hrdinu smerom doprava a potom použite blok opakuj pokiaľ nie je hrdina v cieli, blok ak v smere nasleduje a blok ak v smere na dlaždici je.",
+    "title": "The fourth task assignment",
+    "text": "There is a short path to the stone button to complete this level, but there are traps and water to avoid. First point the hero to the right and then use the repeat block until the hero is in the target, the block if in the direction and the block in the direction of the tile.",
     "image": "maintask3_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste štvrtú úlohu!",
-    "text": "Dobrá práca, váš hrdina sa dostal do cieľa.",
+    "title": "Great! You've completed your fourth task!",
+    "text": "Well done, your hero got to the finish."
     "image": "success"
   }
   }  

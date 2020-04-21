@@ -51,6 +51,7 @@ export default {
 			GameInProgress: !Array.isArray(this.gameData) ? this.gameData : undefined,
 			Url: (path = undefined) => path ? this.baseUrl + path : this.baseUrl,
 			getLocalizedString: (string) => this.lang[string] || 'ERROR_LANG_STRING_NOT_FOUND',
+			getLocalizedStrings: (locales) => Object.keys(locales).reduce((acc, key) => { acc[key] = this.lang[locales[key]] || 'ERROR_LANG_STRING_NOT_FOUND'; return acc; }, {}),			
 			Progress: [...this.inGameProgress]			
 		};
 	},

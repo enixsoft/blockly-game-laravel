@@ -1,49 +1,49 @@
 {
-  "level":{
-    "category":1,
-    "level":5,
+  "level": {
+    "category": 1,
+    "level": 5,
     
   "welcome_modal": {
-    "title": "Kategória 1 Úroveň 5",
-    "text": "V piatej úrovni hrdina získava novú schopnosť - otvorenie truhlice. Túto schopnosť bude potrebovať, aby mohol otvoriť dvere kľúčom, ktorý zoberie z truhlice. Okrem toho si precvičíte všetky doteraz získané schopnosti.",
+    "title": "Category 1 Level 4",
+    "text": "In the fifth level of hero gains and new ability - opening the chest. He will need this ability to open the door with the key he takes from the chest.",
     "image": "welcome_modal"
   },
   
    "finish_modal": {
-    "title": "Všetky úlohy boli splnené!",
-    "text": "Úspešne ste sa naučili schopnosť otvárať truhlicu s hrdinom, ale aj pohyb, skákanie, útok mečom a použitie páky. Toto bola záverečná úroveň.",
-    "image": "success"  
+    "title": "All tasks completed!",
+    "text": "You have successfully learned the ability to open a hero's chest, as well as movement, jumping, sword attack and lever use. This was the final level.",
+    "image": "success"
   }
   },
   
-  "mainTask0":{
+  "mainTask0": {
     "progress": "20",
     
     "introduction_modal": {
-    "title": "Zadanie prvej úlohy",
-    "text": "Cestu k prvému kamennému tlačidlu blokuje voda, krabica, pasca a zatvorené padacie dvere. Prekonajte prekážky a otvorte dvere.",
+    "title": "The first task assignment",
+    "text": "The road to the first stone button is blocked by water, boxes, traps and closed trapdoors. Overcome obstacles and open the door.",
     "image": "maintask0_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste prvú úlohu!",
-    "text": "Váš prvý algoritmus v tejto úrovni umožnil hrdinovi dostať sa do miestnosti s truhlicami.",
+    "title": "Well done! You've completed your first task!",
+    "text": "Your first algorithm at this level allowed the hero to reach the chest room.",
     "image": "success"
   }
   },
   
   "mainTask1": {
-    "progress": "40",  
+    "progress": "40",
   
     "introduction_modal": {
-    "title": "Zadanie druhej úlohy",
-    "text": "Aby sa hrdina dostal ďalej, musí z truhice získať kľúč na otvorenie zamknutých dverí. Použite blok otvorenia truhlice a potom priveďte hrdinu na kamenné tlačidlo pred dverami.",
+    "title": "The second task assignment",
+    "text": "To get the hero further, he must get the key from the chest to open the locked door. Use the chest opening block and then bring the hero to the stone button in the front of the door.",
     "image": "maintask1_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste druhú úlohu!",
-    "text": "Úspešne ste našli kľúč a otvorili dvere. Hrdina môže pokračovať ďalej v ceste.",
+    "title": "Well done! You've completed your second task!",
+    "text": "You have successfully found the key and opened the door. The hero can continue his journey.",
     "image": "success"
   }
   },
@@ -51,49 +51,49 @@
 
 
   "mainTask2": {
-    "progress": "60",  
+    "progress": "60",
   
     "introduction_modal": {
-    "title": "Zadanie tretej úlohy",
-    "text": "V tejto úlohe máme kamenné tlačidlo až za zatvorenými dverami, pred ktorými je aktivovaná pasca. Použite páky, aby ste sa dostali cez prekážky.",
+    "title": "The third task assignment",
+    "text": "In this task we have a stone button behind the closed door, in the front of which the trap is activated. Use the levers to get over obstacles.",
     "image": "maintask2_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste tretiu úlohu!",
-    "text": "Vo vašom treťom algoritme ste použili obe páky a tak hrdina úspešne prekonal nebezpečnú prekážku.",
+    "title": "Great! You've completed your third task!",
+    "text": "You used both levers in your third algorithm to successfully overcome a dangerous obstacle.",
     "image": "success"
   }
   },
   
     "mainTask3": {
-    "progress": "80",  
+    "progress": "80",
   
     "introduction_modal": {
-    "title": "Zadanie štvrtej úlohy",
-    "text": "Ku kamennému tlačidlu pre splnenie tejto úlohy vedie jedna cesta, avšak blokuje ho pasca, ktorej sa nedá vyhnúť. Vypnite ju pomocou páky.",
+    "title": "The fourth task assignment",
+    "text": "There is one way to the stone button to accomplish this task, but is blocked by a trap that cannot be avoided. Turn it off with the lever.",
     "image": "maintask3_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste štvrtú úlohu!",
-    "text": "Dobrá práca, váš hrdina už má cieľ na dosah.",
+    "title": "Great! You've completed your fourth task!",
+    "text": "Well done, your hero already has a target within reach.",
     "image": "success"
   }
   },
   
       "mainTask4": {
-    "progress": "100",  
+    "progress": "100",
   
     "introduction_modal": {
-    "title": "Zadanie piatej úlohy",
-    "text": "V poslednej úlohe piatej úrovne použite páku na vypnutie pasce a preskočte zatopenú časť.",
+    "title": "The fifth task assignment",
+    "text": "In the last task of level five, use the trap release lever and skip the flooded section.",
     "image": "maintask4_introduction_modal"
   },
     
   "success_modal": {
-    "title": "Výborne! Splnili ste štvrtú úlohu!",
-    "text": "Je zrejmé, že používanie páky pre odstránenie prekážok už zvládate dokonale.",
+    "title": "Great! You've completed your fourth task!",
+    "text": "Obviously, you already know how to use the obstacle removal lever.",
     "image": "success"
   }
   }

@@ -4,14 +4,14 @@
     "level":1,
     
   "welcome_modal": {
-    "title": "Kategória 2 Úroveň 1",
-    "text": "Začína sa druhá kategória hry a herný systém ovládania sa mení. Odteraz nebudete vyberať blok so správnym smerom alebo nastavovať smer napr. pri skákaní. Smer hrdinu už bude nastavený, zobrazený žltou šipkou na bloku. Na jeho zmenu musíte hrdinu otáčať pomocou dvoch blokov na to určených, predtým, ako hrdina vykonáva ostatné príkazy.",
+    "title": "Category 2 Level 1",
+    "text": "The second game category begins and the game control system changes. From now on, you will not select the block with the correct direction or set the direction eg. while jumping. The hero's direction will already be set, shown by the yellow arrow on the player's block. To change it, you must rotate the hero using two dedicated blocks before the hero executes other commands.",
     "image": "welcome_modal"
   },
   
    "finish_modal": {
-    "title": "Všetky úlohy boli splnené!",
-    "text": "Úspešne ste sa naučili základy ovládania hrdinu podľa nových pravidiel.",
+    "title": "All tasks completed!",
+    "text": "You have successfully learned the basics of mastering the hero according to the new rules.",
     "image": "success"  
   }
   },
@@ -20,14 +20,14 @@
     "progress": "25",
     
     "introduction_modal": {
-    "title": "Zadanie prvej úlohy",
-    "text": "V prvej úlohe vám stačia bloky pohybu o jeden krok a otáčania. Na začiatku úrovne je hrdina nasmerovaný doprava, otočenie doľava ho nasmeruje hore, otočenie doprava ho nasmeruje dole. Správne ho otáčajte a preskákajte s ním až ku kamennému tlačidlu.",
+    "title": "The first task assignment",
+    "text": "In the first task, all you need is one-step motion and rotation blocks. At the beginning of the level, the hero is directed to the right, turning left counterclockwise will point him up, turning right will direct him down. Rotate it correctly and jump up to the stone button.",
     "image": "maintask0_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste prvú úlohu!",
-    "text": "Váš prvý algoritmus využíva nový systém ovládania a tým umožnil hrdinovi preskočiť na prvé kamenné tlačidlo.",
+    "title": "Well done! You've completed your first task!",
+    "text": "Your first algorithm uses the new control system well, allowing the hero to jump to the first stone button.",
     "image": "success"
   }
   },
@@ -36,14 +36,14 @@
     "progress": "50",  
   
     "introduction_modal": {
-    "title": "Zadanie druhej úlohy",
-    "text": "Teraz už je cieľ o niečo ďalej a v ceste už stojí viacero prekážok. Zničte sud a vyhnite sa pasciam, ale hlavne dávajte pozor, aby sa hrdina vždy otočil, keď je to potrebné.",
+    "title": "The second task assignment",
+    "text": "Now the target is a bit further and there are several obstacles in the way. Destroy the barrel and avoid traps, but especially make sure that the hero always turns when necessary.",
     "image": "maintask1_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste druhú úlohu!",
-    "text": "Úspešne ste sa vyhli všetkým prekážkam. Hrdina môže pokračovať ďalej v ceste.",
+    "title": "Well done! You've completed your second task!",
+    "text": "You have successfully avoided all obstacles. The hero can continue his journey.",
     "image": "success"
   }
   },
@@ -54,14 +54,14 @@
     "progress": "75",  
   
     "introduction_modal": {
-    "title": "Zadanie tretej úlohy",
-    "text": "V tejto úlohe je treba použiť páku, aby sa zneškodnila aktivovaná pasca, ktorej sa nedá vyhnúť.",
+    "title": "The third task assignment",
+    "text": "In this task, a lever must be used to dispose of an activated trap that cannot be avoided.",
     "image": "maintask2_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste tretiu úlohu!",
-    "text": "Vo vašom treťom algoritme ste použili páku a hrdina tak mohol prekonať nebezpečnú prekážku.",
+    "title": "Well done! You've completed your third task!",
+    "text": "You used a lever in your third algorithm so the hero could overcome a dangerous obstacle.",
     "image": "success"
   }
   },
@@ -70,14 +70,14 @@
     "progress": "100",  
   
     "introduction_modal": {
-    "title": "Zadanie štvrtej úlohy",
-    "text": "Ku kamennému tlačidlu pre splnenie tejto úlohy vedie komplikovanejšia cesta s vázami stojacimi v ceste, ktoré treba zničiť.",
+    "title": "The fourth task assignment",
+    "text": "Now there's a more complicated road to the stone button with vases standing in the road that need to be destroyed.",
     "image": "maintask3_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste štvrtú úlohu!",
-    "text": "Dobrá práca, váš hrdina má cieľ na dosah.",
+    "title": "Well done! You've completed your fourth task!",
+    "text": "Well done, your hero has a target within reach.",
     "image": "success"
   }
   }
