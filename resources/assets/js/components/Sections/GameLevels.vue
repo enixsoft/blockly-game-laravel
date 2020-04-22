@@ -19,21 +19,21 @@
                      </button>             
                   </div>                 
                   <br>
-                  <!-- <div v-if="$global.User.role==='admin'" class="form-group">
-                     <h2 class="section-heading">Registration Admin</h2>
+                  <div v-if="$global.User.role==='admin'" class="form-group">
+                     <h2 class="section-heading">{{ locales.register }} (Admin)</h2>
                         <div class="form-group col-md-6 mx-auto">
-                           <input ref="username" class="form-control" placeholder="Prihlasovacie meno" id="username" type="username" name="username">          
+                           <input ref="username" class="form-control" :placeholder="locales.userName" id="username" type="username" name="username">          
                         </div>
                         <div class="form-group col-md-6 mx-auto">
-                           <input ref="password" class="form-control" id="password" placeholder="Heslo" type="password" name="password">              
+                           <input ref="password" class="form-control" id="password" :placeholder="locales.password" type="password" name="password">              
                         </div>
                         <br>
                         <div class="col-md-6 mx-auto">
                            <button class="btn btn-lg btn-success" v-on:click="registerByAdmin()">
-                           Registrácia
+                           {{ locales.registerBtn }}
                            </button>                           
                         </div>         
-                  </div>  -->
+                  </div> 
                 </div> 
             </div>
          </div>
@@ -93,8 +93,14 @@ export default {
 		async registerByAdmin()
 		{
 			const url = this.$global.Url('registeruserbyadmin');
-			const data = {username: this.$refs.usernameInput.value, password: this.$refs.passwordInput.value};
-			await sendRequest({method: 'POST', url, data});
+			const data = {username: this.$refs.username.value, password: this.$refs.password.value};
+			try { 
+				await sendRequest({method: 'POST', url, data});
+			}
+			finally {
+				this.$refs.username.value = '';
+				this.$refs.password.value = '';
+			}
 		}
 	},
 	mounted()

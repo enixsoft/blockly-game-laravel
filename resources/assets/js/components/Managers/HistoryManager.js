@@ -11,9 +11,13 @@ function changeView(view, data, title, location, forcePushState = false)
 	if(currentView === view && !forcePushState)
 	{
 		// replaceState logic	
-		console.log('replaceState logic');	
-		window.history.replaceState({ view, data }, title, location);
+		console.log('replaceState logic');			
 		changeData(data, view);
+		if(location.includes('#'))
+		{
+			scrollToHash('#' + location.split('#')[1]);
+		}
+		window.history.replaceState({ view, data }, title, location.includes('#') ? location.split('#')[0] : location);
 		return;
 	}
 	// pushState logic
@@ -22,11 +26,9 @@ function changeView(view, data, title, location, forcePushState = false)
 
 	if(location.includes('#'))
 	{
-		setTimeout(() => { scrollToHash('#' + location.split('#')[1]); }, 100);
-		window.history.pushState({view, data}, title, location.split('#')[0]);
-		return;		
+		setTimeout(() => { scrollToHash('#' + location.split('#')[1]); }, 100);	
 	}	
-	window.history.pushState({view, data}, title, location);	
+	window.history.pushState({view, data}, title, location.includes('#') ? location.split('#')[0] : location);	
 }
 
 function changeData(data, view = 'home') 

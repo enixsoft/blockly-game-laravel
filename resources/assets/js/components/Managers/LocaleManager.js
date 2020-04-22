@@ -76,7 +76,11 @@ export const gameLevels = {
 	btnInfoLock: 'gamelevels.button.info.lock',
 	btnInfoUse: 'gamelevels.button.info.use',
 	bigBtnStart: 'gamelevels.big.button.start',
-	bigBtnContinue: 'gamelevels.big.button.continue'
+	bigBtnContinue: 'gamelevels.big.button.continue',
+	register: 'register.heading',	
+	registerBtn: 'register.button',
+	userName: 'user.name',
+	password: 'password'
 };
 
 export const heroInfo = {
