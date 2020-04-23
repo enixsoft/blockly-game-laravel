@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use Illuminate\Routing\Controller;
 
 use Auth;
+use App;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Seeder;
@@ -70,10 +71,13 @@ class NewGameController extends Controller
         }
         else
         {
-            $lang = "en";
+            $lang = App::getLocale();
 
             $xmlToolboxPath = "public/game" . "/" . $category . "x" . $level . "/" . "toolbox" . $category . "x" . $level . ".xml";
             $xmlToolbox = Storage::get($xmlToolboxPath);
+            
+            $xmlStartBlocksPath = "public/game/common" . "/" . "xmlStartBlocks" . $category . ".xml";
+            $xmlStartBlocks = Storage::get($xmlStartBlocksPath);
 
             $jsonStartGamePath = "public/game/" . $category . "x" . $level . "/" . "start" . $category . "x" . $level . ".json";
             $jsonStartGame = Storage::get($jsonStartGamePath);
@@ -214,7 +218,7 @@ class NewGameController extends Controller
 
                 }
                 else
-                {
+                {       
 						return $this->startNewGameOrContinue($request);
                 }
 
@@ -223,7 +227,7 @@ class NewGameController extends Controller
         }
         $category = "$category";
         $level = "$level";
-        return $this->redirectOrSendResponse(compact('category', 'level', 'xmlToolbox', 'savedGame', 'jsonTasks', 'jsonModals', 'jsonRatings') , $request);
+        return $this->redirectOrSendResponse(compact('category', 'level', 'xmlToolbox', 'xmlStartBlocks', 'savedGame', 'jsonTasks', 'jsonModals', 'jsonRatings') , $request);
     }
 
     public function saveGame(Request $request)
@@ -273,7 +277,8 @@ class NewGameController extends Controller
 
     public function welcome($gameData = [])
     {
-        $langPath = "public/game/common/en/app.json";
+        $lang = App::getLocale();
+        $langPath = "public/game/common/". $lang ."/app.json";
         $langJson = Storage::get($langPath);
 
         $inGameProgress = [];
@@ -317,16 +322,16 @@ class NewGameController extends Controller
         if ($inGameProgress == null)
         {
             return $this->runGame(1, 1, $request);
-		  }
+		}
 		  
         else if ($inGameProgress['progress'] == 100)
         {
-            return $this->runGame($inGameProgress['category'], $inGameProgress['level'] + 1, $request);
+            return redirect()->route('game', ['category' => $inGameProgress['category'], 'level' => $inGameProgress['level'] + 1], 302, $request->headers->all());
         }
 
         else
         {
-            return $this->runGame($inGameProgress['category'], $inGameProgress['level'], $request);
+            return redirect()->route('game', ['category' => $inGameProgress['category'], 'level' => $inGameProgress['level']], 302, $request->headers->all());            
         }
     }
 

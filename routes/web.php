@@ -37,6 +37,10 @@ Route::post('login', 'Auth\LoginController@login')->name('login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::post('register', 'Auth\RegisterController@register')->name('register');
 
+Route::get('/language/{lang}', 'LanguageController@setLanguage');
+
+
+
 
 /* 
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

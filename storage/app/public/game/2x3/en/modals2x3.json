@@ -43,7 +43,7 @@
 
   "success_modal": {
     "title": "Great! You did the second task!",
-    "text": "You have successfully combined two cycles. The hero can continue his journey."
+    "text": "You have successfully combined two cycles. The hero can continue his journey.",
     "image": "success"
   }  
   },

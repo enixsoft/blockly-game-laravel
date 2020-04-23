@@ -77,7 +77,7 @@
 
   "success_modal": {
     "title": "Great! You've completed your fourth task!",
-    "text": "Well done, your hero got to the finish."
+    "text": "Well done, your hero got to the finish.",
     "image": "success"
   }
   }  

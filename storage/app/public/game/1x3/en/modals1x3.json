@@ -10,7 +10,7 @@
   },
   
    "finish_modal": {
-    "title": "Všetky úlohy boli splnené!",
+    "title": "All tasks completed!",
     "text": "You have successfully learned to destroy obstacles with the hero. The next level follows.",
     "image": "success"  
   }

@@ -53,6 +53,7 @@ export default {
 			locales: this.$global.getLocalizedStrings(locales),
 			failedBlock: [],
 			toolbox: this.gameData.xmlToolbox,
+			startBlocks: this.gameData.xmlStartBlocks,
 			savedGame: this.gameData.savedGame,
 			tasks: JSON.parse(this.gameData.jsonTasks),
 			modals: JSON.parse(this.gameData.jsonModals),			
@@ -128,9 +129,8 @@ export default {
 			*/
 		);
 
-		if(this.category == 2){
-			BlocklyManager.changeFacingDirectionImage(this.$global.Url('game'), this.savedGameParsed.character.facingDirection);
-		}
+		
+		BlocklyManager.changeFacingDirectionImage(this.$global.Url('game'), this.savedGameParsed.character.facingDirection);		
 
 		window.addEventListener('message', this.eventer);      
 		// this.$on('EVENT', (obj) => {
@@ -239,11 +239,8 @@ export default {
 				break;     
 			}
 			case 'changeFacingDirection':
-			{                    
-				if(this.category==2)
-				{
-					BlocklyManager.changeFacingDirectionImage(this.$global.Url('game'), e.data.content);
-				}
+			{     
+				BlocklyManager.changeFacingDirectionImage(this.$global.Url('game'), e.data.content);				
 			}
 			}
 		},
@@ -337,13 +334,12 @@ export default {
 
 			const rule = this.ratings[this.main_task].rules[this.ruleError];
 			let text = this.locales.ruleError;
-			text += ' ' + this.locales[rule.blocks] + '.';
+			text += ' ' + this.locales[rule.block] + '.<br>';
 			if(rule.count>1)
 			{
-				text += this.locales.ruleErrorCount + ' ' + rule.count + ' ' + this.locales.ruleErrorTimes;
+				text += this.locales.ruleErrorCount + ' ' + rule.count + ' ' + this.locales.ruleErrorTimes + '.<br>';
 			}
 			text += this.locales.ruleErrorTryAgain;
-
 
 			ModalManager.showDynamicModal('mainTaskFailed', { 
 				data: { 
@@ -372,6 +368,11 @@ export default {
 		},
 		reportBug(report)
 		{
+			if(!report.length)
+			{
+				return;
+			}
+			
 			if(!this.isUserLoggedIn)
 			{
 				ModalManager.showDynamicModal('ajaxError', { 
@@ -552,7 +553,7 @@ export default {
 		{			
 			try {
 				const result = await sendRequest({method: 'GET', headers: {'Accept': 'application/json'}, url: this.$global.Url(`start/${this.category}/${Number(this.level)+1}`)});           
-				await HistoryManager.changeView('game', result, '', HistoryManager.getLocationFromUrl(this.$global.Url(`game/${this.category}/${Number(this.level)+1}`)), true);		
+				await HistoryManager.changeView('game', result, '', HistoryManager.getLocationFromUrl(this.$global.Url(`game/${result.category}/${result.level}`)), true);
 			}
 			catch (e) {
 				ModalManager.showDynamicModal('ajaxError', { 
@@ -565,6 +566,7 @@ export default {
 		changeLevelData()
 		{
 			this.toolbox = this.gameData.xmlToolbox;
+			this.startBlocks = this.gameData.xmlStartBlocks;
 			this.savedGame = this.gameData.savedGame;
 			this.tasks = JSON.parse(this.gameData.jsonTasks);
 			this.modals = JSON.parse(this.gameData.jsonModals);
@@ -579,9 +581,7 @@ export default {
 			
 			BlocklyManager.changeWorkspacePlayground(this.toolbox, this.startBlocks);
 
-			if(this.category == 2){
-				BlocklyManager.changeFacingDirectionImage(this.$global.Url('game'), this.savedGameParsed.character.facingDirection);
-			}
+			BlocklyManager.changeFacingDirectionImage(this.$global.Url('game'), this.savedGameParsed.character.facingDirection);			
 				
 			const container = this.$refs.iframe.parentElement;
 			this.$refs.iframe.remove();
@@ -598,24 +598,6 @@ export default {
 		userName()
 		{             
 			return this.$global.User ? this.$global.User.username : undefined;
-		},
-		startBlocks()
-		{
-			//TO DO: move to back end
-			let xmlString;
-			switch(this.category){
-			case '1':
-				xmlString = '<xml><block type="player" movable="false" deletable="false" inline="false" x="0" y="0"></block></xml>';
-				break;
-			case '2':
-				xmlString =  '<xml><block type="player" movable="false" deletable="false" inline="false" x="0" y="0"></block></xml>';
-				break;
-			default:
-				xmlString =  '<xml><block type="player" movable="false" deletable="false" inline="false" x="0" y="0"></block></xml>';
-				break;
-			}
-			// return ( new window.DOMParser() ).parseFromString(xmlString, 'text/xml');
-			return xmlString;
 		}
 	},
 	watch: { 

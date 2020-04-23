@@ -7,6 +7,7 @@
     .navbar-brand {
         color: $theme-primary;
         @include heading-font;
+        font-size: 2rem;
         &:hover,
         &:focus {
             color: darken($theme-primary, 10%);
@@ -20,7 +21,7 @@
     .navbar-nav {
         > li {
             > a {
-                font-size: 11px;
+                font-size: 0.75rem;
                 @include alt-font;
                 &.active {
                     color: $theme-primary !important;
@@ -42,6 +43,8 @@
     @media (min-width: 992px) {
         border-color: transparent;
         background-color: transparent;
+        height: 80px;
+        
         .navbar-brand {
             color: fade(white, 70%);
             &:hover,
