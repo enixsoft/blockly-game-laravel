@@ -13,12 +13,21 @@
                   </li>
                   <li v-if="!$global.GameInProgress" class="nav-item">
                      <a class="nav-link js-scroll-trigger" href="#game" v-on:click.prevent="scrollTo('#game')">{{ locales.runGame }}</a>
-                  </li>                             
+                  </li>    
+						<li v-if="!$global.GameInProgress" class="nav-item dropdown">
+                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     <i class="fa fa-language"></i> {{ locales.languages }}
+                     </a>        
+                     <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
+								<a class="dropdown-item" href="" v-on:click.prevent="changeLanguage('en')">English</a>
+                        <a class="dropdown-item" href="" v-on:click.prevent="changeLanguage('sk')">Slovenčina</a>
+                     </div>
+                  </li>                         
                   <li v-if="isUserLoggedIn" class="nav-item dropdown">
-                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                      <i class="fa fa-user-circle"></i> {{ userName }}
                      </a>        
-                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                     <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
                         <a class="dropdown-item" href="" v-on:click.prevent="logout()">{{ locales.logout }}</a>
                      </div>
                   </li>   
@@ -64,6 +73,11 @@ export default {
 		scrollTo(hash){
 			HistoryManager.scrollToHash(hash);
 			//HistoryManager.changeView('home', undefined, '', '/' + this.$global.Url(hash).split('/').slice(3).join('/'));
+		},
+		async changeLanguage(lang)
+		{
+			await sendRequest({method:'GET', url: this.$global.Url(`language/${lang}`)});
+			window.location.reload();
 		}
 	}
 };

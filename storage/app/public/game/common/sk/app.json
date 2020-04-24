@@ -1,4 +1,5 @@
 {
+ "id": "sk",
  "brand": "BLOCKLY HRA",
  "last.updated": "Naposledy aktualizované",
  "navbar.about.game": "O hre",
@@ -143,6 +144,6 @@
  "rule.error": "Vaše riešenie nebolo uznané, pretože ste nepoužili blok:",
  "rule.error.count": "Tento blok treba použiť",
  "rule.error.times": "krát",
- "rule.error.try.again": "Skúste to znova."
-
+ "rule.error.try.again": "Skúste to znova.",
+ "languages": "Jazyky"
 }

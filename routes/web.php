@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\NewGameController;
 
 
-Route::group(['middleware' => 'auth' ], function()
+Route::group(['middleware' => ['auth', 'lang'] ], function()
 {
 //POST
 Route::post('registeruserbyadmin', 'NewGameController@registerUserByAdmin')->name('registeruserbyadmin');

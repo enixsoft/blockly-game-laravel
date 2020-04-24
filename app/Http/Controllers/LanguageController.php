@@ -12,14 +12,12 @@ class LanguageController extends Controller
 
     $supportedLocales = ['en', 'sk'];
 
-    if (in_array($lang, $supportedLocales)) 
+    if (!in_array($lang, $supportedLocales)) 
     {
-        Cookie::queue(Cookie::make('lang', $lang, '20160'));        
-        App::setLocale($lang);
-
-    } else {
-        App::setLocale('en');
+        $lang = 'en';
     }
+    
+    Cookie::queue(Cookie::make('lang', $lang, '20160'));
 
     if (!$request->expectsJson()) 
     {

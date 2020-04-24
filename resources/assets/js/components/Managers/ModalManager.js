@@ -9,8 +9,6 @@ let availableModal = true;
 let modalLocales = undefined;
 
 function enableModals(ref, data, url, locales){
-	console.log(locales);
-
 	modalRef = ref;
 	modalData = data;
 	modalImageUrl = url;

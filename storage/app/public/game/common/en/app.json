@@ -1,4 +1,5 @@
 {
+	"id": "en",
 	"brand": "BLOCKLY GAME",
 	"last.updated": "Last updated",
 	"navbar.about.game": "About game",
@@ -143,5 +144,6 @@
 	"rule.error": "Your solution was not accepted because you did not use the block:",
 	"rule.error.count": "You need to use this block",
 	"rule.error.times": "times",
-	"rule.error.try.again": "Try again."
+	"rule.error.try.again": "Try again.",
+	"languages": "Languages"
   }

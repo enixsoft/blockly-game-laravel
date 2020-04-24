@@ -2,7 +2,8 @@ export const navbar = {
 	brand: 'brand',
 	aboutGame: 'navbar.about.game',
 	runGame: 'navbar.run.game',
-	logout: 'navbar.logout'
+	logout: 'navbar.logout',
+	languages: 'languages'
 };
 
 export const game = {

@@ -2,7 +2,6 @@ import Blockly from 'blockly';
 
 export function createBlocklyBlocks(url, locales)
 {
-	console.log(locales);
 	Blockly.Blocks['do_while_not_finished'] = {
 		init: function() {
 			this.appendDummyInput()       

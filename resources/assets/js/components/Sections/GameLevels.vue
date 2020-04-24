@@ -102,10 +102,6 @@ export default {
 				this.$refs.password.value = '';
 			}
 		}
-	},
-	mounted()
-	{
-		console.log('GameLevels', this.inGameProgress);		
 	}        
 };
 </script>
