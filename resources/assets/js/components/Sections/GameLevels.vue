@@ -82,7 +82,6 @@ export default {
 			}
 			catch (e) {
 				// modal error window?
-				console.log("AJAX GET GAMEDATA:", e);
 			}
 		},
 		gameLevelClick(obj)

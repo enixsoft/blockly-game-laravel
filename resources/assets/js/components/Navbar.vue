@@ -1,8 +1,13 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
          <div class="container">
-            <a v-if="$global.GameInProgress" href="" class="navbar-brand" v-on:click.prevent="changeViewToHome()">{{ locales.brand }}</a>
-            <a v-else class="navbar-brand js-scroll-trigger" href="#page-top" v-on:click.prevent="scrollTo('#page-top')">{{ locales.brand }}</a>            
+            <template v-if="$global.GameInProgress">
+				<a v-if="$global.GameInProgress" href="" class="navbar-brand" v-on:click.prevent="changeViewToHome()">{{ locales.brand }}</a>
+				<a v-if="$global.Mobile" href="" class="navbar-brand" v-on:click.prevent="toggleFullscreen()"><i class="fas fa-expand-arrows-alt"></i></a>
+            </template>
+				<template v-else>
+				<a class="navbar-brand js-scroll-trigger" href="#page-top" v-on:click.prevent="scrollTo('#page-top')">{{ locales.brand }}</a>       
+				</template>     
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars"></i>
             </button>
@@ -47,9 +52,6 @@ export default {
 			locales: this.$global.getLocalizedStrings(locales),
 		};
 	},
-	mounted() {
-		console.log('Navbar mounted.');
-	},
 	computed: {
 		isUserLoggedIn()
 		{
@@ -78,6 +80,36 @@ export default {
 		{
 			await sendRequest({method:'GET', url: this.$global.Url(`language/${lang}`)});
 			window.location.reload();
+		},
+		toggleFullscreen(){
+			const isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
+        (document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
+        (document.mozFullScreenElement && document.mozFullScreenElement !== null) ||
+        (document.msFullscreenElement && document.msFullscreenElement !== null);
+
+			const docElm = document.documentElement;
+			if (!isInFullScreen) {
+				if (docElm.requestFullscreen) {
+					docElm.requestFullscreen();
+				} else if (docElm.mozRequestFullScreen) {
+					docElm.mozRequestFullScreen();
+				} else if (docElm.webkitRequestFullScreen) {
+					docElm.webkitRequestFullScreen();
+				} else if (docElm.msRequestFullscreen) {
+					docElm.msRequestFullscreen();
+				}
+			} else {
+				if (document.exitFullscreen) {
+					document.exitFullscreen();
+				} else if (document.webkitExitFullscreen) {
+					document.webkitExitFullscreen();
+				} else if (document.mozCancelFullScreen) {
+					document.mozCancelFullScreen();
+				} else if (document.msExitFullscreen) {
+					document.msExitFullscreen();
+				}
+			}
+
 		}
 	}
 };

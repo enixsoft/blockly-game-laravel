@@ -169,7 +169,6 @@ function sendRequest(request)
 			url: request.url, 
 			data: request.data,
 			success: (response) => { 
-				console.log('RequestManager RESPONSE', response);
 				return success(response);
 			},
 			error: (textStatus, errorThrown) => {

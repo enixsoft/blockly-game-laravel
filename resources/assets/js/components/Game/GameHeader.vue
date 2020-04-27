@@ -97,9 +97,6 @@ export default {
 		BlocklyManager.createBlocklyBlocks(this.$global.Url(), this.$global.getLocalizedStrings(blocksLocales));
 	},        
 	mounted() {
-		console.log('GameHeader mounted:');   
-		console.log(this.$data);	
-
 		ModalManager.enableModals(this.$refs.modal.$refs.centeredModal, this.modalData, this.$global.Url('game'), this.locales);
 
 		if(!this.isUserLoggedIn)
@@ -117,25 +114,26 @@ export default {
 		
 		this.workspacePlayground = BlocklyManager.createWorkspacePlayground(
 			this.$refs.blocklyDiv, 
-			this.$refs.blocklyArea, 
+			this.$refs.blocklyArea, 			
 			this.startBlocks, 
-			{
-				toolbox: this.toolbox, trashcan: true, scrollbars: true
-			},
+			(this.$global.Mobile ?
+				{
+					toolbox: this.toolbox, scrollbars:  true, toolboxPosition: 'end', horizontalLayout:true, trashcan: true, zoom: {wheel: true}
+				}
+				:
+				{
+					toolbox: this.toolbox, trashcan: true, scrollbars: true
+				}),
 			{
 				player: this.runCode.bind(null, true)
 			}
-			/* MOBILE TO DO
-			{
-				toolbox: toolbox, scrollbars:  true, toolboxPosition: 'end', horizontalLayout:true, trashcan: true, zoom: {wheel: true}
-			}
-			 workspacePlayground.scale = 0.6;
-			*/
 		);
-
+		if(this.$global.Mobile)
+		{
+			this.workspacePlayground.scale = 0.6;
+		}
 		
-		BlocklyManager.changeFacingDirectionImage(this.$global.Url('game'), this.savedGameParsed.character.facingDirection);		
-
+		BlocklyManager.changeFacingDirectionImage(this.$global.Url('game'), this.savedGameParsed.character.facingDirection);
 		window.addEventListener('message', this.eventer);      
 		// this.$on('EVENT', (obj) => {
 		// });
@@ -147,7 +145,6 @@ export default {
 			{
 				return;
 			}
-			console.log('Web-side script has received message from game:  ', e.data);
 			switch(e.data.action)
 			{
 			case 'unlock':
@@ -157,8 +154,14 @@ export default {
 				break;
 			}
 			case 'start':
-			{
-				// if(this.mobile) TO DO				
+			{			
+				if(this.$global.Mobile)
+				{
+					this.sendMessage('camera+\n');	
+					this.sendMessage('camera+\n');
+					this.sendMessage('camera+\n');
+					this.sendMessage('camera+\n');				
+				}
 				this.sendMessage(`start\n${this.saveObjectToString}`);
 				break;     
 			}

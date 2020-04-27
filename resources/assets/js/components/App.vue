@@ -52,7 +52,8 @@ export default {
 			Url: (path = undefined) => path ? this.baseUrl + path : this.baseUrl,
 			getLocalizedString: (string) => this.lang[string] || 'ERROR_LANG_STRING_NOT_FOUND',
 			getLocalizedStrings: (locales) => Object.keys(locales).reduce((acc, key) => { acc[key] = this.lang[locales[key]] || 'ERROR_LANG_STRING_NOT_FOUND'; return acc; }, {}),			
-			Progress: [...this.inGameProgress]			
+			Progress: [...this.inGameProgress],
+			Mobile: (/Mobi|Android/i.test(navigator.userAgent))		
 		};
 	},
 	props: {
@@ -76,7 +77,6 @@ export default {
 	},
 	created() {
 		Vue.prototype.$global = this.$data;
-		console.log('GLOBAL', this.$global);
 		
 		$.ajaxSetup({
 			beforeSend: (xhr) => {

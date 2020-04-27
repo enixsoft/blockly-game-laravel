@@ -5,13 +5,10 @@ let currentView = null;
 let appRef = null;
 
 function changeView(view, data, title, location, forcePushState = false)
-{
-	console.log('CHANGE VIEW', currentView, view, data, title, location, forcePushState);
-	
+{	
 	if(currentView === view && !forcePushState)
 	{
 		// replaceState logic	
-		console.log('replaceState logic');			
 		changeData(data, view);
 		if(location.includes('#'))
 		{
@@ -21,7 +18,6 @@ function changeView(view, data, title, location, forcePushState = false)
 		return;
 	}
 	// pushState logic
-	console.log('pushState logic');
 	changeData(data, view);	
 
 	if(location.includes('#'))
@@ -82,11 +78,6 @@ function enableHistory(app, baseUrl, url, data)
 	window.history.replaceState({ view: currentView, data }, '', getLocationFromUrl(url));
 	
 	window.addEventListener('popstate', (event) => {
-		console.log('event', event);
-		console.log('state', event.state);
-		console.log('view', event.state && event.state.view);
-		console.log('hash', event.target.location.hash);
-
 		$('.modal').modal('hide');
 
 		if(event.state && event.state.view)
