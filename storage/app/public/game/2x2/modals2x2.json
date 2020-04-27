@@ -4,14 +4,14 @@
     "level":2,
     
   "welcome_modal": {
-    "title": "Kategória 2 Úroveň 2",
-    "text": "V druhej úrovni druhej kategórie hrdina získavate nový blok - opakuj x-krát. Ide o cyklus typu for, ktorý vykoná všetky bloky, ktoré k nemu pripojíte, toľko krát, koľko nastavíte. Toto sa hodí, pokiaľ k splneniu úlohy stačí vykonať postupnosť nejakých blokov viac krát za sebou.",
+    "title": "",
+    "text": "",
     "image": "welcome_modal"
   },
   
    "finish_modal": {
-    "title": "Všetky úlohy boli splnené!",
-    "text": "Úspešne ste sa naučili pracovať s cyklom typu for.",
+    "title": "",
+    "text": "",
     "image": "success"  
   }
   },
@@ -20,14 +20,14 @@
     "progress": "25",
     
     "introduction_modal": {
-    "title": "Zadanie prvej úlohy",
-    "text": "V prvej úlohe vám stačia bloky pohybu o jeden krok a otáčania. Umiestnite ich do bloku opakuj x-krát a nastavte správne počet opakovaní. Na začiatku je hrdina nasmerovaný doprava.",
+    "title": "",
+    "text": "",
     "image": "maintask0_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste prvú úlohu!",
-    "text": "Vo vašom prvom algoritme ste správne použili a nastavili cyklus for a tým umožnili hrdinovi prejsť na prvé kamenné tlačidlo.",
+    "title": "",
+    "text": "",
     "image": "success"
   }
   },
@@ -36,14 +36,14 @@
     "progress": "40",  
   
     "introduction_modal": {
-    "title": "Zadanie druhej úlohy",
-    "text": "Teraz hrdinu čaká skákanie cez vodu. To sa dá skvele optimalizovať pomocou bloku opakuj x-krát a na splnenie tejto úlohy je treba použiť dva také bloky. Začnite nasmerovaním hrdinu smerom hore, a potom použite bloky opakovania tak, že druhý bude vnútri prvého.",
+    "title": "",
+    "text": "",
     "image": "maintask1_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste druhú úlohu!",
-    "text": "Zvládli ste použiť vnorený cyklus for a hrdina môže pokračovať ďalej v ceste.",
+    "title": "",
+    "text": "",
     "image": "success"
   }
   },
@@ -54,14 +54,14 @@
     "progress": "60",  
   
     "introduction_modal": {
-    "title": "Zadanie tretej úlohy",
-    "text": "V tejto úlohe máme kamenné tlačidlo až za zatvorenými dverami, ktoré sú zamknuté kľúčom, ktorý musíme nájsť v truhlici. Hrdina teda potrebuje otvoriť všetky truhlice. Použite blok opakuj x-krát, blok pohybu a otáčania doprava.",
+    "title": "",
+    "text": "",
     "image": "maintask2_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste tretiu úlohu!",
-    "text": "Vo vašom treťom algoritme ste otvorili 6 truhlíc,  hrdina našiel kľúč a dostal sa cez zatvorené dvere.",
+    "title": "",
+    "text": "",
     "image": "success"
   }
   },
@@ -70,14 +70,14 @@
     "progress": "80",  
   
     "introduction_modal": {
-    "title": "Zadanie štvrtej úlohy",
-    "text": "Cesta ku kamennému tlačidlu pre splnenie tejto úlohy je blokovaná vázami, ktoré treba zničiť. Opäť dva razy použite blok opakuj x-krát.",
+    "title": "",
+    "text": "",
     "image": "maintask3_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste štvrtú úlohu!",
-    "text": "Zdá sa, že optimalizovať algoritmy pomocou cyklu typu for vám nerobí žiaden problém. Ešte jedna úloha a ste v cieli.",
+    "title": "",
+    "text": "",
     "image": "success"
   }
   },
@@ -86,14 +86,14 @@
     "progress": "100",  
   
     "introduction_modal": {
-    "title": "Zadanie štvrtej úlohy",
-    "text": "A na dokončenie úrovne stačí už len použiť dve páky, aby ste zneškodnili pasce blokujúce prístup do cieľa. Na začiatku nasmerujte hrdinu dole a dva razy použite blok opakuj x-krát.",
-    "image": "maintask3_introduction_modal"
+    "title": "",
+    "text": "",
+    "image": "maintask4_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste štvrtú úlohu!",
-    "text": "Dobrá práca, váš hrdina už má cieľ na dosah.",
+    "title": "",
+    "text": "",
     "image": "success"
   }
   }

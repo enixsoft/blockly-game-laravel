@@ -1,0 +1,35 @@
+/* Checkboxes */
+.fancy-checkbox 
+{
+  cursor: pointer; 
+  user-select: none;
+}
+.fancy-checkbox input[type="checkbox"],
+.fancy-checkbox .checked {
+    display: none;
+   
+}
+ 
+.fancy-checkbox input[type="checkbox"]:checked ~ .checked
+{
+    display: inline-block;
+
+}
+ 
+.fancy-checkbox input[type="checkbox"]:checked ~ .unchecked
+{
+    display: none;
+
+}
+
+
+.progress {
+    position: relative;
+}
+
+.progress span {
+    position: absolute;
+    display: block;
+    width: 100%;
+    color: white;
+ }

@@ -1,4 +1,4 @@
-var Blockly = Blockly || {};
+import Blockly from 'blockly';
 
 Blockly.Blocks['do_while_not_finished'] = {
   init: function() {

@@ -4,14 +4,14 @@
     "level":4,
     
   "welcome_modal": {
-    "title": "Kategória 1 Úroveň 4",
-    "text": "Vo štvrtej úrovni hrdina získava novú schopnosť - použitie páky. Túto schopnosť bude potrebovať, aby mohol deaktivovať pasce ohrozujúce ho v ceste a aby mohol otvárať dvere.",
+    "title": "",
+    "text": "",
     "image": "welcome_modal"
   },
   
    "finish_modal": {
-    "title": "Všetky úlohy boli splnené!",
-    "text": "Úspešne ste sa naučili schopnosť používať páku s hrdinom. Nasleduje ďalšia úroveň.",
+    "title": "",
+    "text": "",
     "image": "success"  
   }
   },
@@ -20,14 +20,14 @@
     "progress": "25",
     
     "introduction_modal": {
-    "title": "Zadanie prvej úlohy",
-    "text": "Cestu k prvému kamennému tlačidlu blokuje niekoľko sudov a zatvorené dvere. Zničte sudy a použite páku.",
+    "title": "",
+    "text": "",
     "image": "maintask0_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste prvú úlohu!",
-    "text": "Váš prvý algoritmus v tejto úrovni umožnil hrdinovi rozsekať sudy stojace v ceste a otvoriť dvere pomocou páky.",
+    "title": "",
+    "text": "",
     "image": "success"
   }
   },
@@ -36,14 +36,14 @@
     "progress": "50",  
   
     "introduction_modal": {
-    "title": "Zadanie druhej úlohy",
-    "text": "V tejto úlohe hrdinu čaká dlhšia cesta, ktorá obsahuje skákanie, zničenie krabice a obídenie pasce.",
+    "title": "",
+    "text": "",
     "image": "maintask1_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste druhú úlohu!",
-    "text": "Váš druhý algoritmus umožnil hrdinovi úspešne dosiahnuť cieľ a prekonať všetky prekážky.",
+    "title": "",
+    "text": "",
     "image": "success"
   }
   },
@@ -54,14 +54,14 @@
     "progress": "75",  
   
     "introduction_modal": {
-    "title": "Zadanie tretej úlohy",
-    "text": "Cestu hrdinovi blokujú dve po sebe nasledujúce pasce, ktoré sa nedajú preskočiť. Našťastie páky na ich vypnutie sú nablízku, použite ich.",
+    "title": "",
+    "text": "",
     "image": "maintask2_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste tretiu úlohu!",
-    "text": "Vo vašom treťom algoritme ste použili obe páky a tak hrdina úspešne prekonal nebezpečnú prekážku.",
+    "title": "",
+    "text": "",
     "image": "success"
   }
   },
@@ -70,14 +70,14 @@
     "progress": "100",  
   
     "introduction_modal": {
-    "title": "Zadanie štvrtej úlohy",
-    "text": "A už nasleduje posledná úloha tejto úrovne, v ktorej opäť treba otvoriť dvere. Otvorte ich pákou nachádzajúcou sa za vázou. ",
+    "title": "",
+    "text": "",
     "image": "maintask3_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste štvrtú úlohu!",
-    "text": "Dokázali ste, že používanie páky vám ide tak dobre, ako skákanie a sekanie mečom.",
+    "title": "",
+    "text": "",
     "image": "success"
   }
   }

@@ -4,14 +4,14 @@
     "level":5,
     
   "welcome_modal": {
-    "title": "Kategória 1 Úroveň 5",
-    "text": "V piatej úrovni hrdina získava novú schopnosť - otvorenie truhlice. Túto schopnosť bude potrebovať, aby mohol otvoriť dvere kľúčom, ktorý zoberie z truhlice. Okrem toho si precvičíte všetky doteraz získané schopnosti.",
+    "title": "",
+    "text": "",
     "image": "welcome_modal"
   },
   
    "finish_modal": {
-    "title": "Všetky úlohy boli splnené!",
-    "text": "Úspešne ste sa naučili schopnosť otvárať truhlicu s hrdinom, ale aj pohyb, skákanie, útok mečom a použitie páky. Toto bola záverečná úroveň.",
+    "title": "",
+    "text": "",
     "image": "success"  
   }
   },
@@ -20,14 +20,14 @@
     "progress": "20",
     
     "introduction_modal": {
-    "title": "Zadanie prvej úlohy",
-    "text": "Cestu k prvému kamennému tlačidlu blokuje voda, krabica, pasca a zatvorené padacie dvere. Prekonajte prekážky a otvorte dvere.",
+    "title": "",
+    "text": "",
     "image": "maintask0_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste prvú úlohu!",
-    "text": "Váš prvý algoritmus v tejto úrovni umožnil hrdinovi dostať sa do miestnosti s truhlicami.",
+    "title": "",
+    "text": "",
     "image": "success"
   }
   },
@@ -36,14 +36,14 @@
     "progress": "40",  
   
     "introduction_modal": {
-    "title": "Zadanie druhej úlohy",
-    "text": "Aby sa hrdina dostal ďalej, musí z truhice získať kľúč na otvorenie zamknutých dverí. Použite blok otvorenia truhlice a potom priveďte hrdinu na kamenné tlačidlo pred dverami.",
+    "title": "",
+    "text": "",
     "image": "maintask1_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste druhú úlohu!",
-    "text": "Úspešne ste našli kľúč a otvorili dvere. Hrdina môže pokračovať ďalej v ceste.",
+    "title": "",
+    "text": "",
     "image": "success"
   }
   },
@@ -54,14 +54,14 @@
     "progress": "60",  
   
     "introduction_modal": {
-    "title": "Zadanie tretej úlohy",
-    "text": "V tejto úlohe máme kamenné tlačidlo až za zatvorenými dverami, pred ktorými je aktivovaná pasca. Použite páky, aby ste sa dostali cez prekážky.",
+    "title": "",
+    "text": "",
     "image": "maintask2_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste tretiu úlohu!",
-    "text": "Vo vašom treťom algoritme ste použili obe páky a tak hrdina úspešne prekonal nebezpečnú prekážku.",
+    "title": "",
+    "text": "",
     "image": "success"
   }
   },
@@ -70,14 +70,14 @@
     "progress": "80",  
   
     "introduction_modal": {
-    "title": "Zadanie štvrtej úlohy",
-    "text": "Ku kamennému tlačidlu pre splnenie tejto úlohy vedie jedna cesta, avšak blokuje ho pasca, ktorej sa nedá vyhnúť. Vypnite ju pomocou páky.",
+    "title": "",
+    "text": "",
     "image": "maintask3_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste štvrtú úlohu!",
-    "text": "Dobrá práca, váš hrdina už má cieľ na dosah.",
+    "title": "",
+    "text": "",
     "image": "success"
   }
   },
@@ -86,14 +86,14 @@
     "progress": "100",  
   
     "introduction_modal": {
-    "title": "Zadanie piatej úlohy",
-    "text": "V poslednej úlohe piatej úrovne použite páku na vypnutie pasce a preskočte zatopenú časť.",
+    "title": "",
+    "text": "",
     "image": "maintask4_introduction_modal"
   },
     
   "success_modal": {
-    "title": "Výborne! Splnili ste štvrtú úlohu!",
-    "text": "Je zrejmé, že používanie páky pre odstránenie prekážok už zvládate dokonale.",
+    "title": "",
+    "text": "",
     "image": "success"
   }
   }

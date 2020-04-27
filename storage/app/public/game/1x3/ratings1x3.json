@@ -1,36 +1,21 @@
 {
-  "level":{
-    "category":1,
-    "level":3,	
-	},
-	
-	"mainTask0":{
-	
-	"solution": "moveRight(1);,moveUp(1);,attack(up);,moveUp(1);,attack(up);,moveUp(1);,attack(right);,moveRight(1);,attack(up);,moveUp(1);,moveUp(1);"
-	
-	},
-	
-	"mainTask1":{
-	
-	"solution": "jump(right);,moveRight(1);,attack(down);,moveDown(1);,jump(down);,attack(left);,moveLeft(1);,attack(down);,moveDown(1);,jump(down);"
-	
-	},
-	
-	"mainTask2":{
-	
-	"solution": "jump(right);,jump(right);,moveUp(1);,attack(right);,moveRight(1);,jump(up);,attack(left);,moveLeft(1);,jump(up);"
-	
-	},
-	
-	"mainTask3":{
-	
-	"solution": "jump(up);,attack(up);,moveUp(1);,moveRight(1);,jump(down);,jump(right);,moveUp(1);,jump(up);,jump(right);"
-	
-	},	
-	
-	"mainTask4":{
-	
-	"solution": "moveDown(1);,moveRight(1);,moveDown(3);,moveLeft(1);,moveDown(1);,attack(left);,moveLeft(1);,jump(down);,moveDown(1);,jump(right);"
-	
-	}	
+   "level":{
+      "category":1,
+      "level":3
+   },
+   "mainTask0":{
+      "solution":"moveRight(1);,moveUp(1);,attack(up);,moveUp(1);,attack(up);,moveUp(1);,attack(right);,moveRight(1);,attack(up);,moveUp(1);,moveUp(1);"
+   },
+   "mainTask1":{
+      "solution":"jump(right);,moveRight(1);,attack(down);,moveDown(1);,jump(down);,attack(left);,moveLeft(1);,attack(down);,moveDown(1);,jump(down);"
+   },
+   "mainTask2":{
+      "solution":"jump(right);,jump(right);,moveUp(1);,attack(right);,moveRight(1);,jump(up);,attack(left);,moveLeft(1);,jump(up);"
+   },
+   "mainTask3":{
+      "solution":"jump(up);,attack(up);,moveUp(1);,moveRight(1);,jump(down);,jump(right);,moveUp(1);,jump(up);,jump(right);"
+   },
+   "mainTask4":{
+      "solution":"moveDown(1);,moveRight(1);,moveDown(3);,moveLeft(1);,moveDown(1);,attack(left);,moveLeft(1);,jump(down);,moveDown(1);,jump(right);"
+   }
 }

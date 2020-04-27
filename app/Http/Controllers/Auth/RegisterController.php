@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Input;
 
 class RegisterController extends Controller
 {
@@ -52,16 +53,20 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        
+        if(env('GOOGLE_RECAPTCHA_KEY') != null && env('GOOGLE_RECAPTCHA_SECRET') != null) 
+        {
+            return Validator::make($data, [
+                'register-username' => 'required|string|max:255|unique:users,username',
+                'register-email' => 'required|string|email|max:255|unique:users,email',
+                'register-password' => 'required|string|min:6|confirmed',
+                'g-recaptcha-response'=>'required|recaptcha'
+            ]); 
+        }
         return Validator::make($data, [
-            'username' => 'required|string|max:255|unique:users',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-            'g-recaptcha-response'=>'required|recaptcha'
+            'register-username' => 'required|string|max:255|unique:users,username',
+            'register-email' => 'required|string|email|max:255|unique:users,email',
+            'register-password' => 'required|string|min:6|confirmed'
         ]); 
-
-
-
     }
 
 
@@ -69,14 +74,14 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return \App\Models\User
      */
     protected function create(array $data)
     {
         return User::create([
-            'username' => $data['username'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'username' => $data['register-username'],
+            'email' => $data['register-email'],
+            'password' => bcrypt($data['register-password']),
             'role' => 'user',
             'remember_token' => null 
         ]);
@@ -88,8 +93,8 @@ class RegisterController extends Controller
         $validation = $this->validator($request->all());
 
         if ($validation->fails()) 
-        {
-            return redirect()->back()->withErrors($validation, 'register')->withInput();
+        {            
+            return redirect()->back()->withErrors($validation, 'register')->withInput(Input::except('register-password', 'register-password_confirmation'));
         }
         else
         {

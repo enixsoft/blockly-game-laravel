@@ -4,14 +4,14 @@
     "level":1,
     
   "welcome_modal": {
-    "title": "Kategória 2 Úroveň 1",
-    "text": "Začína sa druhá kategória hry a herný systém ovládania sa mení. Odteraz nebudete vyberať blok so správnym smerom alebo nastavovať smer napr. pri skákaní. Smer hrdinu už bude nastavený, zobrazený žltou šipkou na bloku. Na jeho zmenu musíte hrdinu otáčať pomocou dvoch blokov na to určených, predtým, ako hrdina vykonáva ostatné príkazy.",
+    "title": "",
+    "text": "",
     "image": "welcome_modal"
   },
   
    "finish_modal": {
-    "title": "Všetky úlohy boli splnené!",
-    "text": "Úspešne ste sa naučili základy ovládania hrdinu podľa nových pravidiel.",
+    "title": "",
+    "text": "",
     "image": "success"  
   }
   },
@@ -20,14 +20,14 @@
     "progress": "25",
     
     "introduction_modal": {
-    "title": "Zadanie prvej úlohy",
-    "text": "V prvej úlohe vám stačia bloky pohybu o jeden krok a otáčania. Na začiatku úrovne je hrdina nasmerovaný doprava, otočenie doľava ho nasmeruje hore, otočenie doprava ho nasmeruje dole. Správne ho otáčajte a preskákajte s ním až ku kamennému tlačidlu.",
+    "title": "",
+    "text": "",
     "image": "maintask0_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste prvú úlohu!",
-    "text": "Váš prvý algoritmus využíva nový systém ovládania a tým umožnil hrdinovi preskočiť na prvé kamenné tlačidlo.",
+    "title": "",
+    "text": "",
     "image": "success"
   }
   },
@@ -36,14 +36,14 @@
     "progress": "50",  
   
     "introduction_modal": {
-    "title": "Zadanie druhej úlohy",
-    "text": "Teraz už je cieľ o niečo ďalej a v ceste už stojí viacero prekážok. Zničte sud a vyhnite sa pasciam, ale hlavne dávajte pozor, aby sa hrdina vždy otočil, keď je to potrebné.",
+    "title": "",
+    "text": "",
     "image": "maintask1_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste druhú úlohu!",
-    "text": "Úspešne ste sa vyhli všetkým prekážkam. Hrdina môže pokračovať ďalej v ceste.",
+    "title": "",
+    "text": "",
     "image": "success"
   }
   },
@@ -54,14 +54,14 @@
     "progress": "75",  
   
     "introduction_modal": {
-    "title": "Zadanie tretej úlohy",
-    "text": "V tejto úlohe je treba použiť páku, aby sa zneškodnila aktivovaná pasca, ktorej sa nedá vyhnúť.",
+    "title": "",
+    "text": "",
     "image": "maintask2_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste tretiu úlohu!",
-    "text": "Vo vašom treťom algoritme ste použili páku a hrdina tak mohol prekonať nebezpečnú prekážku.",
+    "title": "",
+    "text": "",
     "image": "success"
   }
   },
@@ -70,14 +70,14 @@
     "progress": "100",  
   
     "introduction_modal": {
-    "title": "Zadanie štvrtej úlohy",
-    "text": "Ku kamennému tlačidlu pre splnenie tejto úlohy vedie komplikovanejšia cesta s vázami stojacimi v ceste, ktoré treba zničiť.",
+    "title": "",
+    "text": "",
     "image": "maintask3_introduction_modal"
   },
 
   "success_modal": {
-    "title": "Výborne! Splnili ste štvrtú úlohu!",
-    "text": "Dobrá práca, váš hrdina má cieľ na dosah.",
+    "title": "",
+    "text": "",
     "image": "success"
   }
   }

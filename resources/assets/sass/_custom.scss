@@ -1,0 +1,132 @@
+@media (min-width: 992px) {
+.vertical-alignment-helper {
+		display:table;
+		height: 100%;
+		width: 100%;
+		pointer-events:none;
+}
+
+.vertical-align-center {
+
+		display: table-cell;
+		vertical-align: middle;
+		pointer-events:none;
+		padding-left: 25%;
+		padding-right: 25%;
+
+}
+
+}
+
+.game-container {
+	height: 100%;
+	width: 100%;
+	padding-top: 0;
+	padding-bottom: 0;
+	padding-left: 0;
+	padding-right: 0;
+	overflow:hidden;
+
+}
+
+
+.game-playcanvas {  
+width:100%; 
+height:100%; 
+border:none; 
+overflow:hidden;
+pointer-events: none;
+
+}
+
+.game-blockly {  
+	height: 50vh;
+	margin-bottom: 0;
+	overflow:hidden;
+
+}
+
+@media (min-width: 992px) {
+.game-blockly {
+
+		height: 90%; 
+}
+
+}
+
+.game-buttons {  
+	height: auto;
+	overflow: overlay;
+
+}
+
+
+
+@media (max-width: 991.8px) {
+	.no-padding {
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+}
+
+
+header.game-header {
+	position: relative;
+	width: 100%;  
+	/*color: white;*/
+	padding-top: 74px;
+	height: 100vh;  
+	background: url("../img/bg-pattern.png"), #7b4397;
+	background: url("../img/bg-pattern.png"), -webkit-gradient(linear, right top, left top, from(#7b4397), to(#dc2430));
+	background: url("../img/bg-pattern.png"), linear-gradient(to left, #7b4397, #dc2430);
+}
+
+
+@media (min-width: 992px) {
+	header.game-header {
+		height: 100vh;   
+		padding-top: 80px;
+		padding-bottom: 0;
+	}
+	
+}
+
+.fancy-checkbox 
+{
+  cursor: pointer; 
+  user-select: none;
+}
+.fancy-checkbox input[type="checkbox"],
+.fancy-checkbox .checked {
+    display: none;
+   
+}
+ 
+.fancy-checkbox input[type="checkbox"]:checked ~ .checked
+{
+    display: inline-block;
+
+}
+ 
+.fancy-checkbox input[type="checkbox"]:checked ~ .unchecked
+{
+    display: none;
+
+}
+
+
+.progress {
+    position: relative;
+}
+
+.progress span {
+    position: absolute;
+    display: block;
+    width: 100%;
+    color: white;
+ }
+
+ .cc-link {
+	 display: none;
+ }

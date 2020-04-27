@@ -148,7 +148,9 @@ return [
 
         'username' => 'Prihlasovacie meno',
         'password' => 'Heslo',
-        'email' => 'E-mail'
+        'email' => 'E-mail',
+        'register-password' => 'Heslo',
+        'register-email' => 'E-mail',
 
     ],
 
