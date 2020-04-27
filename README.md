@@ -1,9 +1,6 @@
 
 ## Blockly Web Project
 
-
-[www.blocklyhra.sk](https://www.blocklyhra.sk)
-
 ----------
 <p align="left"><img width="30%" src="https://developers.google.com/blockly/images/logos/logo_built_on.png">
 </p>
