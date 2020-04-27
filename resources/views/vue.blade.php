@@ -12,6 +12,7 @@
       <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
       <link rel="stylesheet" href="{{ asset(mix('css/app.css')) }}">
    </head>
    <body id="page-top">
@@ -30,4 +31,24 @@
    </body> 
    <script src="{{ asset(mix('js/app.js')) }}"></script>
    <script src='https://www.google.com/recaptcha/api.js'></script>   
+   <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
+   <script>
+   window.addEventListener("load", function(){
+   window.cookieconsent.initialise({
+      "palette": {
+         "popup": {
+         "background": "#242c34"
+         },
+         "button": {
+         "background": "#d4282a"
+         }
+      },
+      "theme": "classic",
+      "content": {
+         "message": "{{ Lang::get('pagination.cookiesmsg') }}",
+         "dismiss": "{{ Lang::get('pagination.cookiesdismiss') }}",
+         "link": "{{ Lang::get('pagination.cookieslink') }}",
+      }
+   })});
+</script>   
 </html>

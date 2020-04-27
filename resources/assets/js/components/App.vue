@@ -23,7 +23,7 @@
             <p class="mt-3">{{ getLocalizedString('last.updated') + ': 20.4.2020' }}
 				</p>
          </div>
-    </footer>
+    </footer>	 
     </template>
 </div>
 </template>
@@ -72,7 +72,7 @@ export default {
 		HeroInfo,
 		UserAccessForms,
 		GameLevels,
-		GameHeader
+		GameHeader		
 	},
 	created() {
 		Vue.prototype.$global = this.$data;

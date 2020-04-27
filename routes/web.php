@@ -11,26 +11,26 @@
 |
 */
 use Illuminate\Http\Request;
-use App\Http\Controllers\NewGameController;
+use App\Http\Controllers\GameController;
 
 
 Route::group(['middleware' => ['auth', 'lang'] ], function()
 {
 //POST
-Route::post('registeruserbyadmin', 'NewGameController@registerUserByAdmin')->name('registeruserbyadmin');
-Route::post('/game/savegame', 'NewGameController@saveGame');
-Route::post('/game/updateingameprogress', 'NewGameController@updateIngameProgress');
-Route::post('/game/createlogofgameplay', 'NewGameController@createLogOfGameplay');
-Route::post('/game/reportbug', 'NewGameController@reportBug');
+Route::post('registeruserbyadmin', 'GameController@registerUserByAdmin')->name('registeruserbyadmin');
+Route::post('/game/savegame', 'GameController@saveGame');
+Route::post('/game/updateingameprogress', 'GameController@updateIngameProgress');
+Route::post('/game/createlogofgameplay', 'GameController@createLogOfGameplay');
+Route::post('/game/reportbug', 'GameController@reportBug');
 
 //GET
-Route::get('/game/{category}/{level}', 'NewGameController@runGame')->name('game');
-Route::get('/play', 'NewGameController@startNewGameOrContinue')->name('play');
-Route::get('/start/{category}/{level}', 'NewGameController@startLevelAsNew')->name('start');
-Route::get('/continue/{category}/{level}', 'NewGameController@continueLevel')->name('continue');
+Route::get('/game/{category}/{level}', 'GameController@runGame')->name('game');
+Route::get('/play', 'GameController@startNewGameOrContinue')->name('play');
+Route::get('/start/{category}/{level}', 'GameController@startLevelAsNew')->name('start');
+Route::get('/continue/{category}/{level}', 'GameController@continueLevel')->name('continue');
 });
 
-Route::get('/', 'NewGameController@welcome')->name('/');
+Route::get('/', 'GameController@welcome')->name('/');
 
 // Authentication Routes
 Route::post('login', 'Auth\LoginController@login')->name('login');

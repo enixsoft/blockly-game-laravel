@@ -15,6 +15,10 @@ return [
 
     'previous' => '&laquo; Predchádzajúca',
     'next'     => 'Nasledujúca &raquo;',
-    'title' => 'Blockly Hra'
+    'title' => 'Blockly Hra',
+    'cookiesmsg' => 'TÁTO WEBOVÁ STRÁNKA POUŽÍVA SÚBORY COOKIES. PREHLIADANÍM VYJADRUJETE SÚHLAS S ICH POUŽÍVANÍM.',
+    'cookiesdismiss' => 'Rozumiem',
+    'cookieslink' => 'Viac informácií'
+
 
 ];

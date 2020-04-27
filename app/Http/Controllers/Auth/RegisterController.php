@@ -53,16 +53,20 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        
+        if(env('GOOGLE_RECAPTCHA_KEY') != null && env('GOOGLE_RECAPTCHA_SECRET') != null) 
+        {
+            return Validator::make($data, [
+                'register-username' => 'required|string|max:255|unique:users,username',
+                'register-email' => 'required|string|email|max:255|unique:users,email',
+                'register-password' => 'required|string|min:6|confirmed',
+                'g-recaptcha-response'=>'required|recaptcha'
+            ]); 
+        }
         return Validator::make($data, [
             'register-username' => 'required|string|max:255|unique:users,username',
             'register-email' => 'required|string|email|max:255|unique:users,email',
-            'register-password' => 'required|string|min:6|confirmed',
-            // 'g-recaptcha-response'=>'required|recaptcha'
+            'register-password' => 'required|string|min:6|confirmed'
         ]); 
-
-
-
     }
 
 
@@ -89,7 +93,7 @@ class RegisterController extends Controller
         $validation = $this->validator($request->all());
 
         if ($validation->fails()) 
-        {
+        {            
             return redirect()->back()->withErrors($validation, 'register')->withInput(Input::except('register-password', 'register-password_confirmation'));
         }
         else

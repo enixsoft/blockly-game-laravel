@@ -33,7 +33,7 @@
         <label for="register-password_confirmation" class="col-md-12">{{ locales.passwordAgain }}:</label>
         <input id="register-password_confirmation" type="password" autocomplete="new-password" class="form-control" name="register-password_confirmation" required>
     </div>
-    <div class="form-group g-recaptcha" :data-sitekey="$global.RecaptchaKey" style="margin: 0 auto;display: table">     
+    <div v-if="$global.RecaptchaKey" class="form-group g-recaptcha" :data-sitekey="$global.RecaptchaKey" style="margin: 0 auto; display: table">   
     </div>
         <div v-if="errors['g-recaptcha-response']" class="help-block mx-auto text-danger">
         <strong>{{ locales.validationRecaptcha }}</strong>        

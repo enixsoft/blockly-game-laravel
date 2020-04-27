@@ -15850,3 +15850,7 @@ header.game-header {
   width: 100%;
   color: white;
 }
+
+.cc-link {
+  display: none;
+}

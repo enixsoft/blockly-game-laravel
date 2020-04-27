@@ -34,7 +34,9 @@ export const game = {
 	doWhile: 'blocks.do.while.field',
 	for: 'blocks.for.field',
 	ifNextTileIs: 'blocks.if.next.is.field',
-	ifNextTileHas: 'blocks.if.next.has.field'
+	ifNextTileHas: 'blocks.if.next.has.field',
+	category: 'gamelevels.category',
+	level: 'gamelevels.level',
 };
 
 export const carousel = {

@@ -105,7 +105,11 @@ export default {
 		if(!this.isUserLoggedIn)
 		{
 			ModalManager.showDynamicModal('ajaxError', { 
-				data: this.modals.ajaxerror.modal,
+				data: {
+					title: this.$global.getLocalizedString('modals.ajaxerror.title'),
+					text: this.$global.getLocalizedString('modals.ajaxerror.text'),
+					image: this.modals.ajaxerror.modal.image, 
+				},
 				imageLocation: 'common',
 				onclick: () => window.location.reload()
 			});
@@ -165,7 +169,11 @@ export default {
 				if(this.progress==0)
 				{
 					ModalManager.showDynamicModal('levelIntroduced', { 
-						data: this.tasks.level.welcome_modal, 
+						data: {
+							title: `${this.locales.category} ${this.category} ${this.locales.level} ${this.level}`,
+							text: this.$global.getLocalizedString(`${this.levelString}.welcome_modal.text`),
+							image: this.tasks.level.welcome_modal.image, 
+						},
 						imageLocation: this.levelString,
 						onclick: this.mainTaskIntroduced.bind(null, e.data.content)
 					});
@@ -291,7 +299,11 @@ export default {
 			}
 			catch (e) {
 				ModalManager.showDynamicModal('ajaxError', { 
-					data: this.modals.ajaxerror.modal,
+					data: {
+						title: this.$global.getLocalizedString('modals.ajaxerror.title'),
+						text: this.$global.getLocalizedString('modals.ajaxerror.text'),
+						image: this.modals.ajaxerror.modal.image, 
+					},
 					imageLocation: 'common',
 					onclick: () => window.location.reload()
 				});                   
@@ -311,7 +323,11 @@ export default {
 			this.main_task = 'mainTask' + task;
 
 			ModalManager.showDynamicModal('mainTaskIntroduced', { 
-				data: this.tasks[this.main_task].introduction_modal, 
+				data: {
+					title: this.$global.getLocalizedString(`${this.main_task}.introduction_modal.title`),
+					text: this.$global.getLocalizedString(`${this.levelString}.${this.main_task}.introduction_modal.text`),
+					image: this.tasks[this.main_task].introduction_modal.image, 
+				},
 				imageLocation: this.levelString,
 				onclick: this.sendMessage.bind(null, 'continue\n')
 			});
@@ -322,7 +338,11 @@ export default {
 			this.createLogOfGameplay('mainTaskFailed', object);		
 
 			ModalManager.showDynamicModal('mainTaskFailed', { 
-				data: this.modals['maintaskfailed'].modal, 
+				data: {
+					title: this.$global.getLocalizedString('modals.maintaskfailed.title'),
+					text: this.$global.getLocalizedString('modals.maintaskfailed.text'),
+					image: this.modals['maintaskfailed'].modal.image, 
+				},
 				imageLocation: 'common',
 				onclick: this.sendMessage.bind(null, `load\n${this.saveObjectToString}`)
 			});
@@ -343,9 +363,9 @@ export default {
 
 			ModalManager.showDynamicModal('mainTaskFailed', { 
 				data: { 
-					title: this.modals['maintaskfailed'].modal.title,
+					title: this.$global.getLocalizedString('modals.maintaskfailed.title'),
 					text,
-					image: this.modals['maintaskfailed'].modal.image
+					image: this.modals['maintaskfailed'].modal.image, 
 				}, 
 				imageLocation: 'common',
 				onclick: this.sendMessage.bind(null, `load\n${this.saveObjectToString}`)
@@ -354,7 +374,11 @@ export default {
 		showTaskButton() 
 		{
 			ModalManager.showDynamicModal('mainTaskShowed', { 
-				data: this.tasks[this.main_task].introduction_modal, 
+				data: {
+					title: this.$global.getLocalizedString(`${this.main_task}.introduction_modal.title`),
+					text: this.$global.getLocalizedString(`${this.levelString}.${this.main_task}.introduction_modal.text`),
+					image: this.tasks[this.main_task].introduction_modal.image
+				},
 				imageLocation: this.levelString,
 				onclick: () => {}
 			});
@@ -376,7 +400,11 @@ export default {
 			if(!this.isUserLoggedIn)
 			{
 				ModalManager.showDynamicModal('ajaxError', { 
-					data: this.modals.ajaxerror.modal,
+					data: {
+						title: this.$global.getLocalizedString('modals.ajaxerror.title'),
+						text: this.$global.getLocalizedString('modals.ajaxerror.text'),
+						image: this.modals.ajaxerror.modal.image, 
+					},
 					imageLocation: 'common',
 					onclick: () => window.location.reload()
 				});
@@ -390,7 +418,11 @@ export default {
 			}
 			catch (e) {
 				ModalManager.showDynamicModal('ajaxError', { 
-					data: this.modals.ajaxerror.modal,
+					data: {
+						title: this.$global.getLocalizedString('modals.ajaxerror.title'),
+						text: this.$global.getLocalizedString('modals.ajaxerror.text'),
+						image: this.modals.ajaxerror.modal.image, 
+					},
 					imageLocation: 'common',
 					onclick: () => window.location.reload()
 				});               
@@ -439,7 +471,11 @@ export default {
 			this.createLogOfGameplay('stoppedExecution', object);
 
 			ModalManager.showDynamicModal('mainTaskFailed', { 
-				data: this.modals['stoppedexecution'].modal, 
+				data: {
+					title: this.$global.getLocalizedString('modals.stoppedexecution.title'),
+					text: this.$global.getLocalizedString('modals.stoppedexecution.text'),
+					image: this.modals['stoppedexecution'].modal.image,
+				}, 
 				imageLocation: 'common',
 				onclick: this.sendMessage.bind(null, `load\n${this.saveObjectToString}`)
 			});			
@@ -455,8 +491,8 @@ export default {
 			else 
 				text = `${this.locales.commandFailedMore} <br>`;
 
-			let title = this.modals[object.failureType].modal.title;
-			text += this.modals[object.failureType].modal.text; 
+			let title = this.$global.getLocalizedString(`modals.${object.failureType}.title`);
+			text += this.$global.getLocalizedString(`modals.${object.failureType}.text`);
 			let image = this.modals[object.failureType].modal.image;
 			text += `<br> ${this.locales.commandFailedBlock}`;
 
@@ -482,7 +518,11 @@ export default {
 				}
 				catch (e) {
 					ModalManager.showDynamicModal('ajaxError', { 
-						data: this.modals.ajaxerror.modal,
+						data: {
+							title: this.$global.getLocalizedString('modals.ajaxerror.title'),
+							text: this.$global.getLocalizedString('modals.ajaxerror.text'),
+							image: this.modals.ajaxerror.modal.image, 
+						},
 						imageLocation: 'common',
 						onclick: () => window.location.reload()
 					});                   
@@ -507,7 +547,11 @@ export default {
 				this.createLogOfGameplay('mainTaskCompleted', object);     
 				
 				ModalManager.showDynamicModal('mainTaskCompleted', { 
-					data: this.tasks[task].success_modal, 
+					data: {
+						title: this.$global.getLocalizedString(`${task}.success_modal.title`),
+						text: this.$global.getLocalizedString(`${this.levelString}.${task}.success_modal.text`),
+						image: this.tasks[task].success_modal.image, 
+					},
 					imageLocation: 'common',
 					onclick: this.sendMessage.bind(null, 'continue\n'),
 					task_elapsed_time: this.task_end - this.task_start,
@@ -535,7 +579,11 @@ export default {
 			}
 			catch (e) {
 				ModalManager.showDynamicModal('ajaxError', { 
-					data: this.modals.ajaxerror.modal,
+					data: {
+						title: this.$global.getLocalizedString('modals.ajaxerror.title'),
+						text: this.$global.getLocalizedString('modals.ajaxerror.text'),
+						image: this.modals.ajaxerror.modal.image, 
+					},
 					imageLocation: 'common',
 					onclick: () => window.location.reload()
 				});                    
@@ -543,8 +591,12 @@ export default {
 		},
 		allMainTasksFinished()
 		{	 
-			ModalManager.showDynamicModal('allMainTasksFinished', { 
-				data: this.tasks.level.finish_modal, 
+			ModalManager.showDynamicModal('allMainTasksFinished', {
+				data: {
+					title: this.$global.getLocalizedString('finish_modal.title'),
+					text: this.$global.getLocalizedString(`${this.levelString}.finish_modal.text`),
+					image: this.tasks.level.finish_modal.image
+				},
 				imageLocation: 'common',
 				onclick: this.loadNextLevel
 			});
@@ -557,7 +609,11 @@ export default {
 			}
 			catch (e) {
 				ModalManager.showDynamicModal('ajaxError', { 
-					data: this.modals.ajaxerror.modal,
+					data: {
+						title: this.$global.getLocalizedString('modals.ajaxerror.title'),
+						text: this.$global.getLocalizedString('modals.ajaxerror.text'),
+						image: this.modals.ajaxerror.modal.image, 
+					},
 					imageLocation: 'common',
 					onclick: () => window.location.reload()
 				});

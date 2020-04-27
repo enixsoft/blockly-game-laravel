@@ -1,0 +1,101 @@
+{
+  "level":{
+    "category":1,
+    "level":5,
+    
+  "welcome_modal": {
+    "title": "",
+    "text": "",
+    "image": "welcome_modal"
+  },
+  
+   "finish_modal": {
+    "title": "",
+    "text": "",
+    "image": "success"  
+  }
+  },
+  
+  "mainTask0":{
+    "progress": "20",
+    
+    "introduction_modal": {
+    "title": "",
+    "text": "",
+    "image": "maintask0_introduction_modal"
+  },
+
+  "success_modal": {
+    "title": "",
+    "text": "",
+    "image": "success"
+  }
+  },
+  
+  "mainTask1": {
+    "progress": "40",  
+  
+    "introduction_modal": {
+    "title": "",
+    "text": "",
+    "image": "maintask1_introduction_modal"
+  },
+
+  "success_modal": {
+    "title": "",
+    "text": "",
+    "image": "success"
+  }
+  },
+
+
+
+  "mainTask2": {
+    "progress": "60",  
+  
+    "introduction_modal": {
+    "title": "",
+    "text": "",
+    "image": "maintask2_introduction_modal"
+  },
+
+  "success_modal": {
+    "title": "",
+    "text": "",
+    "image": "success"
+  }
+  },
+  
+    "mainTask3": {
+    "progress": "80",  
+  
+    "introduction_modal": {
+    "title": "",
+    "text": "",
+    "image": "maintask3_introduction_modal"
+  },
+
+  "success_modal": {
+    "title": "",
+    "text": "",
+    "image": "success"
+  }
+  },
+  
+      "mainTask4": {
+    "progress": "100",  
+  
+    "introduction_modal": {
+    "title": "",
+    "text": "",
+    "image": "maintask4_introduction_modal"
+  },
+    
+  "success_modal": {
+    "title": "",
+    "text": "",
+    "image": "success"
+  }
+  }
+
+}
