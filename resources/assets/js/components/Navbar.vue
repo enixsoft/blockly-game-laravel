@@ -39,6 +39,7 @@
                </ul>
             </div>
         </div>
+		<form id="logout-form" ref="logoutForm" action="logout" method="POST" style="display: none;"><input type="hidden" name="_token" :value="$global.CsrfToken"></form>
     </nav> 
 </template>
 
@@ -66,11 +67,9 @@ export default {
 		changeViewToHome(){			
 			HistoryManager.changeView('home', undefined, '', '/' + this.$global.Url('#game').split('/').slice(3).join('/'));			
 		},
-		async logout()
-		{
-			await sendRequest({method:'POST', url: this.$global.Url('logout')});
-			this.$global.User = null;
-			this.changeViewToHome();       
+		logout()
+		{     
+			this.$refs.logoutForm.submit();
 		},
 		scrollTo(hash){
 			HistoryManager.scrollToHash(hash);
