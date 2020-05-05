@@ -25,9 +25,9 @@
       :recaptcha-key="'{{env('GOOGLE_RECAPTCHA_KEY')}}'"
       :in-game-progress="{{ $inGameProgressJson }}"
       :game-data="{{ $gameDataJson }}"      
-      base-url="http://localhost:3000/blocklyapp/"
+      base-url="http://blocklyapp.test/"
    />
-	</div> 
+	</div>
    </body> 
    <script src="{{ asset(mix('js/app.js')) }}"></script>
    <script src='https://www.google.com/recaptcha/api.js'></script>   

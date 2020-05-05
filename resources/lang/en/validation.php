@@ -117,6 +117,14 @@ return [
     |
     */
 
-    'attributes' => [],
+    
+    'attributes' => [
+        'username' => 'User name',
+        'password' => 'Password',
+        'email' => 'E-mail',
+        'register-username' => 'User name',
+        'register-password' => 'Password',
+        'register-email' => 'E-mail',
+    ],
 
 ];

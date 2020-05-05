@@ -37,7 +37,7 @@ export default {
 		},
 		oldRegisterEmail()
 		{       
-			return this.oldInputs && this.oldInputs['email'] ? this.oldInputs['email'] : '';
+			return this.oldInputs && this.oldInputs['register-email'] ? this.oldInputs['register-email'] : '';
 		}
 	}  
 };

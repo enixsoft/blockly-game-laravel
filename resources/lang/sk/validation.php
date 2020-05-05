@@ -146,12 +146,12 @@ return [
 
     'attributes' => [
 
-        'username' => 'Prihlasovacie meno',
+        'username' => 'Prihlasovacie meno',        
         'password' => 'Heslo',
         'email' => 'E-mail',
+        'register-username' => 'Prihlasovacie meno',
         'register-password' => 'Heslo',
         'register-email' => 'E-mail',
-
     ],
 
 

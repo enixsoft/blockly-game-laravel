@@ -94,7 +94,7 @@ class RegisterController extends Controller
 
         if ($validation->fails()) 
         {            
-            return redirect()->back()->withErrors($validation, 'register')->withInput(Input::except('register-password', 'register-password_confirmation'));
+            return redirect()->back()->withErrors($validation, 'register')->withInput(Input::except('register-password', 'register-password_confirmation', '_token'));
         }
         else
         {

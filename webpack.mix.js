@@ -20,7 +20,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
 mix.copyDirectory('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/fonts');
 mix.copyDirectory('node_modules/simple-line-icons/fonts', 'public/fonts');
 
-mix.browserSync('http://localhost/blocklyapp/');
+mix.browserSync({proxy: 'blocklyapp.test'});
 if (mix.inProduction()) {
 	mix.version();
 }
