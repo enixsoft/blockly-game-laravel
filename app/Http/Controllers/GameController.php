@@ -232,11 +232,11 @@ class GameController extends Controller
 
     public function saveGame(Request $request)
     {
-
         $data = $request->all();
+        $auth = Auth::user();
 
         SavedGame::create(array(
-            'username' => $data['user'],
+            'username' => $auth->username,
             'category' => $data['category'],
             'level' => $data['level'],
             'progress' => $data['progress'],
@@ -249,16 +249,18 @@ class GameController extends Controller
     {
 
         $data = $request->all();
+        $auth = Auth::user();
 
-        Gameplay::create(['username' => $data['username'], 'category' => $data['category'], 'level' => $data['level'], 'level_start' => $data['level_start'], 'task' => $data['task'], 'task_start' => $data['task_start'], 'task_end' => $data['task_end'], 'task_elapsed_time' => $data['task_elapsed_time'], 'rating' => $data['rating'], 'code' => $data['code'], 'result' => $data['result']]);
+        Gameplay::create(['username' => $auth->username, 'category' => $data['category'], 'level' => $data['level'], 'level_start' => $data['level_start'], 'task' => $data['task'], 'task_start' => $data['task_start'], 'task_end' => $data['task_end'], 'task_elapsed_time' => $data['task_elapsed_time'], 'rating' => $data['rating'], 'code' => $data['code'], 'result' => $data['result']]);
 
     }
     public function updateIngameProgress(Request $request)
     {
 
         $data = $request->all();
+        $auth = Auth::user();
 
-        $inGameProgress = Progress::where('username', '=', $data['user'])->where('category', '=', $data['category'])->latest()
+        $inGameProgress = Progress::where('username', '=', $auth->username)->where('category', '=', $data['category'])->latest()
             ->first();
 
         if ($inGameProgress != null)
@@ -266,9 +268,7 @@ class GameController extends Controller
 
             if ($inGameProgress['level'] == $data['level'] && $inGameProgress['progress'] < $data['progress'])
             {
-
-                $inGameProgress->update(['username' => $data['user'], 'category' => $data['category'], 'level' => $data['level'], 'progress' => $data['progress']]);
-
+                $inGameProgress->update(['username' => $auth->username, 'category' => $data['category'], 'level' => $data['level'], 'progress' => $data['progress']]);
             }
 
         }

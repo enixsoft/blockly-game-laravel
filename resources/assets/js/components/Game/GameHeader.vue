@@ -293,7 +293,7 @@ export default {
 			}
 			}
 
-			const data = {'username' : this.userName, 'category': this.category, 'level': this.level, 'level_start': level_start,
+			const data = {'category': this.category, 'level': this.level, 'level_start': level_start,
 				'task': task, 'task_start': task_start, 'task_end': task_end, 'task_elapsed_time': task_elapsed_time, 'rating': rating, 'code': code, 'result': result
 			};
             
@@ -414,7 +414,7 @@ export default {
 				return;
 			}
 
-			const data = {'username' : this.userName, 'category': this.category, 'level': this.level, 'report': report };
+			const data = {'category': this.category, 'level': this.level, 'report': report };
 
 			try {
 				sendRequest({method:'POST', url: this.$global.Url('game/reportbug'), data});           
@@ -512,25 +512,28 @@ export default {
 			this.gameData.savedGame.json = this.saveObjectToString;
 			this.gameData.savedGame.progress = this.progress;
 			HistoryManager.changeView('game', this.gameData, '', ''); 
-
-			if(this.SAVING_ENABLED && this.isUserLoggedIn)
-			{									
-				const data = {'save' : this.saveObjectToString, 'user' : this.userName, 'category': this.category, 'level': this.level, 'progress': this.progress };				           
-				try {
-					await sendRequest({method:'POST', url: this.$global.Url('game/savegame'), data});           
-				}
-				catch (e) {
-					ModalManager.showDynamicModal('ajaxError', { 
-						data: {
-							title: this.$global.getLocalizedString('modals.ajaxerror.title'),
-							text: this.$global.getLocalizedString('modals.ajaxerror.text'),
-							image: this.modals.ajaxerror.modal.image, 
-						},
-						imageLocation: 'common',
-						onclick: () => window.location.reload()
-					});                   
-				}  
-			}			
+			
+			if(!this.isUserLoggedIn || !this.SAVING_ENABLED)
+			{
+				return;
+			}
+													
+			const data = {'save' : this.saveObjectToString, 'category': this.category, 'level': this.level, 'progress': this.progress };				           
+			try {
+				await sendRequest({method:'POST', url: this.$global.Url('game/savegame'), data});           
+			}
+			catch (e) {
+				ModalManager.showDynamicModal('ajaxError', { 
+					data: {
+						title: this.$global.getLocalizedString('modals.ajaxerror.title'),
+						text: this.$global.getLocalizedString('modals.ajaxerror.text'),
+						image: this.modals.ajaxerror.modal.image, 
+					},
+					imageLocation: 'common',
+					onclick: () => window.location.reload()
+				});                   
+			}  
+						
 		},
 		mainTaskCompleted(object)
 		{   
@@ -576,7 +579,7 @@ export default {
 
 			const progress = this.tasks[task].progress;
 			this.$emit('UPDATE_PROGRESS', {category: this.category, level: this.level, progress: this.progress});
-			const data = {'progress' : progress, 'user': this.userName, 'category': this.category, 'level': this.level }; 
+			const data = {'progress' : progress, 'category': this.category, 'level': this.level }; 
 			try {
 				await sendRequest({method:'POST', url: this.$global.Url('game/updateingameprogress'), data});           
 			}
@@ -653,10 +656,6 @@ export default {
 		isUserLoggedIn()
 		{
 			return this.$global.User ? true : false;
-		},
-		userName()
-		{             
-			return this.$global.User ? this.$global.User.username : undefined;
 		}
 	},
 	watch: { 

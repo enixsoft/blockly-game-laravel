@@ -3,7 +3,7 @@
 <h2 class="section-heading">{{ locales.registerHeading }}</h2>
 <p>{{ locales.registerInfo }}</p>
 <div class="form-group">    
-<form method="POST" id="registerForm" action="register">
+<form method="POST" id="registerForm" action="/register">
 <input type="hidden" name="_token" :value="$global.CsrfToken">
     <div class="form-group col-md-6 mx-auto">
         <label for="register-username" class="col-md-12">{{ locales.userName }}:</label>

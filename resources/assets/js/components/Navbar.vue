@@ -39,7 +39,7 @@
                </ul>
             </div>
         </div>
-		<form id="logout-form" ref="logoutForm" action="logout" method="POST" style="display: none;"><input type="hidden" name="_token" :value="$global.CsrfToken"></form>
+		<form id="logout-form" ref="logoutForm" action="/logout" method="POST" style="display: none;"><input type="hidden" name="_token" :value="$global.CsrfToken"></form>
     </nav> 
 </template>
 
