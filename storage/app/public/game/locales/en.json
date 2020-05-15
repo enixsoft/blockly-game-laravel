@@ -293,9 +293,26 @@
 	"2x5.mainTask2.introduction_modal.text": "In this task, we have a stone button a little further and there are traps to avoid. At the beginning, turn the hero once to the left and then use the repeat block until the hero is in the target, twice the block if it follows in the direction and once the block if it is in the direction of the tile.",
 	"2x5.mainTask2.success_modal.text": "You used both conditions in your third algorithm, so the hero successfully reached the stone button.",
 	"2x5.mainTask3.introduction_modal.text": "Finally, the hero needs to destroy the vases and use the lever to open the trapdoor so he can come to the last stone button in this game. Use the repeat block until the hero is in the target, once block if in the direction follows and twice block if in the direction on the tile.",
-	"2x5.mainTask3.success_modal.text": "The last role in the game has just been accomplished."
+	"2x5.mainTask3.success_modal.text": "The last role in the game has just been accomplished.",
 
+	"footer.heading.links": "Links",
+	"footer.heading.latest.updates": "Latest updates",
+	"footer.heading.technologies": "Technologies",
 
+	"footer.links.0": "GitHub Repository",
+	"footer.links.1": "PlayCanvas",
+	"footer.links.2": "Google Blockly",
+	"footer.links.3": "Hosted on Microsoft Azure",
 
+	"footer.latestupdates.0.title": "Azure deployment patch",
+	"footer.latestupdates.0.date": "15.5.2020",
+	"footer.latestupdates.0.text": "Brings Google ReCaptcha and enables HTTPS, fixes remember-me login, introduces new scroll bar and new footer redesign.",
 
+	"footer.latestupdates.1.title": "Azure deployment",
+	"footer.latestupdates.1.date": "14.5.2020",
+	"footer.latestupdates.1.text": "Blockly Game is now hosted on Microsoft Azure.",
+
+	"footer.latestupdates.2.title": "Localization",
+	"footer.latestupdates.2.date": "13.5.2020",
+	"footer.latestupdates.2.text": "Blockly Game now uses IP-API to determine user's country code and then set language accordingly."
   }

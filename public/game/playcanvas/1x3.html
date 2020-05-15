@@ -27,6 +27,11 @@
             useTouch: true
         };
         pc.script.legacy = false;
+		
+		window.blocklyGameTarget = window.location.search.substring(window.location.search.indexOf('target=') + 'target='.length);
+		if (window.blocklyGameTarget.indexOf('&') >= 0) {
+			window.blocklyGameTarget = window.blocklyGameTarget.substring(0, window.blocklyGameTarget.indexOf('&'));
+		};
     </script>
 </head>
 <body>

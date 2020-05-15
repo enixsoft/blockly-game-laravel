@@ -126,7 +126,26 @@ header.game-header {
     width: 100%;
     color: white;
  }
-
+ 
  .cc-link {
 	 display: none;
+ }
+ 
+ ::-webkit-scrollbar {
+	width: 11px;	
+ }
+
+ ::-webkit-scrollbar-track {
+	border-radius: 10px;
+	background:  $scrollbarBG;
+ }
+
+ ::-webkit-scrollbar-thumb {
+	border: 1px solid $scrollbarBG;
+	border-radius: 10px;
+	background-color: $thumbBG;
+ }
+
+ ::-webkit-scrollbar-thumb:hover {
+	background: $thumbBGhover
  }

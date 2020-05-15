@@ -4,7 +4,7 @@
 <div class="row h-100 w-100 no-padding">
     <div v-if="isUserLoggedIn" class="col-lg-6 no-padding">
         <iframe id="app-frame" class="game-playcanvas" ref="iframe"  
-        :src="this.$global.Url(`game/playcanvas/${levelString}.html`)"></iframe> 
+        :src="this.$global.Url(`game/playcanvas/${levelString}.html?target=${target}`)"></iframe> 
         <!-- src="https://playcanv.as/e/p/62c28f63/"></iframe>-->             
     </div>
     <div v-if="isUserLoggedIn" class="col-lg-6 no-padding">
@@ -125,7 +125,7 @@ export default {
 					toolbox: this.toolbox, trashcan: true, scrollbars: true
 				}),
 			{
-				player: this.runCode.bind(null, true)
+				player: this.runCode.bind(null, this.$global.User.role==='admin')
 			}
 		);
 		if(this.$global.Mobile)
@@ -293,8 +293,8 @@ export default {
 			}
 			}
 
-			const data = {'category': this.category, 'level': this.level, 'level_start': level_start,
-				'task': task, 'task_start': task_start, 'task_end': task_end, 'task_elapsed_time': task_elapsed_time, 'rating': rating, 'code': code, 'result': result
+			const data = {'category': Number(this.category), 'level': Number(this.level), 'level_start': level_start,
+				'task': Number(task), 'task_start': task_start, 'task_end': task_end, 'task_elapsed_time': Math.round(task_elapsed_time), 'rating': Number(rating), 'code': code, 'result': result
 			};
             
 			try {
@@ -414,7 +414,7 @@ export default {
 				return;
 			}
 
-			const data = {'category': this.category, 'level': this.level, 'report': report };
+			const data = {'category': Number(this.category), 'level': Number(this.level), 'report': report };
 
 			try {
 				sendRequest({method:'POST', url: this.$global.Url('game/reportbug'), data});           
@@ -512,13 +512,13 @@ export default {
 			this.gameData.savedGame.json = this.saveObjectToString;
 			this.gameData.savedGame.progress = this.progress;
 			HistoryManager.changeView('game', this.gameData, '', ''); 
-			
+
 			if(!this.isUserLoggedIn || !this.SAVING_ENABLED)
 			{
 				return;
-			}
-													
-			const data = {'save' : this.saveObjectToString, 'category': this.category, 'level': this.level, 'progress': this.progress };				           
+			}		
+				
+			const data = {'save' : this.saveObjectToString, 'category': Number(this.category), 'level': Number(this.level), 'progress':  Number(this.progress) };				           
 			try {
 				await sendRequest({method:'POST', url: this.$global.Url('game/savegame'), data});           
 			}
@@ -532,8 +532,7 @@ export default {
 					imageLocation: 'common',
 					onclick: () => window.location.reload()
 				});                   
-			}  
-						
+			}  						
 		},
 		mainTaskCompleted(object)
 		{   
@@ -579,7 +578,7 @@ export default {
 
 			const progress = this.tasks[task].progress;
 			this.$emit('UPDATE_PROGRESS', {category: this.category, level: this.level, progress: this.progress});
-			const data = {'progress' : progress, 'category': this.category, 'level': this.level }; 
+			const data = {'progress' : Number(progress), 'category': Number(this.category), 'level': Number(this.level) }; 
 			try {
 				await sendRequest({method:'POST', url: this.$global.Url('game/updateingameprogress'), data});           
 			}
@@ -656,6 +655,10 @@ export default {
 		isUserLoggedIn()
 		{
 			return this.$global.User ? true : false;
+		},
+		target()
+		{
+			return window.location.origin;
 		}
 	},
 	watch: { 

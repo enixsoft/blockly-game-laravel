@@ -179,3 +179,24 @@ export const modal = {
 	textAreaLimit: 'modal.textarea.limit',
 	textAreaLabel: 'modal.textarea.label'
 };
+
+export const footer = { 
+	headingLinks: 'footer.heading.links',
+	headingLatestUpdates: 'footer.heading.latest.updates',
+	headingTechnologies: 'footer.heading.technologies',
+
+	links0: 'footer.links.0',
+	links1: 'footer.links.1',
+	links2: 'footer.links.2',
+	links3: 'footer.links.3',
+
+	title0: 'footer.latestupdates.0.title',
+	date0: 'footer.latestupdates.0.date',
+	text0: 'footer.latestupdates.0.text',
+	title1: 'footer.latestupdates.1.title',
+	date1: 'footer.latestupdates.1.date',
+	text1: 'footer.latestupdates.1.text',
+	title2: 'footer.latestupdates.2.title',
+	date2: 'footer.latestupdates.2.date',
+	text2: 'footer.latestupdates.2.text',
+};

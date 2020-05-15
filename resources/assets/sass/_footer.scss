@@ -1,19 +1,24 @@
 // Styling for the footer
 footer {
-    padding: 25px 0;
+    padding-top: 10px;
     text-align: center;
-    color: fade-out(white, .7);
+    color: fade-out(white, .3);
     background-color: $gray-darker;
+    h3 {
+        color: #0894d1;
+          letter-spacing: 1px;
+          margin: 30px 0 20px;
+    }
     p {
-        font-size: 12px;
+        font-size: 0.8rem;
         margin: 0;
     }
     ul {
         margin-bottom: 0;
         li {
             a {
-                font-size: 12px;
-                color: fade-out(white, .7);
+                font-size: 1rem;
+                color: fade-out(white, .3);      
                 &:hover,
                 &:focus,
                 &:active,
@@ -24,3 +29,19 @@ footer {
         }
     }
 }
+
+
+footer .list-group-item {
+    background-color: $gray-darker;
+}
+ 
+footer .copyright {
+	padding: 15px 0;
+	background: #333;
+	margin-top: 20px;
+	font-size: 15px;
+ }
+ 
+ footer .copyright span {
+	color: #0894d1;
+ }

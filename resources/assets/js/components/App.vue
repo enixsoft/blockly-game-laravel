@@ -16,14 +16,7 @@
                     :errors="Array.isArray(errors) ? {} : errors" 
                     :oldInputs="Array.isArray(old) ? {} : old"/>
     <GameLevels v-else :in-game-progress="Progress" :levelsPerCategory="5" />
-    <footer>
-         <div class="container">
-            <a href="https://developers.google.com/blockly"><img class="img-fluid" :src="Url('img/logo_built_on_dark.png')"></a>
-            <br>
-            <p class="mt-3">{{ getLocalizedString('last.updated') + ': 20.4.2020' }}
-				</p>
-         </div>
-    </footer>	 
+	<Footer/>
     </template>
 </div>
 </template>
@@ -41,6 +34,7 @@ import * as $ from 'jquery';
 import 'bootstrap';
 import 'jquery.easing';
 import HistoryManager from './Managers/HistoryManager';
+import Footer from './Footer';
 
 export default { 
 	data(){
@@ -73,7 +67,8 @@ export default {
 		HeroInfo,
 		UserAccessForms,
 		GameLevels,
-		GameHeader		
+		GameHeader,
+		Footer		
 	},
 	created() {
 		Vue.prototype.$global = this.$data;

@@ -292,10 +292,26 @@
  "2x5.mainTask2.introduction_modal.text": "V tejto úlohe máme kamenné tlačidlo trochu ďalej a na ceste sú pasce, ktoré treba preskočiť. Na začiatku otočte hrdinu raz doľava a potom použite blok opakuj pokiaľ nie je hrdina v cieli, dvakrát blok ak v smere nasleduje a raz blok ak v smere na dlaždici je.",
  "2x5.mainTask2.success_modal.text": "Vo vašom treťom algoritme ste použili obe podmienky a tak hrdina úspešne dorazil na kamenné tlačidlo.",
  "2x5.mainTask3.introduction_modal.text": "A na záver, hrdina potrebuje zničiť vázy a použiť páku na otvorenie padacích dverí, aby mohol prísť na posledné kamenné tlačidlo v tejto hre. Použite blok opakuj pokiaľ nie je hrdina v cieli, jeden krát blok ak v smere nasleduje a dvakrát blok ak v smere na dlaždici je.",
- "2x5.mainTask3.success_modal.text": "Posledná úloha v hre bola práve splnená."
+ "2x5.mainTask3.success_modal.text": "Posledná úloha v hre bola práve splnená.",
 
+ "footer.heading.links": "Odkazy",
+ "footer.heading.latest.updates": "Najnovšie aktualizácie",
+ "footer.heading.technologies": "Technológie",
 
+ "footer.links.0": "GitHub Repozitár",
+ "footer.links.1": "PlayCanvas",
+ "footer.links.2": "Google Blockly",
+ "footer.links.3": "Hostované na Microsoft Azure",
 
+ "footer.latestupdates.0.title": "Azure vydanie - opravy",
+ "footer.latestupdates.0.date": "15.5.2020",
+ "footer.latestupdates.0.text": "Registrácia vyžaduje Google ReCaptcha a používa sa protokol HTTPS, opravená je funkčnosť Zapamätať prihlásenie. Bol pridaný nový scroll bar a footer má nový dizajn.",
 
+ "footer.latestupdates.1.title": "Azure vydanie",
+ "footer.latestupdates.1.date": "14.5.2020",
+ "footer.latestupdates.1.text": "Blockly Hra je od dnes hostovaná na Microsoft Azure.",
 
+ "footer.latestupdates.2.title": "Lokalizácia",
+ "footer.latestupdates.2.date": "13.5.2020",
+ "footer.latestupdates.2.text": "Blockly Hra používa IP-API na určenie kódu krajiny používateľa a podľa toho nastavuje jazyk."
 }
