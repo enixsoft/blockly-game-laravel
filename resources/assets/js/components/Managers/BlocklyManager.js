@@ -121,7 +121,11 @@ function getWorkspaceCode()
 
 function clearFailedBlocks(failedBlock)
 {
-	failedBlock.forEach((block) => {	
+	failedBlock.forEach((block) => {
+		if(!block.workspace)
+		{
+			return;
+		}	
 		switch(block.type)
 		{
 		case 'do_while_not_finished':
