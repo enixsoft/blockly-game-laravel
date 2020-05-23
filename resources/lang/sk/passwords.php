@@ -1,10 +1,9 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
-    | Password Reset Language Lines
+    | Password Reminder Language Lines
     |--------------------------------------------------------------------------
     |
     | The following language lines are the default lines which match reasons
@@ -13,9 +12,9 @@ return [
     |
     */
 
-    'password' => 'Heslo sa musí zhodovať a obsahovať najmenej šesť znakov.',
-    'reset'    => 'Heslo bolo zmenené!',
-    'sent'     => 'Pripomienka k zmene hesla bola odoslaná!',
-    'token'    => 'Klúč pre obnovu hesla je neplatný.',
-    'user'     => 'Nepodarilo sa nájsť používateľa s touto e-mailovou adresou.',
+    'reset'     => 'Heslo bolo zmenené!',
+    'sent'      => 'Pripomienka k zmene hesla bola odoslaná!',
+    'throttled' => 'Pred ďalším pokusom chvíľu počkajte.',
+    'token'     => 'Klúč pre obnovu hesla je neplatný.',
+    'user'      => 'Nepodarilo sa nájsť používateľa s touto e-mailovou adresou.',
 ];

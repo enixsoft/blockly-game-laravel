@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
+use App\Providers\RouteServiceProvider;
+use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
@@ -31,9 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
-
-
+    protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -53,58 +49,25 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        if(env('GOOGLE_RECAPTCHA_KEY') != null && env('GOOGLE_RECAPTCHA_SECRET') != null) 
-        {
-            return Validator::make($data, [
-                'register-username' => 'required|string|max:255|unique:users,username',
-                'register-email' => 'required|string|email|max:255|unique:users,email',
-                'register-password' => 'required|string|min:6|confirmed',
-                'g-recaptcha-response'=>'required|recaptcha'
-            ]); 
-        }
         return Validator::make($data, [
-            'register-username' => 'required|string|max:255|unique:users,username',
-            'register-email' => 'required|string|email|max:255|unique:users,email',
-            'register-password' => 'required|string|min:6|confirmed'
-        ]); 
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
     }
-
 
     /**
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\Models\User
+     * @return \App\User
      */
     protected function create(array $data)
     {
         return User::create([
-            'username' => $data['register-username'],
-            'email' => $data['register-email'],
-            'password' => bcrypt($data['register-password']),
-            'role' => 'user',
-            'remember_token' => null 
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
         ]);
-    }
-
-
-    public function register(Request $request)
-    {
-        $validation = $this->validator($request->all());
-
-        if ($validation->fails()) 
-        {            
-            return redirect()->back()->withErrors($validation, 'register')->withInput(Input::except('register-password', 'register-password_confirmation', '_token'));
-        }
-        else
-        {
-
-        event(new Registered($user = $this->create($request->all())));
-
-        $this->guard()->login($user);
-
-        return $this->registered($request, $user)
-                        ?: redirect($this->redirectPath());
-        }
     }
 }

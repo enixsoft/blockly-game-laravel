@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateGameplayTable extends Migration
 {
@@ -14,8 +14,7 @@ class CreateGameplayTable extends Migration
     public function up()
     {
         Schema::create('gameplay', function (Blueprint $table) {
-            $table->increments('id');
-            
+            $table->id();            
             $table->string('username');
             $table->integer('category');
             $table->integer('level');
@@ -26,8 +25,7 @@ class CreateGameplayTable extends Migration
             $table->integer('task_elapsed_time')->nullable();
             $table->integer('rating')->nullable();
             $table->text('code');
-            $table->string('result');           
-
+            $table->string('result');
             $table->timestamps();
         });
     }

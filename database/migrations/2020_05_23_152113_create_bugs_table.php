@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateBugsTable extends Migration
 {
@@ -14,13 +14,11 @@ class CreateBugsTable extends Migration
     public function up()
     {
         Schema::create('bugs', function (Blueprint $table) {
-            $table->increments('id');
-            
+            $table->id();           
             $table->string('username');            
             $table->integer('category');
             $table->integer('level');           
             $table->text('report');
-
             $table->timestamps();
         });
     }

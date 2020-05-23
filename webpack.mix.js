@@ -1,4 +1,4 @@
-let mix = require('laravel-mix');
+const mix = require('laravel-mix');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,17 +11,16 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
+mix.js('resources/js/app.js', 'public/js')
 	.options({
 		processCssUrls: false
 	})
-	.sass('resources/assets/sass/app.scss', 'public/css');
+	.sass('resources/sass/app.scss', 'public/css');
 
 mix.copyDirectory('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/fonts');
 mix.copyDirectory('node_modules/simple-line-icons/fonts', 'public/fonts');
 
-mix.browserSync({proxy: 'blocklyapp.test'});
+mix.browserSync({proxy: 'newblocklyapp.test'});
 if (mix.inProduction()) {
 	mix.version();
 }
-

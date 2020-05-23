@@ -41,7 +41,7 @@
          <h3>{{ locales.headingTechnologies }}</h3>
          <img class="img-fluid mb-3" :src="this.$global.Url('img/logo_built_on_playcanvas.png')" alt="" />
          <img class="img-fluid mb-3" :src="this.$global.Url('img/logo_built_on_dark.png')" alt="" />
-         <img class="img-fluid mb-3" :src="this.$global.Url('img/logo_built_on_aspnetcore.png')" alt="" />
+         <img class="img-fluid mb-3" :src="this.$global.Url('img/logo_built_on_laravel.png')" alt="" />
       </div>
    </div>
 </div>

@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateSavedgamesTable extends Migration
+class CreateProgressTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateSavedgamesTable extends Migration
      */
     public function up()
     {
-        Schema::create('savedgames', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('progress', function (Blueprint $table) {
+            $table->id();
             $table->string('username');
             $table->integer('category');
             $table->integer('level');
             $table->integer('progress');
-            $table->text('json');
-            $table->timestamps();          
+            $table->timestamps();
         });
     }
 
@@ -31,6 +30,6 @@ class CreateSavedgamesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('savedgames');
+        Schema::dropIfExists('progress');
     }
 }

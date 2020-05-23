@@ -25,7 +25,7 @@
       :recaptcha-key="'{{env('GOOGLE_RECAPTCHA_KEY')}}'"
       :in-game-progress="{{ $inGameProgressJson }}"
       :game-data="{{ $gameDataJson }}"      
-      base-url="http://blocklyapp.test/"
+      base-url="http://newblocklyapp.test/"
    />
 	</div>
    </body> 

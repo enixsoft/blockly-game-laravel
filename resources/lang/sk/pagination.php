@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Pagination Language Lines
@@ -19,6 +18,4 @@ return [
     'cookiesmsg' => 'TÁTO WEBOVÁ STRÁNKA POUŽÍVA SÚBORY COOKIES. PREHLIADANÍM VYJADRUJETE SÚHLAS S ICH POUŽÍVANÍM.',
     'cookiesdismiss' => 'Rozumiem',
     'cookieslink' => 'Viac informácií'
-
-
 ];

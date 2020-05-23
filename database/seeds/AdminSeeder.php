@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class AdminSeeder extends Seeder
 {
@@ -13,14 +13,11 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        
-    	User::create(array('username' => "admin",
-            'password' => bcrypt('admin123'),
+        DB::table('users')->insert([
+            'username' => "admin",
             'email' => "admin@blocklyhra.sk",
             'role' => "admin",
-            'remember_token' => null                
-
-    	));   
-
+            'password' => Hash::make('password'),
+        ]);     
     }
 }
