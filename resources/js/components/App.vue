@@ -35,6 +35,7 @@ import 'bootstrap';
 import 'jquery.easing';
 import HistoryManager from './Managers/HistoryManager';
 import Footer from './Footer';
+import 'cookieconsent';
 
 export default { 
 	data(){
@@ -80,6 +81,23 @@ export default {
 		});
 
 		HistoryManager.enableHistory(this, this.$global.Url(''), window.location.href, this.GameInProgress);
+
+		window.cookieconsent.initialise({
+			'palette': {
+				'popup': {
+					'background': '#242c34'
+				},
+				'button': {
+					'background': '#d4282a'
+				}
+			},
+			'theme': 'classic',
+			'content': {
+				'message': this.getLocalizedString('cookies.msg'),
+				'dismiss':  this.getLocalizedString('cookies.dismiss'),
+				'link':  this.getLocalizedString('cookies.link')
+			}
+		});
 	},
 	mounted(){
 		if(this.errors['username'] || this.errors['password'])

@@ -17,7 +17,7 @@ class AdminSeeder extends Seeder
             'username' => "admin",
             'email' => "admin@blocklyhra.sk",
             'role' => "admin",
-            'password' => Hash::make('password'),
+            'password' => Hash::make(config('app.admin_password', 'admin123')),
         ]);     
     }
 }

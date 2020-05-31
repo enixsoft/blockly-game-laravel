@@ -49,11 +49,20 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        if(config('app.google_recaptcha_key') != null && config('app.google_recaptcha_secret') != null) 
+        {
+            return Validator::make($data, [
+                'register-username' => 'required|string|max:255|unique:users,username',
+                'register-email' => 'required|string|email|max:255|unique:users,email',
+                'register-password' => 'required|string|min:6|confirmed',
+                'g-recaptcha-response'=>'required|recaptcha'
+            ]); 
+        }
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+            'register-username' => 'required|string|max:255|unique:users,username',
+            'register-email' => 'required|string|email|max:255|unique:users,email',
+            'register-password' => 'required|string|min:6|confirmed'
+        ]); 
     }
 
     /**
@@ -65,9 +74,11 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'username' => $data['register-username'],
+            'email' => $data['register-email'],
+            'password' => Hash::make($data['register-password']),
+            'role' => 'user',
+            'remember_token' => null 
         ]);
     }
 }

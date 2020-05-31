@@ -310,8 +310,12 @@
  "footer.latestupdates.1.title": "Azure vydanie",
  "footer.latestupdates.1.date": "14.5.2020",
  "footer.latestupdates.1.text": "Blockly Hra je od dnes hostovaná na Microsoft Azure.",
-
+ 
  "footer.latestupdates.2.title": "Lokalizácia",
  "footer.latestupdates.2.date": "13.5.2020",
- "footer.latestupdates.2.text": "Blockly Hra používa IP-API na určenie kódu krajiny používateľa a podľa toho nastavuje jazyk."
+ "footer.latestupdates.2.text": "Blockly Hra používa IP-API na určenie kódu krajiny používateľa a podľa toho nastavuje jazyk.",
+
+ "cookies.msg": "TÁTO WEBOVÁ STRÁNKA POUŽÍVA SÚBORY COOKIES. PREHLIADANÍM VYJADRUJETE SÚHLAS S ICH POUŽÍVANÍM.",
+ "cookies.dismiss": "Rozumiem",
+ "cookies.link": "Viac informácií"
 }

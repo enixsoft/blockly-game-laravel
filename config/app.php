@@ -160,11 +160,13 @@ return [
         Illuminate\Session\SessionServiceProvider::class,
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
-        Illuminate\View\ViewServiceProvider::class,
+        Illuminate\View\ViewServiceProvider::class,        
 
         /*
          * Package Service Providers...
+         * 
          */
+        \Torann\GeoIP\GeoIPServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -227,6 +229,11 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
+
     ],
 
+    'admin_password' => env('ADMIN_PASSWORD'),
+    'google_recaptcha_key' => env('GOOGLE_RECAPTCHA_KEY'),
+    'google_recaptcha_secret' => env('GOOGLE_RECAPTCHA_SECRET'),
 ];

@@ -15,7 +15,7 @@
                   <div class="col-md-6 mx-auto">
                      <button v-on:click="runGame('play')" class="btn btn-lg btn-success" :disabled="(inGameProgress[9] && inGameProgress[9] === 100) || disabled">
                      <i class="fas fa-play"></i>
-                  {{ inGameProgress[0] === 0 ? locales.bigBtnStart : locales.bigBtnContinue }}
+                  {{ inGameProgress[0] === 0 || !inGameProgress.length ? locales.bigBtnStart : locales.bigBtnContinue }}
                      </button>             
                   </div>                 
                   <br>

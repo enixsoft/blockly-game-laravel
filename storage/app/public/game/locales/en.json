@@ -314,5 +314,9 @@
 
 	"footer.latestupdates.2.title": "Localization",
 	"footer.latestupdates.2.date": "13.5.2020",
-	"footer.latestupdates.2.text": "Blockly Game now uses IP-API to determine user's country code and then set language accordingly."
+	"footer.latestupdates.2.text": "Blockly Game now uses IP-API to determine user's country code and then set language accordingly.",
+	
+	"cookies.msg": "THIS WEB PAGE USES COOKIES. BY BROWSING THIS SITE, YOU AGREE TO USE THEM.",
+	"cookies.dismiss": "I understand",
+	"cookies.link": "Learn more"
   }

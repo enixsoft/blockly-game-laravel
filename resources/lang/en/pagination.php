@@ -15,9 +15,5 @@ return [
 
     'previous' => '&laquo; Previous',
     'next' => 'Next &raquo;',
-    'title' => 'Blockly Game',
-    'cookiesmsg' => 'THIS WEB PAGE USES COOKIES. BY BROWSING THIS SITE, YOU AGREE TO USE THEM.',
-    'cookiesdismiss' => 'I understand',
-    'cookieslink' => 'Learn more'
-
+    'title' => 'Blockly Game'
 ];

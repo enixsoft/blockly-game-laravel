@@ -3,9 +3,10 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Cookie;
-use App;
-use Crypt;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\App;
+use Illuminate\Http\Request;
+use GeoIP;
 
 class SetLanguage
 {
@@ -20,9 +21,27 @@ class SetLanguage
     {
         $supportedLocales = ['en', 'sk'];
         $cookie = Cookie::get('lang');
-        $lang = 'en';
+        $lang = config('app.locale');
         
-        if (empty($cookie)) {
+        if (empty($cookie)) 
+        {
+            $userIp = $request->ip();
+            $geo = GeoIP::getLocation($userIp);
+
+            if($geo != null) 
+            {
+                $userCountry = $geo['iso_code'];       
+
+                $countryCodeLocales = [
+                    'SK' => 'sk',
+                    'CZ' => 'sk'
+                ];  
+
+                if (array_key_exists($userCountry, $countryCodeLocales)) {
+                    $lang = $countryCodeLocales[$userCountry];
+                }
+            }  
+
             Cookie::queue(Cookie::make('lang', $lang, '20160'));            
         }
         else 

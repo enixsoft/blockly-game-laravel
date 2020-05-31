@@ -29,7 +29,7 @@ Route::get('/start/{category}/{level}', 'GameController@startLevelAsNew')->name(
 Route::get('/continue/{category}/{level}', 'GameController@continueLevel')->name('continue');
 });
 
-Route::get('/', 'GameController@welcome')->name('/');
+Route::get('/', 'GameController@welcome')->name('/')->middleware('lang');
 
 // Authentication Routes
 Route::post('login', 'Auth\LoginController@login')->name('login');
