@@ -8,7 +8,7 @@
             <li class="list-group-item"><a href="https://github.com/enixsoft/blockly-game-netcore"><i class="icon-social-github"></i> {{ locales.links0 }}</a></li>
             <li class="list-group-item"><a href="https://playcanvas.com"><i class="icon-game-controller"></i> {{ locales.links1 }}</a></li>
             <li class="list-group-item"><a href="https://developers.google.com/blockly"><i class="icon-social-google"></i> {{ locales.links2 }}</a></li>
-            <li class="list-group-item"><a href="https://azure.microsoft.com"><i class="icon-cloud-download"></i> {{ locales.links3 }}</a></li>
+            <li class="list-group-item"><a href="https://www.endora.cz/"><i class="icon-cloud-download"></i> {{ locales.links3 }}</a></li>
          </ul>
       </div>
       <div class="col-lg-4 col-md-6">
@@ -57,6 +57,6 @@ export default {
 		return {
 			locales: this.$global.getLocalizedStrings(locales)
 		};
-    }
+	}
 };
 </script>

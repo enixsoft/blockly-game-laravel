@@ -301,15 +301,15 @@
  "footer.links.0": "GitHub Repozitár",
  "footer.links.1": "PlayCanvas",
  "footer.links.2": "Google Blockly",
- "footer.links.3": "Hostované na Microsoft Azure",
+ "footer.links.3": "Hostované na Endora",
 
- "footer.latestupdates.0.title": "Azure vydanie - opravy",
- "footer.latestupdates.0.date": "15.5.2020",
- "footer.latestupdates.0.text": "Registrácia vyžaduje Google ReCaptcha a používa sa protokol HTTPS, opravená je funkčnosť Zapamätať prihlásenie. Bol pridaný nový scroll bar a footer má nový dizajn.",
+ "footer.latestupdates.0.title": "Endora vydanie",
+ "footer.latestupdates.0.date": "5.6.2020",
+ "footer.latestupdates.0.text": "Blockly Hra je od dnes hostovaná na bezplatnom webhostingu Endora.",
 
- "footer.latestupdates.1.title": "Azure vydanie",
- "footer.latestupdates.1.date": "14.5.2020",
- "footer.latestupdates.1.text": "Blockly Hra je od dnes hostovaná na Microsoft Azure.",
+ "footer.latestupdates.1.title": "Aktualizácia Laravel frameworku",
+ "footer.latestupdates.1.date": "23.5.2020",
+ "footer.latestupdates.1.text": "Blocky hra začala používať Laravel vo verzii 7.12.0.",
  
  "footer.latestupdates.2.title": "Lokalizácia",
  "footer.latestupdates.2.date": "13.5.2020",

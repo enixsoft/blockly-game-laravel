@@ -302,15 +302,15 @@
 	"footer.links.0": "GitHub Repository",
 	"footer.links.1": "PlayCanvas",
 	"footer.links.2": "Google Blockly",
-	"footer.links.3": "Hosted on Microsoft Azure",
+	"footer.links.3": "Hosted on Endora",
 
-	"footer.latestupdates.0.title": "Azure deployment patch",
-	"footer.latestupdates.0.date": "15.5.2020",
-	"footer.latestupdates.0.text": "Brings Google ReCaptcha and enables HTTPS, fixes remember-me login, introduces new scroll bar and new footer redesign.",
+	"footer.latestupdates.0.title": "Endora deployment",
+	"footer.latestupdates.0.date": "5.6.2020",
+	"footer.latestupdates.0.text": "Blockly Game is now hosted on free web hosting Endora.",
 
-	"footer.latestupdates.1.title": "Azure deployment",
-	"footer.latestupdates.1.date": "14.5.2020",
-	"footer.latestupdates.1.text": "Blockly Game is now hosted on Microsoft Azure.",
+	"footer.latestupdates.1.title": "Laravel framework update",
+	"footer.latestupdates.1.date": "23.5.2020",
+	"footer.latestupdates.1.text": "Blockly Game started using Laravel in version 7.12.0.",
 
 	"footer.latestupdates.2.title": "Localization",
 	"footer.latestupdates.2.date": "13.5.2020",
