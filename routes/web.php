@@ -29,11 +29,12 @@ Route::get('/start/{category}/{level}', 'GameController@startLevelAsNew')->name(
 Route::get('/continue/{category}/{level}', 'GameController@continueLevel')->name('continue');
 });
 
-Route::get('/', 'GameController@welcome')->name('/')->middleware('lang');
+Route::group(['middleware' => ['lang'] ], function()
+{
+	Route::get('/', 'GameController@welcome')->name('/');
+	Route::post('register', 'Auth\RegisterController@register')->name('register');
+	Route::post('login', 'Auth\LoginController@login')->name('login');
+});
 
-// Authentication Routes
-Route::post('login', 'Auth\LoginController@login')->name('login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-Route::post('register', 'Auth\RegisterController@register')->name('register');
-
 Route::get('/language/{lang}', 'LanguageController@setLanguage');
