@@ -1,4 +1,24 @@
 {
-    "/js/app.js": "/js/app.js?id=3d126ecdfb4368de4971",
-    "/css/app.css": "/css/app.css?id=2309cc1dd2636b2b76c8"
+    "/js/app.js": "/js/app.js",
+    "/css/app.css": "/css/app.css",
+    "/fonts/fa-brands-400.eot": "/fonts/fa-brands-400.eot",
+    "/fonts/fa-brands-400.svg": "/fonts/fa-brands-400.svg",
+    "/fonts/fa-brands-400.ttf": "/fonts/fa-brands-400.ttf",
+    "/fonts/fa-brands-400.woff": "/fonts/fa-brands-400.woff",
+    "/fonts/fa-brands-400.woff2": "/fonts/fa-brands-400.woff2",
+    "/fonts/fa-regular-400.eot": "/fonts/fa-regular-400.eot",
+    "/fonts/fa-regular-400.svg": "/fonts/fa-regular-400.svg",
+    "/fonts/fa-regular-400.ttf": "/fonts/fa-regular-400.ttf",
+    "/fonts/fa-regular-400.woff": "/fonts/fa-regular-400.woff",
+    "/fonts/fa-regular-400.woff2": "/fonts/fa-regular-400.woff2",
+    "/fonts/fa-solid-900.eot": "/fonts/fa-solid-900.eot",
+    "/fonts/fa-solid-900.svg": "/fonts/fa-solid-900.svg",
+    "/fonts/fa-solid-900.ttf": "/fonts/fa-solid-900.ttf",
+    "/fonts/fa-solid-900.woff": "/fonts/fa-solid-900.woff",
+    "/fonts/fa-solid-900.woff2": "/fonts/fa-solid-900.woff2",
+    "/fonts/Simple-Line-Icons.eot": "/fonts/Simple-Line-Icons.eot",
+    "/fonts/Simple-Line-Icons.svg": "/fonts/Simple-Line-Icons.svg",
+    "/fonts/Simple-Line-Icons.ttf": "/fonts/Simple-Line-Icons.ttf",
+    "/fonts/Simple-Line-Icons.woff": "/fonts/Simple-Line-Icons.woff",
+    "/fonts/Simple-Line-Icons.woff2": "/fonts/Simple-Line-Icons.woff2"
 }

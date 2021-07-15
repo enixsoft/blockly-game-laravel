@@ -1,8 +1,10 @@
 <?php
 
+namespace Database\Seeders;
+
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
 
 class AdminSeeder extends Seeder
 {
@@ -13,11 +15,11 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            'username' => "admin",
+        User::create([
+            'name' => "admin",
             'email' => "admin@blocklyhra.sk",
             'role' => "admin",
             'password' => Hash::make(config('app.admin_password', 'admin123')),
-        ]);     
+        ]);
     }
 }

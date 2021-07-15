@@ -60,7 +60,7 @@ export default {
 		},
 		userName()
 		{             
-			return this.$global.User ? this.$global.User.username : undefined;
+			return this.$global.User ? this.$global.User.name : undefined;
 		}
 	},
 	methods: {      

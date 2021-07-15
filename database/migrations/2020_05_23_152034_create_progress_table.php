@@ -14,12 +14,16 @@ class CreateProgressTable extends Migration
     public function up()
     {
         Schema::create('progress', function (Blueprint $table) {
-            $table->id();
-            $table->string('username');
-            $table->integer('category');
-            $table->integer('level');
-            $table->integer('progress');
+            $table->increments('id');
+            $table->unsignedInteger('user_id');
+            $table->unsignedTinyInteger('category');
+            $table->unsignedTinyInteger('level');
+            $table->unsignedTinyInteger('progress');
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->onDelete('CASCADE');
         });
     }
 

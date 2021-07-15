@@ -100,7 +100,7 @@ export default {
 		});
 	},
 	mounted(){
-		if(this.errors['username'] || this.errors['password'])
+		if(this.errors['name'] || this.errors['password'])
 		{
 			$('html, body').animate({
 				scrollTop: $('#game').offset().top

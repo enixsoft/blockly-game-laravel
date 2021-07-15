@@ -14,19 +14,23 @@ class CreateGameplayTable extends Migration
     public function up()
     {
         Schema::create('gameplay', function (Blueprint $table) {
-            $table->id();            
-            $table->string('username');
-            $table->integer('category');
-            $table->integer('level');
+            $table->increments('id');            
+            $table->unsignedInteger('user_id');
+            $table->unsignedTinyInteger('category');
+            $table->unsignedTinyInteger('level');
             $table->time('level_start');
-            $table->integer('task');
+            $table->unsignedTinyInteger('task');
             $table->time('task_start');
             $table->time('task_end')->nullable();
-            $table->integer('task_elapsed_time')->nullable();
-            $table->integer('rating')->nullable();
+            $table->unsignedSmallInteger('task_elapsed_time')->nullable();
+            $table->unsignedTinyInteger('rating')->nullable();
             $table->text('code');
             $table->string('result');
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->onDelete('CASCADE');
         });
     }
 

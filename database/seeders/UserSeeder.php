@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
@@ -18,14 +20,13 @@ class UserSeeder extends Seeder
 
         for($i=$startNum;$i<=$endNum;$i++)        
         {
-        User::create(array('username' => "hrac" . $i,
-            'password' => bcrypt($i.'heslo'.$i),
-            'email' => "hrac" . $i . "@blocklyhra.sk",
-            'role' => "user",
-            'remember_token' => null                
+            User::create(array('username' => "hrac" . $i,
+                'password' => bcrypt($i.'heslo'.$i),
+                'email' => "hrac" . $i . "@blocklyhra.sk",
+                'role' => "user",
+                'remember_token' => null                
 
-    	));  
-
+            ));  
         }
 
     }

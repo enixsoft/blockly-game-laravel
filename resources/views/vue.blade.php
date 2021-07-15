@@ -21,10 +21,10 @@
       :errors="{{ $errors->merge($errors->register) }}"
       :old="{{ json_encode(Session::getOldInput()) }}"    
       :lang="{{ $langJson }}"
-      :recaptcha-key="'{{env('GOOGLE_RECAPTCHA_KEY')}}'"
+      :recaptcha-key="'{{ config('app.google_recaptcha_key') }}'"
       :in-game-progress="{{ $inGameProgressJson }}"
       :game-data="{{ $gameDataJson }}"      
-      base-url="http://blocklyapp.test/"
+      base-url="{{ config('app.url') }}"
    />
 	</div>
    </body> 

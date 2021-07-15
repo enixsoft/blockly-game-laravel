@@ -8,7 +8,7 @@
 <div class="form-group row col-md-6 mx-auto">
     <label for="login-username" class="col-md-12">{{ locales.userName }}:</label>
     <input class="form-control" id="login-username" type="username" name="login-username" :value="oldUsername" required>    
-    <span v-for="(error, index) in errors['username']" :key="index" class="help-block mx-auto text-danger">
+    <span v-for="(error, index) in errors['name']" :key="index" class="help-block mx-auto text-danger">
     <strong>{{ error }}</strong>
     <br>
     </span> 

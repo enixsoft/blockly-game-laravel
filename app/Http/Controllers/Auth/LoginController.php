@@ -51,7 +51,7 @@ class LoginController extends Controller
     public function credentials(Request $request)
     {
         $credentials = $request->only('login-username', 'login-password');
-        $credentials['username'] = $credentials['login-username'];
+        $credentials['name'] = $credentials['login-username'];
         $credentials['password'] = $credentials['login-password'];
         unset($credentials['login-username']);
         unset($credentials['login-password']);
@@ -60,6 +60,6 @@ class LoginController extends Controller
 
     public function username()
     {
-        return 'username';
+        return 'name';
     }
 }
