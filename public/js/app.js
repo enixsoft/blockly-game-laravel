@@ -76,6 +76,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
 
 
 
@@ -95,9 +96,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     var _this = this;
 
     return {
-      CsrfToken: document.head.querySelector('meta[name="csrf-token"]').content,
+      ViewName: this.viewName,
+      ViewData: !Array.isArray(this.viewData) ? this.viewData : undefined,
       User: this.user,
-      RecaptchaKey: this.recaptchaKey,
       GameInProgress: !Array.isArray(this.gameData) ? this.gameData : undefined,
       Url: function Url() {
         var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
@@ -112,18 +113,20 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           return acc;
         }, {});
       },
-      Progress: _toConsumableArray(this.inGameProgress),
-      Mobile: /Mobi|Android/i.test(navigator.userAgent)
+      Progress: this.user ? _toConsumableArray(this.user.formatted_progress) : [],
+      Mobile: /Mobi|Android/i.test(navigator.userAgent),
+      CsrfToken: document.head.querySelector('meta[name="csrf-token"]').content,
+      RecaptchaKey: this.recaptchaKey
     };
   },
   props: {
+    viewName: String,
+    viewData: [Object, Array],
     user: Object,
+    lang: [Object],
     errors: [Object, Array],
     old: [Object, Array],
-    lang: [Object],
     recaptchaKey: String,
-    inGameProgress: Array,
-    gameData: [Object, Array],
     baseUrl: String
   },
   components: {
@@ -26214,7 +26217,7 @@ var render = function() {
     [
       _c("Navbar"),
       _vm._v(" "),
-      _vm.GameInProgress !== undefined
+      _vm.ViewName === "game"
         ? [
             _c("GameHeader", {
               attrs: {
@@ -26225,7 +26228,8 @@ var render = function() {
               on: { UPDATE_PROGRESS: _vm.updateProgress }
             })
           ]
-        : [
+        : _vm.ViewName === "home"
+        ? [
             _c("Carousel-Header"),
             _vm._v(" "),
             !_vm.$global.User ? _c("Features") : _c("HeroInfo"),
@@ -26246,6 +26250,7 @@ var render = function() {
             _vm._v(" "),
             _c("Footer")
           ]
+        : _vm._e()
     ],
     2
   )

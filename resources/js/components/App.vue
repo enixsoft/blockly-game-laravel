@@ -1,22 +1,23 @@
 <template>
 <div>
     <Navbar/>
-    <template v-if="GameInProgress !== undefined">
-      <GameHeader :category="GameInProgress.category"
-						:level="GameInProgress.level"
-                  :game-data="GameInProgress"	
-						v-on:UPDATE_PROGRESS="updateProgress"			
-       />
+    <template v-if="ViewName === 'game'">
+		<GameHeader 	
+		:category="GameInProgress.category"
+		:level="GameInProgress.level"
+		:game-data="GameInProgress"	
+		v-on:UPDATE_PROGRESS="updateProgress"			
+		/>
     </template>    
-    <template v-else>    
-    <Carousel-Header />
-    <Features v-if="!$global.User" />
-    <HeroInfo v-else />
-    <UserAccessForms v-if="!$global.User"
-                    :errors="Array.isArray(errors) ? {} : errors" 
-                    :oldInputs="Array.isArray(old) ? {} : old"/>
-    <GameLevels v-else :in-game-progress="Progress" :levelsPerCategory="5" />
-	<Footer/>
+    <template v-else-if="ViewName === 'home'">    
+		<Carousel-Header />
+		<Features v-if="!$global.User" />
+		<HeroInfo v-else />
+		<UserAccessForms v-if="!$global.User"
+						:errors="Array.isArray(errors) ? {} : errors" 
+						:oldInputs="Array.isArray(old) ? {} : old"/>
+		<GameLevels v-else :in-game-progress="Progress" :levelsPerCategory="5" />
+		<Footer/>
     </template>
 </div>
 </template>
@@ -40,25 +41,27 @@ import 'cookieconsent';
 export default { 
 	data(){
 		return {
-			CsrfToken: document.head.querySelector('meta[name="csrf-token"]').content,
-			User: this.user,
-			RecaptchaKey: this.recaptchaKey,
+			ViewName: this.viewName,
+			ViewData: !Array.isArray(this.viewData) ? this.viewData : undefined,
+			User: this.user,			
 			GameInProgress: !Array.isArray(this.gameData) ? this.gameData : undefined,
 			Url: (path = undefined) => path ? this.baseUrl + path : this.baseUrl,
 			getLocalizedString: (string) => this.lang[string] || 'ERROR_LANG_STRING_NOT_FOUND',
 			getLocalizedStrings: (locales) => Object.keys(locales).reduce((acc, key) => { acc[key] = this.lang[locales[key]] || 'ERROR_LANG_STRING_NOT_FOUND'; return acc; }, {}),			
-			Progress: [...this.inGameProgress],
-			Mobile: (/Mobi|Android/i.test(navigator.userAgent))		
+			Progress: this.user ? [...this.user.formatted_progress] : [],
+			Mobile: (/Mobi|Android/i.test(navigator.userAgent)),
+			CsrfToken: document.head.querySelector('meta[name="csrf-token"]').content,			
+			RecaptchaKey: this.recaptchaKey,	
 		};
 	},
 	props: {
+		viewName: String,
+		viewData: [Object, Array],
 		user: Object,
+		lang: [Object],		
 		errors: [Object, Array],
-		old: [Object, Array],
-		lang: [Object],
+		old: [Object, Array],		
 		recaptchaKey: String,
-		inGameProgress: Array,
-		gameData: [Object, Array],
 		baseUrl: String
 	},
 	components: {

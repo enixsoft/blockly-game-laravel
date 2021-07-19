@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => ['auth', 'lang'] ], function()
+Route::group(['middleware' => ['auth', 'lang']], function()
 {
 //POST
 Route::post('registeruserbyadmin', 'GameController@registerUserByAdmin')->name('registeruserbyadmin');
@@ -29,9 +29,9 @@ Route::get('/start/{category}/{level}', 'GameController@startLevelAsNew')->name(
 Route::get('/continue/{category}/{level}', 'GameController@continueLevel')->name('continue');
 });
 
-Route::group(['middleware' => ['lang'] ], function()
+Route::group(['middleware' => ['lang']], function()
 {
-	Route::get('/', 'GameController@welcome')->name('/');
+	Route::get('/', 'HomeController@index')->name('/');
 	Route::post('register', 'Auth\RegisterController@register')->name('register');
 	Route::post('login', 'Auth\LoginController@login')->name('login');
 });

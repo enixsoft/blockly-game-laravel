@@ -2,27 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Traits\SinglePageApplicationTrait;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    use SinglePageApplicationTrait;   
 
     /**
-     * Show the application dashboard.
+     * Shows the application home page.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
     {
-        return view('vue');
+        return $this->viewResponse('home', []);
     }
 }

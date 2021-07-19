@@ -1,51 +1,49 @@
 <?php
 namespace App\Http\Controllers;
+
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use App;
-
+use App\Http\Traits\SinglePageApplicationTrait;
 use Illuminate\Http\Request;
-use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Lang;
-
 use App\Models\User;
 use App\Models\SavedGame;
 use App\Models\Progress;
 use App\Models\Gameplay;
 use App\Models\Bug;
-
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\File;
-
-use Storage;
-
-use Validator;
-
-use Redirect;
-
-use Log;
-
-use DB;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Storage;
 
 class GameController extends Controller
-{
+{    
+    use SinglePageApplicationTrait;
 
+    /**  
+    * @var array
+    * levels are increased +1 to enable last level redirect
+    */
+    const LEVELS_PER_CATEGORY = [
+        6,
+        6
+    ];  
+
+    /**
+     * GameController constructor.
+     * @param Application $app
+     */
+    public function __construct()
+    {
+        $this->user = Auth::user();  
+    }
+    
     public function runGame($category, $level, Request $request)
     {
-        $error = null;
-
-        $categoryHasLevelsArray = array(
-            6,
-            6
-        ); // maximum is increased +1 for last level redirect
         $categoryMin = 1;
-        $categoryMax = sizeof($categoryHasLevelsArray);
+        $categoryMax = sizeof(static::LEVELS_PER_CATEGORY);
 
         if ($category <= $categoryMax && $category >= $categoryMin)
         {
-            $levelMax = $categoryHasLevelsArray[$category - 1];
+            $levelMax = static::LEVELS_PER_CATEGORY[$category - 1];
         }
         else
         {
@@ -54,15 +52,13 @@ class GameController extends Controller
 
         $levelMin = 1;
 
-        if ($category > $categoryMax || $category < $categoryMin || $level < $levelMin || $level > $levelMax || !is_numeric($category) || !is_numeric($level))
+        if (!is_numeric($category) || !is_numeric($level) || $category > $categoryMax || $category < $categoryMin || $level < $levelMin || $level > $levelMax)
         {
-            $error = "ERROR_WRONG_CATEGORY_OR_LEVEL";
-            return $this->redirectOrSendResponse(compact('category', 'level', 'error') , $request);
+            return $this->processRequest('home', [], $request, RouteServiceProvider::HOME);
         }
         else if ($category == $categoryMax && $level == $levelMax)
         {
-            $error = "ERROR_WRONG_CATEGORY_OR_LEVEL";
-            return $this->redirectOrSendResponse(compact('category', 'level', 'error') , $request);
+            return $this->processRequest('home', [], $request, RouteServiceProvider::HOME);
         }
         else if ($category < $categoryMax && $level == $levelMax)
         {
@@ -90,139 +86,109 @@ class GameController extends Controller
             $jsonModalsPath = "public/game/common" . "/" . "modals.json";
             $jsonModals = Storage::get($jsonModalsPath);
 
-            $auth = Auth::user();
+            $inGameProgress = optional($this->user->progress)->where('category', $category);            
 
-            $inGameProgress = Progress::where('user_id', '=', $auth->id)
-                ->where('category', '=', $category)->latest()
-                ->first();
-
-            if ($inGameProgress == null) //game was not played at all or requested category was not played yet            
+            if ($inGameProgress == null) // game was not played at all or requested category was not played yet            
             {
-
                 if ($category == 1)
                 {
+                    // no ingame progress in category 1 exists yet for this user, set level1 with 0 progress
+                    $this->user->progress()->create(['category' => $category, 'level' => $level, 'progress' => 0]);
 
-                    //no ingame progress in category 1 exists yet for this user, set level1 with 0 progress
-                    Progress::create(['user_id' => $auth->id, 'category' => $category, 'level' => $level, 'progress' => 0]);
-
-                    //no saved game in this category and level exists yet for this user, create first saved game with 0 progress from startgame json
+                    // no saved game in this category and level exists yet for this user, create first saved game with 0 progress from startgame json
                     $savedGame = SavedGame::create(array(
-                        'user_id' => $auth->id,
+                        'user_id' => $this->user->id,
                         'category' => $category,
                         'level' => $level,
                         'progress' => 0,
                         'json' => $jsonStartGame
                     ));
-
                 }
-
                 else
                 {
-                    //check if player has 100 progress in previous max level of previous category
-                    $inGameProgressOfPreviousLevelOfPreviousCategory = Progress::where('user_id', '=', $auth->id)
-                        ->where('category', '=', $category - 1)->where('level', '=', $categoryHasLevelsArray[$category - 1] - 1)->latest()
-                        ->first();
+                    // check if player has 100 progress in previous max level of previous category
+                    $inGameProgressOfLastLevelOfPreviousCategory = $this->user->progress
+                        ->where('category', '=', $category - 1)->where('level', '=', static::LEVELS_PER_CATEGORY[$category - 1] - 1);
 
-                    if ($inGameProgressOfPreviousLevelOfPreviousCategory == null || $inGameProgressOfPreviousLevelOfPreviousCategory['progress'] != 100)
+                    if ($inGameProgressOfLastLevelOfPreviousCategory == null || $inGameProgressOfLastLevelOfPreviousCategory->progress != 100)
                     {
-							 return $this->startNewGameOrContinue($request);
+						return $this->startNewGameOrContinue($request);
                     }
                     else
                     {
                         if ($level == 1)
                         {
-
-                            Progress::create(['user_id' => $auth->id, 'category' => $category, 'level' => $level, 'progress' => 0]);
+                            $this->user->progress()->create(['category' => $category, 'level' => $level, 'progress' => 0]);
 
                             $savedGame = SavedGame::create(array(
-                                'user_id' => $auth->id,
+                                'user_id' => $this->user->id,
                                 'category' => $category,
                                 'level' => $level,
                                 'progress' => 0,
                                 'json' => $jsonStartGame
                             ));
-
                         }
 
                         else
                         {
                             return $this->runGame($category, 1, $request);
                         }
-
                     }
-
                 }
-
             }
-
-            else
-            //progress for requested category exists            
+            else // progress for requested category exists                        
             {
-
-                if ($inGameProgress['level'] > $level)
+                if ($inGameProgress->level > $level)
                 {
-
-                    //if player has progress beyond the requested level
-                    $savedGame = SavedGame::where('user_id', '=', $auth->id)
+                    // if player has progress beyond the requested level
+                    $savedGame = SavedGame::where('user_id', '=', $this->user->id)
                         ->where('category', '=', $category)->where('level', '=', $level)->latest()
                         ->first();
-
                 }
-
-                else if ($inGameProgress['level'] == $level)
+                else if ($inGameProgress->level == $level)
                 {
-
-                    //if player has progress on the par with requested level, has not completed it yet
-                    if ($inGameProgress['progress'] != 100)
+                    // if player has progress on par with requested level, has not completed it yet
+                    if ($inGameProgress->progress != 100)
                     {
-
-                        $savedGame = SavedGame::where('user_id', '=', $auth->id)
-                            ->where('category', '=', $category)->where('level', '=', $level)->where('progress', '=', $inGameProgress['progress'])->latest()
+                        $savedGame = SavedGame::where('user_id', '=', $this->user->id)
+                            ->where('category', '=', $category)->where('level', '=', $level)->where('progress', '=', $inGameProgress->progress)->latest()
                             ->first();
 
-                        //if player due to error does not have the savedgame with progress he has, he gets the latest savedgame
+                        // if player due to error does not have the savedgame with progress he has, he gets the latest savedgame
                         if ($savedGame == null)
                         {
-                            $savedGame = SavedGame::where('user_id', '=', $auth->id)
+                            $savedGame = SavedGame::where('user_id', '=', $this->user->id)
                                 ->where('category', '=', $category)->where('level', '=', $level)->latest()
                                 ->first();
                         }
-
                     }
 
-                    //player has completed the level, but requests it again
+                    // player has completed the level, but requests it again
                     else
                     {
-                        $savedGame = SavedGame::where('user_id', '=', $auth->id)
+                        $savedGame = SavedGame::where('user_id', '=', $this->user->id)
                             ->where('category', '=', $category)->where('level', '=', $level)->latest()
                             ->first();
-
                     }
-
                 }
-                else if ($inGameProgress['level'] == $level - 1 && $inGameProgress['progress'] == 100)
+                else if ($inGameProgress->level == $level - 1 && $inGameProgress->progress == 100)
                 {
+                    // if player has completed the level below requested level, update progress                    
 
-                    //if player has completed the level below requested level, update progress                    
-
-                    $inGameProgress->update(['user_id' => $auth->id, 'category' => $category, 'level' => $level, 'progress' => 0]);
-
+                    $inGameProgress->update(['category' => $category, 'level' => $level, 'progress' => 0]);
                     $savedGame = SavedGame::create(array(
-                        'user_id' => $auth->id,
+                        'user_id' => $this->user->id,
                         'category' => $category,
                         'level' => $level,
                         'progress' => 0,
                         'json' => $jsonStartGame
                     ));
-
                 }
                 else
                 {       
-						return $this->startNewGameOrContinue($request);
+					return $this->startNewGameOrContinue($request);
                 }
-
             }
-
         }
         $category = "$category";
         $level = "$level";
@@ -232,10 +198,9 @@ class GameController extends Controller
     public function saveGame(Request $request)
     {
         $data = $request->all();
-        $auth = Auth::user();
 
         SavedGame::create(array(
-            'user_id' => $auth->id,
+            'user_id' => $this->user->id,
             'category' => $data['category'],
             'level' => $data['level'],
             'progress' => $data['progress'],
@@ -246,20 +211,16 @@ class GameController extends Controller
 
     public function createLogOfGameplay(Request $request)
     {
-
         $data = $request->all();
-        $auth = Auth::user();
 
-        Gameplay::create(['user_id' => $auth->id, 'category' => $data['category'], 'level' => $data['level'], 'level_start' => $data['level_start'], 'task' => $data['task'], 'task_start' => $data['task_start'], 'task_end' => $data['task_end'], 'task_elapsed_time' => $data['task_elapsed_time'], 'rating' => $data['rating'], 'code' => $data['code'], 'result' => $data['result']]);
+        Gameplay::create(['user_id' => $this->user->id, 'category' => $data['category'], 'level' => $data['level'], 'level_start' => $data['level_start'], 'task' => $data['task'], 'task_start' => $data['task_start'], 'task_end' => $data['task_end'], 'task_elapsed_time' => $data['task_elapsed_time'], 'rating' => $data['rating'], 'code' => $data['code'], 'result' => $data['result']]);
 
     }
     public function updateIngameProgress(Request $request)
     {
-
         $data = $request->all();
-        $auth = Auth::user();
 
-        $inGameProgress = Progress::where('user_id', '=', $auth->id)->where('category', '=', $data['category'])->latest()
+        $inGameProgress = Progress::where('user_id', '=', $this->user->id)->where('category', '=', $data['category'])->latest()
             ->first();
 
         if ($inGameProgress != null)
@@ -267,7 +228,7 @@ class GameController extends Controller
 
             if ($inGameProgress['level'] == $data['level'] && $inGameProgress['progress'] < $data['progress'])
             {
-                $inGameProgress->update(['user_id' => $auth->id, 'category' => $data['category'], 'level' => $data['level'], 'progress' => $data['progress']]);
+                $inGameProgress->update(['user_id' => $this->user->id, 'category' => $data['category'], 'level' => $data['level'], 'progress' => $data['progress']]);
             }
 
         }
@@ -285,28 +246,14 @@ class GameController extends Controller
         if (Auth::check())
         {
             $auth = Auth::user();
-
-            $getProgress = Progress::where('user_id', '=', $auth->id)
-                ->get();
-
-            if ($getProgress != null)
-            {
-                foreach ($getProgress as $item)
-                {
-
-                    for ($i = 1;$i <= $item['level'];$i++)
-                    {
-                        if ($i == $item['level']) $inGameProgress[] = $item['progress'];
-                        else $inGameProgress[] = 100;
-                    }
-
-                }
-
-            }
+            $inGameProgress = $auth->formatted_progress;
         }
 
         $inGameProgressJson = json_encode($inGameProgress);
         $gameDataJson = json_encode($gameData);
+
+        dd(compact('inGameProgressJson', 'langJson', 'gameDataJson'));
+
         return view("vue", compact('inGameProgressJson', 'langJson', 'gameDataJson'));
     }
 
@@ -314,7 +261,7 @@ class GameController extends Controller
     {
         $auth = Auth::user();
 
-        $inGameProgress = Progress::where('user_id', '=', $auth->id)
+        $inGameProgress = Progress::where('user_id', '=', $this->user->id)
             ->latest()
             ->first();
 
@@ -336,18 +283,12 @@ class GameController extends Controller
 
     public function startLevelAsNew($category, $level, Request $request)
     {
-
-        $categoryHasLevelsArray = array(
-            6,
-            6
-        );
-
         $categoryMin = 1;
-        $categoryMax = sizeof($categoryHasLevelsArray);
+        $categoryMax = sizeof(static::LEVELS_PER_CATEGORY);
 
         if ($category <= $categoryMax && $category >= $categoryMin)
         {
-            $levelMax = $categoryHasLevelsArray[$category - 1];
+            $levelMax = static::LEVELS_PER_CATEGORY[$category - 1];
         }
         else
         {
@@ -361,9 +302,7 @@ class GameController extends Controller
             return $this->redirectOrSendResponse([],$request);
         }
 
-        $auth = Auth::user();
-
-        $inGameProgress = Progress::where('user_id', '=', $auth->id)
+        $inGameProgress = Progress::where('user_id', '=', $this->user->id)
             ->where('category', '=', $category)->latest()
             ->first();
 
@@ -378,7 +317,7 @@ class GameController extends Controller
             $jsonStartGame = Storage::get($jsonStartGamePath);
 
             SavedGame::create(array(
-                'user_id' => $auth->id,
+                'user_id' => $this->user->id,
                 'category' => $category,
                 'level' => $level,
                 'progress' => 0,
@@ -391,17 +330,12 @@ class GameController extends Controller
 
     public function continueLevel($category, $level, Request $request)
     {
-        $categoryHasLevelsArray = array(
-            6,
-            6
-        );
-
         $categoryMin = 1;
-        $categoryMax = sizeof($categoryHasLevelsArray);
+        $categoryMax = sizeof(static::LEVELS_PER_CATEGORY);
 
         if ($category <= $categoryMax && $category >= $categoryMin)
         {
-            $levelMax = $categoryHasLevelsArray[$category - 1];
+            $levelMax = static::LEVELS_PER_CATEGORY[$category - 1];
         }
         else
         {
@@ -416,12 +350,11 @@ class GameController extends Controller
         }
         else
         {
-            $auth = Auth::user();
-            $inGameProgress = Progress::where('user_id', '=', $auth->id)
+            $inGameProgress = Progress::where('user_id', '=', $this->user->id)
                 ->where('category', '=', $category)->latest()
                 ->first();
 
-            if ($inGameProgress != null && $inGameProgress['level'] >= $level)
+            if ($inGameProgress != null && $inGameProgress->level >= $level)
             {
                 return $this->runGame($category, $level, $request);
             }
@@ -432,9 +365,7 @@ class GameController extends Controller
 
     public function registerUserByAdmin(Request $request)
     {
-        $auth = Auth::user();
-
-        if ($auth->role == "admin")
+        if ($this->user->role == "admin")
         {
             $user = new User();
             $user->name = $request['username'];
@@ -463,12 +394,12 @@ class GameController extends Controller
                 return response()->json(['error' => 'Internal Server Error'], 500);
             }
             return $responseData;
-		  }
+		}
 		  
-		  if(empty($responseData))
-		  {
-			return redirect()->route('/');
-		  }
+        if(empty($responseData))
+        {
+            return redirect()->route('/');
+        }
 
         return $this->welcome($responseData);
     }

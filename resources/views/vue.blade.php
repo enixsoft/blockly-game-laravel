@@ -15,15 +15,15 @@
       <link rel="stylesheet" href="{{ asset(mix('css/app.css')) }}">
    </head>
    <body id="page-top">
-   <div id="app"> 
+   <div id="app">
    <App      
-      :user="{{ json_encode(auth()->user()) }}"
+      :view-name="'{{ $viewName }}'"
+      :view-data="{{ $viewData }}"
+      :user="{{ $user }}"
+      :lang="{{ $lang }}"
       :errors="{{ $errors->merge($errors->register) }}"
-      :old="{{ json_encode(Session::getOldInput()) }}"    
-      :lang="{{ $langJson }}"
-      :recaptcha-key="'{{ config('app.google_recaptcha_key') }}'"
-      :in-game-progress="{{ $inGameProgressJson }}"
-      :game-data="{{ $gameDataJson }}"      
+      :old="{{ json_encode(Session::getOldInput()) }}"          
+      :recaptcha-key="'{{ config('app.google_recaptcha_key') }}'"     
       base-url="{{ config('app.url') }}"
    />
 	</div>
