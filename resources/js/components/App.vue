@@ -2,10 +2,8 @@
 <div>
     <Navbar/>
     <template v-if="ViewName === 'game'">
-		<GameHeader 	
-		:category="GameInProgress.category"
-		:level="GameInProgress.level"
-		:game-data="GameInProgress"	
+		<GameHeader
+		:game-data="ViewData"	
 		v-on:UPDATE_PROGRESS="updateProgress"			
 		/>
     </template>    
@@ -43,8 +41,7 @@ export default {
 		return {
 			ViewName: this.viewName,
 			ViewData: !Array.isArray(this.viewData) ? this.viewData : undefined,
-			User: this.user,			
-			GameInProgress: !Array.isArray(this.gameData) ? this.gameData : undefined,
+			User: this.user,
 			Url: (path = undefined) => path ? this.baseUrl + path : this.baseUrl,
 			getLocalizedString: (string) => this.lang[string] || 'ERROR_LANG_STRING_NOT_FOUND',
 			getLocalizedStrings: (locales) => Object.keys(locales).reduce((acc, key) => { acc[key] = this.lang[locales[key]] || 'ERROR_LANG_STRING_NOT_FOUND'; return acc; }, {}),			
@@ -83,7 +80,7 @@ export default {
 			}
 		});
 
-		HistoryManager.enableHistory(this, this.$global.Url(''), window.location.href, this.GameInProgress);
+		HistoryManager.enableHistory(this, window.location.href, this.ViewName, this.ViewData);
 
 		window.cookieconsent.initialise({
 			'palette': {
@@ -117,7 +114,7 @@ export default {
 				scrollTop: $('#game').offset().top
 			}, 'slow');
 			HistoryManager.changeView('home', undefined, '', '');  
-		} else if(this.$global.User && !this.$global.GameInProgress)
+		} else if(this.$global.User && this.$global.ViewName === 'home')
 		{
 			$('html, body').animate({
 				scrollTop: $('#features').offset().top

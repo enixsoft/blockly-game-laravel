@@ -75,8 +75,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
-//
 
 
 
@@ -99,7 +97,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       ViewName: this.viewName,
       ViewData: !Array.isArray(this.viewData) ? this.viewData : undefined,
       User: this.user,
-      GameInProgress: !Array.isArray(this.gameData) ? this.gameData : undefined,
       Url: function Url() {
         var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
         return path ? _this.baseUrl + path : _this.baseUrl;
@@ -148,7 +145,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         xhr.setRequestHeader('X-CSRF-TOKEN', _this2.CsrfToken);
       }
     });
-    _Managers_HistoryManager__WEBPACK_IMPORTED_MODULE_10__.default.enableHistory(this, this.$global.Url(''), window.location.href, this.GameInProgress);
+    _Managers_HistoryManager__WEBPACK_IMPORTED_MODULE_10__.default.enableHistory(this, window.location.href, this.ViewName, this.ViewData);
     window.cookieconsent.initialise({
       'palette': {
         'popup': {
@@ -179,7 +176,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         scrollTop: jquery__WEBPACK_IMPORTED_MODULE_7__('#game').offset().top
       }, 'slow');
       _Managers_HistoryManager__WEBPACK_IMPORTED_MODULE_10__.default.changeView('home', undefined, '', '');
-    } else if (this.$global.User && !this.$global.GameInProgress) {
+    } else if (this.$global.User && this.$global.ViewName === 'home') {
       jquery__WEBPACK_IMPORTED_MODULE_7__('html, body').animate({
         scrollTop: jquery__WEBPACK_IMPORTED_MODULE_7__('#features').offset().top
       }, 'slow');
@@ -387,6 +384,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      category: this.gameData.category,
+      level: this.gameData.level,
       locales: this.$global.getLocalizedStrings(_Managers_LocaleManager__WEBPACK_IMPORTED_MODULE_7__.game),
       failedBlock: [],
       toolbox: this.gameData.xmlToolbox,
@@ -395,7 +394,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       tasks: JSON.parse(this.gameData.jsonTasks),
       modals: JSON.parse(this.gameData.jsonModals),
       ratings: JSON.parse(this.gameData.jsonRatings),
-      levelString: "".concat(this.category, "x").concat(this.level),
+      levelString: "".concat(this.gameData.category, "x").concat(this.gameData.level),
       locked: true,
       progress: this.gameData.savedGame.progress,
       rating: 0,
@@ -427,8 +426,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     Modal: _Modal__WEBPACK_IMPORTED_MODULE_5__.default
   },
   props: {
-    category: String,
-    level: String,
+    // category: String,
+    // level: String,
     gameData: Object
   },
   created: function created() {
@@ -1057,7 +1056,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 3:
                 result = _context4.sent;
                 _context4.next = 6;
-                return _Managers_HistoryManager__WEBPACK_IMPORTED_MODULE_6__.default.changeView('game', result, '', _Managers_HistoryManager__WEBPACK_IMPORTED_MODULE_6__.default.getLocationFromUrl(_this4.$global.Url("game/".concat(result.category, "/").concat(result.level))), true);
+                return _Managers_HistoryManager__WEBPACK_IMPORTED_MODULE_6__.default.changeView(result.viewName, result.viewData, '', _Managers_HistoryManager__WEBPACK_IMPORTED_MODULE_6__.default.getLocationFromUrl(_this4.$global.Url("game/".concat(result.viewData.category, "/").concat(result.viewData.level))), true);
 
               case 6:
                 _context4.next = 11;
@@ -1087,6 +1086,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     changeLevelData: function changeLevelData() {
+      this.category = this.gameData.category;
+      this.level = this.gameData.level;
       this.toolbox = this.gameData.xmlToolbox;
       this.startBlocks = this.gameData.xmlStartBlocks;
       this.savedGame = this.gameData.savedGame;
@@ -1846,7 +1847,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 4:
                 result = _context.sent;
-                _Managers_HistoryManager__WEBPACK_IMPORTED_MODULE_3__.default.changeView('game', result, "Kateg\xF3ria ".concat(result.category, " \xDArove\u0148 ").concat(result.level), "game/".concat(result.category, "/").concat(result.level));
+                _Managers_HistoryManager__WEBPACK_IMPORTED_MODULE_3__.default.changeView(result.viewName, result.viewData, "Kateg\xF3ria ".concat(result.viewData.category, " \xDArove\u0148 ").concat(result.viewData.level), "game/".concat(result.viewData.category, "/").concat(result.viewData.level));
                 _context.next = 10;
                 break;
 
@@ -2703,6 +2704,9 @@ function createWorkspacePlayground(blocklyDiv, blocklyArea, startBlocks, config,
 
 function changeWorkspacePlayground(toolbox, startBlocks) {
   blockly_core__WEBPACK_IMPORTED_MODULE_0__.Xml.clearWorkspaceAndLoadFromXml(blockly_core__WEBPACK_IMPORTED_MODULE_0__.Xml.textToDom(startBlocks), workspacePlayground);
+  setTimeout(function () {
+    return workspacePlayground.trashcan.emptyContents();
+  }, 100);
   workspacePlayground.updateToolbox(toolbox);
   enableClickableBlocks();
 }
@@ -2734,7 +2738,7 @@ function deleteAllBlocks() {
   var allBlocks = workspacePlayground.getAllBlocks();
 
   for (var i = 0; i < allBlocks.length; i++) {
-    if (allBlocks[i].type != 'player' && allBlocks[i].type != 'playerDirection') {
+    if (!['player', 'playerDirection'].includes(allBlocks[i].type)) {
       allBlocks[i].dispose();
     }
   }
@@ -2828,6 +2832,10 @@ function blockClickController(functionObject, event) {
 
   var blockToCheck = blockly_core__WEBPACK_IMPORTED_MODULE_0__.selected;
   var blockCheckResult = undefined;
+
+  if (!blockToCheck) {
+    return;
+  }
 
   switch (blockToCheck.id) {
     case clickableBlocks.player[0].id:
@@ -3057,13 +3065,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery_easing__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery_easing__WEBPACK_IMPORTED_MODULE_1__);
 
 
-var currentView = null;
 var appRef = null;
 
 function changeView(view, data, title, location) {
   var forcePushState = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
 
-  if (currentView === view && !forcePushState) {
+  if (appRef.ViewName === view && !forcePushState) {
     // replaceState logic	
     changeData(data, view);
 
@@ -3095,18 +3102,8 @@ function changeView(view, data, title, location) {
 
 function changeData(data) {
   var view = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'home';
-
-  switch (view) {
-    case 'game':
-      appRef.GameInProgress = data;
-      break;
-
-    case 'home':
-      appRef.GameInProgress = data;
-      break;
-  }
-
-  currentView = view;
+  appRef.ViewData = data;
+  appRef.ViewName = view;
 }
 
 function scrollToHash(hash) {
@@ -3124,28 +3121,12 @@ function getLocationFromUrl(url) {
   return '/' + url.split('/').slice(3).join('/');
 }
 
-function getViewFromUrl(baseUrl, url) {
-  var view = url.replace(baseUrl, '');
-  view = view.split('/').filter(function (x) {
-    return x;
-  })[0];
-
-  switch (view) {
-    default:
-      return 'home';
-
-    case 'game':
-      return 'game';
-  }
-}
-
-function enableHistory(app, baseUrl, url, data) {
+function enableHistory(app) {
   appRef = app;
-  currentView = getViewFromUrl(baseUrl, url);
   window.history.replaceState({
-    view: currentView,
-    data: data
-  }, '', getLocationFromUrl(url));
+    view: appRef.ViewName,
+    data: appRef.ViewData
+  }, '', getLocationFromUrl(window.location.href));
   window.addEventListener('popstate', function (event) {
     jquery__WEBPACK_IMPORTED_MODULE_0__('.modal').modal('hide');
 
@@ -3167,8 +3148,7 @@ function enableHistory(app, baseUrl, url, data) {
   changeView: changeView,
   enableHistory: enableHistory,
   scrollToHash: scrollToHash,
-  getLocationFromUrl: getLocationFromUrl,
-  getViewFromUrl: getViewFromUrl
+  getLocationFromUrl: getLocationFromUrl
 });
 
 /***/ }),
@@ -26220,11 +26200,7 @@ var render = function() {
       _vm.ViewName === "game"
         ? [
             _c("GameHeader", {
-              attrs: {
-                category: _vm.GameInProgress.category,
-                level: _vm.GameInProgress.level,
-                "game-data": _vm.GameInProgress
-              },
+              attrs: { "game-data": _vm.ViewData },
               on: { UPDATE_PROGRESS: _vm.updateProgress }
             })
           ]
@@ -26901,24 +26877,22 @@ var render = function() {
         "div",
         { staticClass: "container" },
         [
-          _vm.$global.GameInProgress
+          _vm.$global.ViewName === "game"
             ? [
-                _vm.$global.GameInProgress
-                  ? _c(
-                      "a",
-                      {
-                        staticClass: "navbar-brand",
-                        attrs: { href: "" },
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            return _vm.changeViewToHome()
-                          }
-                        }
-                      },
-                      [_vm._v(_vm._s(_vm.locales.brand))]
-                    )
-                  : _vm._e(),
+                _c(
+                  "a",
+                  {
+                    staticClass: "navbar-brand",
+                    attrs: { href: "" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.changeViewToHome()
+                      }
+                    }
+                  },
+                  [_vm._v(_vm._s(_vm.locales.brand))]
+                ),
                 _vm._v(" "),
                 _vm.$global.Mobile
                   ? _c(
@@ -26964,7 +26938,7 @@ var render = function() {
             },
             [
               _c("ul", { staticClass: "navbar-nav ml-auto" }, [
-                !_vm.$global.GameInProgress
+                _vm.$global.ViewName === "home"
                   ? _c("li", { staticClass: "nav-item" }, [
                       _c(
                         "a",
@@ -26983,7 +26957,7 @@ var render = function() {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
-                !_vm.$global.GameInProgress
+                _vm.$global.ViewName === "home"
                   ? _c("li", { staticClass: "nav-item" }, [
                       _c(
                         "a",
@@ -27002,7 +26976,7 @@ var render = function() {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
-                !_vm.$global.GameInProgress
+                _vm.$global.ViewName === "home"
                   ? _c("li", { staticClass: "nav-item dropdown" }, [
                       _c(
                         "a",
@@ -27022,7 +26996,7 @@ var render = function() {
                           _vm._v(
                             " " +
                               _vm._s(_vm.locales.languages) +
-                              "\n                     "
+                              "\n                     \t"
                           )
                         ]
                       ),
@@ -27085,11 +27059,7 @@ var render = function() {
                         },
                         [
                           _c("i", { staticClass: "fa fa-user-circle" }),
-                          _vm._v(
-                            " " +
-                              _vm._s(_vm.userName) +
-                              "\n                     "
-                          )
+                          _vm._v(" " + _vm._s(_vm.userName) + "\n\t\t\t\t\t\t")
                         ]
                       ),
                       _vm._v(" "),

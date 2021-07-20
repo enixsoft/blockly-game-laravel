@@ -32,7 +32,7 @@ function createWorkspacePlayground(blocklyDiv, blocklyArea, startBlocks, config,
 	enableClickableBlocks();
 
 	changeListener = blockClickController.bind(null, blockClickFunctionObj);
-	workspacePlayground.addChangeListener(changeListener);	
+	workspacePlayground.addChangeListener(changeListener);
 
 	return workspacePlayground;
 }
@@ -40,6 +40,7 @@ function createWorkspacePlayground(blocklyDiv, blocklyArea, startBlocks, config,
 function changeWorkspacePlayground(toolbox, startBlocks)
 {
 	Blockly.Xml.clearWorkspaceAndLoadFromXml(Blockly.Xml.textToDom(startBlocks), workspacePlayground);
+	setTimeout(() => workspacePlayground.trashcan.emptyContents(), 100);
 	workspacePlayground.updateToolbox(toolbox);
 	enableClickableBlocks();
 }
@@ -77,7 +78,7 @@ function deleteAllBlocks()
 	let allBlocks = workspacePlayground.getAllBlocks();
 	for (let i = 0; i<allBlocks.length; i++)
 	{
-		if(allBlocks[i].type != 'player' && allBlocks[i].type != 'playerDirection')
+		if(!['player', 'playerDirection'].includes(allBlocks[i].type))
 		{
 			allBlocks[i].dispose();
 		}
@@ -178,6 +179,10 @@ function blockClickController(functionObject, event)
 
 	let blockToCheck = Blockly.selected;
 	let blockCheckResult = undefined;
+
+	if(!blockToCheck) {
+		return;
+	}
 
 	switch(blockToCheck.id)
 	{		

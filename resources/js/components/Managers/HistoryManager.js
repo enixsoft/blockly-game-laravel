@@ -1,12 +1,11 @@
 import * as $ from 'jquery';
 import 'jquery.easing';
 
-let currentView = null;
 let appRef = null;
 
 function changeView(view, data, title, location, forcePushState = false)
 {	
-	if(currentView === view && !forcePushState)
+	if(appRef.ViewName === view && !forcePushState)
 	{
 		// replaceState logic	
 		changeData(data, view);
@@ -28,17 +27,9 @@ function changeView(view, data, title, location, forcePushState = false)
 }
 
 function changeData(data, view = 'home') 
-{	
-	switch(view)
-	{
-	case 'game':				         
-		appRef.GameInProgress = data;			
-		break;
-	case 'home':
-		appRef.GameInProgress = data;
-		break;
-	}
-	currentView = view;
+{
+	appRef.ViewData = data;
+	appRef.ViewName = view;
 }
 
 function scrollToHash(hash) 
@@ -57,25 +48,11 @@ function getLocationFromUrl(url)
 	return '/' + url.split('/').slice(3).join('/');
 }
 
-function getViewFromUrl(baseUrl, url)
-{
-	let view = url.replace(baseUrl, '');
-	view = view.split('/').filter(x => x)[0];
-	switch(view)
-	{
-	default:
-		return 'home';
-	case 'game':
-		return 'game';		
-	}
-}
-
-function enableHistory(app, baseUrl, url, data)
-{
+function enableHistory(app)
+{	
 	appRef = app;
-	currentView = getViewFromUrl(baseUrl, url);
 
-	window.history.replaceState({ view: currentView, data }, '', getLocationFromUrl(url));
+	window.history.replaceState({ view: appRef.ViewName, data: appRef.ViewData }, '', getLocationFromUrl(window.location.href));
 	
 	window.addEventListener('popstate', (event) => {
 		$('.modal').modal('hide');
@@ -96,4 +73,4 @@ function enableHistory(app, baseUrl, url, data)
 	}); 
 }
 
-export default { changeView, enableHistory, scrollToHash, getLocationFromUrl, getViewFromUrl };
+export default { changeView, enableHistory, scrollToHash, getLocationFromUrl };

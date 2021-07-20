@@ -62,7 +62,7 @@ class User extends Authenticatable
 
     public function progress() 
     {
-        return $this->hasMany(Progress::class);
+        return $this->hasMany(Progress::class)->orderBy('id', 'desc');
     }
 
     public function getFormattedProgressAttribute() 

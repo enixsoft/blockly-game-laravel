@@ -50,6 +50,8 @@ import { game as locales, blocks as blocksLocales } from '../Managers/LocaleMana
 export default {
 	data(){
 		return {
+			category: this.gameData.category,
+			level: this.gameData.level,
 			locales: this.$global.getLocalizedStrings(locales),
 			failedBlock: [],
 			toolbox: this.gameData.xmlToolbox,
@@ -58,7 +60,7 @@ export default {
 			tasks: JSON.parse(this.gameData.jsonTasks),
 			modals: JSON.parse(this.gameData.jsonModals),			
 			ratings: JSON.parse(this.gameData.jsonRatings),
-			levelString: `${this.category}x${this.level}`,
+			levelString: `${this.gameData.category}x${this.gameData.level}`,
 			locked: true,
 			progress: this.gameData.savedGame.progress,
 			rating: 0,
@@ -89,8 +91,8 @@ export default {
 		Modal
 	},
 	props: {
-		category: String,
-		level: String,
+		// category: String,
+		// level: String,
 		gameData: Object
 	},
 	created(){
@@ -610,7 +612,7 @@ export default {
 		{			
 			try {
 				const result = await sendRequest({method: 'GET', headers: {'Accept': 'application/json'}, url: this.$global.Url(`start/${this.category}/${Number(this.level)+1}`)});           
-				await HistoryManager.changeView('game', result, '', HistoryManager.getLocationFromUrl(this.$global.Url(`game/${result.category}/${result.level}`)), true);
+				await HistoryManager.changeView(result.viewName, result.viewData, '', HistoryManager.getLocationFromUrl(this.$global.Url(`game/${result.viewData.category}/${result.viewData.level}`)), true);
 			}
 			catch (e) {
 				ModalManager.showDynamicModal('ajaxError', { 
@@ -626,6 +628,9 @@ export default {
 		},
 		changeLevelData()
 		{
+			this.category =  this.gameData.category;
+			this.level = this.gameData.level;
+			
 			this.toolbox = this.gameData.xmlToolbox;
 			this.startBlocks = this.gameData.xmlStartBlocks;
 			this.savedGame = this.gameData.savedGame;
