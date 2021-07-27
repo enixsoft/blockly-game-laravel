@@ -520,7 +520,7 @@ export default {
 				return;
 			}		
 				
-			const data = {'save' : this.saveObjectToString, 'category': Number(this.category), 'level': Number(this.level), 'progress':  Number(this.progress) };				           
+			const data = {'json': this.saveObjectToString, 'category': Number(this.category), 'level': Number(this.level), 'progress': Number(this.progress)};				           
 			try {
 				await sendRequest({method:'POST', url: this.$global.Url('game/savegame'), data});           
 			}

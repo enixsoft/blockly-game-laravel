@@ -9,7 +9,6 @@ class Bug extends Model
     protected $table = 'bugs';
 
     protected $fillable = [
-        'id', 
         'user_id', 
         'category', 
         'level', 

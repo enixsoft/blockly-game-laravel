@@ -891,7 +891,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 6:
                 data = {
-                  'save': _this2.saveObjectToString,
+                  'json': _this2.saveObjectToString,
                   'category': Number(_this2.category),
                   'level': Number(_this2.level),
                   'progress': Number(_this2.progress)
@@ -1847,7 +1847,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 4:
                 result = _context.sent;
-                _Managers_HistoryManager__WEBPACK_IMPORTED_MODULE_3__.default.changeView(result.viewName, result.viewData, "Kateg\xF3ria ".concat(result.viewData.category, " \xDArove\u0148 ").concat(result.viewData.level), "game/".concat(result.viewData.category, "/").concat(result.viewData.level));
+
+                if (result.viewData.category && result.viewData.level) {
+                  _Managers_HistoryManager__WEBPACK_IMPORTED_MODULE_3__.default.changeView(result.viewName, result.viewData, "Kateg\xF3ria ".concat(result.viewData.category, " \xDArove\u0148 ").concat(result.viewData.level), "game/".concat(result.viewData.category, "/").concat(result.viewData.level));
+                } else {
+                  _Managers_HistoryManager__WEBPACK_IMPORTED_MODULE_3__.default.changeView(result.viewName, result.viewData, '', '');
+                }
+
                 _context.next = 10;
                 break;
 
@@ -2692,7 +2698,7 @@ function createWorkspacePlayground(blocklyDiv, blocklyArea, startBlocks, config,
   blockly_core__WEBPACK_IMPORTED_MODULE_0__.Xml.domToWorkspace(blockly_core__WEBPACK_IMPORTED_MODULE_0__.Xml.textToDom(startBlocks), workspacePlayground);
   disableContextMenus();
   scrollWorkspace();
-  jquery__WEBPACK_IMPORTED_MODULE_3__(window).resize(function () {
+  jquery__WEBPACK_IMPORTED_MODULE_3__(window).on('resize', function () {
     return onResize(blocklyDiv, blocklyArea);
   });
   onResize(blocklyDiv, blocklyArea);

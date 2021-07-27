@@ -23,7 +23,7 @@ function createWorkspacePlayground(blocklyDiv, blocklyArea, startBlocks, config,
 	disableContextMenus();
 	scrollWorkspace();
 
-	$(window).resize(() =>     
+	$(window).on('resize', () =>     
 		onResize(blocklyDiv, blocklyArea)
 	);
 

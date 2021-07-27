@@ -9,7 +9,6 @@ class SavedGame extends Model
     protected $table = 'savedgames';
 
     protected $fillable = [
-        'id', 
         'user_id', 
         'category', 
         'level', 

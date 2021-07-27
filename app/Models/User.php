@@ -21,15 +21,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * The relations to eager load on every query.
-     *
-     * @var array
-     */
-    protected $with = [
-        'progress'
-    ];
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -60,9 +51,24 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function savedGames() 
+    {
+        return $this->hasMany(SavedGame::class);
+    }
+
+    public function gameplay() 
+    {
+        return $this->hasMany(Gameplay::class);
+    }
+
+    public function bugs() 
+    {
+        return $this->hasMany(Bug::class);
+    }
+
     public function progress() 
     {
-        return $this->hasMany(Progress::class)->orderBy('id', 'desc');
+        return $this->hasMany(Progress::class);
     }
 
     public function getFormattedProgressAttribute() 

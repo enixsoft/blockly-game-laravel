@@ -9,7 +9,6 @@ class Gameplay extends Model
     protected $table = 'gameplay';
 
     protected $fillable = [
-        'id', 
         'user_id', 
         'category', 
         'level', 

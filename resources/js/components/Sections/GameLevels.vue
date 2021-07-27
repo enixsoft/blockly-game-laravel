@@ -78,7 +78,11 @@ export default {
 			try {
 				const url = type === 'play' ? this.$global.Url('play') : this.$global.Url(`${type}/${category}/${level}`);
 				const result = await sendRequest({method: 'GET', headers: {'Accept': 'application/json'}, url});
-				HistoryManager.changeView(result.viewName, result.viewData, `Kategória ${result.viewData.category} Úroveň ${result.viewData.level}`, `game/${result.viewData.category}/${result.viewData.level}`);
+				if(result.viewData.category && result.viewData.level) {
+					HistoryManager.changeView(result.viewName, result.viewData, `Kategória ${result.viewData.category} Úroveň ${result.viewData.level}`, `game/${result.viewData.category}/${result.viewData.level}`);
+				} else {
+					HistoryManager.changeView(result.viewName, result.viewData, '', '');
+				}				
 			}
 			catch (e) {
 				// modal error window?

@@ -12,38 +12,31 @@ trait SinglePageApplicationTrait
     {
         $viewData = json_encode($viewData);
         $user = json_encode(Auth::check() ? Auth::user() : null);       
-        $lang = Storage::get("public/game/locales/". App::getLocale() .".json");      
-       
-        // dd(compact('view', 'data', 'user', 'lang'));
+        $lang = Storage::get("public/game/locales/". App::getLocale() .".json");
         
         return view("vue", compact('viewName', 'viewData', 'user', 'lang'));
     }
 
     public function jsonDataResponse(String $view, Array $data)
     {
-        // if(empty($data))
-        // {
-        //     return response()->json(['error' => 'Internal Server Error'], 500);
-        // }
         return response()->json(['viewName' => $view, 'viewData' => $data]);
     }
 
-    public function redirectHomeResponse()
-    {	       
-        return redirect()->route('');
+    public function successApiResponse() {
+        return response('', 204);
     }
 
-    public function processRequest(String $view, Array $data, Request $request, $redirectToRoute = null)
+    public function redirectToRoute($routeName, $routeParameters, Request $request) {
+        return redirect()->route($routeName, $routeParameters, 302, $request->headers->all());
+    }
+
+    public function processRequest(String $view, Array $data, Request $request)
     {
         if ($request->expectsJson())
         {
             return $this->jsonDataResponse($view, $data);
 		}
 
-        if($redirectToRoute)
-        {
-            return redirect()->route($redirectToRoute);            
-        }
         return $this->viewResponse($view, $data);
     }
 }
