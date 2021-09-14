@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 
 class UserSeeder extends Seeder
@@ -24,8 +23,7 @@ class UserSeeder extends Seeder
                 'password' => bcrypt($i.'heslo'.$i),
                 'email' => "hrac" . $i . "@blocklyhra.sk",
                 'role' => "user",
-                'remember_token' => null                
-
+                'remember_token' => null
             ));  
         }
 

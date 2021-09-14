@@ -1,11 +1,22 @@
 ## Blockly Game (Laravel)
 
-  Requirements:
+  Requirements (Linux):
   - docker
   - docker-compose
- 
+
+  Requirements (Windows):
+  - Docker Desktop
+  - WSL2
+  - Linux distribution (WSL2) integrated with Docker Desktop
+
 How to run this application:
-https://laravel.com/docs/8.x/sail
+1. Use Linux distro (natively or in Windows) to clone this repo and navigate to root folder of application.
+2. Install dependencies. https://laravel.com/docs/8.x/sail#installing-composer-dependencies-for-existing-projects
+3. Run command `cp .env.example .env`
+4. Run command `./vendor/bin/sail up -d`
+5. Run command `./vendor/bin/sail artisan key:generate`
+6. Run command `./vendor/bin/sail artisan migrate --seed`
+7. You can now log in with username `admin` and password `admin123` and play the game.
 
 ----------
 
